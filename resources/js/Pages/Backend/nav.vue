@@ -48,7 +48,7 @@ export default {
             <label for="ham-menu-switch-3" class="ham-menu">
               <div class="paletteB"><img :src="images.palette" width="25" height="25" alt=""></div>
             </label>
-            <div class="topic shadow-lg w-[350px] absolute right-0 top-[107px] bg-white hidden">
+            <div class="topic">
               <div class="topic-head">
                 <div class="top-text">
                   <img class="palette" :src="images.palette" alt="">
@@ -155,23 +155,23 @@ export default {
                   <h4>顏色</h4>
                   <div class="colorbox-all">
                     <div class="col">
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#db4437]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#673ab7]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#3f51b5]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#4285f4]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#03a9f4]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#00bcd4]"><i class="fa-sharp fa-solid fa-check check"></i></div>
                     </div>
                     <div class="col">
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                      <div class="colorbox"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#ff5722]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#ff9800]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#009688]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#4caf50]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#607d8b]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                      <div class="colorbox bg-[#9e9e9e]"><i class="fa-sharp fa-solid fa-check check"></i></div>
                     </div>
                     <div class="col">
-                      <div class="colorbox"><img class="add" :src="images.add"
+                      <div class="colorbox bg-[#eeeeee]"><img class="add" :src="images.add"
                         alt=""></div>
                     </div>
                   </div>
@@ -189,17 +189,14 @@ export default {
                     <div class="colorbox">
                       <i class="fa-sharp fa-solid fa-check check"></i>
                     </div>
-                    <div class="colorbox border">
+                    <div class="colorbox border bg-[#f6f6f6]">
                       <i class="fa-sharp fa-solid fa-check check"></i>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-            <button type="button">
-              <div class="eye w-[35px] h-[35px] flex justify-center items-center mx-[10px] pb-[4px]"><img :src="images.visibility" width="25" height="25" alt=""></div>
-            </button>
+            <button type="button" class="eye"><img :src="images.visibility" width="25" height="25" alt=""></button>
             <button type="button" class="sent">傳送</button>
             <input type="checkbox" id="ham-menu-switch" class="hidden">
             <label for="ham-menu-switch" class="ham-menu">
@@ -252,31 +249,11 @@ export default {
 #nav {
 }
 
-button {
-    border: 0;
-    background-color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: rgb(237, 237, 237);
-    border-radius: 50%;
-}
-
-.material-symbols-outlined {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 48,
-}
-
 nav {
   @apply relative;
     .container {
       @apply flex h-[107px] flex-col justify-between bg-[#ededed];
         .top {
-          @apply bg-[#ededed];
             .topL {
                 .logo {
                     @apply mx-[10px];
@@ -294,7 +271,7 @@ nav {
                   @apply flex w-[45px] h-[45px] cursor-pointer justify-center items-center me-[5px] hover:bg-[#ededed] rounded-[50%];
                 }
                 .eye {
-                  @apply flex justify-center items-center mt-[5px];
+                  @apply mt-[5px] w-[45px] h-[45px] flex justify-center items-center mx-[10px] pb-[4px] hover:bg-[#ededed] rounded-[50%];
                 }
                 #ham-menu-switch-3:checked~.topic {
                     @apply block;
@@ -359,138 +336,69 @@ nav {
             }
         }
         .down {
-          @apply h-[40%] bg-[#ededed] flex justify-center items-end;
+          @apply h-[40%] bg-white flex justify-center items-end border-b-2;
             .btn {
-              @apply p-[10px] text-[16px] bg-[#ededed] rounded-none hover:bg-white active:bg-[#a287d156];
+              @apply p-[10px] text-[16px] rounded-none hover:border-b-2 border-purple active:bg-[#a287d156];
             }
         }
     }
 }
 .topic {
+  @apply shadow-lg w-[350px] absolute right-0 top-[107px] bg-white hidden;
 }
-
 .topic-head {
-  padding: 0 20px;
-  width: 350px;
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0 1px 1px 1px rgb(204, 204, 204);
-
+  @apply px-[20px] w-[350px] flex justify-between drop-shadow-sm;
   .top-text {
-    padding: 15px 0;
-    display: flex;
-    align-content: center;
-
+    @apply py-[15px] flex items-center;
     .palette {
-      width: 24px;
-      margin-right: 10px;
+      @apply w-[24px] me-[10px];
     }
   }
-
   .close {
-    padding: 15px;
-
-    &:hover {
-      border-radius: 50%;
-      background-color: rgb(229, 229, 229);
-    }
-
+    @apply p-[15px] hover:rounded-full hover:bg-[#e5e5e5];
   }
-
   span {
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 24px;
+    @apply text-[22px] font-normal leading-[24px];
   }
 }
-
 .topic-body {
-  padding: 10px 20px;
-  overflow-y: scroll;
-  height: calc(100vh - 161px);
-
+  @apply px-[20px] py-[10px] overflow-y-scroll h-[calc(100vh-161px)];
   .select-region {
-    margin-bottom: 20px;
-
+    @apply mb-[20px];
     .region-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
+      @apply text-[18px] font-semibold mb-[10px];
     }
-
     select {
-      height: 50px;
-      border-radius: 5px;
-      border-color: rgb(215, 215, 215);
+      @apply h-[50px] rounded-[5px] bg-[#ffffff];
     }
-
     #font-family {
-      width: 200px;
-      margin-right: 8px;
-
-      // &:hover {
-      //   background-color: rgb(239, 239, 239);
-      // }
+      @apply w-[200px] me-[8px];
     }
-
     #font-size {
-      width: 80px;
-
-      // &:hover {
-      //   background-color: rgb(239, 239, 239);
-      // }
+      @apply w-[80px];
     }
   }
-
   .page-top {
     .choice-image {
-      width: 150px;
-      display: flex;
-      justify-content: center;
-      border: 1px solid rgb(203, 203, 203);
-      border-radius: 5px;
-      padding: 10px 0;
-      cursor: pointer;
-
+      @apply w-[150px] flex justify-center border border-[#cbcbcb] rounded-[5px] py-[10px] cursor-pointer;
       img {
-        margin-right: 10px;
+        @apply me-[10px];
       }
-
       span {
-        font-size: 20px;
-        font-weight: 600;
-        color: rgb(77, 146, 237);
+        @apply text-[20px] font-semibold text-[#4d92ed];
       }
     }
   }
 }
-
 .col {
-  display: flex;
-  margin-bottom: 10px;
-
+  @apply flex mb-[10px];
   .colorbox {
-    display: flex;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-    justify-content: center;
-    align-content: center;
-
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0 1px 2px grey;
-    }
-
+    @apply flex w-[30px] h-[30px] rounded-full me-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
     .check {
-      padding: 7px 4px;
-      width: 24px;
-      display: none;
+      @apply py-[7px] px-[4px] hidden;
     }
-
     .add {
-      width: 24px;
+      @apply w-[24px];
     }
   }
 }
