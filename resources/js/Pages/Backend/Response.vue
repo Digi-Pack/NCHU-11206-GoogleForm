@@ -86,8 +86,10 @@ export default {
 
 <style lang="scss" scoped>
 #response {
+.all {
+    @apply m-auto max-w-[770px] bg-[white];
     .response-head {
-        @apply m-auto max-w-[768px] bg-[white] border my-[15px] rounded-[10px] border-gray-200;;
+        @apply my-[15px] rounded-[10px] border border-gray-200;
 
         .head-top {
             @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
@@ -166,7 +168,7 @@ export default {
     }
 
     .response-body {
-        @apply m-auto max-w-[768px] flex min-h-[80px] justify-center items-center bg-white border rounded-[10px] border-gray-200;
+        @apply flex min-h-[80px] justify-center items-center border rounded-[10px] border-gray-200;
             span {
                 @apply text-[#686868];
             }
@@ -174,6 +176,7 @@ export default {
                 // @media (max-width:480px) {
                 //     .to-excel {
                 //         display: none;
+            }
 }
 
 </style>

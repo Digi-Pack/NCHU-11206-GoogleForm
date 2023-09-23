@@ -21,7 +21,4 @@ export default {};
   @apply h-[calc(100dvh-42px)];
 }
 
-#header, #footer {
-  @apply h-[21px] bg-[#00bd89];
-}
 </style>
