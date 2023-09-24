@@ -36,7 +36,7 @@ export default {
 
 <template>
   <section>
-    <nav>
+    <!-- <nav>
       <div class="container">
         <div class="top h-[60%] bg-white flex justify-between p-[10px]">
           <div class="topL flex justify-start items-center">
@@ -241,14 +241,11 @@ export default {
           <button type="button" class="btn">設定</button>
         </div>
       </div>
-    </nav>
+    </nav> -->
   </section>
 </template>
 
 <style lang="scss" scoped>
-#nav {
-}
-
 nav {
   @apply relative;
     .container {
