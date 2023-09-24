@@ -31,6 +31,16 @@ export default {
       },
     };
   },
+  methods: {
+    /**
+     * 判斷現在是否在urlName的路由
+     * @param {String} urlName 路由名稱
+     */
+    currentUrl(urlName = '') {
+      if (urlName === '') return;
+      return route().current(urlName);
+    },
+  },
 };
 </script>
 
@@ -240,9 +250,15 @@ export default {
             </div>
           </div>
           <div class="down">
-            <button type="button" class="btn">問題</button>
-            <button type="button" class="btn">回覆</button>
-            <button type="button" class="btn">設定</button>
+            <NavLink class="btn" :href="route('nav')" :active="currentUrl('nav')">
+              問題
+            </NavLink>
+            <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
+              回覆
+            </NavLink>
+            <NavLink class="btn" :href="route('dashboard')" :active="currentUrl('dashboard')">
+              設定
+            </NavLink>
           </div>
         </div>
       </nav>
@@ -410,7 +426,7 @@ nav {
         .down {
           @apply h-[40%] bg-white flex justify-center items-end border-b-2;
             .btn {
-              @apply p-[10px] text-[16px] rounded-none hover:border-b-2 border-purple active:bg-[#a287d156];
+              @apply p-[10px] text-[16px] rounded-none;
             }
         }
     }
