@@ -15,8 +15,14 @@ import time from '/resources/images/time.png';
 import dots from '/resources/images/dots.png';
 import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
+import Dropdown from '@/Components/Dropdown.vue';
+import del from '/resources/images/del.png';
+import copy from '/resources/images/copy.png';
 
 export default {
+  components: {
+    Dropdown,
+  },
   data() {
     return {
       add: add,
@@ -35,6 +41,8 @@ export default {
       dots: dots,
       check_box: check_box,
       arrow_down: arrow_down,
+      del: del,
+      copy: copy,
     };
   },
 };
@@ -87,34 +95,40 @@ export default {
           <img :src="image" alt="">
           <!-- 下拉選單 -->
           <div class="check">
-            <div class="check-box">
-              <img :src="radio_button" alt="">
-              <span>選擇題</span>
-              <img :src="arrow_down" alt="">
-            </div>
-            <div class="answer-type">
-              <ul>
-                <li><img :src="short_text" alt="">簡答</li>
-                <li><img :src="long_text" alt="">詳答</li>
-              </ul>
-              <ul>
-                <li><img :src="radio_button" alt="">選擇題</li>
-                <li><img :src="check_box" alt="">核取方塊</li>
-                <li><img :src="circle_down" alt="">下拉式選單</li>
-              </ul>
-              <ul>
-                <li><img :src="cloud_upload" alt="">檔案上傳</li>
-              </ul>
-              <ul>
-                <li><img :src="dots" alt="">線性刻度</li>
-                <li><img :src="dots" alt="">單選方格</li>
-                <li><img :src="dots" alt="">核取方塊格</li>
-              </ul>
-              <ul>
-                <li><img :src="date" alt="">日期</li>
-                <li><img :src="time" alt="">時間</li>
-              </ul>
-            </div>
+            <Dropdown>
+              <template #content>
+                <div class="answer-type">
+                  <ul>
+                    <li><img :src="short_text" alt="">簡答</li>
+                    <li><img :src="long_text" alt="">詳答</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="radio_button" alt="">選擇題</li>
+                    <li><img :src="check_box" alt="">核取方塊</li>
+                    <li><img :src="circle_down" alt="">下拉式選單</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="cloud_upload" alt="">檔案上傳</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="dots" alt="">線性刻度</li>
+                    <li><img :src="dots" alt="">單選方格</li>
+                    <li><img :src="dots" alt="">核取方塊格</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="date" alt="">日期</li>
+                    <li><img :src="time" alt="">時間</li>
+                  </ul>
+                </div>
+              </template>
+              <template #trigger>
+                <div class="check-box">
+                  <img :src="radio_button" alt="">
+                  <span>選擇題</span>
+                  <img :src="arrow_down" alt="">
+                </div>
+              </template>
+            </Dropdown>
           </div>
         </div>
         <!-- 第二行 第一種 簡答 -->
@@ -264,8 +278,8 @@ export default {
         <!-- 第三行 -->
         <div class="question-bottom">
           <div class="func">
-            <i class="fa-regular fa-copy"></i>
-            <i class="fa-regular fa-trash-can"></i>
+            <img :src="copy" alt="">
+            <img :src="del" alt="">
           </div>
           <!-- 必填選項開關 -->
           <div class="switch">
@@ -276,7 +290,6 @@ export default {
                 <span class="btn"></span>
               </span>
             </label>
-
             <img :src="dot" alt="">
           </div>
 
@@ -367,13 +380,13 @@ $md-blue:rgb(39,123,233);
                     @apply flex justify-around items-center w-[209px] h-[49px] rounded-[10px] text-gray-500 font-semibold border border-grey;
                 }
                 .answer-type {
-                    @apply w-[209px] max-h-[580px] overflow-y-scroll absolute -top-[200px] hidden;
+                    @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll absolute top-[40px] right-0;
                     ul {
-                        @apply w-full border-x-0 border-t-0 bg-white border-b-gray-400 px-[3px] py-[8px] m-0;
+                        @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
                         li {
-                            @apply w-full flex h-[48px] p-[8px] font-normal text-grey hover:bg-blue;
+                            @apply w-full flex h-[48px] p-[8px] font-normal hover:bg-blue;
                             img {
-                                @apply mr-[26px];
+                                @apply mr-[26px] w-[22px] h-[22px] inline-block;
                             }
                         }
                     }
@@ -745,20 +758,26 @@ $md-blue:rgb(39,123,233);
             }
         }
         .question-bottom {
-            @apply w-full flex justify-end text-lg font-semibold text-grey pt-[24px] pr-[10px];
+            @apply w-full flex justify-end items-center text-lg font-semibold text-grey pt-[0px] pr-[10px];
             .func{
-                @apply w-full flex items-center justify-around border-r border-r-gray-400;
+                @apply w-full h-[52px] pr-5 flex items-center justify-end border-r border-r-gray-400;
+                img {
+                  @apply w-[22px] h-[22px] mr-2.5;
+                }
                 @media(max-width:480px){
                     display:none;
                 }
             }
             .switch {
-                @apply w-[130px] ml-[50px] flex justify-between items-center;
+                @apply w-[130px] ml-[50px];
+                label {
+                  @apply w-[85px] flex justify-between items-center;
+                }
                 .btn-box {
                     @apply inline-block align-middle w-[40px] h-[20px] rounded-[100px] bg-grey-middle shadow-inner;
                 }
                 .btn-box .btn {
-                    @apply inline-block w-[25px] h-[25px] rounded-[50%] bg-white ml-0 transition-[0.5s] shadow-sm;
+                    @apply inline-block -translate-y-1 drop-shadow-lg w-[25px] h-[25px] rounded-[50%] bg-white ml-0 transition-[0.5s] shadow-sm;
                 }
                 .checkbox {
                     @apply absolute opacity-0;
