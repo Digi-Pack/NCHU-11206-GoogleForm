@@ -65,9 +65,7 @@ const open = ref(false);
         :class="[widthClass, alignmentClasses]"
         @click="open = false"
       >
-        <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
-          <slot name="content" />
-        </div>
+        <slot name="content" />
       </button>
     </transition>
   </div>

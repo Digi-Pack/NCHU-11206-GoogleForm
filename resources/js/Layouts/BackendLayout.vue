@@ -300,7 +300,7 @@ nav {
                 }
 
                 .topic {
-                  @apply shadow-lg w-[350px] absolute right-0 top-[107px] bg-white hidden;
+                  @apply shadow-lg w-[380px] absolute right-0 top-[107px] bg-white overflow-y-scroll hidden;
                   .topic-head {
                   @apply px-[20px] w-[350px] flex justify-between drop-shadow-sm;
                     .top-text {

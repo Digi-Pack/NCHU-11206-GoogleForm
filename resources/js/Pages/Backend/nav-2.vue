@@ -43,7 +43,17 @@ export default {
       arrow_down: arrow_down,
       del: del,
       copy: copy,
+      questions: [],
     };
+  },
+
+  methods: {
+    addques() {
+      const newQues = {
+        text: 'question',
+      };
+      this.questions.push(newQues);
+    },
   },
 };
 </script>
@@ -53,10 +63,10 @@ export default {
     <div class="container">
       <!-- 側欄 -->
       <div class="side">
-        <div class="side-func">
+        <button type="button" class="side-func" @click="addques()">
           <img :src="add" alt="">
           <span>新增問題</span>
-        </div>
+        </button>
         <div class="side-func">
           <img :src="upload" alt="">
           <span>匯入問題</span>
@@ -86,7 +96,7 @@ export default {
         <input type="text" value="表單說明" class="form-input form-explain-input-2">
       </div>
       <!-- 問題設置 -->
-      <div class="question">
+      <div v-for="item in questions" :key="item" class="question">
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
@@ -302,13 +312,13 @@ export default {
 <style lang="scss" scoped>
 #question {
     $grey:rgb(178, 176, 176);
-$font-grey:rgb(108, 105, 105);
-$grey-bac:rgb(104,108,113);
-$blue:rgb(237,244,253);
-$md-blue:rgb(39,123,233);
+    $font-grey:rgb(108, 105, 105);
+    $grey-bac:rgb(104,108,113);
+    $blue:rgb(237,244,253);
+    $md-blue:rgb(39,123,233);
 
 .container{
-    @apply max-w-[770px] m-auto relative;
+    @apply max-w-[770px] m-auto relative mt-[20px];
     .side{
         @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
 
