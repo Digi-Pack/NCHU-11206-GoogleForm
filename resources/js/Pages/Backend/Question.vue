@@ -92,7 +92,10 @@ export default {
           <div class="text-box">
             <input type="text" value="問題" class="form-input form-title-input">
           </div>
-          <img :src="image" alt="">
+          <label for="image">
+            <img :src="image" alt="" class="upload">
+            <input type="file" id="image" hidden>
+          </label>
           <!-- 下拉選單 -->
           <div class="check">
             <Dropdown>
@@ -356,6 +359,9 @@ $md-blue:rgb(39,123,233);
             // @media(max-width:435px){
             //     justify-content:initial;
             // }
+            .upload {
+                @apply w-[55px] h-[55px] p-[16px] cursor-pointer hover:bg-gray-100 rounded-[50%];
+            }
             .text-box {
                 @apply w-[447px] mt-[10px];
 
@@ -762,7 +768,7 @@ $md-blue:rgb(39,123,233);
             .func{
                 @apply w-full h-[52px] pr-5 flex items-center justify-end border-r border-r-gray-400;
                 img {
-                  @apply w-[22px] h-[22px] mr-2.5;
+                  @apply w-[52px] h-[52px] p-[15px] mr-2.5 cursor-pointer hover:bg-gray-100 rounded-[50%];
                 }
                 @media(max-width:480px){
                     display:none;
