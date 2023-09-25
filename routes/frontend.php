@@ -8,3 +8,4 @@ Route::get('/', function () {
         'response' => rtFormat([100, 200, 300]),
     ]);
 });
+
