@@ -1,45 +1,797 @@
 <script>
-import palette from '/images/palette.svg';
-import close from '/images/close.svg';
-import image from '/images/image.svg';
-import add from '/images/add.svg';
-import visibility from '/images/visibility.svg';
-import more_vert from '/images/more_vert.svg';
-import content_copy from '/images/content_copy.svg';
-import del from '/images/del.svg';
-import link from '/images/link.svg';
-import print from '/images/print.svg';
-import group_add from '/images/group_add.svg';
-import logo from '/images/logo.png';
+import add from '/resources/images/add_circle.png';
+import image from '/resources/images/image.png';
+import upload from '/resources/images/upload.png';
+import video from '/resources/images/video.png';
+import view_agenda from '/resources/images/view_agenda.png';
+import text from '/resources/images/text.png';
+import short_text from '/resources/images/short_text.png';
+import long_text from '/resources/images/long_text.png';
+import radio_button from '/resources/images/radio_button_checked.png';
+import circle_down from '/resources/images/circle_down.png';
+import cloud_upload from '/resources/images/cloud_upload.png';
+import date from '/resources/images/date.png';
+import time from '/resources/images/time.png';
+import dots from '/resources/images/dots.png';
+import check_box from '/resources/images/check_box.png';
+import arrow_down from '/resources/images/arrow_down.png';
+import Dropdown from '@/Components/Dropdown.vue';
+import del from '/resources/images/del.png';
+import copy from '/resources/images/copy.png';
 
 export default {
+  components: {
+    Dropdown,
+  },
   data() {
     return {
-      images: {
-        palette,
-        close,
-        image,
-        add,
-        visibility,
-        more_vert,
-        content_copy,
-        del,
-        link,
-        print,
-        group_add,
-        logo,
-      },
+      add: add,
+      image: image,
+      upload: upload,
+      video: video,
+      view_agenda: view_agenda,
+      text: text,
+      short_text: short_text,
+      long_text: long_text,
+      radio_button: radio_button,
+      circle_down: circle_down,
+      cloud_upload: cloud_upload,
+      date: date,
+      time: time,
+      dots: dots,
+      check_box: check_box,
+      arrow_down: arrow_down,
+      del: del,
+      copy: copy,
     };
   },
 };
 </script>
 
 <template>
-  <section>
-    <h1>test</h1>
+  <section id="question">
+    <div class="container">
+      <!-- 側欄 -->
+      <div class="side">
+        <div class="side-func">
+          <img :src="add" alt="">
+          <span>新增問題</span>
+        </div>
+        <div class="side-func">
+          <img :src="upload" alt="">
+          <span>匯入問題</span>
+        </div>
+        <div class="side-func">
+          <img :src="text" alt="">
+          <span>新增標題與說明</span>
+        </div>
+        <div class="side-func">
+          <img :src="image" alt="">
+          <span>新增圖片</span>
+        </div>
+        <div class="side-func">
+          <img :src="video" alt="">
+          <span>新增影片</span>
+        </div>
+        <div class="side-func">
+          <img :src="view_agenda" alt="">
+          <span>新增區段</span>
+        </div>
+      </div>
+      <!-- 表單命名處 -->
+      <div class="form-title">
+        <!-- 表單名稱 -->
+        <input type="text" value="未命名的表單" class="form-input form-title-input">
+        <!-- 表單說明 -->
+        <input type="text" value="表單說明" class="form-input form-explain-input-2">
+      </div>
+      <!-- 問題設置 -->
+      <div class="question">
+        <!-- 第一行 -->
+        <div class="question-top">
+          <div class="text-box">
+            <input type="text" value="問題" class="form-input form-title-input">
+          </div>
+          <img :src="image" alt="">
+          <!-- 下拉選單 -->
+          <div class="check">
+            <Dropdown>
+              <template #content>
+                <div class="answer-type">
+                  <ul>
+                    <li><img :src="short_text" alt="">簡答</li>
+                    <li><img :src="long_text" alt="">詳答</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="radio_button" alt="">選擇題</li>
+                    <li><img :src="check_box" alt="">核取方塊</li>
+                    <li><img :src="circle_down" alt="">下拉式選單</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="cloud_upload" alt="">檔案上傳</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="dots" alt="">線性刻度</li>
+                    <li><img :src="dots" alt="">單選方格</li>
+                    <li><img :src="dots" alt="">核取方塊格</li>
+                  </ul>
+                  <ul>
+                    <li><img :src="date" alt="">日期</li>
+                    <li><img :src="time" alt="">時間</li>
+                  </ul>
+                </div>
+              </template>
+              <template #trigger>
+                <div class="check-box">
+                  <img :src="radio_button" alt="">
+                  <span>選擇題</span>
+                  <img :src="arrow_down" alt="">
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+        </div>
+        <!-- 第二行 第一種 簡答 -->
+        <div class="questype-1">
+          <div class="short">簡答文字</div>
+        </div>
+        <!-- 第二行 第二種 詳答 -->
+        <div class="questype-2">
+          <div class="long">詳答文字</div>
+        </div>
+        <!-- 第二行 第三種 選擇題 -->
+        <div class="questype-3">
+          <div class="choose">
+
+            <input type="checkbox" id="checkbox">
+            <label for="checkbox" class="checkbox"></label>
+            <input type="text" class="choose_line" value="選項1">
+
+          </div>
+          <div class="choose">
+            <input type="checkbox" id="checkbox2">
+            <label for="checkbox2" class="checkbox"></label>
+            <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
+          </div>
+        </div>
+        <!-- 第二行 第四種 核取方塊 -->
+        <div class="questype-4">
+          <div class="choose">
+            <input type="checkbox" id="checkbox">
+            <input type="text" class="choose_line" value="選項1">
+          </div>
+          <div class="choose">
+            <input type="checkbox" id="checkbox2">
+            <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
+          </div>
+        </div>
+        <!-- 第二行 第五種 下拉式選單 -->
+        <div class="questype-5">
+          <div class="choose">
+            1<span>。</span><input type="text" class="choose_line" value="選項1">
+          </div>
+          <div class="choose">
+            2<span>。</span><input type="text" class="choose_line choose_line2" value="新增選項">
+          </div>
+        </div>
+        <!-- 第二行 第六種  檔案上傳 -->
+        <div class="questype-6">
+          <h3>作答者可將檔案上傳到雲端硬碟</h3>
+          <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
+          <div><a href="">取消</a><a href="">繼續</a></div>
+        </div>
+        <!-- 第二行 第七種 線性刻度 -->
+        <div class="questype-7">
+          <!-- 範圍設定 -->
+          <div class="set-number">
+            <ul class="number0-1">
+              <li class="show-number"><span>0</span><i class="fa-solid fa-triangle fa-rotate-180"></i></li>
+              <div class="choose0-1">
+                <li>0</li>
+                <li>1</li>
+              </div>
+            </ul>
+            &nbsp;到&nbsp;
+            <ul class="number2-10">
+              <li class="show-number"><span>5</span><i class="fa-solid fa-triangle fa-rotate-180"></i></li>
+              <div class="choose2-10">
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+              </div>
+            </ul>
+          </div>
+          <!-- 最大值與最小值意義設定 -->
+          <div class="num-mean">
+            <div class="min"><span class="min-num">1</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
+            <div class="max"><span class="max-num">5</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
+          </div>
+        </div>
+        <!-- 第二行 第八種  單選方格 -->
+        <div class="questype-8">
+          <div class="left_right">
+            <div class="left">
+              <div>列</div>
+              <div class="choose">
+                1<span>。</span><input type="text" class="choose_line" value="選項1">
+              </div>
+              <div class="choose">
+                2<span>。</span><input type="text" class="choose_line choose_line2" value="新增列">
+              </div>
+            </div>
+            <div class="right">
+              <div>欄</div>
+              <div class="choose">
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="checkbox"></label>
+                <input type="text" class="choose_line" value="選項1">
+              </div>
+              <div class="choose">
+                <input type="checkbox" id="checkbox2">
+                <label for="checkbox2" class="checkbox"></label>
+                <input type="text" class="choose_line choose_line2" value="新增欄">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 第二行 第九種  核取方塊格 -->
+        <div class="questype-9">
+          <div class="left_right">
+            <div class="left">
+              <div>列</div>
+              <div class="choose">
+                1<span>。</span><input type="text" class="choose_line" value="第1列">
+              </div>
+              <div class="choose">
+                2<span>。</span><input type="text" class="choose_line choose_line2" value="新增列">
+              </div>
+            </div>
+            <div class="right">
+              <div>欄</div>
+              <div class="choose">
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="checkbox"></label>
+                <input type="text" class="choose_line" value="第1欄">
+              </div>
+              <div class="choose">
+                <input type="checkbox" id="checkbox2">
+                <label for="checkbox2" class="checkbox"></label>
+                <input type="text" class="choose_line choose_line2" value="新增欄">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 第二行 第十種  日期 -->
+        <div class="questype-10">
+          <div class="calender">年/月/日<i class="fa-regular fa-calendar-day"></i></div>
+        </div>
+        <!-- 第二行 第十一種  時間 -->
+        <div class="questype-11">
+          <div class="clock">時間<i class="fa-regular fa-clock"></i></div>
+        </div>
+        <!-- 第三行 -->
+        <div class="question-bottom">
+          <div class="func">
+            <img :src="copy" alt="">
+            <img :src="del" alt="">
+          </div>
+          <!-- 必填選項開關 -->
+          <div class="switch">
+            <label>
+              <span class="text">必填</span>
+              <input type="checkbox" name="" id="" class="checkbox">
+              <span class="btn-box">
+                <span class="btn"></span>
+              </span>
+            </label>
+            <img :src="dot" alt="">
+          </div>
+
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
+#question {
+    $grey:rgb(178, 176, 176);
+$font-grey:rgb(108, 105, 105);
+$grey-bac:rgb(104,108,113);
+$blue:rgb(237,244,253);
+$md-blue:rgb(39,123,233);
 
+.container{
+    @apply max-w-[770px] m-auto relative;
+    .side{
+        @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+
+        img {
+            @apply w-[22px];
+        }
+
+        .side-func {
+            @apply flex justify-center items-center relative py-[10px] hover:bg-blue-light;
+            &:hover span{
+                @apply block;
+            }
+            &:nth-of-type(1){
+                @apply rounded-tl-[10px] rounded-tr-[10px];
+            }
+            &:nth-of-type(6){
+                @apply rounded-bl-[10px] rounded-br-[10px];
+            }
+            span{
+                @apply hidden absolute w-auto whitespace-nowrap p-[6px] bg-gray-500 text-white text-xs rounded-[3px] top-[10px] left-[60px];
+            }
+        }
+    }
+
+    .form-title{
+        @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px];
+        .form-input {
+            @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
+        }
+        .form-title-input{
+            @apply  h-[45px] text-[32px] ;
+        }
+        .form-explain-input-2{
+            @apply h-[21px] text-[18px] text-grey;
+        }
+    }
+
+    .question {
+        @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px];
+        img {
+            @apply w-[22px];
+        }
+        .question-top {
+            @apply flex flex-wrap justify-between items-center;
+            // @media(max-width:435px){
+            //     justify-content:initial;
+            // }
+            .text-box {
+                @apply w-[447px] mt-[10px];
+
+                @media(max-width:770px){
+                    width:90%;
+                }
+                @media(max-width:435px){
+                    width:100%;
+                }
+
+                .form-title-input {
+                    @apply border-x-0 border-t-0 border-b-gray-400 w-full h-[56px] text-base font-semibold focus:bg-gray-50 focus:border-b-[3px] focus:border-b-purple focus:outline-none rounded-tl-[10px] rounded-tr-[10px];
+                }
+            }
+            .check {
+                @apply relative mt-[10px];
+
+                @media(max-width:435px){
+                    margin-left: 10px;
+                }
+                .check-box {
+                    @apply flex justify-around items-center w-[209px] h-[49px] rounded-[10px] text-gray-500 font-semibold border border-grey;
+                }
+                .answer-type {
+                    @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll absolute top-[40px] right-0;
+                    ul {
+                        @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
+                        li {
+                            @apply w-full flex h-[48px] p-[8px] font-normal hover:bg-blue;
+                            img {
+                                @apply mr-[26px] w-[22px] h-[22px] inline-block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .questype-1{
+            padding: 20px 0 35px ;
+            display:none;
+            border-bottom: 1px solid $grey;
+            .short{
+            width:60%;
+            font-size: 16px;
+            font-weight:600;
+            color:$grey;
+            border-bottom:1px dotted $grey;
+            }
+        }
+        .questype-2{
+            padding: 20px 0 35px;
+            display:none;
+            border-bottom: 1px solid $grey;
+            .long{
+            width:85%;
+            font-size: 16px;
+            font-weight:600;
+            color:$grey;
+            border-bottom:1px dotted $grey;
+            }
+        }
+        .questype-3{
+            width:100%;
+            padding: 30px 0;
+            border-bottom: 1px solid $grey;
+            .choose{
+                width:100%;
+                display: flex;
+                align-items: center;
+                #checkbox, #checkbox2{
+                    display: none;
+                }
+                .checkbox{
+                    width:24px;
+                    height:24px;
+                    display: inline-block;
+                    border-radius: 50%;
+                    border:2px solid $grey;
+                    margin-right: 5px;
+
+                }
+                .choose_line{
+                    width:80%;
+                    border:none;
+                    height:40px;
+                    font-size:16px;
+                    font-weight: 500;
+                    &:hover{
+                        border-bottom:1px solid $grey ;
+                    }
+                    &:focus{
+                        border:0px solid white;
+                        border-bottom:3px solid  rgb(103,58,183);
+                        outline: none;
+                    }
+
+                }
+                .choose_line2{
+                        width:70px;
+                        color:$font-grey;
+
+                }
+                a{
+                    color:$md-blue;
+                    text-decoration: none;
+                }
+            }
+        }
+        .questype-4{
+            width:100%;
+            padding: 30px 0;
+            border-bottom: 1px solid $grey;
+            display:none;
+            .choose{
+                width:100%;
+                display: flex;
+                align-items: center;
+                #checkbox, #checkbox2{
+                   width:24px;
+                   height:24px;
+                //    border-radius: 4px;
+                //    border:5px solid $grey;
+                   margin-right: 5px;
+                   pointer-events: none;
+                }
+                .choose_line{
+                    width:80%;
+                    border:none;
+                    height:40px;
+                    font-size:16px;
+                    font-weight: 500;
+                    &:hover{
+                        border-bottom:1px solid $grey ;
+                    }
+                    &:focus{
+                        border:0px solid white;
+                        border-bottom:3px solid  rgb(103,58,183);
+                        outline: none;
+                    }
+
+                }
+                .choose_line2{
+                        width:70px;
+                        color:$font-grey;
+
+                }
+                a{
+                    color:$md-blue;
+                    text-decoration: none;
+                }
+            }
+        }
+        .questype-5{
+            display:none;
+            width:100%;
+            padding: 30px 0;
+            border-bottom: 1px solid $grey;
+            display:none;
+            .choose{
+                width:100%;
+                display: flex;
+                align-items: center;
+                span{
+                    padding-top: 12px;
+                }
+                .choose_line{
+                    width:80%;
+                    border:none;
+                    height:40px;
+                    font-size:16px;
+                    font-weight: 500;
+                    &:hover{
+                        border-bottom:1px solid $grey ;
+                    }
+                    &:focus{
+                        border:0px solid white;
+                        border-bottom:3px solid  rgb(103,58,183);
+                        outline: none;
+                    }
+                }
+                .choose_line2{
+                        width:70px;
+                        color:$font-grey;
+                }
+            }
+        }
+        .questype-6{
+            width:100%;
+            display: none;
+            padding: 10px 0 10px;
+            div{
+                padding:20px;
+                width:100%;
+                display: flex;
+                justify-content: end;
+                a{
+                    color:$md-blue;
+                    text-decoration: none;
+                }
+            }
+        }
+        .questype-7{
+           width:100%;
+           border-bottom: 1px solid $grey;
+           padding-bottom: 30px;
+           display:none;
+            .set-number{
+                display: flex;
+                align-items: center;
+                 ul{
+                    width:70px;
+                    // background-color: aquamarine;
+                    padding:10px 0px;
+                    margin: 0px;
+                    border-radius: 10px;
+                    position: relative;
+                        li{
+                            width:70px;
+                            display: block;
+                            height: 50px;
+                            line-height: 50px;
+                            text-align: center;
+                            display: none;
+                            color:$font-grey;
+                            padding: 0 5px 0 10px;
+                            i{
+                                font-size: 5px;
+                                margin-left: 26px;
+                                }
+                            &:hover{
+                                background-color: $blue;
+
+                                }
+                        }
+                        .choose0-1, .choose2-10{
+                            width:70px;
+                            background-color:white;
+                            display:none;
+                            padding:5px 0;
+                            border-radius:10px;
+                            // background-color:blue;
+                            box-shadow:3px 3px 3px $grey;
+                            box-shadow:0px 0px 3px $grey;
+                            position:absolute;
+                            bottom:0;
+                        }
+                        .show-number{
+                            display: block;
+                            }
+                    }
+
+                }
+           .num-mean{
+                color:$grey;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            .num-mean-input{
+                border:none;
+                border-bottom:1px solid $grey ;
+                width:200px;
+                height:40px;
+                font-size:16px;
+                font-weight: 600;
+                margin:8px 25px 8px;
+                color:$grey;
+                &:focus{
+                    border:0px solid white;
+                    border-bottom:3px solid  rgb(103,58,183);
+                    outline: none;
+                }
+            }
+        }
+        .questype-8{
+            width:100%;
+            display: none;
+            .left_right{
+                width:100%;
+                display:none;
+             .right, .left{
+                width:50%;
+                padding: 30px 0;
+                border-bottom: 1px solid $grey;
+                display:none;
+                .choose{
+                    width:100%;
+                    display: flex;
+                    align-items: center;
+                    span{
+                        padding-top: 12px;
+                    }
+                    .choose_line{
+                        width:80%;
+                        border:none;
+                        height:40px;
+                        font-size:16px;
+                        font-weight: 500;
+                        &:hover{
+                            border-bottom:1px solid $grey ;
+                        }
+                        &:focus{
+                            border:0px solid white;
+                            border-bottom:3px solid  rgb(103,58,183);
+                            outline: none;
+                        }
+                    }
+                    .choose_line2{
+                            width:70px;
+                            color:$font-grey;
+                    }
+                }
+             }
+             .right{
+                #checkbox, #checkbox2{
+                    width:24px;
+                    height:24px;
+                    margin-right: 5px;
+                    pointer-events: none;
+                 }
+
+             }
+            }
+        }
+        .questype-9{
+            width:100%;
+            display: none;
+            .left_right{
+                width:100%;
+                display:none;
+             .right, .left{
+                width:50%;
+                padding: 30px 0;
+                border-bottom: 1px solid $grey;
+                display:none;
+                .choose{
+                    width:100%;
+                    display: flex;
+                    align-items: center;
+                    span{
+                        padding-top: 12px;
+                    }
+                    .choose_line{
+                        width:80%;
+                        border:none;
+                        height:40px;
+                        font-size:16px;
+                        font-weight: 500;
+                        &:hover{
+                            border-bottom:1px solid $grey ;
+                        }
+                        &:focus{
+                            border:0px solid white;
+                            border-bottom:3px solid  rgb(103,58,183);
+                            outline: none;
+                        }
+                    }
+                    .choose_line2{
+                            width:70px;
+                            color:$font-grey;
+                    }
+                }
+             }
+             .right{
+                #checkbox, #checkbox2{
+                    width:24px;
+                    height:24px;
+                    margin-right: 5px;
+                    pointer-events: none;
+                 }
+
+             }
+            }
+        }
+        .questype-10{
+            padding: 20px 0 35px ;
+            display:none;
+            border-bottom: 1px solid $grey;
+            .calender{
+                display:flex;
+                justify-content: space-between;
+                width:35%;
+                font-size: 16px;
+                font-weight:600;
+                color:$grey;
+                border-bottom:1px dotted $grey;
+            }
+        }
+        .questype-11{
+            padding: 20px 0 35px ;
+            display:none;
+            border-bottom: 1px solid $grey;
+            .clock{
+                display:flex;
+                justify-content: space-between;
+                width:35%;
+                font-size: 16px;
+                font-weight:600;
+                color:$grey;
+                border-bottom:1px dotted $grey;
+            }
+        }
+        .question-bottom {
+            @apply w-full flex justify-end items-center text-lg font-semibold text-grey pt-[0px] pr-[10px];
+            .func{
+                @apply w-full h-[52px] pr-5 flex items-center justify-end border-r border-r-gray-400;
+                img {
+                  @apply w-[22px] h-[22px] mr-2.5;
+                }
+                @media(max-width:480px){
+                    display:none;
+                }
+            }
+            .switch {
+                @apply w-[130px] ml-[50px];
+                label {
+                  @apply w-[85px] flex justify-between items-center;
+                }
+                .btn-box {
+                    @apply inline-block align-middle w-[40px] h-[20px] rounded-[100px] bg-grey-middle shadow-inner;
+                }
+                .btn-box .btn {
+                    @apply inline-block -translate-y-1 drop-shadow-lg w-[25px] h-[25px] rounded-[50%] bg-white ml-0 transition-[0.5s] shadow-sm;
+                }
+                .checkbox {
+                    @apply absolute opacity-0;
+                }
+                .checkbox:checked + .btn-box {
+                    @apply bg-blue;
+                }
+                .checkbox:checked + .btn-box .btn {
+                    @apply ml-[20px];
+                }
+            }
+        }
+    }
+}
+}
 </style>
+
