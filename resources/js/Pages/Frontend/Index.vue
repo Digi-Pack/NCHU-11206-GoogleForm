@@ -13,7 +13,7 @@ export default {
     };
   },
   created() {
-    console.log(this.response);
+    // console.log(this.response);
   },
 };
 </script>
@@ -37,7 +37,7 @@ export default {
   }
 
   .btn-base {
-    @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
+    @apply p-1.5 border-2 rounded-md cursor-pointer;
   }
 }
 </style>

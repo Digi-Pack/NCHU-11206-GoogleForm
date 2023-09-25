@@ -93,7 +93,7 @@ module.exports = {
                 middle: '#d7dfe2',
                 dark: '#c7d2d6',
             },
-            'gray': {
+            'grey': {
                 light: '#f0f0f0',
                 DEFAULT: '#9e9e9e',
                 middle: '#e7e7e7',
@@ -102,8 +102,5 @@ module.exports = {
             },
         },
     },
-
     plugins: [require('@tailwindcss/forms')],
-
-
 };
