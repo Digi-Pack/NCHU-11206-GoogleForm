@@ -43,16 +43,116 @@ export default {
       arrow_down: arrow_down,
       del: del,
       copy: copy,
-      questions: [],
+      maxId: 1,
+      questions: [{
+        question: '選擇',
+        id: 1,
+      }],
+      activeType: [
+        {
+          id: 3,
+        },
+      ],
+      alltype: 3,
     };
   },
 
   methods: {
     addques() {
+      this.maxId++;
       const newQues = {
-        text: 'question',
+        question: '問題',
+        id: this.maxId,
+      };
+      const textall = {
+        id: 3,
+        indexs: this.maxId - 1,
       };
       this.questions.push(newQues);
+      console.log(this.activeType);
+      this.activeType.push(textall);
+      this.sortQuestions();
+    },
+    delQues(id) {
+      const indexToDelete = this.questions.findIndex(question => question.id === id);
+
+      if (indexToDelete !== -1) {
+        // 找到匹配的问题区块索引后删除
+        this.questions.splice(indexToDelete, 1);
+      }
+
+      this.sortQuestions();
+    },
+    sortQuestions() {
+      // 对问题按照 ID 升序排序
+      this.questions.sort((a, b) => a.id - b.id);
+    },
+    type1(id) {
+      console.log(id);
+      this.alltype = 1;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type2(id) {
+      this.alltype = 2;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type3(id) {
+      this.alltype = 3;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type4(id) {
+      this.alltype = 4;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type5(id) {
+      this.alltype = 5;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type6(id) {
+      this.alltype = 6;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type7(id) {
+      this.alltype = 7;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type8(id) {
+      this.alltype = 8;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type9(id) {
+      this.alltype = 9;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type10(id) {
+      this.alltype = 10;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
+    },
+    type11(id) {
+      this.alltype = 11;
+      if (id) {
+        this.activeType[id - 1].id = this.alltype;
+      }
     },
   },
 };
@@ -96,10 +196,11 @@ export default {
         <input type="text" value="表單說明" class="form-input form-explain-input-2">
       </div>
       <!-- 問題設置 -->
-      <div v-for="item in questions" :key="item" class="question">
+      <div v-for="question in questions" :key="question.id" class="question">
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
+            <span>{{ question.id }}.</span>
             <input type="text" value="問題" class="form-input form-title-input">
           </div>
           <img :src="image" alt="">
@@ -109,25 +210,25 @@ export default {
               <template #content>
                 <div class="answer-type">
                   <ul>
-                    <li><img :src="short_text" alt="">簡答</li>
-                    <li><img :src="long_text" alt="">詳答</li>
+                    <li><button type="button" @click="type1(question.id)"><img :src="short_text" alt="">簡答</button></li>
+                    <li><button type="button" @click="type2(question.id)"><img :src="long_text" alt="">詳答</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="radio_button" alt="">選擇題</li>
-                    <li><img :src="check_box" alt="">核取方塊</li>
-                    <li><img :src="circle_down" alt="">下拉式選單</li>
+                    <li><button type="button" @click="type3(question.id)"><img :src="radio_button" alt="">選擇題</button></li>
+                    <li><button type="button" @click="type4(question.id)"><img :src="check_box" alt="">核取方塊</button></li>
+                    <li><button type="button" @click="type5(question.id)"><img :src="circle_down" alt="">下拉式選單</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="cloud_upload" alt="">檔案上傳</li>
+                    <li><button type="button" @click="type6(question.id)"><img :src="cloud_upload" alt="">檔案上傳</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="dots" alt="">線性刻度</li>
-                    <li><img :src="dots" alt="">單選方格</li>
-                    <li><img :src="dots" alt="">核取方塊格</li>
+                    <li><button type="button" @click="type7(question.id)"><img :src="dots" alt="">線性刻度</button></li>
+                    <li><button type="button" @click="type8(question.id)"><img :src="dots" alt="">單選方格</button></li>
+                    <li><button type="button" @click="type9(question.id)"><img :src="dots" alt="">核取方塊格</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="date" alt="">日期</li>
-                    <li><img :src="time" alt="">時間</li>
+                    <li><button type="button" @click="type10(question.id)"><img :src="date" alt="">日期</button></li>
+                    <li><button type="button" @click="type11(question.id)"><img :src="time" alt="">時間</button></li>
                   </ul>
                 </div>
               </template>
@@ -142,21 +243,19 @@ export default {
           </div>
         </div>
         <!-- 第二行 第一種 簡答 -->
-        <div class="questype-1">
+        <div v-if="activeType[question.id - 1].id === 1" class="questype-1 !block">
           <div class="short">簡答文字</div>
         </div>
         <!-- 第二行 第二種 詳答 -->
-        <div class="questype-2">
+        <div v-if="activeType[question.id - 1].id === 2" class="questype-2 !block">
           <div class="long">詳答文字</div>
         </div>
         <!-- 第二行 第三種 選擇題 -->
-        <div class="questype-3">
+        <div v-if="activeType[question.id - 1].id === 3" class="questype-3">
           <div class="choose">
-
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
             <input type="text" class="choose_line" value="選項1">
-
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
@@ -165,7 +264,7 @@ export default {
           </div>
         </div>
         <!-- 第二行 第四種 核取方塊 -->
-        <div class="questype-4">
+        <div v-if="activeType[question.id - 1].id === 4" class="questype-4 !block">
           <div class="choose">
             <input type="checkbox" id="checkbox">
             <input type="text" class="choose_line" value="選項1">
@@ -176,7 +275,7 @@ export default {
           </div>
         </div>
         <!-- 第二行 第五種 下拉式選單 -->
-        <div class="questype-5">
+        <div v-if="activeType[question.id - 1].id === 5" class="questype-5 !block">
           <div class="choose">
             1<span>。</span><input type="text" class="choose_line" value="選項1">
           </div>
@@ -185,13 +284,13 @@ export default {
           </div>
         </div>
         <!-- 第二行 第六種  檔案上傳 -->
-        <div class="questype-6">
+        <div v-if="activeType[question.id - 1].id === 6" class="questype-6 !block">
           <h3>作答者可將檔案上傳到雲端硬碟</h3>
           <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
           <div><a href="">取消</a><a href="">繼續</a></div>
         </div>
         <!-- 第二行 第七種 線性刻度 -->
-        <div class="questype-7">
+        <div v-if="activeType[question.id - 1].id === 7" class="questype-7 !block">
           <!-- 範圍設定 -->
           <div class="set-number">
             <ul class="number0-1">
@@ -224,7 +323,7 @@ export default {
           </div>
         </div>
         <!-- 第二行 第八種  單選方格 -->
-        <div class="questype-8">
+        <div v-if="activeType[question.id - 1].id === 8" class="questype-8 !block">
           <div class="left_right">
             <div class="left">
               <div>列</div>
@@ -251,7 +350,7 @@ export default {
           </div>
         </div>
         <!-- 第二行 第九種  核取方塊格 -->
-        <div class="questype-9">
+        <div v-if="activeType[question.id - 1].id === 9" class="questype-9 !block">
           <div class="left_right">
             <div class="left">
               <div>列</div>
@@ -278,18 +377,18 @@ export default {
           </div>
         </div>
         <!-- 第二行 第十種  日期 -->
-        <div class="questype-10">
+        <div v-if="activeType[question.id - 1].id === 10" class="questype-10 !block">
           <div class="calender">年/月/日<i class="fa-regular fa-calendar-day"></i></div>
         </div>
         <!-- 第二行 第十一種  時間 -->
-        <div class="questype-11">
+        <div v-if="activeType[question.id - 1].id === 11" class="questype-11 !block">
           <div class="clock">時間<i class="fa-regular fa-clock"></i></div>
         </div>
         <!-- 第三行 -->
         <div class="question-bottom">
           <div class="func">
             <img :src="copy" alt="">
-            <img :src="del" alt="">
+            <button type="button" @click="delQues(question.id)"><img :src="del" alt=""></button>
           </div>
           <!-- 必填選項開關 -->
           <div class="switch">
@@ -302,7 +401,6 @@ export default {
             </label>
             <img :src="dot" alt="">
           </div>
-
         </div>
       </div>
     </div>
@@ -393,7 +491,7 @@ export default {
                     @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll absolute top-[40px] right-0;
                     ul {
                         @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
-                        li {
+                        button {
                             @apply w-full flex h-[48px] p-[8px] font-normal hover:bg-blue;
                             img {
                                 @apply mr-[26px] w-[22px] h-[22px] inline-block;
@@ -405,7 +503,7 @@ export default {
         }
         .questype-1{
             padding: 20px 0 35px ;
-            display:none;
+            display: none;
             border-bottom: 1px solid $grey;
             .short{
             width:60%;
@@ -644,12 +742,10 @@ export default {
             display: none;
             .left_right{
                 width:100%;
-                display:none;
              .right, .left{
                 width:50%;
                 padding: 30px 0;
                 border-bottom: 1px solid $grey;
-                display:none;
                 .choose{
                     width:100%;
                     display: flex;
@@ -694,12 +790,10 @@ export default {
             display: none;
             .left_right{
                 width:100%;
-                display:none;
              .right, .left{
                 width:50%;
                 padding: 30px 0;
                 border-bottom: 1px solid $grey;
-                display:none;
                 .choose{
                     width:100%;
                     display: flex;
@@ -754,9 +848,7 @@ export default {
             }
         }
         .questype-11{
-            padding: 20px 0 35px ;
-            display:none;
-            border-bottom: 1px solid $grey;
+          @apply pt-[20px] pb-[35px] hidden border-b border-grey;
             .clock{
                 display:flex;
                 justify-content: space-between;
