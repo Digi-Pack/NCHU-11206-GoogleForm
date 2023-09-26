@@ -89,6 +89,10 @@ export default {
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
     },
+    delOption(item, id) {
+      const newFormData = item.options.filter((item) => item.id !== id);
+      item.options = newFormData;
+    },
     addrow(id) {
       console.log(id);
       const { formData } = this;
@@ -105,12 +109,10 @@ export default {
         text: '',
       };
       formData.find((item) => item.id === id).square.column.push(squareColumn);
-    delOption(item, id) {
-      const newFormData = item.options.filter((item) => item.id !== id);
-      item.options = newFormData;
     },
   },
 };
+
 </script>
 
 <template>
@@ -155,7 +157,6 @@ export default {
       </div>
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
-        {{ item }}
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
@@ -197,22 +198,24 @@ export default {
         </div>
         <!-- 第二行 第四種 核取方塊 -->
         <div v-if="item.type === 4" class="questype-4 !block">
-          <div class="choose">
+          <div v-for="option in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <input type="text" class="choose_line" value="選項1">
+            <button type="button" class="w-[22px]" @click="Checkbox(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
-            <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addCheckbox(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
           </div>
         </div>
         <!-- 第二行 第五種 下拉式選單 -->
         <div v-if="item.type === 5" class="questype-5 !block">
-          <div class="choose">
+          <div v-for="option in item.options" :key="option.id" class="choose">
             1<span>。</span><input type="text" class="choose_line" value="選項1">
+            <button type="button" class="w-[22px]" @click="delDrop(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
-            2<span>。</span><input type="text" class="choose_line choose_line2" value="新增選項">
+            2<span>。</span><button type="button" class="ml-[10px] mr-[5px]" @click="addDrop(item)">新增選項</button>
           </div>
         </div>
         <!-- 第二行 第六種  檔案上傳 -->
@@ -506,11 +509,11 @@ export default {
                       @apply w-[24px] h-[24px] mr-[5px] pointer-events-none;
                     }
                     .choose_line {
-                      @apply w-[80px] border-none h-[40px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-none h-[40px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                      @apply w-[70px] text-grey;
+                      @apply w-[100px] text-grey;
                     }
 
                     a {
@@ -534,7 +537,7 @@ export default {
                     }
 
                     .choose_line2 {
-                      @apply w-[70px] text-grey;
+                      @apply w-[100px] text-grey;
                     }
                 }
             }
