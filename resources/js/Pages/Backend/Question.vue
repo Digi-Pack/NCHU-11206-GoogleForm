@@ -52,8 +52,6 @@ export default {
         video: '',
         type: 3,
         options: [{ id: 1, value: '' }],
-        checkboxs: [{ id: 1, value: '' }],
-        dropdowns: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       }],
@@ -75,8 +73,6 @@ export default {
         video: '',
         type: 3,
         options: [{ id: 1, value: '' }],
-        checkboxs: [{ id: 1, value: '' }],
-        dropdowns: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       };
@@ -144,6 +140,16 @@ export default {
       const newFormData = item.square.column.filter((item) => item.id !== id);
       item.square.column = newFormData;
     },
+    clearOptions(item) {
+      let odds = item.options.length;
+      console.log(odds);
+      const newQuestion = {
+        id: Math.max(0, ...item.options.map(item => item.id)),
+        value: '',
+      };
+      item.options.splice(0, odds, newQuestion);
+      console.log(item);
+    },
   },
 };
 
@@ -202,7 +208,7 @@ export default {
           </label>
           <!-- 下拉選單 -->
           <div class="check">
-            <select v-model="item.type" class="answer-type" name="">
+            <select v-model="item.type" class="answer-type" name="" @change="clearOptions(item)">
               <option v-for="items in questionTypeOption" :key="items.id" :value="items.id">{{ items.name }}
               </option>
             </select>
@@ -218,6 +224,7 @@ export default {
         </div>
         <!-- 第二行 第三種 選擇題 -->
         <div v-if="item.type === 3" class="questype-3">
+          {{ item.options }}
           <div v-for="(option, index) in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
@@ -232,24 +239,24 @@ export default {
         </div>
         <!-- 第二行 第四種 核取方塊 -->
         <div v-if="item.type === 4" class="questype-4 !block">
-          <div v-for="(checkbox, index) in item.checkboxs" :key="checkbox.id" class="choose">
+          <div v-for="(option, index) in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <input type="text" class="choose_line" :value="'選項' + (index + 1)">
-            <button type="button" class="w-[22px]" @click="delCheckbox(item, checkbox.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+            <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
-            <button type="button" class="ml-[10px] mr-[5px]" @click="addCheckbox(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
           </div>
         </div>
         <!-- 第二行 第五種 下拉式選單 -->
         <div v-if="item.type === 5" class="questype-5 !block">
-          <div v-for="(dropdown, index) in item.dropdowns" :key="dropdown.id" class="choose">
-            {{ index + 1 }}<span>。</span><input type="text" class="choose_line" :value="'選項' + dropdown.id">
-            <button type="button" class="w-[22px]" @click="delDrop(item, dropdown.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+          <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+            {{ index + 1 }}<span>。</span><input type="text" class="choose_line" :value="'選項' + option.id">
+            <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
-            {{ item.dropdowns.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px]" @click="addDrop(item)">新增選項</button>
+            {{ item.options.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>
           </div>
         </div>
         <!-- 第二行 第六種  檔案上傳 -->
