@@ -51,6 +51,7 @@ export default {
       activeType: [
         {
           id: 3,
+          indexs: 1,
         },
       ],
       alltype: 3,
@@ -66,29 +67,24 @@ export default {
       };
       const textall = {
         id: 3,
-        indexs: this.maxId - 1,
+        indexs: this.maxId,
       };
       this.questions.push(newQues);
-      console.log(this.activeType);
       this.activeType.push(textall);
-      this.sortQuestions();
     },
     delQues(id) {
       const indexToDelete = this.questions.findIndex(question => question.id === id);
+      console.log(this.questions);
+      console.log(this.activeType);
+      const typeToDelete = this.activeType.findIndex(item => item.indexs === id);
 
-      if (indexToDelete !== -1) {
+      if (indexToDelete !== -1 && typeToDelete !== -1) {
         // 找到匹配的问题区块索引后删除
+        this.activeType.splice(typeToDelete, 1);
         this.questions.splice(indexToDelete, 1);
       }
-
-      this.sortQuestions();
-    },
-    sortQuestions() {
-      // 对问题按照 ID 升序排序
-      this.questions.sort((a, b) => a.id - b.id);
     },
     type1(id) {
-      console.log(id);
       this.alltype = 1;
       if (id) {
         this.activeType[id - 1].id = this.alltype;
