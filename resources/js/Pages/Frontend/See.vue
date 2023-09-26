@@ -14,6 +14,8 @@ export default {
       see: [
         { title: '123', desc: '問題說明', request: 1, image: '圖片檔案', video: '影片網址', type: 11, options: [{ id: 1, value: '我不好' }, { id: 2, value: '你覺得呢' }], linear: [{ min: 1, max: 10, minText: 0, maxText: 100 }], square: [{ row: [{ id: 1, text: '晴天' }, { id: 2, text: '陰天' }], column: [{ id: 1, text: '下雨' }, { id: 2, text: '大豪雨' }, { id: 3, text: '沒有下雨' }] }],
         },
+        { title: '45', desc: '問題說明', request: 1, image: '圖片檔案', video: '影片網址', type: 11, options: [{ id: 1, value: '我不好' }, { id: 2, value: '你覺得呢' }], linear: [{ min: 1, max: 10, minText: 0, maxText: 100 }], square: [{ row: [{ id: 1, text: '晴天' }, { id: 2, text: '陰天' }], column: [{ id: 1, text: '下雨' }, { id: 2, text: '大豪雨' }, { id: 3, text: '沒有下雨' }] }],
+        },
       ],
     };
   },
@@ -23,9 +25,7 @@ export default {
   methods: {
     addclick() {
       const { see } = this;
-      const jsonData = JSON.stringify(see);
-      console.log(jsonData);
-      router.visit(route('see.store'), { method: 'post', data: { jsonData } });
+      router.visit(route('see.store'), { method: 'post', data: { see } });
     },
   },
 };

@@ -17,25 +17,19 @@ class EditorController extends Controller
 
     public function seeStore(Request $request)
     {
-        $data = $request->json()->all();
-        // $data = json_decode($request->input('jsonData'), true);
-        // 定义验证规则
-        $rules = [
-            'title' => 'required|string',
-        ];
+        $request->validate([
+            'see.*.title' => 'required|string',
+        ]);
 
-        // 创建一个验证实例并应用规则
-        $validator = Validator::make($data, $rules);
+        dd(123);
 
-        // 检查验证是否通过
-        // if ($validator->fails()) {
-        //     // 验证失败，可以返回错误消息或采取其他措施
-        //     return response()->json(['errors' => $validator->errors()], 400);
-        // }
-        // dd($request->jsonData);
+        // $seeData = $request->input('see');
+        // 將 see 數組轉換為 JSON 格式
+        $seeJson = json_encode($request->see);
+
         $see = Seeall::create([
-            'jsondata' => $request->jsonData,
+            'jsondata' => $seeJson,
         ]);
         return back()->with(['message' => rtFormat($see)]);
-   }
+    }
 }
