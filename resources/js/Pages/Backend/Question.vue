@@ -17,6 +17,7 @@ import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
+import close from '/resources/images/close.svg';
 import { questionTypeOption } from '@/Composables/useQuestionType';
 
 export default {
@@ -40,6 +41,7 @@ export default {
       arrow_down: arrow_down,
       del: del,
       copy: copy,
+      close: close,
       questionTypeOption,
       formData: [{
         id: 1,
@@ -49,11 +51,12 @@ export default {
         image: '',
         video: '',
         type: 3,
-        options: [{ id: '', value: '' }],
+        options: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       }],
       a: 1,
+      b: 1,
     };
   },
   methods: {
@@ -68,11 +71,18 @@ export default {
         image: '',
         video: '',
         type: 3,
-        options: [{ id: '', value: '' }],
+        options: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       };
       formData.push(newQuestion);
+    },
+    addSelect(item) {
+      const newQuestion = {
+        id: Math.max(0, ...item.options.map(item => item.id)) + 1,
+        value: '',
+      };
+      item.options.push(newQuestion);
     },
     delQuestion(id) {
       const { formData } = this;
@@ -95,6 +105,9 @@ export default {
         text: '',
       };
       formData.find((item) => item.id === id).square.column.push(squareColumn);
+    delOption(item, id) {
+      const newFormData = item.options.filter((item) => item.id !== id);
+      item.options = newFormData;
     },
   },
 };
@@ -134,6 +147,7 @@ export default {
       </div>
       <!-- 表單命名處 -->
       <div class="form-title">
+
         <!-- 表單名稱 -->
         <input type="text" value="未命名的表單" class="form-input form-title-input">
         <!-- 表單說明 -->
@@ -168,16 +182,17 @@ export default {
           <div class="long">詳答文字</div>
         </div>
         <!-- 第二行 第三種 選擇題 -->
-        <div v-if="item.type === 3" class="questype-3 !block">
-          <div class="choose">
+        <div v-if="item.type === 3" class="questype-3">
+          <div v-for="option in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
-            <input type="text" class="choose_line" value="選項1">
+            <input type="text" class="choose_line" :value="'選項' + option.id">
+            <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
             <label for="checkbox2" class="checkbox"></label>
-            <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
           </div>
         </div>
         <!-- 第二行 第四種 核取方塊 -->
@@ -445,198 +460,93 @@ export default {
             }
 
             .questype-1 {
-                padding: 20px 0 35px;
-                display: none;
-                border-bottom: 1px solid $grey;
-
+                @apply pt-[20px] pb-[35px] hidden border-b border-grey;
                 .short {
-                    width: 60%;
-                    font-size: 16px;
-                    font-weight: 600;
-                    color: $grey;
-                    border-bottom: 1px dotted $grey;
+                  @apply w-[60%] text-[16px] font-semibold text-grey border-b border-grey border-dotted;
                 }
             }
-
             .questype-2 {
-                padding: 20px 0 35px;
-                display: none;
-                border-bottom: 1px solid $grey;
-
+                @apply pt-[20px] pb-[35px] hidden border-b border-grey;
                 .long {
-                    width: 85%;
-                    font-size: 16px;
-                    font-weight: 600;
-                    color: $grey;
-                    border-bottom: 1px dotted $grey;
+                  @apply w-[85%] text-[16px] font-semibold text-grey border-b border-grey border-dotted;
                 }
             }
-
             .questype-3 {
-                width: 100%;
-                padding: 30px 0;
-                border-bottom: 1px solid $grey;
-
+                @apply w-full py-[30px] border-b border-grey;
                 .choose {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-
+                  @apply w-full flex items-center mb-[10px];
                     #checkbox,
                     #checkbox2 {
-                        display: none;
+                      @apply hidden;
                     }
-
                     .checkbox {
-                        width: 24px;
-                        height: 24px;
-                        display: inline-block;
-                        border-radius: 50%;
-                        border: 2px solid $grey;
-                        margin-right: 5px;
-
+                      @apply w-[24px] h-[24px] inline-block rounded-full border-[2px] border-grey mr-[5px];
                     }
-
                     .choose_line {
-                        width: 80%;
-                        border: none;
-                        height: 40px;
-                        font-size: 16px;
-                        font-weight: 500;
-
-                        &:hover {
-                            border-bottom: 1px solid $grey ;
-                        }
-
-                        &:focus {
-                            border: 0px solid white;
-                            border-bottom: 3px solid rgb(103, 58, 183);
-                            outline: none;
-                        }
-
+                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                        width: 70px;
-                        color: $font-grey;
-
+                      @apply w-[100px] text-grey;
                     }
 
                     a {
-                        color: $md-blue;
-                        text-decoration: none;
+                      @apply text-blue no-underline;
                     }
                 }
             }
 
             .questype-4 {
-                width: 100%;
-                padding: 30px 0;
-                border-bottom: 1px solid $grey;
-                display: none;
-
+              @apply w-full py-[30px] border-b border-grey hidden;
                 .choose {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
+                  @apply w-full flex items-center;
 
                     #checkbox,
                     #checkbox2 {
-                        width: 24px;
-                        height: 24px;
-                        //    border-radius: 4px;
-                        //    border:5px solid $grey;
-                        margin-right: 5px;
-                        pointer-events: none;
+                      @apply w-[24px] h-[24px] mr-[5px] pointer-events-none;
                     }
-
                     .choose_line {
-                        width: 80%;
-                        border: none;
-                        height: 40px;
-                        font-size: 16px;
-                        font-weight: 500;
-
-                        &:hover {
-                            border-bottom: 1px solid $grey ;
-                        }
-
-                        &:focus {
-                            border: 0px solid white;
-                            border-bottom: 3px solid rgb(103, 58, 183);
-                            outline: none;
-                        }
-
+                      @apply w-[80px] border-none h-[40px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                        width: 70px;
-                        color: $font-grey;
-
+                      @apply w-[70px] text-grey;
                     }
 
                     a {
-                        color: $md-blue;
-                        text-decoration: none;
+                      @apply text-blue no-underline;
                     }
                 }
             }
 
             .questype-5 {
-                display: none;
-                width: 100%;
-                padding: 30px 0;
-                border-bottom: 1px solid $grey;
-                display: none;
+              @apply hidden w-full py-[30px] border-b border-grey;
 
                 .choose {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
+                  @apply w-full flex items-center;
 
                     span {
-                        padding-top: 12px;
+                      @apply pt-[12px];
                     }
 
                     .choose_line {
-                        width: 80%;
-                        border: none;
-                        height: 40px;
-                        font-size: 16px;
-                        font-weight: 500;
-
-                        &:hover {
-                            border-bottom: 1px solid $grey ;
-                        }
-
-                        &:focus {
-                            border: 0px solid white;
-                            border-bottom: 3px solid rgb(103, 58, 183);
-                            outline: none;
-                        }
+                      @apply w-[80%] border-none h-[40px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                        width: 70px;
-                        color: $font-grey;
+                      @apply w-[70px] text-grey;
                     }
                 }
             }
 
             .questype-6 {
-                width: 100%;
-                display: none;
-                padding: 10px 0 10px;
+              @apply w-full hidden py-[10px];
 
                 div {
-                    padding: 20px;
-                    width: 100%;
-                    display: flex;
-                    justify-content: end;
+                  @apply p-[20px] w-full flex justify-center;
 
                     a {
-                        color: $md-blue;
-                        text-decoration: none;
+                      @apply text-blue no-underline;
                     }
                 }
             }
