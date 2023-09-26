@@ -15,14 +15,11 @@ import time from '/resources/images/time.png';
 import dots from '/resources/images/dots.png';
 import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
-import Dropdown from '@/Components/Dropdown.vue';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
+import { questionTypeOption } from '@/Composables/useQuestionType';
 
 export default {
-  components: {
-    Dropdown,
-  },
   data() {
     return {
       add: add,
@@ -43,6 +40,7 @@ export default {
       arrow_down: arrow_down,
       del: del,
       copy: copy,
+      questionTypeOption,
       formData: [{
         id: 1,
         title: '',
@@ -56,7 +54,6 @@ export default {
         square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
       }],
       a: 1,
-      alltype: 3,
     };
   },
   methods: {
@@ -81,72 +78,6 @@ export default {
       const { formData } = this;
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
-    },
-    type1(id) {
-      this.alltype = 1;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type2(id) {
-      this.alltype = 2;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type3(id) {
-      this.alltype = 3;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type4(id) {
-      this.alltype = 4;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type5(id) {
-      this.alltype = 5;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type6(id) {
-      this.alltype = 6;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type7(id) {
-      this.alltype = 7;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type8(id) {
-      this.alltype = 8;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type9(id) {
-      this.alltype = 9;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type10(id) {
-      this.alltype = 10;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
-    },
-    type11(id) {
-      this.alltype = 11;
-      if (id) {
-        this.formData[id - 1].type = this.alltype;
-      }
     },
   },
 };
@@ -206,40 +137,10 @@ export default {
           </label>
           <!-- 下拉選單 -->
           <div class="check">
-            <Dropdown>
-              <template #content>
-                <div class="answer-type">
-                  <ul>
-                    <li><button type="button" @click="type1(item.id)"><img :src="short_text" alt="">簡答</button></li>
-                    <li><button type="button" @click="type2(item.id)"><img :src="long_text" alt="">詳答</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type3(item.id)"><img :src="radio_button" alt="">選擇題</button></li>
-                    <li><button type="button" @click="type4(item.id)"><img :src="check_box" alt="">核取方塊</button></li>
-                    <li><button type="button" @click="type5(item.id)"><img :src="circle_down" alt="">下拉式選單</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type6(item.id)"><img :src="cloud_upload" alt="">檔案上傳</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type7(item.id)"><img :src="dots" alt="">線性刻度</button></li>
-                    <li><button type="button" @click="type8(item.id)"><img :src="dots" alt="">單選方格</button></li>
-                    <li><button type="button" @click="type9(item.id)"><img :src="dots" alt="">核取方塊格</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type10(item.id)"><img :src="date" alt="">日期</button></li>
-                    <li><button type="button" @click="type11(item.id)"><img :src="time" alt="">時間</button></li>
-                  </ul>
-                </div>
-              </template>
-              <template #trigger>
-                <div class="check-box">
-                  <img :src="radio_button" alt="">
-                  <span>選擇題</span>
-                  <img :src="arrow_down" alt="">
-                </div>
-              </template>
-            </Dropdown>
+            <select v-model="item.type" class="answer-type" name="">
+              <option v-for="items in questionTypeOption" :key="items.id" :value="items.id">{{ items.name }}
+              </option>
+            </select>
           </div>
         </div>
         <!-- 第二行 第一種 簡答 -->
@@ -421,7 +322,7 @@ export default {
     $md-blue: rgb(39, 123, 233);
 
     .container {
-        @apply max-w-[770px] m-auto relative;
+        @apply max-w-[770px] m-auto relative mt-[20px];
 
         .side {
             @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
@@ -481,7 +382,7 @@ export default {
                 //     justify-content:initial;
                 // }
                 .upload {
-                    @apply w-[55px] h-[55px] p-[16px] cursor-pointer hover:bg-gray-100 rounded-[50%];
+                    @apply w-[41.6px] h-[41.6px] p-[10px] mt-[8px] cursor-pointer hover:bg-gray-100 rounded-[50%];
                 }
 
                 .text-box {
@@ -512,7 +413,7 @@ export default {
                     }
 
                     .answer-type {
-                        @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll absolute top-[40px] right-0;
+                        @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll;
 
                         ul {
                             @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
