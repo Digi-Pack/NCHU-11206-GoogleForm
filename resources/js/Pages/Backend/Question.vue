@@ -50,47 +50,103 @@ export default {
         request: '1',
         image: '',
         video: '',
-        type: '1',
+        type: 3,
         options: [{ id: '', value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
-        square: [{ id: '', text: '' }],
-        column: [{ id: '', text: '' }],
+        square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
       }],
       a: 1,
+      alltype: 3,
     };
   },
   methods: {
     addQuestion() {
       const { formData } = this;
-      if (formData.length > 0 && formData[0].id !== '') {
-        this.a++;
-        const newQuestion = JSON.parse(JSON.stringify(formData[0]));
-        newQuestion.id = this.a;
-        formData.push(newQuestion);
-      } else {
-        const newQuestion = {
-          id: this.a,
-          title: '',
-          desc: '',
-          request: '1',
-          image: '',
-          video: '',
-          type: '1',
-          options: [{ id: '', value: '' }],
-          linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
-          square: [{ id: '', text: '' }],
-          column: [{ id: '', text: '' }],
-        };
-        formData.push(newQuestion);
-      }
+      this.a++;
+      const newQuestion = {
+        id: this.a,
+        title: '',
+        desc: '',
+        request: '1',
+        image: '',
+        video: '',
+        type: 3,
+        options: [{ id: '', value: '' }],
+        linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
+        square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
+      };
+      formData.push(newQuestion);
     },
     delQuestion(id) {
       const { formData } = this;
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
-      this.formData.forEach((item, index) => {
-        item.id = index + 1;
-      });
+    },
+    type1(id) {
+      this.alltype = 1;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type2(id) {
+      this.alltype = 2;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type3(id) {
+      this.alltype = 3;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type4(id) {
+      this.alltype = 4;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type5(id) {
+      this.alltype = 5;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type6(id) {
+      this.alltype = 6;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type7(id) {
+      this.alltype = 7;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type8(id) {
+      this.alltype = 8;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type9(id) {
+      this.alltype = 9;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type10(id) {
+      this.alltype = 10;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
+    },
+    type11(id) {
+      this.alltype = 11;
+      if (id) {
+        this.formData[id - 1].type = this.alltype;
+      }
     },
   },
 };
@@ -137,7 +193,8 @@ export default {
       </div>
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
-        {{ item }}
+        {{ item.id }}
+        {{ item.type }}
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
@@ -153,25 +210,25 @@ export default {
               <template #content>
                 <div class="answer-type">
                   <ul>
-                    <li><img :src="short_text" alt="">簡答</li>
-                    <li><img :src="long_text" alt="">詳答</li>
+                    <li><button type="button" @click="type1(item.id)"><img :src="short_text" alt="">簡答</button></li>
+                    <li><button type="button" @click="type2(item.id)"><img :src="long_text" alt="">詳答</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="radio_button" alt="">選擇題</li>
-                    <li><img :src="check_box" alt="">核取方塊</li>
-                    <li><img :src="circle_down" alt="">下拉式選單</li>
+                    <li><button type="button" @click="type3(item.id)"><img :src="radio_button" alt="">選擇題</button></li>
+                    <li><button type="button" @click="type4(item.id)"><img :src="check_box" alt="">核取方塊</button></li>
+                    <li><button type="button" @click="type5(item.id)"><img :src="circle_down" alt="">下拉式選單</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="cloud_upload" alt="">檔案上傳</li>
+                    <li><button type="button" @click="type6(item.id)"><img :src="cloud_upload" alt="">檔案上傳</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="dots" alt="">線性刻度</li>
-                    <li><img :src="dots" alt="">單選方格</li>
-                    <li><img :src="dots" alt="">核取方塊格</li>
+                    <li><button type="button" @click="type7(item.id)"><img :src="dots" alt="">線性刻度</button></li>
+                    <li><button type="button" @click="type8(item.id)"><img :src="dots" alt="">單選方格</button></li>
+                    <li><button type="button" @click="type9(item.id)"><img :src="dots" alt="">核取方塊格</button></li>
                   </ul>
                   <ul>
-                    <li><img :src="date" alt="">日期</li>
-                    <li><img :src="time" alt="">時間</li>
+                    <li><button type="button" @click="type10(item.id)"><img :src="date" alt="">日期</button></li>
+                    <li><button type="button" @click="type11(item.id)"><img :src="time" alt="">時間</button></li>
                   </ul>
                 </div>
               </template>
@@ -185,18 +242,16 @@ export default {
             </Dropdown>
           </div>
         </div>
-        <div class="h-[100px]"></div>
         <!-- 第二行 第一種 簡答 -->
-        <!-- <div class="questype-1">
+        <div v-if="item.type === 1" class="questype-1 !block">
           <div class="short">簡答文字</div>
-        </div> -->
+        </div>
         <!-- 第二行 第二種 詳答 -->
-        <!-- <div class="questype-2">
+        <div v-if="item.type === 2" class="questype-2 !block">
           <div class="long">詳答文字</div>
-        </div> -->
-        <!--
-        第二行 第三種 選擇題 -->
-        <!-- <div class="questype-3">
+        </div>
+        <!-- 第二行 第三種 選擇題 -->
+        <div v-if="item.type === 3" class="questype-3 !block">
           <div class="choose">
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
@@ -207,9 +262,9 @@ export default {
             <label for="checkbox2" class="checkbox"></label>
             <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
           </div>
-        </div> -->
+        </div>
         <!-- 第二行 第四種 核取方塊 -->
-        <!-- <div class="questype-4">
+        <div v-if="item.type === 4" class="questype-4 !block">
           <div class="choose">
             <input type="checkbox" id="checkbox">
             <input type="text" class="choose_line" value="選項1">
@@ -218,26 +273,26 @@ export default {
             <input type="checkbox" id="checkbox2">
             <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
           </div>
-        </div> -->
+        </div>
         <!-- 第二行 第五種 下拉式選單 -->
-        <!-- <div class="questype-5">
+        <div v-if="item.type === 5" class="questype-5 !block">
           <div class="choose">
             1<span>。</span><input type="text" class="choose_line" value="選項1">
           </div>
           <div class="choose">
             2<span>。</span><input type="text" class="choose_line choose_line2" value="新增選項">
           </div>
-        </div> -->
+        </div>
         <!-- 第二行 第六種  檔案上傳 -->
-        <!-- <div class="questype-6">
+        <div v-if="item.type === 6" class="questype-6 !block">
           <h3>作答者可將檔案上傳到雲端硬碟</h3>
           <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
           <div><a href="">取消</a><a href="">繼續</a></div>
-        </div> -->
+        </div>
         <!-- 第二行 第七種 線性刻度 -->
-        <!-- <div class="questype-7"> -->
-        <!-- 範圍設定 -->
-        <!-- <div class="set-number">
+        <div v-if="item.type === 7" class="questype-7 !block">
+          <!-- 範圍設定 -->
+          <div class="set-number">
             <ul class="number0-1">
               <li class="show-number"><span>0</span><i class="fa-solid fa-triangle fa-rotate-180"></i></li>
               <div class="choose0-1">
@@ -260,15 +315,15 @@ export default {
                 <li>10</li>
               </div>
             </ul>
-          </div> -->
-        <!-- 最大值與最小值意義設定 -->
-        <!-- <div class="num-mean">
+          </div>
+          <!-- 最大值與最小值意義設定 -->
+          <div class="num-mean">
             <div class="min"><span class="min-num">1</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
             <div class="max"><span class="max-num">5</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
-          </div> -->
-        <!-- </div> -->
+          </div>
+        </div>
         <!-- 第二行 第八種  單選方格 -->
-        <!-- <div class="questype-8">
+        <div v-if="item.type === 8" class="questype-8 !block">
           <div class="left_right">
             <div class="left">
               <div>列</div>
@@ -293,9 +348,9 @@ export default {
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- 第二行 第九種  核取方塊格 -->
-        <!-- <div class="questype-9">
+        <div v-if="item.type === 9" class="questype-9 !block">
           <div class="left_right">
             <div class="left">
               <div>列</div>
@@ -320,15 +375,15 @@ export default {
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- 第二行 第十種  日期 -->
-        <!-- <div class="questype-10">
+        <div v-if="item.type === 10" class="questype-10 !block">
           <div class="calender">年/月/日<i class="fa-regular fa-calendar-day"></i></div>
-        </div> -->
+        </div>
         <!-- 第二行 第十一種  時間 -->
-        <!-- <div class="questype-11">
+        <div v-if="item.type === 11" class="questype-11 !block">
           <div class="clock">時間<i class="fa-regular fa-clock"></i></div>
-        </div> -->
+        </div>
         <!-- 第三行 -->
         <div class="question-bottom">
           <div class="func">
@@ -462,7 +517,7 @@ export default {
                         ul {
                             @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
 
-                            li {
+                            button {
                                 @apply w-full flex h-[48px] p-[8px] font-normal hover:bg-blue;
 
                                 img {
@@ -761,14 +816,12 @@ export default {
 
                 .left_right {
                     width: 100%;
-                    display: none;
 
                     .right,
                     .left {
                         width: 50%;
                         padding: 30px 0;
                         border-bottom: 1px solid $grey;
-                        display: none;
 
                         .choose {
                             width: 100%;
@@ -824,14 +877,12 @@ export default {
 
                 .left_right {
                     width: 100%;
-                    display: none;
 
                     .right,
                     .left {
                         width: 50%;
                         padding: 30px 0;
                         border-bottom: 1px solid $grey;
-                        display: none;
 
                         .choose {
                             width: 100%;
