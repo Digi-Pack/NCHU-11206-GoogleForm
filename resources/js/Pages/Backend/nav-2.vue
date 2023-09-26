@@ -15,13 +15,12 @@ import time from '/resources/images/time.png';
 import dots from '/resources/images/dots.png';
 import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
-import Dropdown from '@/Components/Dropdown.vue';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
+import { questionTypeOption } from '@/Composables/useQuestionType';
 
 export default {
   components: {
-    Dropdown,
   },
   data() {
     return {
@@ -44,8 +43,9 @@ export default {
       del: del,
       copy: copy,
       maxId: 1,
+      questionTypeOption,
       questions: [{
-        question: '選擇',
+        question: '',
         id: 1,
       }],
       activeType: [
@@ -62,7 +62,7 @@ export default {
     addques() {
       this.maxId++;
       const newQues = {
-        question: '問題',
+        question: '',
         id: this.maxId,
       };
       const textall = {
@@ -73,14 +73,15 @@ export default {
       this.activeType.push(textall);
     },
     delQues(id) {
+      console.log(id);
       const indexToDelete = this.questions.findIndex(question => question.id === id);
-      console.log(this.questions);
-      console.log(this.activeType);
-      const typeToDelete = this.activeType.findIndex(item => item.indexs === id);
+      //   console.log(this.questions);
+      //   console.log(this.activeType);
+      //   const typeToDelete = this.activeType.findIndex(item => item.indexs === id);
 
-      if (indexToDelete !== -1 && typeToDelete !== -1) {
+      if (indexToDelete !== -1) {
         // 找到匹配的问题区块索引后删除
-        this.activeType.splice(typeToDelete, 1);
+        // this.activeType.splice(typeToDelete, 1);
         this.questions.splice(indexToDelete, 1);
       }
     },
@@ -150,6 +151,9 @@ export default {
         this.activeType[id - 1].id = this.alltype;
       }
     },
+    test(el) {
+      console.log(el);
+    },
   },
 };
 </script>
@@ -202,49 +206,26 @@ export default {
           <img :src="image" alt="">
           <!-- 下拉選單 -->
           <div class="check">
-            <Dropdown>
-              <template #content>
-                <div class="answer-type">
-                  <ul>
-                    <li><button type="button" @click="type1(question.id)"><img :src="short_text" alt="">簡答</button></li>
-                    <li><button type="button" @click="type2(question.id)"><img :src="long_text" alt="">詳答</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type3(question.id)"><img :src="radio_button" alt="">選擇題</button></li>
-                    <li><button type="button" @click="type4(question.id)"><img :src="check_box" alt="">核取方塊</button></li>
-                    <li><button type="button" @click="type5(question.id)"><img :src="circle_down" alt="">下拉式選單</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type6(question.id)"><img :src="cloud_upload" alt="">檔案上傳</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type7(question.id)"><img :src="dots" alt="">線性刻度</button></li>
-                    <li><button type="button" @click="type8(question.id)"><img :src="dots" alt="">單選方格</button></li>
-                    <li><button type="button" @click="type9(question.id)"><img :src="dots" alt="">核取方塊格</button></li>
-                  </ul>
-                  <ul>
-                    <li><button type="button" @click="type10(question.id)"><img :src="date" alt="">日期</button></li>
-                    <li><button type="button" @click="type11(question.id)"><img :src="time" alt="">時間</button></li>
-                  </ul>
-                </div>
-              </template>
-              <template #trigger>
-                <div class="check-box">
-                  <img :src="radio_button" alt="">
-                  <span>選擇題</span>
-                  <img :src="arrow_down" alt="">
-                </div>
-              </template>
-            </Dropdown>
+            <label for="ques"></label>
+            <select v-model="question" class="answer-type" id="ques" name="">
+              <option v-for="item in questionTypeOption" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+            <!-- <div class="check-box">
+              <img :src="radio_button" alt="">
+              <span>選擇題</span>
+              <img :src="arrow_down" alt="">
+            </div> -->
           </div>
         </div>
         <!-- 第二行 第一種 簡答 -->
         <div v-if="activeType[question.id - 1].id === 1" class="questype-1 !block">
           <div class="short">簡答文字</div>
+
         </div>
         <!-- 第二行 第二種 詳答 -->
         <div v-if="activeType[question.id - 1].id === 2" class="questype-2 !block">
           <div class="long">詳答文字</div>
+
         </div>
         <!-- 第二行 第三種 選擇題 -->
         <div v-if="activeType[question.id - 1].id === 3" class="questype-3">
@@ -253,11 +234,13 @@ export default {
             <label for="checkbox" class="checkbox"></label>
             <input type="text" class="choose_line" value="選項1">
           </div>
+
           <div class="choose">
             <input type="checkbox" id="checkbox2">
             <label for="checkbox2" class="checkbox"></label>
             <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
           </div>
+
         </div>
         <!-- 第二行 第四種 核取方塊 -->
         <div v-if="activeType[question.id - 1].id === 4" class="questype-4 !block">
@@ -265,25 +248,30 @@ export default {
             <input type="checkbox" id="checkbox">
             <input type="text" class="choose_line" value="選項1">
           </div>
+
           <div class="choose">
             <input type="checkbox" id="checkbox2">
             <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
           </div>
+
         </div>
         <!-- 第二行 第五種 下拉式選單 -->
         <div v-if="activeType[question.id - 1].id === 5" class="questype-5 !block">
           <div class="choose">
             1<span>。</span><input type="text" class="choose_line" value="選項1">
           </div>
+
           <div class="choose">
             2<span>。</span><input type="text" class="choose_line choose_line2" value="新增選項">
           </div>
+
         </div>
         <!-- 第二行 第六種  檔案上傳 -->
         <div v-if="activeType[question.id - 1].id === 6" class="questype-6 !block">
           <h3>作答者可將檔案上傳到雲端硬碟</h3>
           <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
           <div><a href="">取消</a><a href="">繼續</a></div>
+
         </div>
         <!-- 第二行 第七種 線性刻度 -->
         <div v-if="activeType[question.id - 1].id === 7" class="questype-7 !block">
@@ -295,6 +283,7 @@ export default {
                 <li>0</li>
                 <li>1</li>
               </div>
+
             </ul>
             &nbsp;到&nbsp;
             <ul class="number2-10">
@@ -311,11 +300,14 @@ export default {
                 <li>10</li>
               </div>
             </ul>
+
           </div>
           <!-- 最大值與最小值意義設定 -->
           <div class="num-mean">
             <div class="min"><span class="min-num">1</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
+
             <div class="max"><span class="max-num">5</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
+
           </div>
         </div>
         <!-- 第二行 第八種  單選方格 -->
@@ -323,25 +315,31 @@ export default {
           <div class="left_right">
             <div class="left">
               <div>列</div>
+
               <div class="choose">
                 1<span>。</span><input type="text" class="choose_line" value="選項1">
               </div>
+
               <div class="choose">
                 2<span>。</span><input type="text" class="choose_line choose_line2" value="新增列">
               </div>
+
             </div>
             <div class="right">
               <div>欄</div>
+
               <div class="choose">
                 <input type="checkbox" id="checkbox">
                 <label for="checkbox" class="checkbox"></label>
                 <input type="text" class="choose_line" value="選項1">
               </div>
+
               <div class="choose">
                 <input type="checkbox" id="checkbox2">
                 <label for="checkbox2" class="checkbox"></label>
                 <input type="text" class="choose_line choose_line2" value="新增欄">
               </div>
+
             </div>
           </div>
         </div>
@@ -350,35 +348,43 @@ export default {
           <div class="left_right">
             <div class="left">
               <div>列</div>
+
               <div class="choose">
                 1<span>。</span><input type="text" class="choose_line" value="第1列">
               </div>
+
               <div class="choose">
                 2<span>。</span><input type="text" class="choose_line choose_line2" value="新增列">
               </div>
+
             </div>
             <div class="right">
               <div>欄</div>
+
               <div class="choose">
                 <input type="checkbox" id="checkbox">
                 <label for="checkbox" class="checkbox"></label>
                 <input type="text" class="choose_line" value="第1欄">
               </div>
+
               <div class="choose">
                 <input type="checkbox" id="checkbox2">
                 <label for="checkbox2" class="checkbox"></label>
                 <input type="text" class="choose_line choose_line2" value="新增欄">
               </div>
+
             </div>
           </div>
         </div>
         <!-- 第二行 第十種  日期 -->
         <div v-if="activeType[question.id - 1].id === 10" class="questype-10 !block">
           <div class="calender">年/月/日<i class="fa-regular fa-calendar-day"></i></div>
+
         </div>
         <!-- 第二行 第十一種  時間 -->
         <div v-if="activeType[question.id - 1].id === 11" class="questype-11 !block">
           <div class="clock">時間<i class="fa-regular fa-clock"></i></div>
+
         </div>
         <!-- 第三行 -->
         <div class="question-bottom">
@@ -386,6 +392,7 @@ export default {
             <img :src="copy" alt="">
             <button type="button" @click="delQues(question.id)"><img :src="del" alt=""></button>
           </div>
+
           <!-- 必填選項開關 -->
           <div class="switch">
             <label>
@@ -395,7 +402,6 @@ export default {
                 <span class="btn"></span>
               </span>
             </label>
-            <img :src="dot" alt="">
           </div>
         </div>
       </div>
@@ -484,7 +490,7 @@ export default {
                     @apply flex justify-around items-center w-[209px] h-[49px] rounded-[10px] text-gray-500 font-semibold border border-grey;
                 }
                 .answer-type {
-                    @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll absolute top-[40px] right-0;
+                    @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll;
                     ul {
                         @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
                         button {
