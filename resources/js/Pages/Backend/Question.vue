@@ -51,7 +51,7 @@ export default {
         type: 3,
         options: [{ id: '', value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
-        square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
+        square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       }],
       a: 1,
     };
@@ -70,7 +70,7 @@ export default {
         type: 3,
         options: [{ id: '', value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
-        square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
+        square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       };
       formData.push(newQuestion);
     },
@@ -78,6 +78,23 @@ export default {
       const { formData } = this;
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
+    },
+    addrow(id) {
+      console.log(id);
+      const { formData } = this;
+      const squareRow = {
+        id: this.a,
+        text: '',
+      };
+      formData.find((item) => item.id === id).square.row.push(squareRow);
+    },
+    addcolumn(id) {
+      const { formData } = this;
+      const squareColumn = {
+        id: this.a,
+        text: '',
+      };
+      formData.find((item) => item.id === id).square.column.push(squareColumn);
     },
   },
 };
@@ -124,8 +141,7 @@ export default {
       </div>
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
-        {{ item.id }}
-        {{ item.type }}
+        {{ item }}
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
@@ -193,34 +209,32 @@ export default {
         <!-- 第二行 第七種 線性刻度 -->
         <div v-if="item.type === 7" class="questype-7 !block">
           <!-- 範圍設定 -->
-          <div class="set-number">
-            <ul class="number0-1">
-              <li class="show-number"><span>0</span><i class="fa-solid fa-triangle fa-rotate-180"></i></li>
-              <div class="choose0-1">
-                <li>0</li>
-                <li>1</li>
-              </div>
-            </ul>
-            &nbsp;到&nbsp;
-            <ul class="number2-10">
-              <li class="show-number"><span>5</span><i class="fa-solid fa-triangle fa-rotate-180"></i></li>
-              <div class="choose2-10">
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-                <li>10</li>
-              </div>
-            </ul>
-          </div>
+          <select name="min">
+            <option value="0">0</option>
+            <option value="1">1</option>
+          </select>
+          <span>到</span>
+          <select name="max">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
           <!-- 最大值與最小值意義設定 -->
           <div class="num-mean">
-            <div class="min"><span class="min-num">1</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
-            <div class="max"><span class="max-num">5</span><input type="text" class="num-mean-input" value="標籤(選填)"></div>
+            <div class="min">
+              <span>1</span>
+              <input type="text" class="num-mean-input" value="標籤(選填)">
+            </div>
+            <div class="max">
+              <span>5</span>
+              <input type="text" class="num-mean-input" value="標籤(選填)">
+            </div>
           </div>
         </div>
         <!-- 第二行 第八種  單選方格 -->
@@ -228,24 +242,24 @@ export default {
           <div class="left_right">
             <div class="left">
               <div>列</div>
-              <div class="choose">
-                1<span>。</span><input type="text" class="choose_line" value="選項1">
+              <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
+                {{ index + 1 }}<span>。</span>
+                <input type="text" class="choose_line" value="選項1">
               </div>
               <div class="choose">
-                2<span>。</span><input type="text" class="choose_line choose_line2" value="新增列">
+                <button type="button" @click="addrow(item.id)">新增列</button>
               </div>
             </div>
             <div class="right">
               <div>欄</div>
-              <div class="choose">
+              <div v-for="column in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox" id="checkbox">
                 <label for="checkbox" class="checkbox"></label>
                 <input type="text" class="choose_line" value="選項1">
               </div>
               <div class="choose">
-                <input type="checkbox" id="checkbox2">
-                <label for="checkbox2" class="checkbox"></label>
-                <input type="text" class="choose_line choose_line2" value="新增欄">
+                {{ item.id }}
+                <button type="button" @click="addcolumn(item.id)">新增欄</button>
               </div>
             </div>
           </div>
@@ -279,11 +293,12 @@ export default {
         </div>
         <!-- 第二行 第十種  日期 -->
         <div v-if="item.type === 10" class="questype-10 !block">
-          <div class="calender">年/月/日<i class="fa-regular fa-calendar-day"></i></div>
+          <input type="date" class="calender">
         </div>
         <!-- 第二行 第十一種  時間 -->
         <div v-if="item.type === 11" class="questype-11 !block">
-          <div class="clock">時間<i class="fa-regular fa-clock"></i></div>
+          <input type="time" hidden>
+          <div class="clock">時間<img :src="time" alt=""></div>
         </div>
         <!-- 第三行 -->
         <div class="question-bottom">
@@ -304,7 +319,6 @@ export default {
                 <span class="btn"></span>
               </div>
             </label>
-            <img :src="dot" alt="">
           </div>
 
         </div>
@@ -628,102 +642,26 @@ export default {
             }
 
             .questype-7 {
-                width: 100%;
-                border-bottom: 1px solid $grey;
-                padding-bottom: 30px;
-                display: none;
-
-                .set-number {
-                    display: flex;
-                    align-items: center;
-
-                    ul {
-                        width: 70px;
-                        // background-color: aquamarine;
-                        padding: 10px 0px;
-                        margin: 0px;
-                        border-radius: 10px;
-                        position: relative;
-
-                        li {
-                            width: 70px;
-                            display: block;
-                            height: 50px;
-                            line-height: 50px;
-                            text-align: center;
-                            display: none;
-                            color: $font-grey;
-                            padding: 0 5px 0 10px;
-
-                            i {
-                                font-size: 5px;
-                                margin-left: 26px;
-                            }
-
-                            &:hover {
-                                background-color: $blue;
-
-                            }
-                        }
-
-                        .choose0-1,
-                        .choose2-10 {
-                            width: 70px;
-                            background-color: white;
-                            display: none;
-                            padding: 5px 0;
-                            border-radius: 10px;
-                            // background-color:blue;
-                            box-shadow: 3px 3px 3px $grey;
-                            box-shadow: 0px 0px 3px $grey;
-                            position: absolute;
-                            bottom: 0;
-                        }
-
-                        .show-number {
-                            display: block;
-                        }
-                    }
-
+                @apply w-full border-x-0 border-t-0 border-b border-b-grey pb-[30px] hidden;
+                select {
+                    @apply border-0;
                 }
-
                 .num-mean {
-                    color: $grey;
-                    font-size: 16px;
-                    font-weight: 600;
+                    @apply text-grey text-base font-semibold;
                 }
 
                 .num-mean-input {
-                    border: none;
-                    border-bottom: 1px solid $grey ;
-                    width: 200px;
-                    height: 40px;
-                    font-size: 16px;
-                    font-weight: 600;
-                    margin: 8px 25px 8px;
-                    color: $grey;
-
-                    &:focus {
-                        border: 0px solid white;
-                        border-bottom: 3px solid rgb(103, 58, 183);
-                        outline: none;
-                    }
+                    @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple outline-none;
                 }
             }
 
-            .questype-8 {
-                width: 100%;
-                display: none;
-
+            .questype-8, .questype-9 {
+                @apply w-full hidden;
                 .left_right {
-                    width: 100%;
-
+                    @apply w-full flex;
                     .right,
                     .left {
-                        width: 50%;
-                        padding: 30px 0;
-                        border-bottom: 1px solid $grey;
-
+                        @apply w-1/2 py-[30px] border-x-0 border-t-0 border-b border-b-grey;
                         .choose {
                             width: 100%;
                             display: flex;
@@ -759,68 +697,6 @@ export default {
                     }
 
                     .right {
-
-                        #checkbox,
-                        #checkbox2 {
-                            width: 24px;
-                            height: 24px;
-                            margin-right: 5px;
-                            pointer-events: none;
-                        }
-
-                    }
-                }
-            }
-
-            .questype-9 {
-                width: 100%;
-                display: none;
-
-                .left_right {
-                    width: 100%;
-
-                    .right,
-                    .left {
-                        width: 50%;
-                        padding: 30px 0;
-                        border-bottom: 1px solid $grey;
-
-                        .choose {
-                            width: 100%;
-                            display: flex;
-                            align-items: center;
-
-                            span {
-                                padding-top: 12px;
-                            }
-
-                            .choose_line {
-                                width: 80%;
-                                border: none;
-                                height: 40px;
-                                font-size: 16px;
-                                font-weight: 500;
-
-                                &:hover {
-                                    border-bottom: 1px solid $grey ;
-                                }
-
-                                &:focus {
-                                    border: 0px solid white;
-                                    border-bottom: 3px solid rgb(103, 58, 183);
-                                    outline: none;
-                                }
-                            }
-
-                            .choose_line2 {
-                                width: 70px;
-                                color: $font-grey;
-                            }
-                        }
-                    }
-
-                    .right {
-
                         #checkbox,
                         #checkbox2 {
                             width: 24px;
@@ -834,34 +710,19 @@ export default {
             }
 
             .questype-10 {
-                padding: 20px 0 35px;
-                display: none;
-                border-bottom: 1px solid $grey;
-
+                @apply pt-[20px] pb-[35px] hidden border-x-0 border-t-0 border-b border-b-grey;
                 .calender {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 35%;
-                    font-size: 16px;
-                    font-weight: 600;
-                    color: $grey;
-                    border-bottom: 1px dotted $grey;
+                    @apply w-[35%] text-base font-semibold text-grey border-x-0 border-t-0 border-dotted border-b-grey;
                 }
             }
 
             .questype-11 {
-                padding: 20px 0 35px;
-                display: none;
-                border-bottom: 1px solid $grey;
-
+                @apply pt-[20px] pb-[35px] hidden border-x-0 border-t-0 border-b border-b-grey;
                 .clock {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 35%;
-                    font-size: 16px;
-                    font-weight: 600;
-                    color: $grey;
-                    border-bottom: 1px dotted $grey;
+                    @apply flex justify-between w-[20%] text-base font-semibold text-grey border-x-0 border-t-0 border-b border-dotted border-b-grey;
+                    img {
+                        @apply w-[22px] h-[22px];
+                    }
                 }
             }
 
