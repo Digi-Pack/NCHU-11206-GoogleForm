@@ -120,7 +120,7 @@ export default {
       const newFormData = item.dropdowns.filter((item) => item.id !== id);
       item.dropdowns = newFormData;
     },
-    addrow(id) {
+    addrow(item, id) {
       const { formData } = this;
       const squareRow = {
         id: Math.max(0, ...item.square.row.map(item => item.id)) + 1,
@@ -129,7 +129,8 @@ export default {
       formData.find((item) => item.id === id).square.row.push(squareRow);
     },
     delrow(item, id) {
-      item.square.row = item.square.row.filter((item) => item.id !== id);
+      const newFormData = item.square.row.filter((item) => item.id !== id);
+      item.square.row = newFormData;
     },
     addcolumn(item, id) {
       const { formData } = this;
@@ -139,9 +140,9 @@ export default {
       };
       formData.find((item) => item.id === id).square.column.push(squareColumn);
     },
-    delOption(item, id) {
-      const newFormData = item.options.filter((item) => item.id !== id);
-      item.options = newFormData;
+    delcolumn(item, id) {
+      const newFormData = item.square.column.filter((item) => item.id !== id);
+      item.square.column = newFormData;
     },
   },
 };
@@ -260,12 +261,12 @@ export default {
         <!-- 第二行 第七種 線性刻度 -->
         <div v-if="item.type === 7" class="questype-7 !block">
           <!-- 範圍設定 -->
-          <select v-model="selectedMin" name="min">
+          <select v-model="item.linear.min" name="min">
             <option value="0">0</option>
             <option value="1">1</option>
           </select>
           <span>到</span>
-          <select v-model="selectedMax" name="max">
+          <select v-model="item.linear.max" name="max">
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -279,12 +280,12 @@ export default {
           <!-- 最大值與最小值意義設定 -->
           <div class="num-mean">
             <div class="min">
-              <span>{{ selectedMin }}</span>
-              <input type="text" class="num-mean-input" value="標籤(選填)">
+              <span>{{ item.linear.min }}</span>
+              <input type="text" class="num-mean-input" v-model="item.linear.minText" placeholder="標籤(選填)">
             </div>
             <div class="max">
-              <span>{{ selectedMax }}</span>
-              <input type="text" class="num-mean-input" value="標籤(選填)">
+              <span>{{ item.linear.max }}</span>
+              <input type="text" class="num-mean-input" v-model="item.linear.maxText" placeholder="標籤(選填)">
             </div>
           </div>
         </div>
@@ -296,7 +297,7 @@ export default {
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
                 <input type="text" class="choose_line" :value="'選項' + (index + 1)">
-                <button type="button" @click="delrow(item.id, row.id)">X</button>
+                <button type="button" @click="delrow(item, row.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addrow(item, item.id)">新增列</button>
@@ -307,7 +308,7 @@ export default {
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
                 <input type="text" class="choose_line" :value="'選項' + (index + 1)">
-                <button type="button" @click="column.id">X</button>
+                <button type="button" @click="delcolumn(item, column.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
@@ -323,6 +324,7 @@ export default {
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
                 <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <button type="button" @click="delrow(item, row.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addrow(item, item.id)">新增列</button>
@@ -333,6 +335,7 @@ export default {
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
                 <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <button type="button" @click="delcolumn(item, column.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
@@ -416,7 +419,7 @@ export default {
         }
 
         .form-title {
-            @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px];
+            @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
 
             .form-input {
                 @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
@@ -432,7 +435,7 @@ export default {
         }
 
         .question {
-            @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px];
+            @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white;
 
             img {
                 @apply w-[22px];

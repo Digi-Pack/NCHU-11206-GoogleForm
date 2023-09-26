@@ -386,7 +386,7 @@ nav {
                   @apply w-[30px] h-[30px] bg-purple rounded-[50%];
                 }
                 #account-menu {
-                  @apply w-[400px] h-[400px] bg-[aliceblue] border border-[gainsboro] p-[5px] rounded-[30px] mt-[5px] hidden shadow-lg absolute top-[80px] right-[30px];
+                  @apply w-[400px] h-[400px] bg-[aliceblue] border border-[gainsboro] p-[5px] rounded-[30px] mt-[5px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
                     .google {
                       @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
                         .photo {
