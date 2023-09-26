@@ -17,6 +17,7 @@ import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
+import close from '/resources/images/close.svg';
 import { questionTypeOption } from '@/Composables/useQuestionType';
 
 export default {
@@ -40,6 +41,7 @@ export default {
       arrow_down: arrow_down,
       del: del,
       copy: copy,
+      close: close,
       questionTypeOption,
       formData: [{
         id: 1,
@@ -49,11 +51,12 @@ export default {
         image: '',
         video: '',
         type: 3,
-        options: [{ id: '', value: '' }],
+        options: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
       }],
       a: 1,
+      b: 1,
     };
   },
   methods: {
@@ -68,16 +71,27 @@ export default {
         image: '',
         video: '',
         type: 3,
-        options: [{ id: '', value: '' }],
+        options: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: [{ row: [{ id: '', text: '' }], column: [{ id: '', text: '' }] }],
       };
       formData.push(newQuestion);
     },
+    addSelect(item) {
+      const newQuestion = {
+        id: Math.max(0, ...item.options.map(item => item.id)) + 1,
+        value: '',
+      };
+      item.options.push(newQuestion);
+    },
     delQuestion(id) {
       const { formData } = this;
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
+    },
+    delOption(item, id) {
+      const newFormData = item.options.filter((item) => item.id !== id);
+      item.options = newFormData;
     },
   },
 };
@@ -117,15 +131,15 @@ export default {
       </div>
       <!-- 表單命名處 -->
       <div class="form-title">
+
         <!-- 表單名稱 -->
         <input type="text" value="未命名的表單" class="form-input form-title-input">
         <!-- 表單說明 -->
         <input type="text" value="表單說明" class="form-input form-explain-input-2">
       </div>
       <!-- 問題設置 -->
-      <div v-for="item in formData" :key="item.id" class="question">
-        {{ item.id }}
-        {{ item.type }}
+      <div v-for="(item, index) in formData" :key="item.id" class="question">
+        {{ index + 1 }}.
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
@@ -153,15 +167,16 @@ export default {
         </div>
         <!-- 第二行 第三種 選擇題 -->
         <div v-if="item.type === 3" class="questype-3">
-          <div class="choose">
+          <div v-for="option in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
-            <input type="text" class="choose_line" value="選項1">
+            <input type="text" class="choose_line" :value="'選項' + option.id">
+            <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
             <label for="checkbox2" class="checkbox"></label>
-            <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
           </div>
         </div>
         <!-- 第二行 第四種 核取方塊 -->
@@ -304,7 +319,6 @@ export default {
                 <span class="btn"></span>
               </div>
             </label>
-            <img :src="dot" alt="">
           </div>
 
         </div>
@@ -445,7 +459,7 @@ export default {
             .questype-3 {
                 @apply w-full py-[30px] border-b border-grey;
                 .choose {
-                  @apply w-full flex items-center;
+                  @apply w-full flex items-center mb-[10px];
                     #checkbox,
                     #checkbox2 {
                       @apply hidden;
@@ -454,11 +468,11 @@ export default {
                       @apply w-[24px] h-[24px] inline-block rounded-full border-[2px] border-grey mr-[5px];
                     }
                     .choose_line {
-                      @apply w-[80%] border-none h-[40px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                      @apply w-[70px] text-grey;
+                      @apply w-[100px] text-grey;
                     }
 
                     a {
