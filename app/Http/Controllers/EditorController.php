@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
+use App\Models\Response;
 use App\Models\Seeall;
+use Egulias\EmailValidator\Result\Reason\Reason;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
@@ -33,17 +36,30 @@ class EditorController extends Controller
             'see.*.title.string' => '請輸入文字',
         ]);
 
-        // dd(123);
-
-        // $seeData = $request->input('see');
+        // $seeData = $request->input('formData');
         // 將 see 數組轉換為 JSON 格式
 
-        $seeJson = json_encode($request->see);
-
-        $see = Seeall::create([
-            'jsondata' => $seeJson,
+        $seeJson = json_encode($request->formData);
+        $see = Question::create([
+            'modified_at' => $request->Dataall['modified_at'],
+            'other_modified' => $request->Dataall['other_modified'],
+            'opened_date' => $request->Dataall['opened_date'],
+            'lead_author_id' => $request->Dataall['lead_author_id'],
+            'qu_naires_title' => $request->Dataall['qu_naires_title'],
+            'qu_naires_desc' => $request->Dataall['qu_naires_desc'],
+            'questionnaires' => $seeJson,
         ]);
-        dd(123);
+
+        
+        $data = Response::create([
+            'user_id' => $request->resPonse[0]['user_id'],
+            'question_id' => $request->resPonse[0]['question_id'],
+            'answer' => $seeJson,
+        ]);
+
+        
+
+
         return back()->with(['message' => rtFormat($see)]);
     }
 }
