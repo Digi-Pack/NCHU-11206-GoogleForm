@@ -56,18 +56,20 @@ export default {
         square: [{ id: '', text: '' }],
         column: [{ id: '', text: '' }],
       }],
+      a: 1,
     };
   },
   methods: {
     addQuestion() {
       const { formData } = this;
       if (formData.length > 0 && formData[0].id !== '') {
+        this.a++;
         const newQuestion = JSON.parse(JSON.stringify(formData[0]));
-        newQuestion.id = formData[0].id++;
+        newQuestion.id = this.a;
         formData.push(newQuestion);
       } else {
         const newQuestion = {
-          id: 1,
+          id: this.a,
           title: '',
           desc: '',
           request: '1',
