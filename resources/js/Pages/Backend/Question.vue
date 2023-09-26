@@ -52,6 +52,8 @@ export default {
         video: '',
         type: 3,
         options: [{ id: 1, value: '' }],
+        checkboxs: [{ id: 1, value: '' }],
+        dropdowns: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       }],
@@ -73,10 +75,17 @@ export default {
         video: '',
         type: 3,
         options: [{ id: 1, value: '' }],
+        checkboxs: [{ id: 1, value: '' }],
+        dropdowns: [{ id: 1, value: '' }],
         linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       };
       formData.push(newQuestion);
+    },
+    delQuestion(id) {
+      const { formData } = this;
+      const newFormData = formData.filter((item) => item.id !== id);
+      this.formData = newFormData;
     },
     addSelect(item) {
       const newQuestion = {
@@ -85,13 +94,33 @@ export default {
       };
       item.options.push(newQuestion);
     },
-    delQuestion(id) {
-      const { formData } = this;
-      const newFormData = formData.filter((item) => item.id !== id);
-      this.formData = newFormData;
+    delOption(item, id) {
+      const newFormData = item.options.filter((item) => item.id !== id);
+      item.options = newFormData;
     },
-    addrow(item, id) {
-      console.log(item, id);
+    addCheckbox(item) {
+      const newQuestion = {
+        id: Math.max(0, ...item.checkboxs.map(item => item.id)) + 1,
+        value: '',
+      };
+      item.checkboxs.push(newQuestion);
+    },
+    delCheckbox(item, id) {
+      const newFormData = item.checkboxs.filter((item) => item.id !== id);
+      item.checkboxs = newFormData;
+    },
+    addDrop(item) {
+      const newQuestion = {
+        id: Math.max(0, ...item.dropdowns.map(item => item.id)) + 1,
+        value: '',
+      };
+      item.dropdowns.push(newQuestion);
+    },
+    delDrop(item, id) {
+      const newFormData = item.dropdowns.filter((item) => item.id !== id);
+      item.dropdowns = newFormData;
+    },
+    addrow(id) {
       const { formData } = this;
       const squareRow = {
         id: Math.max(0, ...item.square.row.map(item => item.id)) + 1,
@@ -116,6 +145,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <template>
@@ -160,7 +190,6 @@ export default {
       </div>
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
-        {{ item }}
         <!-- 第一行 -->
         <div class="question-top">
           <div class="text-box">
@@ -188,10 +217,10 @@ export default {
         </div>
         <!-- 第二行 第三種 選擇題 -->
         <div v-if="item.type === 3" class="questype-3">
-          <div v-for="option in item.options" :key="option.id" class="choose">
+          <div v-for="(option, index) in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
-            <input type="text" class="choose_line" :value="'選項' + option.id">
+            <input type="text" class="choose_line" :value="'選項' + (index + 1)">
             <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
@@ -202,22 +231,24 @@ export default {
         </div>
         <!-- 第二行 第四種 核取方塊 -->
         <div v-if="item.type === 4" class="questype-4 !block">
-          <div class="choose">
+          <div v-for="(checkbox, index) in item.checkboxs" :key="checkbox.id" class="choose">
             <input type="checkbox" id="checkbox">
-            <input type="text" class="choose_line" value="選項1">
+            <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+            <button type="button" class="w-[22px]" @click="delCheckbox(item, checkbox.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
-            <input type="text" class="choose_line choose_line2" value="新增選項">或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addCheckbox(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
           </div>
         </div>
         <!-- 第二行 第五種 下拉式選單 -->
         <div v-if="item.type === 5" class="questype-5 !block">
-          <div class="choose">
-            1<span>。</span><input type="text" class="choose_line" value="選項1">
+          <div v-for="(dropdown, index) in item.dropdowns" :key="dropdown.id" class="choose">
+            {{ index + 1 }}<span>。</span><input type="text" class="choose_line" :value="'選項' + dropdown.id">
+            <button type="button" class="w-[22px]" @click="delDrop(item, dropdown.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
-            2<span>。</span><input type="text" class="choose_line choose_line2" value="新增選項">
+            {{ item.dropdowns.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px]" @click="addDrop(item)">新增選項</button>
           </div>
         </div>
         <!-- 第二行 第六種  檔案上傳 -->
@@ -502,18 +533,18 @@ export default {
             .questype-4 {
               @apply w-full py-[30px] border-b border-grey hidden;
                 .choose {
-                  @apply w-full flex items-center;
+                  @apply w-full flex items-center mb-[10px];
 
                     #checkbox,
                     #checkbox2 {
                       @apply w-[24px] h-[24px] mr-[5px] pointer-events-none;
                     }
                     .choose_line {
-                      @apply w-[80px] border-none h-[40px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                      @apply w-[70px] text-grey;
+                      @apply w-[100px] text-grey;
                     }
 
                     a {
@@ -526,18 +557,18 @@ export default {
               @apply hidden w-full py-[30px] border-b border-grey;
 
                 .choose {
-                  @apply w-full flex items-center;
+                  @apply w-full flex items-center mb-[10px];
 
                     span {
                       @apply pt-[12px];
                     }
 
                     .choose_line {
-                      @apply w-[80%] border-none h-[40px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
                     }
 
                     .choose_line2 {
-                      @apply w-[70px] text-grey;
+                      @apply w-[100px] text-grey;
                     }
                 }
             }
