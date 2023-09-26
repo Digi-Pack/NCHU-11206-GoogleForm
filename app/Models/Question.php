@@ -49,10 +49,10 @@ class Question extends Model
 
     public function coworker () 
     {
-        return $this->hasMany(Coworker::class,'id','question_id');
+        return $this->hasMany(Coworker::class,'question_id','id');
     }
     public function response () 
     {
-        return $this->hasMany(Response::class,'id','question_id');
+        return $this->hasMany(Response::class,'question_id','id');
     }
 }

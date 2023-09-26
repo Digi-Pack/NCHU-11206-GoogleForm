@@ -57,7 +57,7 @@ class EditorController extends Controller
             'answer' => $seeJson,
         ]);
 
-        
+        dd(Question::with('response')->find(2));
 
 
         return back()->with(['message' => rtFormat($see)]);

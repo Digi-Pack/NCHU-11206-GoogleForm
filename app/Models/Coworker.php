@@ -37,6 +37,6 @@ class Coworker extends Model
 
     public function question()
     {
-        return $this->belongsTo(Question::class, 'question_id', 'id');
+        return $this->belongsTo(Question::class, 'id', 'question_id');
     }
 }
