@@ -70,11 +70,22 @@ export default {
           </div>
         </div>
         <div class="head-middle">
-          <span>接受回應</span>
+
+          <div class="switch">
+            <label>
+              <span>接受回應</span>
+              <input type="checkbox" name="" id="" class="checkbox">
+              <div class="btn-box">
+                <span class="btn"></span>
+              </div>
+            </label>
+          </div>
+
+          <!-- <span>接受回應</span>
           <div class="btn">
             <div class="button-bar"></div>
             <div class="button-circle"></div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="response-body">
@@ -152,13 +163,28 @@ export default {
             span {
                 @apply mr-[20px] text-[#686868];
             }
-            .btn {
-                @apply relative;
-                .button-bar {
-                    @apply w-[45px] h-[18px] bg-[#e1d8f1] rounded-[25px] mt-[3px];
+            .switch {
+                @apply w-[150px];
+                label {
+                  @apply w-full flex justify-between items-center;
                 }
-                .button-circle {
-                    @apply absolute mt-[2px] w-[25px] h-[25px] bg-[#673ab7] rounded-[50%] bottom-0 translate-y-1 shadow-[0_2px_3px_0_rgba(0,0,0,0.4)] hover:shadow-[0_0_0_10px_rgba(234,247,255,0.4)];
+                span {
+                    @apply mr-0;
+                }
+                .btn-box {
+                    @apply inline-block align-middle w-[40px] h-[20px] rounded-[100px] bg-grey-middle shadow-inner;
+                }
+                .btn-box .btn {
+                    @apply inline-block -translate-y-1 drop-shadow-lg w-[25px] h-[25px] rounded-[50%] bg-[#673ab7] shadow-sm;
+                }
+                .checkbox {
+                    @apply absolute opacity-0;
+                }
+                .checkbox:checked + .btn-box {
+                    @apply bg-purple-light;
+                }
+                .checkbox:checked + .btn-box .btn {
+                    @apply ml-[20px];
                 }
             }
         }
