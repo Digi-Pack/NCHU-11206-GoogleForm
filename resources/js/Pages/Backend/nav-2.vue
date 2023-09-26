@@ -207,7 +207,7 @@ export default {
           <!-- 下拉選單 -->
           <div class="check">
             <label for="ques"></label>
-            <select v-model="" class="answer-type" id="ques" name="">
+            <select class="answer-type" id="ques" name="">
               <option v-for="item in questionTypeOption" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
           </div>
