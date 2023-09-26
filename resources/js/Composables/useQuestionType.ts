@@ -3,7 +3,7 @@ const questionTypeOption = Object.freeze([
   { id: 2, name: '詳答' },
   { id: 3, name: '選擇題' },
   { id: 4, name: '核取方塊' },
-  { id: 5, name: '下拉下拉式選單' },
+  { id: 5, name: '下拉式選單' },
   { id: 6, name: '檔案上傳' },
   { id: 7, name: '線性刻度' },
   { id: 8, name: '單選方格' },

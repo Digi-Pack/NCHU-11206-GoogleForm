@@ -210,11 +210,6 @@ export default {
             <select v-model="question" class="answer-type" id="ques" name="">
               <option v-for="item in questionTypeOption" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
-            <!-- <div class="check-box">
-              <img :src="radio_button" alt="">
-              <span>選擇題</span>
-              <img :src="arrow_down" alt="">
-            </div> -->
           </div>
         </div>
         <!-- 第二行 第一種 簡答 -->
