@@ -56,7 +56,8 @@ export default {
         square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
       }],
       a: 1,
-      b: 1,
+      selectedMin: '0',
+      selectedMax: '2',
     };
   },
   methods: {
@@ -89,22 +90,26 @@ export default {
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
     },
-    addrow(id) {
-      console.log(id);
+    addrow(item, id) {
+      console.log(item, id);
       const { formData } = this;
       const squareRow = {
-        id: this.a,
+        id: Math.max(0, ...item.square.row.map(item => item.id)) + 1,
         text: '',
       };
       formData.find((item) => item.id === id).square.row.push(squareRow);
     },
-    addcolumn(id) {
+    delrow(item, id) {
+      item.square.row = item.square.row.filter((item) => item.id !== id);
+    },
+    addcolumn(item, id) {
       const { formData } = this;
       const squareColumn = {
-        id: this.a,
+        id: Math.max(0, ...item.square.column.map(item => item.id)) + 1,
         text: '',
       };
       formData.find((item) => item.id === id).square.column.push(squareColumn);
+    },
     delOption(item, id) {
       const newFormData = item.options.filter((item) => item.id !== id);
       item.options = newFormData;
@@ -224,12 +229,12 @@ export default {
         <!-- 第二行 第七種 線性刻度 -->
         <div v-if="item.type === 7" class="questype-7 !block">
           <!-- 範圍設定 -->
-          <select name="min">
+          <select v-model="selectedMin" name="min">
             <option value="0">0</option>
             <option value="1">1</option>
           </select>
           <span>到</span>
-          <select name="max">
+          <select v-model="selectedMax" name="max">
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -243,11 +248,11 @@ export default {
           <!-- 最大值與最小值意義設定 -->
           <div class="num-mean">
             <div class="min">
-              <span>1</span>
+              <span>{{ selectedMin }}</span>
               <input type="text" class="num-mean-input" value="標籤(選填)">
             </div>
             <div class="max">
-              <span>5</span>
+              <span>{{ selectedMax }}</span>
               <input type="text" class="num-mean-input" value="標籤(選填)">
             </div>
           </div>
@@ -259,22 +264,22 @@ export default {
               <div>列</div>
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
-                <input type="text" class="choose_line" value="選項1">
+                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <button type="button" @click="delrow(item.id, row.id)">X</button>
               </div>
               <div class="choose">
-                <button type="button" @click="addrow(item.id)">新增列</button>
+                <button type="button" @click="addrow(item, item.id)">新增列</button>
               </div>
             </div>
             <div class="right">
               <div>欄</div>
-              <div v-for="column in item.square.column" :key="column.id" class="choose">
-                <input type="checkbox" id="checkbox">
-                <label for="checkbox" class="checkbox"></label>
-                <input type="text" class="choose_line" value="選項1">
+              <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
+                <input type="checkbox">
+                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <button type="button" @click="column.id">X</button>
               </div>
               <div class="choose">
-                {{ item.id }}
-                <button type="button" @click="addcolumn(item.id)">新增欄</button>
+                <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
               </div>
             </div>
           </div>
@@ -284,24 +289,22 @@ export default {
           <div class="left_right">
             <div class="left">
               <div>列</div>
-              <div class="choose">
-                1<span>。</span><input type="text" class="choose_line" value="第1列">
+              <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
+                {{ index + 1 }}<span>。</span>
+                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
               </div>
               <div class="choose">
-                2<span>。</span><input type="text" class="choose_line choose_line2" value="新增列">
+                <button type="button" @click="addrow(item, item.id)">新增列</button>
               </div>
             </div>
             <div class="right">
               <div>欄</div>
-              <div class="choose">
-                <input type="checkbox" id="checkbox">
-                <label for="checkbox" class="checkbox"></label>
-                <input type="text" class="choose_line" value="第1欄">
+              <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
+                <input type="checkbox">
+                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
               </div>
               <div class="choose">
-                <input type="checkbox" id="checkbox2">
-                <label for="checkbox2" class="checkbox"></label>
-                <input type="text" class="choose_line choose_line2" value="新增欄">
+                <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
               </div>
             </div>
           </div>
@@ -559,7 +562,6 @@ export default {
                 .num-mean {
                     @apply text-grey text-base font-semibold;
                 }
-
                 .num-mean-input {
                     @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple outline-none;
                 }
@@ -573,48 +575,23 @@ export default {
                     .left {
                         @apply w-1/2 py-[30px] border-x-0 border-t-0 border-b border-b-grey;
                         .choose {
-                            width: 100%;
-                            display: flex;
-                            align-items: center;
-
+                          @apply w-full flex items-center;
                             span {
-                                padding-top: 12px;
+                              @apply pt-3;
                             }
-
                             .choose_line {
-                                width: 80%;
-                                border: none;
-                                height: 40px;
-                                font-size: 16px;
-                                font-weight: 500;
-
-                                &:hover {
-                                    border-bottom: 1px solid $grey ;
-                                }
-
-                                &:focus {
-                                    border: 0px solid white;
-                                    border-bottom: 3px solid rgb(103, 58, 183);
-                                    outline: none;
-                                }
+                              @apply w-4/5 border-0 h-[40px] text-base font-medium hover:border-b hover:border-b-grey focus:border-x-0 focus:border-t-0 focus:border-b-[3px] focus:border-b-purple focus:outline-none;
                             }
-
                             .choose_line2 {
-                                width: 70px;
-                                color: $font-grey;
+                              @apply w-[70px] text-grey;
                             }
                         }
                     }
-
                     .right {
                         #checkbox,
                         #checkbox2 {
-                            width: 24px;
-                            height: 24px;
-                            margin-right: 5px;
-                            pointer-events: none;
+                          @apply w-6 h-6 mr-[5px] pointer-events-none;
                         }
-
                     }
                 }
             }
