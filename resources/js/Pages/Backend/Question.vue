@@ -94,28 +94,6 @@ export default {
       const newFormData = item.options.filter((item) => item.id !== id);
       item.options = newFormData;
     },
-    addCheckbox(item) {
-      const newQuestion = {
-        id: Math.max(0, ...item.checkboxs.map(item => item.id)) + 1,
-        value: '',
-      };
-      item.checkboxs.push(newQuestion);
-    },
-    delCheckbox(item, id) {
-      const newFormData = item.checkboxs.filter((item) => item.id !== id);
-      item.checkboxs = newFormData;
-    },
-    addDrop(item) {
-      const newQuestion = {
-        id: Math.max(0, ...item.dropdowns.map(item => item.id)) + 1,
-        value: '',
-      };
-      item.dropdowns.push(newQuestion);
-    },
-    delDrop(item, id) {
-      const newFormData = item.dropdowns.filter((item) => item.id !== id);
-      item.dropdowns = newFormData;
-    },
     addrow(item, id) {
       const { formData } = this;
       const squareRow = {
@@ -198,6 +176,7 @@ export default {
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
         <!-- 第一行 -->
+        {{ item }}
         <div class="question-top">
           <div class="text-box">
             <input type="text" value="問題" class="form-input form-title-input">
@@ -224,11 +203,10 @@ export default {
         </div>
         <!-- 第二行 第三種 選擇題 -->
         <div v-if="item.type === 3" class="questype-3">
-          {{ item.options }}
           <div v-for="(option, index) in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox"></label>
-            <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+            <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
             <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
@@ -241,7 +219,7 @@ export default {
         <div v-if="item.type === 4" class="questype-4 !block">
           <div v-for="(option, index) in item.options" :key="option.id" class="choose">
             <input type="checkbox" id="checkbox">
-            <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+            <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
             <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
@@ -252,7 +230,7 @@ export default {
         <!-- 第二行 第五種 下拉式選單 -->
         <div v-if="item.type === 5" class="questype-5 !block">
           <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-            {{ index + 1 }}<span>。</span><input type="text" class="choose_line" :value="'選項' + option.id">
+            {{ index + 1 }}<span>。</span><input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
             <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
           </div>
           <div class="choose">
@@ -303,7 +281,7 @@ export default {
               <div>列</div>
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
-                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
                 <button type="button" @click="delrow(item, row.id)">X</button>
               </div>
               <div class="choose">
@@ -314,7 +292,7 @@ export default {
               <div>欄</div>
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
-                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
                 <button type="button" @click="delcolumn(item, column.id)">X</button>
               </div>
               <div class="choose">
@@ -330,7 +308,7 @@ export default {
               <div>列</div>
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
-                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
                 <button type="button" @click="delrow(item, row.id)">X</button>
               </div>
               <div class="choose">
@@ -341,7 +319,7 @@ export default {
               <div>欄</div>
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
-                <input type="text" class="choose_line" :value="'選項' + (index + 1)">
+                <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
                 <button type="button" @click="delcolumn(item, column.id)">X</button>
               </div>
               <div class="choose">
