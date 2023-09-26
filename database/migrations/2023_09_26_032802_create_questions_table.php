@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('qu_naires_title')->nullable()->default('')->comment('表單標題');
             $table->string('qu_naires_desc')->nullable()->default('')->comment('表單說明');
             $table->longText('questionnaires')->nullable()->default('')->comment('問題');
-
         });
     }
 
