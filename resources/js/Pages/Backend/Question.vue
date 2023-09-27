@@ -51,9 +51,32 @@ export default {
         image: '',
         video: '',
         type: 3,
-        options: [{ id: 1, value: '' }],
-        linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
-        square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
+        options: [
+          {
+            id: 1,
+            value: '',
+          },
+        ],
+        linear: {
+          min: 1,
+          max: 10,
+          minText: '',
+          maxText: '',
+        },
+        square: {
+          row: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+          column: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+        },
       }],
       a: 1,
       selectedMin: '0',
@@ -72,9 +95,32 @@ export default {
         image: '',
         video: '',
         type: 3,
-        options: [{ id: 1, value: '' }],
-        linear: [{ min: 1, max: 10, minText: '', maxText: '' }],
-        square: { row: [{ id: 1, text: '' }], column: [{ id: 1, text: '' }] },
+        options: [
+          {
+            id: 1,
+            value: '',
+          },
+        ],
+        linear: {
+          min: 1,
+          max: 10,
+          minText: '',
+          maxText: '',
+        },
+        square: {
+          row: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+          column: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+        },
       };
       formData.push(newQuestion);
     },
@@ -134,9 +180,17 @@ export default {
         id: Math.max(0, ...item.square.column.map(item => item.id)) + 1,
         text: '',
       };
+      const linears = {
+        min: 1,
+        max: 10,
+        minText: '',
+        maxText: '',
+      };
+
       item.options.splice(0, optionsLength, newQuestion);
       item.square.row.splice(0, squarerow, squareRow);
       item.square.column.splice(0, squarecolumn, squareColumn);
+      item.linear = linears;
     },
   },
 };
