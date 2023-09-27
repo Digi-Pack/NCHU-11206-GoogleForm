@@ -19,6 +19,8 @@ import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
 import close from '/resources/images/close.svg';
 import { questionTypeOption } from '@/Composables/useQuestionType';
+import Swal from 'sweetalert2';
+import { router } from '@inertiajs/vue3';
 
 export default {
   data() {
@@ -43,11 +45,18 @@ export default {
       copy: copy,
       close: close,
       questionTypeOption,
+      formText: {
+        modified_at: '',
+        other_modified: '',
+        opened_date: '',
+        lead_author_id: '',
+        qu_naires_title: '未命名的表單',
+        qu_naires_desc: '表單說明',
+      },
       formData: [{
         id: 1,
-        title: '',
-        desc: '',
-        request: '1',
+        title: '問題',
+        request: false,
         image: '',
         video: '',
         type: 3,
@@ -89,9 +98,8 @@ export default {
       this.a++;
       const newQuestion = {
         id: this.a,
-        title: '',
-        desc: '',
-        request: '1',
+        title: '問題',
+        request: false,
         image: '',
         video: '',
         type: 3,
@@ -169,15 +177,15 @@ export default {
       let squarerow = item.square.row.length;
       let squarecolumn = item.square.column.length;
       const newQuestion = {
-        id: Math.max(0, ...item.options.map(item => item.id)),
+        id: 1,
         value: '',
       };
       const squareRow = {
-        id: Math.max(0, ...item.square.row.map(item => item.id)),
+        id: 1,
         text: '',
       };
       const squareColumn = {
-        id: Math.max(0, ...item.square.column.map(item => item.id)) + 1,
+        id: 1,
         text: '',
       };
       const linears = {
@@ -191,6 +199,31 @@ export default {
       item.square.row.splice(0, squarerow, squareRow);
       item.square.column.splice(0, squarecolumn, squareColumn);
       item.linear = linears;
+    },
+    // 儲存表單
+    submitData() {
+      const { formData, formText } = this;
+      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      // 驗證
+      router.visit(route('edit.store'), {
+        method: 'post', data: { formData, formText }, preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '新增成功',
+              showDenyButton: true,
+              confirmButtonText: '回列表',
+              denyButtonText: '取消',
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              // if (result.isConfirmed) {
+              //   router.get(route('product.list'));
+              // }
+              console.log(result);
+            });
+          }
+        },
+      });
     },
   },
 };
@@ -233,16 +266,17 @@ export default {
       <div class="form-title">
 
         <!-- 表單名稱 -->
-        <input type="text" value="未命名的表單" class="form-input form-title-input">
+        <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input">
         <!-- 表單說明 -->
-        <input type="text" value="表單說明" class="form-input form-explain-input-2">
+        <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
       </div>
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
         <!-- 第一行 -->
+        {{ item }}
         <div class="question-top">
           <div class="text-box">
-            <input type="text" value="問題" class="form-input form-title-input">
+            <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input">
           </div>
           <label for="image">
             <img :src="image" alt="" class="upload">
@@ -414,7 +448,7 @@ export default {
           <div class="switch">
             <label>
               <span class="text">必填</span>
-              <input type="checkbox" name="" id="" class="checkbox">
+              <input v-model="item.request" type="checkbox" name="" id="" class="checkbox">
               <div class="btn-box">
                 <span class="btn"></span>
               </div>
@@ -422,7 +456,7 @@ export default {
           </div>
         </div>
       </div>
-      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">儲存表單</button>
+      <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
     </div>
   </section>
 </template>

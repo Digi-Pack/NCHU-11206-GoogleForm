@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Question
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -47,12 +47,16 @@ class Question extends Model
         'questionnaires'
     ];
 
-    public function coworker () 
+    public function coworker ()
     {
         return $this->hasMany(Coworker::class,'question_id','id');
     }
-    public function response () 
+    public function response ()
     {
         return $this->hasMany(Response::class,'question_id','id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'lead_author_id',);
     }
 }
