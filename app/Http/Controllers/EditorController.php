@@ -62,4 +62,18 @@ class EditorController extends Controller
 
         return back()->with(['message' => rtFormat($see)]);
     }
+
+    public function  edit_index ()
+    {
+        return Inertia::render('Backend/Question');
+    }
+    public function  edit_store (Request $request)
+    {
+        dd($request->all());
+    }
+    public function  edit_old ()
+    {
+        
+    }
+
 }

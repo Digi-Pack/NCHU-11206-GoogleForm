@@ -19,6 +19,8 @@ import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
 import close from '/resources/images/close.svg';
 import { questionTypeOption } from '@/Composables/useQuestionType';
+import Swal from 'sweetalert2';
+import { router } from '@inertiajs/vue3';
 
 export default {
   data() {
@@ -191,6 +193,31 @@ export default {
       item.square.row.splice(0, squarerow, squareRow);
       item.square.column.splice(0, squarecolumn, squareColumn);
       item.linear = linears;
+    },
+
+    submitData() {
+      const { formData } = this;
+      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      // 驗證
+      router.visit(route('edit.store'), {
+        method: 'post', data: formData, preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '新增成功',
+              showDenyButton: true,
+              confirmButtonText: '回列表',
+              denyButtonText: '取消',
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              // if (result.isConfirmed) {
+              //   router.get(route('product.list'));
+              // }
+              console.log(result);
+            });
+          }
+        },
+      });
     },
   },
 };
@@ -422,7 +449,7 @@ export default {
           </div>
         </div>
       </div>
-      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">儲存表單</button>
+      <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
     </div>
   </section>
 </template>
