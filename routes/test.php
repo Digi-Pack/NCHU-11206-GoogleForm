@@ -5,7 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return Inertia::render('Backend/Question');
+    return Inertia::render('Backend/Modal-test');
 })->name('response');
 
 Route::get('/see',[EditorController::class,'index'])->name('see.index');
