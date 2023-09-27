@@ -379,9 +379,7 @@ export default {
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                <button type="button" @click="delrow(item, row.id)">
-                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                </button>
+                <button type="button" @click="delrow(item, row.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addrow(item, item.id)">新增列</button>
@@ -392,9 +390,7 @@ export default {
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                <button type="button" @click="delcolumn(item, column.id)">
-                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                </button>
+                <button type="button" @click="delcolumn(item, column.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
@@ -410,9 +406,7 @@ export default {
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                <button type="button" @click="delrow(item, row.id)">
-                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                </button>
+                <button type="button" @click="delrow(item, row.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addrow(item, item.id)">新增列</button>
@@ -423,9 +417,7 @@ export default {
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                <button type="button" @click="delcolumn(item, column.id)">
-                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                </button>
+                <button type="button" @click="delcolumn(item, column.id)">X</button>
               </div>
               <div class="choose">
                 <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
@@ -435,7 +427,7 @@ export default {
         </div>
         <!-- 第二行 第十種  日期 -->
         <div v-if="item.type === 10" class="questype-10 !block">
-          <div class="calender">日期<img :src="date" alt=""></div>
+          <input type="date" class="calender">
         </div>
         <!-- 第二行 第十一種  時間 -->
         <div v-if="item.type === 11" class="questype-11 !block">
@@ -471,6 +463,12 @@ export default {
 
 <style lang="scss" scoped>
 #question {
+    $grey: rgb(178, 176, 176);
+    $font-grey: rgb(108, 105, 105);
+    $grey-bac: rgb(104, 108, 113);
+    $blue: rgb(237, 244, 253);
+    $md-blue: rgb(39, 123, 233);
+
     .container {
         @apply max-w-[770px] m-auto relative mt-[20px];
 
@@ -717,10 +715,7 @@ export default {
             .questype-10 {
                 @apply pt-[20px] pb-[35px] hidden border-x-0 border-t-0 border-b border-b-grey;
                 .calender {
-                    @apply flex justify-between w-[20%] text-base font-semibold text-grey border-x-0 border-t-0 border-b border-dotted border-b-grey;
-                    img {
-                        @apply w-[22px] h-[22px];
-                    }
+                    @apply w-[35%] text-base font-semibold text-grey border-x-0 border-t-0 border-dotted border-b-grey;
                 }
             }
 
@@ -779,6 +774,5 @@ export default {
             }
         }
     }
-}
-</style>
+}</style>
 

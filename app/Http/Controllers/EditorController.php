@@ -69,6 +69,7 @@ class EditorController extends Controller
     }
     public function  edit_store(Request $request)
     {
+        $user = $request->user();
         // dd($request->formText['qu_naires_title']);
         $request->validate([
             'formData.*.title' => 'required|string',
@@ -83,11 +84,13 @@ class EditorController extends Controller
             'qu_naires_title' => $request->formText['qu_naires_title'],
             'qu_naires_desc' => $request->formText['qu_naires_desc'],
             'questionnaires' => $jsonText,
-            'lead_author_id'=> 123,
+            'lead_author_id'=> $user->id,
         ]);
+
         return back()->with(['message' => rtFormat($textData)]);
     }
     public function  edit_old()
     {
+        return Inertia::render('Backend/Editorold');
     }
 }
