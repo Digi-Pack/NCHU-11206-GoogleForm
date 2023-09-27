@@ -470,7 +470,7 @@ export default {
     $md-blue: rgb(39, 123, 233);
 
     .container {
-        @apply max-w-[770px] m-auto relative mt-[20px];
+        @apply max-w-[770px] m-auto relative mt-[127px];
 
         .side {
             @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;

@@ -281,11 +281,15 @@ export default {
 
 <style lang="scss" scoped>
 #frontend-layout {
-  @apply w-full min-h-screen;
+  @apply w-full min-h-screen mt-[127px];
 }
 
 #main {
   @apply h-[calc(100dvh-107px)];
+}
+
+#header {
+  @apply fixed w-full top-0 z-50;
 }
 
 nav {
