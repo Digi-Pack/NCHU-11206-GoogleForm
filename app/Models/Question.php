@@ -55,7 +55,7 @@ class Question extends Model
     {
         return $this->hasMany(Response::class,'question_id','id');
     }
-    public function question()
+    public function user()
     {
         return $this->belongsTo(User::class, 'id', 'lead_author_id',);
     }

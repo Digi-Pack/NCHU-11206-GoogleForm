@@ -50,7 +50,7 @@ class EditorController extends Controller
             'questionnaires' => $seeJson,
         ]);
 
-        
+
         $data = Response::create([
             'user_id' => $request->resPonse[0]['user_id'],
             'question_id' => $request->resPonse[0]['question_id'],
@@ -63,17 +63,31 @@ class EditorController extends Controller
         return back()->with(['message' => rtFormat($see)]);
     }
 
-    public function  edit_index ()
+    public function  edit_index()
     {
         return Inertia::render('Backend/Question');
     }
-    public function  edit_store (Request $request)
+    public function  edit_store(Request $request)
     {
-        dd($request->all());
-    }
-    public function  edit_old ()
-    {
+        // dd($request->formText['qu_naires_title']);
+        $request->validate([
+            'formData.*.title' => 'required|string',
+            'formData.*.type' => 'required|numeric',
+            'formText.qu_naires_title' => 'required|string',
+        ]);
+        // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
         
-    }
+        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
+        $textData = Question::create([
+            'qu_naires_title' => $request->formText['qu_naires_title'],
+            'qu_naires_desc' => $request->formText['qu_naires_desc'],
+            'questionnaires' => $jsonText,
+            'lead_author_id'=> 123,
+        ]);
+        return back()->with(['message' => rtFormat($textData)]);
+    }
+    public function  edit_old()
+    {
+    }
 }

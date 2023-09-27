@@ -45,11 +45,18 @@ export default {
       copy: copy,
       close: close,
       questionTypeOption,
+      formText: {
+        modified_at: '',
+        other_modified: '',
+        opened_date: '',
+        lead_author_id: '',
+        qu_naires_title: '未命名的表單',
+        qu_naires_desc: '表單說明',
+      },
       formData: [{
         id: 1,
-        title: '',
-        desc: '',
-        request: '1',
+        title: '問題',
+        request: false,
         image: '',
         video: '',
         type: 3,
@@ -91,9 +98,8 @@ export default {
       this.a++;
       const newQuestion = {
         id: this.a,
-        title: '',
-        desc: '',
-        request: '1',
+        title: '問題',
+        request: false,
         image: '',
         video: '',
         type: 3,
@@ -171,15 +177,15 @@ export default {
       let squarerow = item.square.row.length;
       let squarecolumn = item.square.column.length;
       const newQuestion = {
-        id: Math.max(0, ...item.options.map(item => item.id)),
+        id: 1,
         value: '',
       };
       const squareRow = {
-        id: Math.max(0, ...item.square.row.map(item => item.id)),
+        id: 1,
         text: '',
       };
       const squareColumn = {
-        id: Math.max(0, ...item.square.column.map(item => item.id)) + 1,
+        id: 1,
         text: '',
       };
       const linears = {
@@ -194,13 +200,13 @@ export default {
       item.square.column.splice(0, squarecolumn, squareColumn);
       item.linear = linears;
     },
-
+    // 儲存表單
     submitData() {
-      const { formData } = this;
+      const { formData, formText } = this;
       // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
       // 驗證
       router.visit(route('edit.store'), {
-        method: 'post', data: formData, preserveState: true,
+        method: 'post', data: { formData, formText }, preserveState: true,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
@@ -260,16 +266,17 @@ export default {
       <div class="form-title">
 
         <!-- 表單名稱 -->
-        <input type="text" value="未命名的表單" class="form-input form-title-input">
+        <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input">
         <!-- 表單說明 -->
-        <input type="text" value="表單說明" class="form-input form-explain-input-2">
+        <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
       </div>
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
         <!-- 第一行 -->
+        {{ item }}
         <div class="question-top">
           <div class="text-box">
-            <input type="text" value="問題" class="form-input form-title-input">
+            <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input">
           </div>
           <label for="image">
             <img :src="image" alt="" class="upload">
@@ -441,7 +448,7 @@ export default {
           <div class="switch">
             <label>
               <span class="text">必填</span>
-              <input type="checkbox" name="" id="" class="checkbox">
+              <input v-model="item.request" type="checkbox" name="" id="" class="checkbox">
               <div class="btn-box">
                 <span class="btn"></span>
               </div>
