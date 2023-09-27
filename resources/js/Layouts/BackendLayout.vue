@@ -1,4 +1,5 @@
 <script>
+import sendLinkModal from '@/Components/Modal/SendLinkModal.vue';
 import palette from '/images/palette.svg';
 import close from '/images/close.svg';
 import image from '/images/image.svg';
@@ -13,6 +14,9 @@ import group_add from '/images/group_add.svg';
 import logo from '/images/logo.png';
 
 export default {
+  components: {
+    sendLinkModal,
+  },
   data() {
     return {
       images: {
@@ -29,6 +33,7 @@ export default {
         group_add,
         logo,
       },
+      show: false,
     };
   },
   methods: {
@@ -39,6 +44,9 @@ export default {
     currentUrl(urlName = '') {
       if (urlName === '') return;
       return route().current(urlName);
+    },
+    open() {
+      this.show = !this.show;
     },
   },
 };
@@ -211,7 +219,9 @@ export default {
                 </div>
               </div>
               <button type="button" class="eye"><img :src="images.visibility" width="25" height="25" alt=""></button>
-              <button type="button" class="sent">傳送</button>
+              <button type="button" class="sent" @click="open()">傳送</button>
+              <SendLinkModal v-if="show">
+              </SendLinkModal>
               <input type="checkbox" id="ham-menu-switch" class="hidden">
               <label for="ham-menu-switch" class="ham-menu">
                 <div class="downMenu">
