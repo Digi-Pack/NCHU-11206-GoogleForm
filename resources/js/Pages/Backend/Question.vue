@@ -240,7 +240,6 @@ export default {
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
         <!-- 第一行 -->
-        {{ item }}
         <div class="question-top">
           <div class="text-box">
             <input type="text" value="問題" class="form-input form-title-input">
@@ -276,7 +275,7 @@ export default {
           <div class="choose">
             <input type="checkbox" id="checkbox2">
             <label for="checkbox2" class="checkbox"></label>
-            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>
           </div>
         </div>
         <!-- 第二行 第四種 核取方塊 -->
@@ -288,7 +287,7 @@ export default {
           </div>
           <div class="choose">
             <input type="checkbox" id="checkbox2">
-            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>或&nbsp;<a href="">新增「其他」</a>
+            <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>
           </div>
         </div>
         <!-- 第二行 第五種 下拉式選單 -->
@@ -421,9 +420,9 @@ export default {
               </div>
             </label>
           </div>
-
         </div>
       </div>
+      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">儲存表單</button>
     </div>
   </section>
 </template>
