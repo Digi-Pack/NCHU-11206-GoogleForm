@@ -19,6 +19,7 @@ Route::prefix('edit')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/store', [EditorController::class, 'edit_store'])->name('edit.store');
     // 編輯舊表單
     Route::get('/old', [EditorController::class, 'edit_old'])->name('edit.old');
+    Route::post('/update', [EditorController::class, 'edit_update'])->name('edit.update');
 });
 
 Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {

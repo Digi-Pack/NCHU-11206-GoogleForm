@@ -23,6 +23,9 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
 export default {
+  props: {
+    response: Object,
+  },
   data() {
     return {
       add: add,
@@ -46,47 +49,51 @@ export default {
       close: close,
       questionTypeOption,
       formText: {
+        id: this.response?.rt_data?.responseForm[0].id ?? '',
         modified_at: '',
         other_modified: '',
         opened_date: '',
         lead_author_id: '',
-        qu_naires_title: '未命名的表單',
-        qu_naires_desc: '表單說明',
+        qu_naires_title: this.response?.rt_data?.responseForm[0].qu_naires_title ?? '',
+        qu_naires_desc: this.response?.rt_data?.responseForm[0].qu_naires_desc ?? '',
       },
-      formData: [{
-        id: 1,
-        title: '問題',
-        request: false,
-        image: '',
-        video: '',
-        type: 3,
-        options: [
-          {
-            id: 1,
-            value: '',
+
+      formData: this.response?.rt_data?.questionNaires?.map(questionnaire => {
+        return {
+          id: questionnaire.id,
+          title: questionnaire.title,
+          request: questionnaire.request,
+          image: questionnaire.image,
+          video: questionnaire.video,
+          type: questionnaire.type,
+          options: questionnaire.options.map(option => {
+            return {
+              id: option.id,
+              value: option.value,
+            };
+          }),
+          linear: {
+            min: questionnaire.linear.min,
+            max: questionnaire.linear.max,
+            minText: questionnaire.linear.minText,
+            maxText: questionnaire.linear.maxText,
           },
-        ],
-        linear: {
-          min: 1,
-          max: 10,
-          minText: '',
-          maxText: '',
-        },
-        square: {
-          row: [
-            {
-              id: 1,
-              text: '',
-            },
-          ],
-          column: [
-            {
-              id: 1,
-              text: '',
-            },
-          ],
-        },
-      }],
+          square: {
+            row: questionnaire.square.row.map(rowItem => {
+              return {
+                id: rowItem.id,
+                text: rowItem.text,
+              };
+            }),
+            column: questionnaire.square.column.map(columnItem => {
+              return {
+                id: columnItem.id,
+                text: columnItem.text,
+              };
+            }),
+          },
+        };
+      }) ?? [],
       a: 1,
       selectedMin: '0',
       selectedMax: '2',
@@ -205,7 +212,7 @@ export default {
       const { formData, formText } = this;
       // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
       // 驗證
-      router.visit(route('edit.store'), {
+      router.visit(route('edit.update'), {
         method: 'post', data: { formData, formText }, preserveState: true,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
@@ -270,10 +277,11 @@ export default {
         <!-- 表單說明 -->
         <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
       </div>
+
       <!-- 問題設置 -->
       <div v-for="item in formData" :key="item.id" class="question">
         <!-- 第一行 -->
-        {{ item }}
+        <!-- {{ item }} -->
         <div class="question-top">
           <div class="text-box">
             <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input">

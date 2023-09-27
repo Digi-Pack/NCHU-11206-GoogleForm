@@ -77,7 +77,7 @@ class EditorController extends Controller
             'formText.qu_naires_title' => 'required|string',
         ]);
         // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
-        
+
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         $textData = Question::create([
@@ -89,8 +89,46 @@ class EditorController extends Controller
 
         return back()->with(['message' => rtFormat($textData)]);
     }
-    public function  edit_old()
+    public function  edit_old(Request $request)
     {
-        return Inertia::render('Backend/Editorold');
+
+        // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
+        $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id',$request->id)->get();
+        // dd($responseForm[0]['questionnaires']);
+        // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
+        $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
+        // dd( $questionnaires);
+        $response = [
+            'responseForm' => $responseForm,
+            'questionNaires' => $questionNaires,
+        ];
+
+        return Inertia::render('Backend/Editorold',['response'=>rtFormat($response)]);
     }
+    public function  edit_update(Request $request)
+    {
+
+        $request->validate([
+            'formData.*.title' => 'required|string',
+            'formData.*.type' => 'required|numeric',
+            'formText.qu_naires_title' => 'required|string',
+        ]);
+        // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
+
+        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
+
+        // 找到表單id
+        // dd($request->formText['id']);
+        // dd($request->formData);
+        $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
+        // dd($updateForm);
+         $updateForm->update([
+            'qu_naires_title' => $request->formText['qu_naires_title'],
+            'qu_naires_desc' => $request->formText['qu_naires_desc'],
+            'questionnaires' => $jsonText,
+        ]);
+        // dd(132);
+        return back()->with(['message' => rtFormat($updateForm)]);
+    }
+
 }
