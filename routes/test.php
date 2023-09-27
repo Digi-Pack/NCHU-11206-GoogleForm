@@ -16,5 +16,5 @@ Route::get('/test', function () {
 })->name('nav2');
 
 Route::get('/test2', function () {
-    return Inertia::render('Backend/nav-2');
+    return Inertia::render('Backend/Answer');
 })->name('nav');
