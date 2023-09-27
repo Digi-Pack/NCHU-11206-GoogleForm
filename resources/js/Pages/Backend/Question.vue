@@ -119,14 +119,24 @@ export default {
       item.square.column = newFormData;
     },
     clearOptions(item) {
-      let odds = item.options.length;
-      console.log(odds);
+      let optionsLength = item.options.length;
+      let squarerow = item.square.row.length;
+      let squarecolumn = item.square.column.length;
       const newQuestion = {
         id: Math.max(0, ...item.options.map(item => item.id)),
         value: '',
       };
-      item.options.splice(0, odds, newQuestion);
-      console.log(item);
+      const squareRow = {
+        id: Math.max(0, ...item.square.row.map(item => item.id)),
+        text: '',
+      };
+      const squareColumn = {
+        id: Math.max(0, ...item.square.column.map(item => item.id)) + 1,
+        text: '',
+      };
+      item.options.splice(0, optionsLength, newQuestion);
+      item.square.row.splice(0, squarerow, squareRow);
+      item.square.column.splice(0, squarecolumn, squareColumn);
     },
   },
 };
