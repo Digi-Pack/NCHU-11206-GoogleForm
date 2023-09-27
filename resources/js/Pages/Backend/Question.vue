@@ -427,7 +427,7 @@ export default {
         </div>
         <!-- 第二行 第十種  日期 -->
         <div v-if="item.type === 10" class="questype-10 !block">
-          <input type="date" class="calender">
+          <div class="calender">日期<img :src="date" alt=""></div>
         </div>
         <!-- 第二行 第十一種  時間 -->
         <div v-if="item.type === 11" class="questype-11 !block">
@@ -715,7 +715,10 @@ export default {
             .questype-10 {
                 @apply pt-[20px] pb-[35px] hidden border-x-0 border-t-0 border-b border-b-grey;
                 .calender {
-                    @apply w-[35%] text-base font-semibold text-grey border-x-0 border-t-0 border-dotted border-b-grey;
+                    @apply flex justify-between w-[20%] text-base font-semibold text-grey border-x-0 border-t-0 border-b border-dotted border-b-grey;
+                    img {
+                        @apply w-[22px] h-[22px];
+                    }
                 }
             }
 
