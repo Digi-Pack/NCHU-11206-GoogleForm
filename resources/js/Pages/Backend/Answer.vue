@@ -52,33 +52,6 @@ export default {
 <template>
   <section id="question">
     <div class="container">
-      <!-- 側欄 -->
-      <div class="side">
-        <button type="button" class="side-func" @click="addques()">
-          <img :src="add" alt="">
-          <span>新增問題</span>
-        </button>
-        <div class="side-func">
-          <img :src="upload" alt="">
-          <span>匯入問題</span>
-        </div>
-        <div class="side-func">
-          <img :src="text" alt="">
-          <span>新增標題與說明</span>
-        </div>
-        <div class="side-func">
-          <img :src="image" alt="">
-          <span>新增圖片</span>
-        </div>
-        <div class="side-func">
-          <img :src="video" alt="">
-          <span>新增影片</span>
-        </div>
-        <div class="side-func">
-          <img :src="view_agenda" alt="">
-          <span>新增區段</span>
-        </div>
-      </div>
       <!-- 表單命名處 -->
       <div class="form-title">
         <!-- 表單名稱 -->
@@ -97,7 +70,7 @@ export default {
       <div class="question">
         <span class="text-[18px]">詳答</span>
         <div class="questype-2">
-          <input class="long" placeholder="您的回答">
+          <input type="text" class="long" placeholder="您的回答">
         </div>
       </div>
       <!-- 選擇題 -->

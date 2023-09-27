@@ -2,6 +2,7 @@
 import link from '/resources/images/link.png';
 import facebook from '/resources/images/facebook.svg';
 import twitter from '/resources/images/twitter.svg';
+import close from '/resources/images/close.svg';
 
 export default {
   data() {
@@ -9,6 +10,7 @@ export default {
       link,
       facebook,
       twitter,
+      close,
       show: true,
     };
   },
@@ -26,7 +28,9 @@ export default {
       <div class="content">
         <div class="flex justify-between items-center">
           <h1 class="text-[28px] font-bold text-black">傳送表單</h1>
-          <button type="button" class="text-[28px] font-bold text-black" @click="closing()">X</button>
+          <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
+            <img :src="close" alt="">
+          </button>
         </div>
         <div class="flex justify-between items-end pt-[30px] pb-[10px] border-b border-black">
           <div class="flex">傳送方式

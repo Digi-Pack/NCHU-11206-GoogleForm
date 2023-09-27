@@ -379,7 +379,9 @@ export default {
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                <button type="button" @click="delrow(item, row.id)">X</button>
+                <button type="button" @click="delrow(item, row.id)">
+                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                </button>
               </div>
               <div class="choose">
                 <button type="button" @click="addrow(item, item.id)">新增列</button>
@@ -390,7 +392,9 @@ export default {
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                <button type="button" @click="delcolumn(item, column.id)">X</button>
+                <button type="button" @click="delcolumn(item, column.id)">
+                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                </button>
               </div>
               <div class="choose">
                 <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
@@ -406,7 +410,9 @@ export default {
               <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
                 {{ index + 1 }}<span>。</span>
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                <button type="button" @click="delrow(item, row.id)">X</button>
+                <button type="button" @click="delrow(item, row.id)">
+                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                </button>
               </div>
               <div class="choose">
                 <button type="button" @click="addrow(item, item.id)">新增列</button>
@@ -417,7 +423,9 @@ export default {
               <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
                 <input type="checkbox">
                 <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                <button type="button" @click="delcolumn(item, column.id)">X</button>
+                <button type="button" @click="delcolumn(item, column.id)">
+                  <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                </button>
               </div>
               <div class="choose">
                 <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
@@ -463,14 +471,8 @@ export default {
 
 <style lang="scss" scoped>
 #question {
-    $grey: rgb(178, 176, 176);
-    $font-grey: rgb(108, 105, 105);
-    $grey-bac: rgb(104, 108, 113);
-    $blue: rgb(237, 244, 253);
-    $md-blue: rgb(39, 123, 233);
-
     .container {
-        @apply max-w-[770px] m-auto relative mt-[20px];
+        @apply max-w-[770px] h-screen m-auto relative mt-[20px];
 
         .side {
             @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
