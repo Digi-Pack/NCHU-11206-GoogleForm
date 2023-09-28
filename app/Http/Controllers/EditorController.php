@@ -123,6 +123,9 @@ class EditorController extends Controller
             'formData.*.title' => 'required|string',
             'formData.*.type' => 'required|numeric',
             'formText.qu_naires_title' => 'required|string',
+        ],[
+            'formData.*.title.required' => '問題:position必填 ',
+            'formText.qu_naires_title.required' => '表單標題必填',
         ]);
         // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
 
