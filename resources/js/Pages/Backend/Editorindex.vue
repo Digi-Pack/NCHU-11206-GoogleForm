@@ -23,6 +23,9 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
 export default {
+  props: {
+    flash: String,
+  },
   data() {
     return {
       add: add,
@@ -91,6 +94,8 @@ export default {
       selectedMin: '0',
       selectedMax: '2',
       show: false,
+      isSidebarFixed: false,
+      formUrl: '',
     };
   },
   methods: {
@@ -210,6 +215,7 @@ export default {
         method: 'post', data: { formData, formText }, preserveState: true,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
+            this.formUrl = props.flash.message.rt_data;
             Swal.fire({
               title: '新增成功',
               showDenyButton: true,
@@ -228,12 +234,27 @@ export default {
     },
     open() {
       this.show = !this.show;
+      // console.log(this.formUrl);
     },
     testStyle(index, err = {}) {
       // console.log(Object.hasOwn(err, `formData.${index}.title`));
       console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
     },
+    created() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    handleScroll() {
+      // 获取滚动的垂直位置
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      // 根据滚动位置来判断是否固定导航栏
+      this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
+    },
+
   },
 };
 
@@ -242,7 +263,7 @@ export default {
 <template>
   <section id="question" class="pt-[10px]">
     <div class="container">
-      <form>
+      <form @submit.prevent="submitData()">
         <!-- 側欄 -->
         <div :class="{ 'sidebar-fixed': isSidebarFixed }" class="side">
           <button type="button" class="side-func" @click="addQuestion()">
@@ -473,9 +494,9 @@ export default {
               </label>
             </div>
           </div>
-          <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
+          <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">儲存表單</button>
           <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[150px] bottom-5" @click="open()">傳送</button>
-          <SendLinkModal v-if="show">
+          <SendLinkModal v-if="show" :form-url="formUrl">
           </SendLinkModal>
         </div>
       </form>

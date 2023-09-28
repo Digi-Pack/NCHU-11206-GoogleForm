@@ -81,7 +81,7 @@ class EditorController extends Controller
             'formData.*.title' => 'required|min:0',
             'formData.*.type' => 'required|numeric',
             'formText.qu_naires_title' => 'required|string',
-        ],[
+        ], [
             'formData.*.title.required' => '問題:position必填 ',
             'formText.qu_naires_title.required' => '表單標題必填',
         ]);
@@ -97,8 +97,7 @@ class EditorController extends Controller
             'lead_author_id' => $user->id,
             'random' => $combinedString,
         ]);
-
-        return back()->with(['message' => rtFormat($textData)]);
+        return back()->with(['message' => rtFormat($combinedString)]);
     }
     public function  edit_old(Request $request)
     {
@@ -123,7 +122,7 @@ class EditorController extends Controller
             'formData.*.title' => 'required|string',
             'formData.*.type' => 'required|numeric',
             'formText.qu_naires_title' => 'required|string',
-        ],[
+        ], [
             'formData.*.title.required' => '問題:position必填 ',
             'formText.qu_naires_title.required' => '表單標題必填',
         ]);
