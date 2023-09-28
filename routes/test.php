@@ -17,5 +17,5 @@ Route::get('/test3', function () {
 })->name('nav2');
 
 Route::get('/test2', function () {
-    return Inertia::render('Backend/Editorindex');
-})->name('nav');
+    return Inertia::render('Frontend/Guide');
+})->name('guide');

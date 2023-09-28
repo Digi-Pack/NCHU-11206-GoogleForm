@@ -44,7 +44,8 @@ class Question extends Model
         'lead_author_id',
         'qu_naires_title',
         'qu_naires_desc',
-        'questionnaires'
+        'questionnaires',
+        'random'
     ];
 
     public function coworker ()

@@ -22,6 +22,9 @@ import { questionTypeOption } from '@/Composables/useQuestionType';
 export default {
   components: {
   },
+  props: {
+    response: Object,
+  },
   data() {
     return {
       add: add,
@@ -44,217 +47,183 @@ export default {
       copy: copy,
       maxId: 1,
       questionTypeOption,
+      formData: [{
+        general: {
+          id: '',
+          answer: '',
+        },
+        manyCheck: {
+          id: '',
+          answer: '',
+        },
+        squape: {
+          id: '',
+          answer: [
+            {
+              id: 1,
+              answer: '',
+            },
+          ],
+        },
+      }],
     };
   },
 };
 </script>
 
 <template>
+  <!-- {{ response }} -->
+  <!-- {{ response.rt_data.responseForm[0] }} -->
+  {{ response.rt_data.questionNaires }}
   <section id="question">
     <div class="container">
       <!-- 表單命名處 -->
       <div class="form-title">
         <!-- 表單名稱 -->
-        <input type="text" value="未命名的表單" class="form-input form-title-input">
+        <div class="form-input form-title-input">未命名的表單</div>
         <!-- 表單說明 -->
-        <input type="text" value="表單說明" class="form-input form-explain-input-2">
+        <div class="form-input form-explain-input-2">表單說明</div>
       </div>
-      <!-- 簡答 -->
-      <div class="question">
-        <span class="text-[18px]">未命名的問題</span>
-        <div class="questype-1">
-          <input type="text" class="short" placeholder="您的回答">
-        </div>
-      </div>
-      <!-- 詳答 -->
-      <div class="question">
-        <span class="text-[18px]">詳答</span>
-        <div class="questype-2">
-          <input type="text" class="long" placeholder="您的回答">
-        </div>
-      </div>
-      <!-- 選擇題 -->
-      <div class="question">
-        <span class="text-[18px]">選擇題</span>
-        <div class="questype-3">
-          <div class="option">
-            <input type="radio" name="choice-questions" id="choice-1">
-            <label for="choice-1">選項一</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="choice-questions" id="choice-2">
-            <label for="choice-2">選項二</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="choice-questions" id="choice-3">
-            <label for="choice-3">選項三</label>
+      <div v-for="item in response.rt_data.questionNaires" :key="item.id" class="question">
+        <!-- 簡答 -->
+        <div v-if="item.type === 1" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-1">
+            <input type="text" class="short" placeholder="簡答">
           </div>
         </div>
-      </div>
-      <!-- 核取方塊 -->
-      <div class="question">
-        <span class="text-[18px]">核取方塊</span>
-        <div class="questype-4">
-          <div class="option">
-            <input type="checkbox" class="focus:" name="checkbox-1" id="checkbox-1">
-            <label for="checkbox-1">選項一</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="checkbox-2" id="checkbox-2">
-            <label for="checkbox-2">選項二</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="checkbox-3" id="checkbox-3">
-            <label for="checkbox-3">選項三</label>
+        <!-- 詳答 -->
+        <div v-if="item.type === 2" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-2">
+            <input type="text" class="long" placeholder="詳答">
           </div>
         </div>
-      </div>
-      <!-- 下拉式選單 -->
-      <div class="question">
-        <span class="text-[18px]">下拉式選單</span>
-        <div class="questype-5">
-          <label for="select"></label>
-          <select name="select" id="select">
-            <option value="選項一">選項一</option>
-            <option value="選項二">選項二</option>
-            <option value="選項三">選項三</option>
-          </select>
-        </div>
-      </div>
-      <!-- 檔案上傳 -->
-      <div class="question">
-        <span class="text-[18px]">檔案上傳</span>
-        <div class="questype-6">
-          <label for=""></label>
-          <input type="file" name="" id="">
-        </div>
-      </div>
-      <!-- 線性刻度 -->
-      <div class="question">
-        <span class="text-[18px]">線性刻度</span>
-        <div class="questype-7">
-          <span>標籤</span>
-          <div class="linear">
-            <label for="linear-1">1</label>
-            <input type="radio" name="linear" id="linear-1">
+        <!-- 選擇題 -->
+        <div v-if="item.type === 3" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-3">
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="radio" name="choice-questions" id="choice-1">
+              <label for="choice-1">{{ choose.value }}</label>
+            </div>
           </div>
-          <div class="linear">
-            <label for="linear-2">2</label>
-            <input type="radio" name="linear" id="linear-2">
-          </div>
-          <div class="linear">
-            <label for="linear-3">3</label>
-            <input type="radio" name="linear" id="linear-3">
-          </div>
-          <div class="linear">
-            <label for="linear-4">4</label>
-            <input type="radio" name="linear" id="linear-4">
-          </div>
-          <div class="linear">
-            <label for="linear-5">5</label>
-            <input type="radio" name="linear" id="linear-5">
-          </div>
-          <span class="">標籤</span>
         </div>
-      </div>
-      <!-- 單選方格 -->
-      <div class="question">
-        <span class="text-[18px]">單選方格</span>
-        <div class="questype-8">
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>第一欄</th>
-                <th>第二欄</th>
-                <th>第三欄</th>
-                <th>第四欄</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>第一列</th>
-                <td><input type="radio" name="row-1"></td>
-                <td><input type="radio" name="row-1"></td>
-                <td><input type="radio" name="row-1"></td>
-                <td><input type="radio" name="row-1"></td>
-              </tr>
-              <tr>
-                <th>第二列</th>
-                <td><input type="radio" name="row-2"></td>
-                <td><input type="radio" name="row-2"></td>
-                <td><input type="radio" name="row-2"></td>
-                <td><input type="radio" name="row-2"></td>
-              </tr>
-              <tr>
-                <th>第三列</th>
-                <td><input type="radio" name="row-3"></td>
-                <td><input type="radio" name="row-3"></td>
-                <td><input type="radio" name="row-3"></td>
-                <td><input type="radio" name="row-3"></td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- 核取方塊 -->
+        <div v-if="item.type === 4" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-4">
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="checkbox" class="focus:" name="checkbox-1" id="checkbox-1">
+              <label for="checkbox-1">{{ choose.value }}</label>
+            </div>
+          </div>
         </div>
-      </div>
-      <!-- 核取方塊格 -->
-      <div class="question">
-        <span class="text-[18px]">核取方塊格</span>
-        <div class="questype-9">
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>第一欄</th>
-                <th>第二欄</th>
-                <th>第三欄</th>
-                <th>第四欄</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>第一列</th>
-                <td><input type="checkbox" name="row-1"></td>
-                <td><input type="checkbox" name="row-1"></td>
-                <td><input type="checkbox" name="row-1"></td>
-                <td><input type="checkbox" name="row-1"></td>
-              </tr>
-              <tr>
-                <th>第二列</th>
-                <td><input type="checkbox" name="row-2"></td>
-                <td><input type="checkbox" name="row-2"></td>
-                <td><input type="checkbox" name="row-2"></td>
-                <td><input type="checkbox" name="row-2"></td>
-              </tr>
-              <tr>
-                <th>第三列</th>
-                <td><input type="checkbox" name="row-3"></td>
-                <td><input type="checkbox" name="row-3"></td>
-                <td><input type="checkbox" name="row-3"></td>
-                <td><input type="checkbox" name="row-3"></td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- 下拉式選單 -->
+        <div v-if="item.type === 5" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-5">
+            <label for="select"></label>
+            <select name="select" id="select">
+              <option v-for="choose in item.options" :key="choose.id" value="{{ choose.value }}">{{ choose.value }}</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <!-- 日期 -->
-      <div class="question">
-        <span class="text-[18px]">日期</span>
-        <div class="questype-10">
-          <input type="date">
+        <!-- 檔案上傳 -->
+        <div v-if="item.type === 6" class="!block">
+          <span class="text-[18px]">檔案上傳</span>
+          <div class="questype-6">
+            <label for=""></label>
+            <input type="file" name="" id="">
+          </div>
         </div>
-      </div>
-      <!-- 時間 -->
-      <div class="question">
-        <span class="text-[18px]">時間</span>
-        <div class="questype-11">
-          <input type="text">
-          <span>:</span>
-          <input type="text">
-          <select name="" id="">
-            <option value="a.m.">上午</option>
-            <option value="p.m.">下午</option>
-          </select>
+        <!-- 線性刻度 -->
+        <div v-if="item.type === 7" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-7">
+            <span>{{ item.linear.minText }}</span>
+            <!-- <div class="linear">
+              <label for="linear-1">{{ item.linear.min }}</label>
+              <input type="radio" name="linear" id="linear-1">
+            </div> -->
+            <div v-for="i in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key="i">
+              <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
+                {{ i - (item.linear.min === '1' ? 0 : 1) }}
+              </label>
+              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
+            </div>
+            <!-- <div class="linear">
+              <label :for="'linear-' + item.linear.max">{{ item.linear.max }}</label>
+              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + item.linear.max">
+            </div> -->
+            <span class="">{{ item.linear.maxText }}</span>
+          </div>
+        </div>
+        <!-- 單選方格 -->
+
+        <div v-if="item.type === 8" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-8">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="choose in item.square.row" :key="choose.id">
+                  <th>{{ choose.text }}</th>
+                  <td><input v-for="choose in item.square.row" :key="choose.id" type="radio" name="row-1"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 核取方塊格 -->
+        <div v-if="item.type === 9" class="!block">
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-9">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="choose in item.square.row" :key="choose.id">
+                  <th>{{ choose.text }}</th>
+                  <td><input v-for="choose in item.square.row" :key="choose.id" type="radio" name="row-1"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 日期 -->
+        <div v-if="item.type === 10" class="!block">
+          <div class="question">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-10">
+              <input type="date">
+            </div>
+          </div>
+        </div>
+        <!-- 時間 -->
+        <div v-if="item.type === 11" class="!block">
+          <div class="question">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-11">
+              <input type="text">
+              <span>:</span>
+              <input type="text">
+              <select name="" id="">
+                <option value="a.m.">上午</option>
+                <option value="p.m.">下午</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -323,19 +292,19 @@ export default {
                 @apply w-[22px];
             }
             .questype-1 {
-                @apply pt-[20px] pb-[10px];
+                @apply pt-[20px] pb-[10px] ;
                 .short {
                   @apply w-[60%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
                 }
             }
             .questype-2 {
-                @apply pt-[20px] pb-[10px];
+                @apply pt-[20px] pb-[10px]  ;
                 .long {
                   @apply w-[85%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
                 }
             }
             .questype-3 {
-                @apply w-full pt-[20px] flex flex-col;
+                @apply w-full pt-[20px] flex flex-col ;
                 .option {
                   @apply flex items-center mb-3;
                   label {
@@ -345,7 +314,7 @@ export default {
             }
 
             .questype-4 {
-              @apply w-full pt-[20px];
+              @apply w-full pt-[20px] ;
               .option {
                   @apply flex items-center mb-3;
                   label {
@@ -355,21 +324,21 @@ export default {
             }
 
             .questype-5 {
-              @apply w-full py-[30px];
+              @apply w-full py-[30px] ;
               #select {
                 @apply w-[30%] h-[50px] border-green-middle rounded-md;
               }
             }
 
             .questype-6 {
-              @apply w-full py-[10px];
+              @apply w-full py-[10px] ;
               #file-upload-button {
                 @apply bg-purple;
               }
             }
 
             .questype-7 {
-                @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
+                @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10 ;
                 .linear {
                   @apply flex flex-col;
                   label {
@@ -392,14 +361,14 @@ export default {
             }
 
             .questype-10 {
-                @apply pt-[20px] pb-[20px];
+                @apply pt-[20px] pb-[20px] ;
                 input {
                   @apply border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
                 }
             }
 
             .questype-11 {
-                @apply pt-[20px] pb-[20px];
+                @apply pt-[20px] pb-[20px] ;
                 input {
                   @apply w-[30px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
                 }
