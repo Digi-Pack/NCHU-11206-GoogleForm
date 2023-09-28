@@ -83,9 +83,9 @@ export default {
       <!-- 表單命名處 -->
       <div class="form-title">
         <!-- 表單名稱 -->
-        <div class="form-input form-title-input">未命名的表單</div>
+        <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
         <!-- 表單說明 -->
-        <div class="form-input form-explain-input-2">表單說明</div>
+        <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
       </div>
       <div v-for="item in response.rt_data.questionNaires" :key="item.id" class="question">
         <!-- 簡答 -->

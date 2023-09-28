@@ -12,9 +12,9 @@ class ReplyController extends Controller
     public function reply_index(Request $request)
     {
         // 先找到指定id的表單
-        $responseForm = Question::where('id', 14)->get();
-        
-        $url = route('reply.index', ['random' => 'your_random_value']); 
+        $responseForm = Question::where('id', 2)->get();
+
+        $url = route('reply.index', ['random' => 'your_random_value']);
         //獲取亂數表單
         //$question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);
