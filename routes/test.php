@@ -11,8 +11,9 @@ Route::get('/', function () {
 Route::get('/see',[EditorController::class,'index'])->name('see.index');
 
 Route::post('/see/store',[EditorController::class,'seeStore'])->name('see.store');
-Route::get('/test', function () {
-    return Inertia::render('Backend/nav');
+
+Route::get('/test3', function () {
+    return Inertia::render('Backend/Response');
 })->name('nav2');
 
 Route::get('/test2', function () {

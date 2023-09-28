@@ -246,14 +246,9 @@ export default {
                   <div class="hello">shane，你好!</div>
                   <div class="manage">管理你的 Google 帳戶</div>
                   <div class="advice">建議採取的行動</div>
-                  <div class="acc">
+                  <div class="acc mb-3">
                     <div class="add">新增帳戶</div>
                     <div class="log-out">登出</div>
-                  </div>
-                  <div class="footer">
-                    <span>隱私權政策</span>
-                    <div class="dot"></div>
-                    <span>服務條款</span>
                   </div>
                 </div>
               </div>
