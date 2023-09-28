@@ -91,6 +91,7 @@ export default {
       selectedMin: '0',
       selectedMax: '2',
       show: false,
+      isSidebarFixed: false,
     };
   },
   methods: {
@@ -218,7 +219,7 @@ export default {
             }).then((result) => {
               /* Read more about isConfirmed, isDenied below */
               // if (result.isConfirmed) {
-              //   router.get(route('guide.index'));
+              //   router.get(route('product.list'));
               // }
               console.log(result);
             });
@@ -234,6 +235,19 @@ export default {
       console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
     },
+    created() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    handleScroll() {
+      // 获取滚动的垂直位置
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      // 根据滚动位置来判断是否固定导航栏
+      this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
+    },
   },
 };
 
@@ -242,9 +256,9 @@ export default {
 <template>
   <section id="question" class="pt-[10px]">
     <div class="container">
-      <form @submit.prevent="submitData()">
+      <form>
         <!-- 側欄 -->
-        <div class="side">
+        <div :class="{ 'sidebar-fixed': isSidebarFixed }" class="side">
           <button type="button" class="side-func" @click="addQuestion()">
             <label>
               <img :src="add" alt="">
@@ -276,18 +290,17 @@ export default {
         <div class="form-title">
 
           <!-- 表單名稱 -->
-          <input v-model="formText.qu_naires_title" :class="{ 'border-[red]': $page.props.errors['formText.qu_naires_title'] }" type="text" placeholder="未命名的表單" class="form-input form-title-input" required>
-          <div class="text-[red]">{{ $page.props?.errors['formText.qu_naires_title'] ?? '' }}</div>
+          <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input">
           <!-- 表單說明 -->
           <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
         </div>
         <!-- 問題設置 -->
-        <div v-for="(item, index) in formData" :key="item.id" class="question">
+        <div v-for="item in formData" :key="item.id" class="question">
           <!-- 第一行 -->
+          {{ item }}
           <div class="question-top">
             <div class="text-box">
-              <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input" required>
-              <div class="text-[red]">{{ $page.props?.errors[`formData.${index}.title`] ?? '' }}</div>
+              <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input">
             </div>
             <label for="image">
               <img :src="image" alt="" class="upload">
@@ -474,11 +487,11 @@ export default {
               </label>
             </div>
           </div>
+          <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
+          <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[150px] bottom-5" @click="open()">傳送</button>
+          <SendLinkModal v-if="show">
+          </SendLinkModal>
         </div>
-        <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
-        <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[150px] bottom-5" @click="open()">傳送</button>
-        <SendLinkModal v-if="show">
-        </SendLinkModal>
       </form>
     </div>
   </section>

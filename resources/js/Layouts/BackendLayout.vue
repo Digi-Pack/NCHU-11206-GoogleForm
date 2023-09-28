@@ -68,7 +68,11 @@ export default {
         <div class="container">
           <div class="top h-[60%] bg-white flex justify-between p-[10px]">
             <div class="topL flex justify-start items-center">
-              <div class="square logo"><img :src="images.logo" width="25" alt=""></div>
+              <Link :href="route('guide')">
+                <div class="square logo">
+                  <img :src="images.logo" width="25" alt="">
+                </div>
+              </Link>
               <span class="title">未命名表單</span>
             </div>
             <div class="topR">
@@ -254,7 +258,7 @@ export default {
             </div>
           </div>
           <div class="down">
-            <NavLink class="btn" :href="route('guide')" :active="currentUrl('guide')">
+            <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
               問題
             </NavLink>
             <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
