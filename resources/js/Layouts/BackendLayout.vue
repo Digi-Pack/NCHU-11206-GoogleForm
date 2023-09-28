@@ -255,7 +255,7 @@ export default {
             </div>
           </div>
           <div class="down">
-            <NavLink class="btn" :href="route('nav')" :active="currentUrl('nav')">
+            <NavLink class="btn" :href="route('guide')" :active="currentUrl('guide')">
               問題
             </NavLink>
             <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
