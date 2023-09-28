@@ -207,26 +207,26 @@ export default {
         </div>
         <!-- 日期 -->
         <div v-if="item.type === 10" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-10">
-              <input type="date">
-            </div>
+
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-10">
+            <input type="date">
           </div>
+
         </div>
         <!-- 時間 -->
         <div v-if="item.type === 11" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-11">
-              <input type="text">
-              <span>:</span>
-              <input type="text">
-              <select name="" id="">
-                <option value="a.m.">上午</option>
-                <option value="p.m.">下午</option>
-              </select>
-            </div>
+
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-11">
+            <input type="text">
+            <span>:</span>
+            <input type="text">
+            <select name="" id="">
+              <option value="a.m.">上午</option>
+              <option value="p.m.">下午</option>
+            </select>
+
           </div>
         </div>
       </div>
