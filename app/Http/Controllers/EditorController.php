@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\Response;
 use App\Models\Seeall;
+use Carbon\Carbon;
 use Egulias\EmailValidator\Result\Reason\Reason;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -69,13 +70,22 @@ class EditorController extends Controller
     }
     public function  edit_store(Request $request)
     {
+        // 與當下時間
+        $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
+        // 產生再轉成16進位亂瑪(15字元)
+        $randomString = bin2hex(random_bytes(15));
+        $combinedString = $data . $randomString;
         $user = $request->user();
         // dd($request->formText['qu_naires_title']);
         $request->validate([
-            'formData.*.title' => 'required|string',
+            'formData.*.title' => 'required|min:0',
             'formData.*.type' => 'required|numeric',
             'formText.qu_naires_title' => 'required|string',
+        ],[
+            'formData.*.title.required' => '問題:position必填 ',
+            'formText.qu_naires_title.required' => '表單標題必填',
         ]);
+        // :position 第幾個意思
         // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
 
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
@@ -84,7 +94,8 @@ class EditorController extends Controller
             'qu_naires_title' => $request->formText['qu_naires_title'],
             'qu_naires_desc' => $request->formText['qu_naires_desc'],
             'questionnaires' => $jsonText,
-            'lead_author_id'=> $user->id,
+            'lead_author_id' => $user->id,
+            'random' => $combinedString,
         ]);
 
         return back()->with(['message' => rtFormat($textData)]);
@@ -93,7 +104,7 @@ class EditorController extends Controller
     {
 
         // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
-        $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id',$request->id)->get();
+        $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id', $request->id)->get();
         // dd($responseForm[0]['questionnaires']);
         // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
         $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
@@ -103,7 +114,7 @@ class EditorController extends Controller
             'questionNaires' => $questionNaires,
         ];
 
-        return Inertia::render('Backend/Editorold',['response'=>rtFormat($response)]);
+        return Inertia::render('Backend/Editorold', ['response' => rtFormat($response)]);
     }
     public function  edit_update(Request $request)
     {
@@ -112,6 +123,9 @@ class EditorController extends Controller
             'formData.*.title' => 'required|string',
             'formData.*.type' => 'required|numeric',
             'formText.qu_naires_title' => 'required|string',
+        ],[
+            'formData.*.title.required' => '問題:position必填 ',
+            'formText.qu_naires_title.required' => '表單標題必填',
         ]);
         // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
 
@@ -122,7 +136,7 @@ class EditorController extends Controller
         // dd($request->formData);
         $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
         // dd($updateForm);
-         $updateForm->update([
+        $updateForm->update([
             'qu_naires_title' => $request->formText['qu_naires_title'],
             'qu_naires_desc' => $request->formText['qu_naires_desc'],
             'questionnaires' => $jsonText,
@@ -130,5 +144,4 @@ class EditorController extends Controller
         // dd(132);
         return back()->with(['message' => rtFormat($updateForm)]);
     }
-
 }
