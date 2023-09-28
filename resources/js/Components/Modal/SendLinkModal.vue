@@ -34,7 +34,9 @@ export default {
         </div>
         <div class="flex justify-between items-end pt-[30px] pb-[10px] border-b border-black">
           <div class="flex">傳送方式
-            <img :src="link" class="ml-[20px] w-[28px] h-[28px]" alt="">
+            <button type="button">
+              <img :src="link" class="ml-[20px] w-[28px] h-[28px]" alt="">
+            </button>
           </div>
           <div class="flex">
             <img :src="facebook" class="mr-[10px] w-[28px] h-[28px]" alt="">

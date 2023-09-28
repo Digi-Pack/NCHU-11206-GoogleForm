@@ -216,9 +216,9 @@ export default {
               denyButtonText: '取消',
             }).then((result) => {
               /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                router.get(route('guide.index'));
-              }
+              // if (result.isConfirmed) {
+              //   router.get(route('guide.index'));
+              // }
               console.log(result);
             });
           }
