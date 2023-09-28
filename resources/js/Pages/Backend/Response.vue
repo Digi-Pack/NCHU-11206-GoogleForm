@@ -24,8 +24,8 @@ export default {
 
 <template>
   <section id="response">
-    <div class="all">
-      <div class="response-head">
+    <div class="all relative z-10">
+      <div class="response-head bg-white">
         <div class="head-top">
           <h2>0則回應</h2>
           <div class="func">
@@ -88,7 +88,7 @@ export default {
           </div> -->
         </div>
       </div>
-      <div class="response-body">
+      <div class="response-body bg-white">
         <span>待回應</span>
       </div>
     </div>
@@ -97,8 +97,9 @@ export default {
 
 <style lang="scss" scoped>
 #response {
+    @apply h-screen mt-[20px] pb-[20px];
 .all {
-    @apply m-auto max-w-[770px] bg-[white];
+    @apply m-auto max-w-[770px] z-50;
     .response-head {
         @apply my-[15px] rounded-[10px] border border-gray-200;
 

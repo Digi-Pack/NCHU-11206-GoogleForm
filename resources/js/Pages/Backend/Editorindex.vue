@@ -98,6 +98,12 @@ export default {
       formUrl: '',
     };
   },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
   methods: {
     addQuestion() {
       const { formData } = this;
@@ -241,6 +247,7 @@ export default {
       console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
     },
+<<<<<<< Updated upstream
     created() {
       window.addEventListener('scroll', this.handleScroll);
     },
@@ -255,17 +262,24 @@ export default {
       this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
     },
 
+=======
+    handleScroll() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      // 根据滚动距离来判断是否固定侧边栏
+      this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定侧边栏
+    },
+>>>>>>> Stashed changes
   },
 };
 
 </script>
 
 <template>
-  <section id="question" class="pt-[10px]">
+  <section id="question" class="pt-[10px] z-2">
     <div class="container">
       <form @submit.prevent="submitData()">
         <!-- 側欄 -->
-        <div :class="{ 'sidebar-fixed': isSidebarFixed }" class="side">
+        <div class="side">
           <button type="button" class="side-func" @click="addQuestion()">
             <label>
               <img :src="add" alt="">
@@ -511,7 +525,7 @@ export default {
         @apply max-w-[770px] m-auto relative mt-[20px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+            @apply w-[49px] h-[253px] flex flex-col fixed top-[160px] right-[20%] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
 
             img {
                 @apply w-[22px];

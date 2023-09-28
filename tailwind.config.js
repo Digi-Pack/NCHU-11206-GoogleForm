@@ -32,6 +32,7 @@ module.exports = {
         DEFAULT: '#db4437',
         middle: '#f6d0cd',
         dark: '#f2beb9',
+        ...colors.red,
       },
       'purple': {
         light: '#f0ebf8',

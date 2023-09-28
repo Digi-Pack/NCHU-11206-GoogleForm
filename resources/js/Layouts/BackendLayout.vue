@@ -12,6 +12,7 @@ import link from '/images/link.svg';
 import print from '/images/print.svg';
 import group_add from '/images/group_add.svg';
 import logo from '/images/logo.png';
+import { colorType } from '@/Composables/useBgColor';
 
 export default {
   components: {
@@ -34,7 +35,7 @@ export default {
         logo,
       },
       show: false,
-      bgColor: 'bg-purple-light',
+      bgColor: 'bg-indigo-light',
     };
   },
   methods: {
@@ -50,11 +51,11 @@ export default {
       this.show = !this.show;
     },
     changeColor(newColor) {
-      let myNewColor = `bg-${newColor}-light`;
+      console.log(colorType);
+      let myNewColor = `bg-${newColor}`;
       this.bgColor = myNewColor;
     },
     myStyle() {
-      console.log(this.bgColor);
       return this.bgColor;
     },
   },
@@ -80,7 +81,7 @@ export default {
               <label for="ham-menu-switch-3" class="ham-menu">
                 <div class="paletteB"><img :src="images.palette" width="25" height="25" alt=""></div>
               </label>
-              <div class="topic">
+              <div class="topic z-50">
                 <div class="topic-head">
                   <div class="top-text">
                     <img class="palette" :src="images.palette" alt="">
@@ -272,7 +273,7 @@ export default {
       </nav>
     </header>
     <main id="main" :class="myStyle()">
-      {{ bgColor }}
+      <div class="fixed top-0 w-full h-screen bg-white opacity-80"></div>
       <slot />
     </main>
   </section>
@@ -284,7 +285,7 @@ export default {
 }
 
 #main {
-  @apply h-auto;
+  @apply h-auto relative;
 }
 
 #header {
