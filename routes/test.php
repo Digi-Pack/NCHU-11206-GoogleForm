@@ -4,9 +4,9 @@ use App\Http\Controllers\EditorController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return Inertia::render('Backend/Question');
-})->name('response');
+// Route::get('/', function () {
+//     return Inertia::render('Backend/Question');
+// })->name('response');
 
 Route::get('/see',[EditorController::class,'index'])->name('see.index');
 
