@@ -225,6 +225,11 @@ export default {
         },
       });
     },
+    testStyle(index, err = {}) {
+      // console.log(Object.hasOwn(err, `formData.${index}.title`));
+      console.log(err[`formData.${index}.title`] ?? '');
+      return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
+    },
   },
 };
 
@@ -266,17 +271,20 @@ export default {
       <div class="form-title">
 
         <!-- 表單名稱 -->
-        <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input">
+        <input v-model="formText.qu_naires_title" :class="{ 'border-[red]': $page.props.errors['formText.qu_naires_title'] }" type="text" placeholder="未命名的表單" class="form-input form-title-input">
+        <div class="text-[red]">{{ $page.props?.errors['formText.qu_naires_title'] ?? '' }}</div>
         <!-- 表單說明 -->
         <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
       </div>
       <!-- 問題設置 -->
-      <div v-for="item in formData" :key="item.id" class="question">
+      <div v-for="(item, index) in formData" :key="item.id" class="question">
         <!-- 第一行 -->
-        {{ item }}
         <div class="question-top">
           <div class="text-box">
-            <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input">
+            {{ $page.props?.errors[`formData.${index}.title`] ?? '' }}
+            <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input">
+            <!--  -->
+            <div class="text-[red]">{{ $page.props?.errors[`formData.${index}.title`] ?? '' }}</div>
           </div>
           <label for="image">
             <img :src="image" alt="" class="upload">
