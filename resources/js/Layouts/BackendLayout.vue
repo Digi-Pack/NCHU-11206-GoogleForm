@@ -34,6 +34,7 @@ export default {
         logo,
       },
       show: false,
+      bgColor: 'bg-purple-light',
     };
   },
   methods: {
@@ -47,6 +48,14 @@ export default {
     },
     open() {
       this.show = !this.show;
+    },
+    changeColor(newColor) {
+      let myNewColor = `bg-${newColor}-light`;
+      this.bgColor = myNewColor;
+    },
+    myStyle() {
+      console.log(this.bgColor);
+      return this.bgColor;
     },
   },
 };
@@ -106,7 +115,6 @@ export default {
                         <option value="">24</option>
                       </select>
                     </div>
-
                     <div class="select-region">
                       <div class="region-title">問題</div>
                       <select name="" id="font-family" value="Roboto">
@@ -135,7 +143,6 @@ export default {
                         <option value="">18</option>
                       </select>
                     </div>
-
                     <div class="select-region">
                       <div class="region-title">文字</div>
                       <select name="" id="font-family" value="Roboto">
@@ -177,20 +184,20 @@ export default {
                     <div class="text-[18px] font-semibold mb-[10px]">顏色</div>
                     <div class="colorbox-all">
                       <div class="col">
-                        <div class="colorbox bg-[#db4437]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#673ab7]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#3f51b5]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#4285f4]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#03a9f4]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#00bcd4]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                        <button type="button" class="colorbox bg-red" @click="changeColor('red')"></button>
+                        <button type="button" class="colorbox bg-purple" @click="changeColor('purple')"></button>
+                        <button type="button" class="colorbox bg-indigo" @click="changeColor('indigo')"></button>
+                        <button type="button" class="colorbox bg-blue" @click="changeColor('blue')"></button>
+                        <button type="button" class="colorbox bg-light-blue" @click="changeColor('light-blue')"></button>
+                        <button type="button" class="colorbox bg-cyan-blue" @click="changeColor('cyan-blue')"></button>
                       </div>
                       <div class="col">
-                        <div class="colorbox bg-[#ff5722]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#ff9800]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#009688]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#4caf50]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#607d8b]"><i class="fa-sharp fa-solid fa-check check"></i></div>
-                        <div class="colorbox bg-[#9e9e9e]"><i class="fa-sharp fa-solid fa-check check"></i></div>
+                        <button type="button" class="colorbox bg-orange-red" @click="changeColor('orange-red')"></button>
+                        <button type="button" class="colorbox bg-orange" @click="changeColor('orange')"></button>
+                        <button type="button" class="colorbox bg-blue-green" @click="changeColor('blue-green')"></button>
+                        <button type="button" class="colorbox bg-green" @click="changeColor('green')"></button>
+                        <button type="button" class="colorbox bg-blue-gray" @click="changeColor('blue-gray')"></button>
+                        <button type="button" class="colorbox bg-grey" @click="changeColor('grey')"></button>
                       </div>
                       <div class="col">
                         <div class="colorbox bg-[#eeeeee]"><img class="add" :src="images.add"
@@ -202,18 +209,10 @@ export default {
                   <div class="page-background-color">
                     <div class="text-[18px] font-semibold mb-[10px]">背景</div>
                     <div class="col">
-                      <div class="colorbox">
-                        <i class="fa-sharp fa-solid fa-check check"></i>
-                      </div>
-                      <div class="colorbox">
-                        <i class="fa-sharp fa-solid fa-check check"></i>
-                      </div>
-                      <div class="colorbox">
-                        <i class="fa-sharp fa-solid fa-check check"></i>
-                      </div>
-                      <div class="colorbox border bg-[#f6f6f6]">
-                        <i class="fa-sharp fa-solid fa-check check"></i>
-                      </div>
+                      <div class="colorbox"></div>
+                      <div class="colorbox"></div>
+                      <div class="colorbox"></div>
+                      <div class="colorbox border bg-[#f6f6f6]"></div>
                     </div>
                   </div>
                 </div>
@@ -268,7 +267,8 @@ export default {
         </div>
       </nav>
     </header>
-    <main id="main">
+    <main id="main" :class="myStyle()">
+      {{ bgColor }}
       <slot />
     </main>
   </section>
@@ -276,11 +276,11 @@ export default {
 
 <style lang="scss" scoped>
 #frontend-layout {
-  @apply w-full min-h-screen mt-[127px];
+  @apply w-full mt-[107px];
 }
 
 #main {
-  @apply h-[calc(100dvh-107px)];
+  @apply h-auto;
 }
 
 #header {

@@ -90,6 +90,7 @@ export default {
       a: 1,
       selectedMin: '0',
       selectedMax: '2',
+      show: false,
     };
   },
   methods: {
@@ -225,13 +226,16 @@ export default {
         },
       });
     },
+    open() {
+      this.show = !this.show;
+    },
   },
 };
 
 </script>
 
 <template>
-  <section id="question">
+  <section id="question" class="pt-[10px]">
     <div class="container">
       <!-- 側欄 -->
       <div class="side">
@@ -465,14 +469,18 @@ export default {
         </div>
       </div>
       <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
+      <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[150px] bottom-5" @click="open()">傳送</button>
+      <SendLinkModal v-if="show">
+      </SendLinkModal>
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #question {
+    @apply h-full;
     .container {
-        @apply max-w-[770px] m-auto relative mt-[20px];
+        @apply max-w-[770px] m-auto relative py-[20px];
 
         .side {
             @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;

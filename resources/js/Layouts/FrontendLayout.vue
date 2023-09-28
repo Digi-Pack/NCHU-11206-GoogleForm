@@ -8,17 +8,12 @@ export default {};
     <main id="main">
       <slot />
     </main>
-    <footer id="footer"></footer>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #frontend-layout {
-  @apply w-full min-h-screen;
-}
-
-#main {
-  @apply h-[calc(100dvh-42px)];
+  @apply w-full;
 }
 
 </style>
