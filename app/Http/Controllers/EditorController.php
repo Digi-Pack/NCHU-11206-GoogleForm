@@ -65,7 +65,7 @@ class EditorController extends Controller
 
     public function  edit_index()
     {
-        return Inertia::render('Backend/Question');
+        return Inertia::render('Backend/Editorindex');
     }
     public function  edit_store(Request $request)
     {
