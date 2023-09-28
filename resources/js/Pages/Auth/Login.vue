@@ -70,6 +70,9 @@ const submit = () => {
           <Checkbox name="remember" v-model:checked="form.remember" />
           <span class="ml-2 text-sm text-gray-600">Remember me</span>
         </label>
+        <a :href="route('register')">
+          <button type="button" class="mt-[15px] text-grey p-2 rounded-[10px] hover:bg-gray-100 hover:text-blue">Register</button>
+        </a>
       </div>
 
       <div class="flex items-center justify-end mt-4">
