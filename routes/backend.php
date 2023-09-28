@@ -6,9 +6,10 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Backend/Guideindex');
-    });
+    // Route::get('/', function () {
+    //     return Inertia::render('Frontend/guide_index');
+    // });
+    Route::get('/',[GuideController::class,'guide_index'])->name('guide.index');
 });
 
 //編輯者頁面
@@ -25,4 +26,5 @@ Route::prefix('edit')->middleware(['auth', 'verified'])->group(function () {
 Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
     // 新增表單
     Route::get('/index',[GuideController::class,'guide_index'])->name('guide.index');
+    Route::delete('/destroy',[GuideController::class,'guide_destroy'])->name('guide.destroy');
 });

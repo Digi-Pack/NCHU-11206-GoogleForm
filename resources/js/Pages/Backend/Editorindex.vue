@@ -247,7 +247,6 @@ export default {
       console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
     },
-<<<<<<< Updated upstream
     created() {
       window.addEventListener('scroll', this.handleScroll);
     },
@@ -262,13 +261,6 @@ export default {
       this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
     },
 
-=======
-    handleScroll() {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      // 根据滚动距离来判断是否固定侧边栏
-      this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定侧边栏
-    },
->>>>>>> Stashed changes
   },
 };
 

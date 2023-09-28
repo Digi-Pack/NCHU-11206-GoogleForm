@@ -49,9 +49,38 @@ export default {
         dot,
         text,
         open_in_new,
+
       },
       show: false,
+      items: [],
+      nextItemId: 1, // 用于生成唯一的项目ID
     };
+  },
+  methods: {
+    addItem() {
+    // 添加新项目到 items 数组
+      this.items.push({ id: this.nextItemId, isOpen: false });
+      this.nextItemId++; // 增加下一个项目的ID
+    },
+    handleLabelClick(itemId) {
+      const clickedItem = this.items.find(item => item.id === itemId);
+      if (clickedItem) {
+      // 切换项目的菜单状态
+        clickedItem.isOpen = !clickedItem.isOpen;
+        console.log(clickedItem.isOpen);
+      }
+    },
+    handleDivClick(itemId) {
+      console.log(itemId);
+      // 先添加新项目
+      this.addItem();
+      // 再切换项目的菜单状态
+      this.handleLabelClick(itemId);
+
+    },
+    handleLabelKeydown() {
+      // 用click事件沒加keydown事件會報錯
+    },
   },
 };
 </script>
@@ -131,11 +160,11 @@ export default {
                 <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
                 <input type="checkbox" class="hidden" id="card-option">
                 <label for="card-option">
-                  <div class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
+                  <div class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click.prevent="handleDivClick(item.id)" @keydown="handleLabelKeydown()">
                     <img :src="images.dot" alt="">
                   </div>
                 </label>
-                <div id="card-option-menu">
+                <div v-if="item.isOpen" id="card-option-menu">
                   <button type="button"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
                   <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
                   <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
@@ -267,7 +296,7 @@ export default {
             @apply block;
           }
           #card-option-menu {
-            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md hidden;
+            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md ;
             button {
             @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
             }

@@ -178,7 +178,7 @@ export default {
               <tbody>
                 <tr v-for="choose in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td><input v-for="choose in item.square.column" :key="choose.id" type="radio" name="row-1"></td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" name="row-1"></td>
                 </tr>
               </tbody>
             </table>
@@ -199,7 +199,7 @@ export default {
               <tbody>
                 <tr v-for="choose in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td><input v-for="choose in item.square.column" :key="choose.id" type="radio" name="row-1"></td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" name="row-1"></td>
                 </tr>
               </tbody>
             </table>
