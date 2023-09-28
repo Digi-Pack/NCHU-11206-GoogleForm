@@ -19,6 +19,15 @@ import text from '/images/text.png';
 import open_in_new from '/images/open_in_new.png';
 
 export default {
+  props: {
+    response: {
+      type: Object,
+      required: true,
+      default: () => {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       images: {
@@ -110,33 +119,42 @@ export default {
     <div class="main">
       <div class="card-group">
         <!-- 表單方格 -->
-        <div class="card">
-          <div class="card-top">
-            <!-- 預覽頁面 -->
-          </div>
-          <div class="card-bottom">
-            <div class="text-[14px]">未命名表單</div>
-            <div class="flex gap-3 items-center">
-              <img :src="images.favicon_qp2" class="rounded-sm" alt="">
-              <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
-              <input type="checkbox" class="hidden" id="card-option">
-              <label for="card-option">
-                <div class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
-                  <img :src="images.dot" alt="">
+        <div class="card" v-for="item in response.rt_data" :key="item.id">
+          <Link :href="route('edit.old', { id: item.id })">
+            <div class="card-top">
+              <!-- 預覽頁面 -->
+            </div>
+            <div class="card-bottom">
+              <div class="text-[14px]">{{ item.qu_naires_title }}</div>
+              <div class="flex gap-3 items-center">
+                <img :src="images.favicon_qp2" class="rounded-sm" alt="">
+                <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
+                <input type="checkbox" class="hidden" id="card-option">
+                <label for="card-option">
+                  <div class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
+                    <img :src="images.dot" alt="">
+                  </div>
+                </label>
+                <div id="card-option-menu">
+                  <button type="button"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
+                  <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
+                  <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
                 </div>
-              </label>
-              <div id="card-option-menu">
-                <button type="button"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
-                <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
-                <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
+
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
   </section>
 </template>
+<!-- <div v-for="item in response.rt_data" :key="item.id">
+    <h1>{{ item.qu_naires_title }}</h1>
+    <Link :href="route('edit.old', { id: item.id })">
+      <button type="button" class="px-6 py-3 border border-black rounded-[5px]">編輯</button>
+    </Link>
+  </div> -->
 
 <style lang="scss" scoped>
 #guide {

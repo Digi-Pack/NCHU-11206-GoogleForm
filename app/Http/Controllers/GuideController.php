@@ -14,6 +14,6 @@ class GuideController extends Controller
         // $Guide = Question::orderBy('id', 'desc')->get();
         // $id = $request->user()->id;
 
-        return Inertia::render('Backend/Guideindex', ['response' => rtFormat($Guide)]);
+        return Inertia::render('Frontend/guide_index', ['response' => rtFormat($Guide)]);
     }
 }
