@@ -91,7 +91,6 @@ export default {
       selectedMin: '0',
       selectedMax: '2',
       show: false,
-      isSidebarFixed: false,
     };
   },
   methods: {
@@ -234,19 +233,6 @@ export default {
       // console.log(Object.hasOwn(err, `formData.${index}.title`));
       console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
-    },
-    created() {
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
-    handleScroll() {
-      // 获取滚动的垂直位置
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-      // 根据滚动位置来判断是否固定导航栏
-      this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
     },
   },
 };
@@ -501,7 +487,7 @@ export default {
 #question {
     @apply h-full;
     .container {
-        @apply max-w-[770px] m-auto relative py-[20px];
+        @apply max-w-[770px] m-auto relative mt-[20px] pb-[20px];
 
         .side {
             @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
