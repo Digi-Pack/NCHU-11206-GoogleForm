@@ -15,6 +15,8 @@ import view_list from '/images/view_list.png';
 import sort_by_alpha from '/images/sort_by_alpha.png';
 import favicon_qp2 from '/images/favicon_qp2.png';
 import dot from '/images/dot.png';
+import text from '/images/text.png';
+import open_in_new from '/images/open_in_new.png';
 
 export default {
   data() {
@@ -36,6 +38,8 @@ export default {
         view_list,
         favicon_qp2,
         dot,
+        text,
+        open_in_new,
       },
       show: false,
     };
@@ -52,6 +56,7 @@ export default {
             <div class="square logo"><img :src="images.logo" width="25" alt=""></div>
             <span class="title">表單</span>
           </div>
+          <!-- 搜尋欄 -->
           <input type="text" class="search" placeholder="搜尋">
           <div class="topR">
             <input type="checkbox" id="ham-menu-switch-2" class="hidden">
@@ -104,8 +109,11 @@ export default {
     </nav>
     <div class="main">
       <div class="card-group">
+        <!-- 表單方格 -->
         <div class="card">
-          <div class="card-top"></div>
+          <div class="card-top">
+            <!-- 預覽頁面 -->
+          </div>
           <div class="card-bottom">
             <div class="text-[14px]">未命名表單</div>
             <div class="flex gap-3 items-center">
@@ -118,18 +126,13 @@ export default {
                 </div>
               </label>
               <div id="card-option-menu">
-                <button type="button">重新命名</button>
-                <button type="button"><img :src="images.del" alt="">移除</button>
-                <button type="button">在新分頁開啟</button>
+                <button type="button"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
+                <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
+                <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
               </div>
             </div>
           </div>
         </div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
       </div>
     </div>
   </section>
@@ -224,9 +227,9 @@ export default {
         @apply block;
       }
       #sortMenu {
-          @apply border bg-white z-10 border-green-light py-5 w-[210px] absolute top-[60px] right-[100px] shadow-md drop-shadow-md hidden;
+          @apply border bg-white z-10 border-green-light py-2 w-[210px] absolute top-[60px] right-[100px] shadow-md drop-shadow-md hidden;
           button {
-            @apply w-full hover:bg-grey-light;
+            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
           }
       }
     }
@@ -246,9 +249,9 @@ export default {
             @apply block;
           }
           #card-option-menu {
-            @apply border bg-white border-green-light py-5 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md hidden;
+            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md hidden;
             button {
-            @apply w-full hover:bg-grey-light flex justify-center gap-10;
+            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
             }
           }
         }
