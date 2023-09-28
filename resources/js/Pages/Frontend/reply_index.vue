@@ -230,6 +230,7 @@ export default {
           </div>
         </div>
       </div>
+      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">儲存表單</button>
     </div>
   </section>
 </template>

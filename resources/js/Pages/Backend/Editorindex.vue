@@ -303,7 +303,7 @@ export default {
         <div class="form-title">
 
           <!-- 表單名稱 -->
-          <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input">
+          <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required>
           <!-- 表單說明 -->
           <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
         </div>
@@ -313,7 +313,7 @@ export default {
           {{ item }}
           <div class="question-top">
             <div class="text-box">
-              <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input">
+              <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input" required>
             </div>
             <label for="image">
               <img :src="image" alt="" class="upload">
