@@ -87,132 +87,118 @@ export default {
       <div v-for="item in response.rt_data.questionNaires" :key="item.id" class="question">
         <!-- 簡答 -->
         <div v-if="item.type === 1" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-1">
-              <input type="text" class="short" placeholder="簡答">
-            </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-1">
+            <input type="text" class="short" placeholder="簡答">
           </div>
         </div>
         <!-- 詳答 -->
         <div v-if="item.type === 2" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-2">
-              <input type="text" class="long" placeholder="詳答">
-            </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-2">
+            <input type="text" class="long" placeholder="詳答">
           </div>
         </div>
         <!-- 選擇題 -->
         <div v-if="item.type === 3" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-3">
-              <div v-for="choose in item.options" :key="choose.id" class="option">
-                <input type="radio" name="choice-questions" id="choice-1">
-                <label for="choice-1">{{ choose.value }}</label>
-              </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-3">
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="radio" name="choice-questions" id="choice-1">
+              <label for="choice-1">{{ choose.value }}</label>
             </div>
           </div>
         </div>
         <!-- 核取方塊 -->
         <div v-if="item.type === 4" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-4">
-              <div v-for="choose in item.options" :key="choose.id" class="option">
-                <input type="checkbox" class="focus:" name="checkbox-1" id="checkbox-1">
-                <label for="checkbox-1">{{ choose.value }}</label>
-              </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-4">
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="checkbox" class="focus:" name="checkbox-1" id="checkbox-1">
+              <label for="checkbox-1">{{ choose.value }}</label>
             </div>
           </div>
         </div>
         <!-- 下拉式選單 -->
         <div v-if="item.type === 5" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-5">
-              <label for="select"></label>
-              <select name="select" id="select">
-                <option v-for="choose in item.options" :key="choose.id" value="{{ choose.value }}">{{ choose.value }}</option>
-              </select>
-            </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-5">
+            <label for="select"></label>
+            <select name="select" id="select">
+              <option v-for="choose in item.options" :key="choose.id" value="{{ choose.value }}">{{ choose.value }}</option>
+            </select>
           </div>
         </div>
         <!-- 檔案上傳 -->
         <div v-if="item.type === 6" class="!block">
-          <div class="question">
-            <span class="text-[18px]">檔案上傳</span>
-            <div class="questype-6">
-              <label for=""></label>
-              <input type="file" name="" id="">
-            </div>
+          <span class="text-[18px]">檔案上傳</span>
+          <div class="questype-6">
+            <label for=""></label>
+            <input type="file" name="" id="">
           </div>
         </div>
         <!-- 線性刻度 -->
         <div v-if="item.type === 7" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-7">
-              <span>{{ item.linear.minText }}</span>
-              <div class="linear">
-                <label for="linear-1">{{ item.linear.min }}</label>
-                <input type="radio" name="linear" id="linear-1">
-              </div>
-              <div v-for="i in item.linear.max - item.linear.min" class="linear" :key="i">
-                <label :for="'linear-' + (i + item.linear.min + 1)">{{ i + item.linear.min + 1 }}</label>
-                <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
-              </div>
-              <div class="linear">
-                <label :for="'linear-' + item.linear.max">{{ item.linear.max }}</label>
-                <input type="radio" :name="'linear-' + item.id" :id="'linear-' + item.linear.max">
-              </div>
-              <span class="">{{ item.linear.maxText }}</span>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-7">
+            <span>{{ item.linear.minText }}</span>
+            <!-- <div class="linear">
+              <label for="linear-1">{{ item.linear.min }}</label>
+              <input type="radio" name="linear" id="linear-1">
+            </div> -->
+            <div v-for="i in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key="i">
+              <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
+                {{ i - (item.linear.min === '1' ? 0 : 1) }}
+              </label>
+              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
             </div>
+            <!-- <div class="linear">
+              <label :for="'linear-' + item.linear.max">{{ item.linear.max }}</label>
+              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + item.linear.max">
+            </div> -->
+            <span class="">{{ item.linear.maxText }}</span>
           </div>
         </div>
         <!-- 單選方格 -->
+
         <div v-if="item.type === 8" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-8">
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="choose in item.square.row" :key="choose.id">
-                    <th>{{ choose.text }}</th>
-                    <td><input v-for="choose in item.square.row" :key="choose.id" type="radio" name="row-1"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-8">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="choose in item.square.row" :key="choose.id">
+                  <th>{{ choose.text }}</th>
+                  <td><input v-for="choose in item.square.row" :key="choose.id" type="radio" name="row-1"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+
         <!-- 核取方塊格 -->
         <div v-if="item.type === 9" class="!block">
-          <div class="question">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="questype-9">
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="choose in item.square.row" :key="choose.id">
-                    <th>{{ choose.text }}</th>
-                    <td><input v-for="choose in item.square.row" :key="choose.id" type="radio" name="row-1"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <span class="text-[18px]">{{ item.title }}</span>
+          <div class="questype-9">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="choose in item.square.row" :key="choose.id">
+                  <th>{{ choose.text }}</th>
+                  <td><input v-for="choose in item.square.row" :key="choose.id" type="radio" name="row-1"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <!-- 日期 -->
