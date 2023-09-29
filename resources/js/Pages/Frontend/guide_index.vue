@@ -17,8 +17,10 @@ import favicon_qp2 from '/images/favicon_qp2.png';
 import dot from '/images/dot.png';
 import text from '/images/text.png';
 import open_in_new from '/images/open_in_new.png';
+import RenameModal from '@/Components/Modal/RenameModal.vue';
 
 export default {
+  components: { RenameModal },
   props: {
     response: {
       type: Object,
@@ -58,12 +60,17 @@ export default {
     toggleMenu(id) {
       this.isMenuOpen[id] = !this.isMenuOpen[id];
     },
+    open() {
+      this.show = !this.show;
+    },
   },
 };
 </script>
 
 <template>
   <section id="guide">
+    <RenameModal v-if="show">
+    </RenameModal>
     <nav>
       <div class="container">
         <div class="top">
@@ -140,7 +147,7 @@ export default {
                 <img :src="images.dot" alt="">
               </button>
               <div id="card-option-menu" v-if="isMenuOpen[item.id]">
-                <button type="button"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
+                <button type="button" @click="open()"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
                 <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
                 <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
               </div>
