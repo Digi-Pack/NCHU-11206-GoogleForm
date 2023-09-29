@@ -62,33 +62,7 @@ export default {
       }) ?? [],
     };
   },
-  //   watch: {
-  //     'formData': {
-  //       deep: true, // 深度监听
-  //       handler(newVal) {
-  //         newVal.forEach(item => {
-  //           this.groupOptions(item); // 调用 groupOptions 方法来更新 groupedData
-  //         });
-  //       },
-  //     },
-  //   },
-  //   methods: {
-  //     groupOptions(item) {
-  //       item.manyOptions.forEach(option => {
-  //       // 使用正则表达式提取行号，假设行号是以 "row" 开头的部分
-  //         const match = option.match(/^row(\d+)/);
-  //         if (match) {
-  //           const rowNumber = match[1]; // 提取行号
-  //           if (!item.groupedData[rowNumber]) {
-  //             item.groupedData[rowNumber] = []; // 如果该行号不存在，则创建一个空数组
-  //           }
-  //           if (!item.groupedData[rowNumber].includes(option)) {
-  //             item.groupedData[rowNumber].push(option); // 将选项添加到相应的行号数组中，如果不存在的话
-  //           }
-  //         }
-  //       });
-  //     },
-  //   },
+  
 
 };
 </script>

@@ -72,7 +72,7 @@ export default {
   //       },
   //     },
   //   },
-  //   methods: {
+   methods: {
   //     groupOptions(item) {
   //       item.manyOptions.forEach(option => {
   //       // 使用正则表达式提取行号，假设行号是以 "row" 开头的部分
@@ -88,7 +88,7 @@ export default {
   //         }
   //       });
   //     },
-  //   },
+   },
 
 };
 </script>
