@@ -47,18 +47,25 @@ export default {
       copy: copy,
       maxId: 1,
       questionTypeOption,
-      formData: this.response?.rt_data?.questionNaires?.map(questionnaire => {
-        return {
-          id: questionnaire.id,
+      formData: [{
+        general: {
+          id: '',
           answer: '',
-          manyOptions: [],
-          time: {
-            hour: '',
-            minute: '',
-            section: 'a.m.',
-          },
-        };
-      }) ?? [],
+        },
+        manyCheck: {
+          id: '',
+          answer: '',
+        },
+        squape: {
+          id: '',
+          answer: [
+            {
+              id: 1,
+              answer: '',
+            },
+          ],
+        },
+      }],
     };
   },
   methods: {
@@ -68,7 +75,9 @@ export default {
 </script>
 
 <template>
-  {{ formData }}
+  <!-- {{ response }} -->
+  <!-- {{ response.rt_data.responseForm[0] }} -->
+  {{ response.rt_data.questionNaires }}
   <section id="question">
     <div class="container">
       <!-- 表單命名處 -->
@@ -78,28 +87,27 @@ export default {
         <!-- 表單說明 -->
         <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
       </div>
-      <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
+      <div v-for="item in response.rt_data.questionNaires" :key="item.id" class="question">
         <!-- 簡答 -->
         <div v-if="item.type === 1" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-1">
-            <input v-model=" formData[key].answer " type="text" class="short" placeholder="簡答">
-            {{ key }}
+            <input type="text" class="short" placeholder="簡答">
           </div>
         </div>
         <!-- 詳答 -->
         <div v-if="item.type === 2" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-2">
-            <input v-model=" formData[key].answer" type="text" class="long" placeholder="詳答">
+            <input type="text" class="long" placeholder="詳答">
           </div>
         </div>
         <!-- 選擇題 -->
         <div v-if="item.type === 3" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-3">
-            <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model=" formData[key].answer" type="radio" name="choice-questions" id="choice-1" :value="innerkey + 1">
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="radio" name="choice-questions" id="choice-1">
               <label for="choice-1">{{ choose.value }}</label>
             </div>
           </div>
@@ -108,9 +116,9 @@ export default {
         <div v-if="item.type === 4" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-4">
-            <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model="formData[key].manyOptions" type="checkbox" class="focus:" :name="'checkbox-' + key" :id="'checkbox-' + choose.id" :value="innerkey + 1">
-              <label :for="'checkbox-' + choose.id">{{ choose.value }}</label>
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="checkbox" class="focus:" name="checkbox-1" id="checkbox-1">
+              <label for="checkbox-1">{{ choose.value }}</label>
             </div>
           </div>
         </div>
@@ -119,8 +127,8 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-5">
             <label for="select"></label>
-            <select v-model="formData[key].answer" name="select" id="select">
-              <option v-for="(choose, innerkey) in item.options" :key="choose.id" :value="innerkey + 1">{{ choose.value }}
+            <select name="select" id="select">
+              <option v-for="choose in item.options" :key="choose.id" value="{{ choose.value }}">{{ choose.value }}
               </option>
             </select>
           </div>
@@ -138,12 +146,20 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-7">
             <span>{{ item.linear.minText }}</span>
+            <!-- <div class="linear">
+              <label for="linear-1">{{ item.linear.min }}</label>
+              <input type="radio" name="linear" id="linear-1">
+            </div> -->
             <div v-for="i in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key="i">
               <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
                 {{ i - (item.linear.min === '1' ? 0 : 1) }}
               </label>
               <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
             </div>
+            <!-- <div class="linear">
+              <label :for="'linear-' + item.linear.max">{{ item.linear.max }}</label>
+              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + item.linear.max">
+            </div> -->
             <span class="">{{ item.linear.maxText }}</span>
           </div>
         </div>
@@ -194,7 +210,7 @@ export default {
 
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-10">
-            <input v-model=" formData[key].answer" type="date">
+            <input type="date">
           </div>
 
         </div>
@@ -203,10 +219,10 @@ export default {
 
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-11">
-            <input type="text" v-model=" formData[key].time.hour">
+            <input type="text">
             <span>:</span>
-            <input type="text" v-model=" formData[key].time.minute">
-            <select name="" id="" v-model=" formData[key].time.section">
+            <input type="text">
+            <select name="" id="">
               <option value="a.m.">上午</option>
               <option value="p.m.">下午</option>
             </select>
@@ -378,7 +394,7 @@ export default {
         @apply pt-[20px] pb-[20px];
 
         input {
-          @apply w-[60px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
+          @apply w-[30px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
         }
 
         span {

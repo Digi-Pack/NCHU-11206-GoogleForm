@@ -51,11 +51,10 @@ export default {
         return {
           id: questionnaire.id,
           answer: '',
-          manyOptions: [],
           time: {
             hour: '',
             minute: '',
-            section: 'a.m.',
+            section: '',
           },
         };
       }) ?? [],
@@ -68,7 +67,11 @@ export default {
 </script>
 
 <template>
+  <!-- {{ response }} -->
+  <!-- {{ response.rt_data.responseForm[0] }} -->
+  <!-- {{ response.rt_data.questionNaires }} -->
   {{ formData }}
+  <!-- {{ formData[3].answer }} -->
   <section id="question">
     <div class="container">
       <!-- 表單命名處 -->
@@ -108,9 +111,9 @@ export default {
         <div v-if="item.type === 4" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-4">
-            <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model="formData[key].manyOptions" type="checkbox" class="focus:" :name="'checkbox-' + key" :id="'checkbox-' + choose.id" :value="innerkey + 1">
-              <label :for="'checkbox-' + choose.id">{{ choose.value }}</label>
+            <div v-for="choose in item.options" :key="choose.id" class="option">
+              <input type="checkbox" class="focus:" name="checkbox-1" id="checkbox-1" value=key>
+              <label for="checkbox-1">{{ choose.value }}</label>
             </div>
           </div>
         </div>
@@ -138,12 +141,20 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-7">
             <span>{{ item.linear.minText }}</span>
+            <!-- <div class="linear">
+              <label for="linear-1">{{ item.linear.min }}</label>
+              <input type="radio" name="linear" id="linear-1">
+            </div> -->
             <div v-for="i in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key="i">
               <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
                 {{ i - (item.linear.min === '1' ? 0 : 1) }}
               </label>
               <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
             </div>
+            <!-- <div class="linear">
+              <label :for="'linear-' + item.linear.max">{{ item.linear.max }}</label>
+              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + item.linear.max">
+            </div> -->
             <span class="">{{ item.linear.maxText }}</span>
           </div>
         </div>
