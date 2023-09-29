@@ -228,10 +228,7 @@ export default {
               confirmButtonText: '回列表',
               denyButtonText: '取消',
             }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              // if (result.isConfirmed) {
-              //   router.get(route('product.list'));
-              // }
+              router.get(route('guide.index'));
               console.log(result);
             });
           }
