@@ -57,48 +57,18 @@ export default {
             minute: '',
             section: 'a.m.',
           },
-        //   groupedData: {},
         };
       }) ?? [],
     };
   },
-  //   watch: {
-  //     'formData': {
-  //       deep: true, // 深度监听
-  //       handler(newVal) {
-  //         newVal.forEach(item => {
-  //           this.groupOptions(item); // 调用 groupOptions 方法来更新 groupedData
-  //         });
-  //       },
-  //     },
-  //   },
-  //   methods: {
-  //     groupOptions(item) {
-  //       item.manyOptions.forEach(option => {
-  //       // 使用正则表达式提取行号，假设行号是以 "row" 开头的部分
-  //         const match = option.match(/^row(\d+)/);
-  //         if (match) {
-  //           const rowNumber = match[1]; // 提取行号
-  //           if (!item.groupedData[rowNumber]) {
-  //             item.groupedData[rowNumber] = []; // 如果该行号不存在，则创建一个空数组
-  //           }
-  //           if (!item.groupedData[rowNumber].includes(option)) {
-  //             item.groupedData[rowNumber].push(option); // 将选项添加到相应的行号数组中，如果不存在的话
-  //           }
-  //         }
-  //       });
-  //     },
-  //   },
+  methods: {
 
+  },
 };
 </script>
 
 <template>
-  <!-- {{ response }} -->
-  <!-- {{ response.rt_data.responseForm[0] }} -->
-  <!-- {{ response.rt_data.questionNaires }} -->
   {{ formData }}
-  <!-- {{ formData[3].answer }} -->
   <section id="question">
     <div class="container">
       <!-- 表單命名處 -->
@@ -192,14 +162,13 @@ export default {
               <tbody>
                 <tr v-for="(choose, key) in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td v-for="choose in item.square.column" :key="choose.id">
-                    <input type="radio" :name="'only-' + key">
-                  </td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" :name="'only-' + key"></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
         <!-- 核取方塊格 -->
         <div v-if="item.type === 9" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
@@ -212,11 +181,9 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
+                <tr v-for="(choose, key) in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
-                    <input v-model="formData[key].manyOptions" type="checkbox" :name="'many-' + innerkey + '-' + innerinnerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)">
-                  </td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="checkbox" :name="'many-' + key"></td>
                 </tr>
               </tbody>
             </table>
