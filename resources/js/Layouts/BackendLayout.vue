@@ -222,7 +222,9 @@ export default {
                   </div>
                 </div>
               </div>
-              <button type="button" class="eye"><img :src="images.visibility" width="25" height="25" alt=""></button>
+              <Link :href="route('reply.index', 8)">
+                <button type="button" class="eye"><img :src="images.visibility" width="25" height="25" alt=""></button>
+              </Link>
               <button type="button" class="sent" @click="open()">傳送</button>
               <SendLinkModal v-if="show">
               </SendLinkModal>
