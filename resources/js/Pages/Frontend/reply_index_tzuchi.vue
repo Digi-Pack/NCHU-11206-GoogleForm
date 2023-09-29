@@ -72,7 +72,7 @@ export default {
   <!-- {{ response.rt_data.responseForm[0] }} -->
   <!-- {{ response.rt_data.questionNaires }} -->
   {{ formData }}
-  {{ formData[3].answer }}
+  <!-- {{ formData[3].answer }} -->
   <section id="question">
     <div class="container">
       <!-- 表單命名處 -->
@@ -164,15 +164,14 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="choose in item.square.row" :key="choose.id">
+                <tr v-for="(choose, key) in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" name="row-1"></td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" :name="'only-' + key"></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
         <!-- 核取方塊格 -->
         <div v-if="item.type === 9" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
@@ -187,7 +186,7 @@ export default {
               <tbody>
                 <tr v-for="choose in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" name="row-1"></td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" name="many"></td>
                 </tr>
               </tbody>
             </table>
