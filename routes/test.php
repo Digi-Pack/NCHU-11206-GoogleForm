@@ -3,6 +3,7 @@
 use App\Http\Controllers\EditorController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Backend/Question');
@@ -19,3 +20,8 @@ Route::get('/test3', function () {
 Route::get('/test2', function () {
     return Inertia::render('Frontend/Guide');
 })->name('guide');
+
+Route::prefix('reply')->group(function () {
+    // 新增表單
+    Route::get('/tzuchi',[ProfileController::class,'reply_index_tzuchi'])->name('reply.index');
+});

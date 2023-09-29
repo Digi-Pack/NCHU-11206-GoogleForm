@@ -237,6 +237,7 @@ export default {
 </script>
 
 <template>
+  {{ formData }}
   <section id="question">
     <div class="container">
       <form @submit.prevent="submitData()">
