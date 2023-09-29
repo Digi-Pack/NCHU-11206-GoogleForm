@@ -1,5 +1,6 @@
 <script>
-import sendLinkModal from '@/Components/Modal/SendLinkModal.vue';
+import CopyDocument from '@/Components/Modal/CopyDocument.vue';
+import TrashCanModal from '@/Components/Modal/TrashCanModal.vue';
 import palette from '/images/palette.svg';
 import close from '/images/close.svg';
 import image from '/images/image.svg';
@@ -16,7 +17,8 @@ import { colorType } from '@/Composables/useBgColor';
 
 export default {
   components: {
-    sendLinkModal,
+    CopyDocument,
+    TrashCanModal,
   },
   data() {
     return {
@@ -34,7 +36,9 @@ export default {
         group_add,
         logo,
       },
-      show: false,
+      show1: false,
+      show2: false,
+      show4: false,
       bgColor: 'bg-indigo-light',
     };
   },
@@ -47,8 +51,8 @@ export default {
       if (urlName === '') return;
       return route().current(urlName);
     },
-    open() {
-      this.show = !this.show;
+    open(num) {
+      this['show' + num] = !this['show' + num];
     },
     changeColor(newColor) {
       console.log(colorType);
@@ -225,9 +229,6 @@ export default {
               <Link :href="route('reply.index', 8)">
                 <button type="button" class="eye"><img :src="images.visibility" width="25" height="25" alt=""></button>
               </Link>
-              <button type="button" class="sent" @click="open()">傳送</button>
-              <SendLinkModal v-if="show">
-              </SendLinkModal>
               <input type="checkbox" id="ham-menu-switch" class="hidden">
               <label for="ham-menu-switch" class="ham-menu">
                 <div class="downMenu">
@@ -235,11 +236,16 @@ export default {
                 </div>
               </label>
               <div id="menu">
-                <div class="option"><img :src="images.content_copy" alt=""><span>建立副本</span></div>
-                <div class="option"><img :src="images.del" alt=""><span>移至垃圾桶</span></div>
-                <div class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></div>
-                <div class="option"><img :src="images.print" alt=""><span>列印</span></div>
-                <div class="option"><img :src="images.group_add" alt=""><span>新增協作者</span></div>
+                <CopyDocument v-if="show1"></CopyDocument>
+                <TrashCanModal v-if="show2"></TrashCanModal>
+                <AddCollaborator v-if="show4"></AddCollaborator>
+                <div class="">
+                  <button type="button" class="option" @click="open(1)"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
+                  <button type="button" class="option" @click="open(2)"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
+                  <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button>
+                  <button type="button" class="option" @click="open()"><img :src="images.print" alt=""><span>列印</span></button>
+                  <button type="button" class="option" @click="open(4)"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
+                </div>
               </div>
               <input type="checkbox" id="ham-menu-switch-2" class="hidden">
               <label for="ham-menu-switch-2" class="ham-menu">
@@ -387,7 +393,7 @@ nav {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-[230px] my-[12.5px] ps-[10px] leading-[30px] text-[#505050] flex font-bold items-center;
+                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start hover:bg-grey-light;
                     span {
                         @apply ms-[10px];
                     }
