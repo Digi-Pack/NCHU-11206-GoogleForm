@@ -23,5 +23,7 @@ Route::get('/test2', function () {
 
 Route::prefix('reply')->group(function () {
     // 新增表單
-    Route::get('/tzuchi',[ProfileController::class,'reply_index_tzuchi'])->name('reply.index');
+    Route::get('/tzuchi',[ProfileController::class,'reply_index_tzuchi'])->name('reply.tzuchi.index');
+    Route::post('/tzuchi/store',[ProfileController::class,'reply_index_tzuchi_store'])->name('reply.tzuchi.store');
+    Route::get('/tzuchi/final',[ProfileController::class,'reply_index_tzuchi_final'])->name('reply.tzuchi.final');
 });

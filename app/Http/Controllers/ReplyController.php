@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Question;
+use App\Models\Response;
 
 class ReplyController extends Controller
 {
@@ -28,5 +29,19 @@ class ReplyController extends Controller
         return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
         //   return Inertia::render('Frontend/reply_index');
         // return Inertia::render('Backend/Guideindex', ['response' => rtFormat($Guide)]);
+    }
+    public function reply_store(Request $request)
+    {
+
+        $user = $request->user();
+        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
+
+        Response::create([
+           'user_id'=>$user->id,
+            'question_id'=>$request-> formId,
+            'answer'=> $jsonText ,
+        ]);
+
+        return Inertia::render('Frontend/reply_final');
     }
 }

@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Inertia\Response;
 use App\Models\Question;
+use App\Models\Response;
 
 class ProfileController extends Controller
 {
@@ -64,7 +64,7 @@ class ProfileController extends Controller
     public function reply_index_tzuchi(Request $request)
     {
         // 先找到指定id的表單
-        $responseForm = Question::where('id', 2)->get();
+        $responseForm = Question::where('id', 8)->get();
         //獲取亂數表單
         //$question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);
@@ -80,6 +80,20 @@ class ProfileController extends Controller
         return Inertia::render('Frontend/reply_index_tzuchi', ['response' => rtFormat($response)]);
         //   return Inertia::render('Frontend/reply_index');
         // return Inertia::render('Backend/Guideindex', ['response' => rtFormat($Guide)]);
+    }
+    public function reply_index_tzuchi_store(Request $request)
+    {
+
+        $user = $request->user();
+        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
+
+        Response::create([
+           'user_id'=>$user->id,
+            'question_id'=>$request-> formId,
+            'answer'=> $jsonText ,
+        ]);
+
+        return Inertia::render('Frontend/reply_final');
     }
 
 }

@@ -18,6 +18,7 @@ import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
 import { questionTypeOption } from '@/Composables/useQuestionType';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: {
@@ -62,7 +63,42 @@ export default {
       }) ?? [],
     };
   },
-  
+  //   watch: {
+  //     'formData': {
+  //       deep: true, // 深度监听
+  //       handler(newVal) {
+  //         newVal.forEach(item => {
+  //           this.groupOptions(item); // 调用 groupOptions 方法来更新 groupedData
+  //         });
+  //       },
+  //     },
+  //   },
+  methods: {
+    submitData() {
+      const { formData, response } = this;
+      const formId = response.rt_data.responseForm[0].id;
+      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      // 驗證
+      router.visit(route('reply.store'), {
+        method: 'post', data: { formData, formId }, preserveState: true,
+      });
+    },
+  //     groupOptions(item) {
+  //       item.manyOptions.forEach(option => {
+  //       // 使用正则表达式提取行号，假设行号是以 "row" 开头的部分
+  //         const match = option.match(/^row(\d+)/);
+  //         if (match) {
+  //           const rowNumber = match[1]; // 提取行号
+  //           if (!item.groupedData[rowNumber]) {
+  //             item.groupedData[rowNumber] = []; // 如果该行号不存在，则创建一个空数组
+  //           }
+  //           if (!item.groupedData[rowNumber].includes(option)) {
+  //             item.groupedData[rowNumber].push(option); // 将选项添加到相应的行号数组中，如果不存在的话
+  //           }
+  //         }
+  //       });
+  //     },
+  },
 
 };
 </script>
@@ -146,7 +182,7 @@ export default {
               <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
                 {{ i - (item.linear.min === '1' ? 0 : 1) }}
               </label>
-              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
+              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)" :value="i">
             </div>
             <span class="">{{ item.linear.maxText }}</span>
           </div>

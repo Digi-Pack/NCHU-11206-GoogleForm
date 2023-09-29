@@ -13,4 +13,6 @@ Route::get('/', function () {
 Route::prefix('reply')->middleware(['auth', 'verified'])->group(function () {
     // 新增表單
     Route::get('/index/{id}',[ReplyController::class,'reply_index'])->name('reply.index');
+    Route::post('/store',[ReplyController::class,'reply_store'])->name('reply.store');
+    Route::get('/final',[ReplyController::class,'reply_final'])->name('reply.final');
 });
