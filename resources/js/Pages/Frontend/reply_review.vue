@@ -18,7 +18,7 @@ import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
 import { questionTypeOption } from '@/Composables/useQuestionType';
-import { router } from '@inertiajs/vue3';
+// import { router } from '@inertiajs/vue3';
 
 export default {
   components: {
@@ -48,41 +48,26 @@ export default {
       copy: copy,
       maxId: 1,
       questionTypeOption,
-      formData: this.response?.rt_data?.questionNaires?.map(questionnaire => {
+      formData: this.response?.rt_data?.lastAnswer?.map(answer => {
         return {
-          id: questionnaire.id,
-          answer: '',
-          manyOptions: [],
-          time: {
-            hour: '',
-            minute: '',
-            section: 'a.m.',
-          },
-        //   groupedData: {},
+          id: answer.id,
+          answer: answer.answer,
+          manyOptions: answer.manyOptions,
+          time: answer.time,
         };
       }) ?? [],
     };
   },
-  //   watch: {
-  //     'formData': {
-  //       deep: true, // 深度监听
-  //       handler(newVal) {
-  //         newVal.forEach(item => {
-  //           this.groupOptions(item); // 调用 groupOptions 方法来更新 groupedData
-  //         });
-  //       },
-  //     },
-  //   },
   methods: {
-    submitData() {
-      const { formData, response } = this;
-      const formId = response.rt_data.responseForm[0].id;
-      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
-      // 驗證
-      router.visit(route('reply.store'), {
-        method: 'post', data: { formData, formId }, preserveState: true,
-      });
-    },
+    // submitData() {
+    //   const { formData, response } = this;
+    //   const formId = response.rt_data.responseForm[0].id;
+    // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+    // 驗證
+    //   router.visit(route('reply.store'), {
+    //     method: 'post', data: { formData, formId }, preserveState: true,
+    //   });
+    // },
   },
 
 };
@@ -92,7 +77,7 @@ export default {
   <!-- {{ response }} -->
   <!-- {{ response.rt_data.responseForm[0] }} -->
   <!-- {{ response.rt_data.questionNaires }} -->
-  {{ formData }}
+  <!-- {{ formData }} -->
   <!-- {{ formData[3].answer }} -->
   <section id="question">
     <div class="container">

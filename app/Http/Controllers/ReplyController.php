@@ -12,8 +12,16 @@ class ReplyController extends Controller
 
     public function reply_index(Request $request, $id)
     {
+        // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第八份問卷)
+        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 9)->get();
+        if (!$hasBeen->isEmpty()){
+            // 如果有，則前往修改答案的頁面
+            //   dd($hasBeen);
+            return redirect()->route('reply.review'); // 这里进行重定向
+        }
+
         // 先找到指定id的表單
-        $responseForm = Question::where('id', 9)->get();
+        $responseForm = Question::where('id', 7)->get();
         //獲取亂數表單
         //$question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);
@@ -41,7 +49,39 @@ class ReplyController extends Controller
             'question_id'=>$request-> formId,
             'answer'=> $jsonText ,
         ]);
+        $response=[
+            'user_id'=>$user->id,
+            'question_id'=>$request-> formId,
+        ];
 
-        return Inertia::render('Frontend/reply_final');
+        return Inertia::render('Frontend/reply_final', ['response' => rtFormat($response)]);
     }
+    public function reply_review(Request $request)
+    {
+         // 先找到指定id的表單
+         $responseForm = Question::where('id', 8)->get();
+         $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
+         // dd( $questionnaires);
+         $response = [
+             'responseForm' => $responseForm,
+             'questionNaires' => $questionNaires,
+         ];
+
+        // 找到該使用者的回覆
+        $lastStore = Response::where('user_id', $request->user()->id)->get();
+        // dd($responseForm[0]['questionnaires']);
+        // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
+        $lastAnswer = json_decode($lastStore[0]['answer'], true);
+        // dd( $questionnaires);
+        // dd($lastAnswer);
+        $response = [
+            'responseForm' => $responseForm,
+            'questionNaires' => $questionNaires,
+            'lastAnswer'=> $lastAnswer,
+        ];
+
+        return Inertia::render('Frontend/reply_review', ['response' => rtFormat($response)]);
+    }
+
+
 }
