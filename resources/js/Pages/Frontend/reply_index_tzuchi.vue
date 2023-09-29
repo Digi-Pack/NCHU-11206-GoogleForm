@@ -172,7 +172,7 @@ export default {
               <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
                 {{ i - (item.linear.min === '1' ? 0 : 1) }}
               </label>
-              <input type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)">
+              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)" :value="i">
             </div>
             <span class="">{{ item.linear.maxText }}</span>
           </div>
