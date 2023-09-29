@@ -184,9 +184,9 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="choose in item.square.row" :key="choose.id">
+                <tr v-for="(choose, key) in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
-                  <td v-for="choose in item.square.column" :key="choose.id"><input type="radio" name="many"></td>
+                  <td v-for="choose in item.square.column" :key="choose.id"><input type="checkbox" :name="'many-' + key"></td>
                 </tr>
               </tbody>
             </table>
