@@ -49,13 +49,15 @@ export default {
         dot,
         text,
         open_in_new,
-
       },
       show: false,
+      isMenuOpen: {},
     };
   },
   methods: {
-
+    toggleMenu(id) {
+      this.isMenuOpen[id] = !this.isMenuOpen[id];
+    },
   },
 };
 </script>
@@ -134,21 +136,16 @@ export default {
             <div class="flex gap-3 items-center">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
               <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
-              <input type="checkbox" class="hidden" id="card-option">
-              <label for="card-option">
-                <div class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
-                  <img :src="images.dot" alt="">
-                </div>
-              </label>
-              <div id="card-option-menu">
+              <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
+                <img :src="images.dot" alt="">
+              </button>
+              <div id="card-option-menu" v-if="isMenuOpen[item.id]">
                 <button type="button"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
                 <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
                 <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -268,11 +265,11 @@ export default {
         }
         .card-bottom {
           @apply h-[30%] w-full px-5 py-2 border-grey-middle border-t relative;
-          #card-option:checked~#card-option-menu {
-            @apply block;
-          }
+        //   #card-option:checked~#card-option-menu {
+        //     @apply block;
+        //   }
           #card-option-menu {
-            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md ;
+            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md;
             button {
             @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
             }
