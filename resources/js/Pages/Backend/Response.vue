@@ -23,8 +23,8 @@ export default {
 </script>
 
 <template>
-  <section id="response">
-    <div class="all relative z-10">
+  <section id="response" class="pt-[10px]">
+    <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
           <h2>0則回應</h2>
@@ -70,7 +70,6 @@ export default {
           </div>
         </div>
         <div class="head-middle">
-
           <div class="switch">
             <label>
               <span>接受回應</span>
@@ -80,12 +79,6 @@ export default {
               </div>
             </label>
           </div>
-
-          <!-- <span>接受回應</span>
-          <div class="btn">
-            <div class="button-bar"></div>
-            <div class="button-circle"></div>
-          </div> -->
         </div>
       </div>
       <div class="response-body bg-white">
@@ -99,7 +92,7 @@ export default {
 #response {
     @apply h-screen mt-[20px] pb-[20px];
 .all {
-    @apply m-auto max-w-[770px] z-50;
+    @apply m-auto max-w-[770px] relative z-[2];
     .response-head {
         @apply my-[15px] rounded-[10px] border border-gray-200;
 
@@ -130,7 +123,7 @@ export default {
                 }
 
                 .dot-box-all {
-                    @apply absolute top-[40px] z-[9] bg-white rounded-[10px] py-[10px] w-auto h-[200px] overflow-auto shadow-[0_2px_1px_0_rgba(0,0,0,0.3)] hidden;
+                    @apply absolute top-[40px] z-[9] bg-white rounded-[10px] py-[10px] w-[300px] h-[200px] overflow-auto shadow-[0_2px_1px_0_rgba(0,0,0,0.3)] hidden;
 
                         &::-webkit-scrollbar {
                             width: 1em;
@@ -145,7 +138,7 @@ export default {
                         @apply list-none leading-[25px] hover:bg-[#e6e6e6] flex py-[10px];
 
                         img {
-                            @apply ml-[15px] w-[25px];
+                            @apply ml-[15px] w-[25px] h-[25px];
                         }
                         .text {
                             @apply pr-[10px] ml-[20px];

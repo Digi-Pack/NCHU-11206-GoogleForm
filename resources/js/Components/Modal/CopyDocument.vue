@@ -2,11 +2,17 @@
 import close from '/images/close.svg';
 
 export default {
+  props: {
+    formUrl: String,
+  },
   data() {
     return {
       close,
       show: true,
     };
+  },
+  mounted() {
+    console.log(this.formUrl);
   },
   methods: {
     closing() {
@@ -17,7 +23,7 @@ export default {
 </script>
 
 <template>
-  <section v-if="show" id="RenameModal">
+  <section v-if="show" id="CopyDocumentModal">
     <div class="container">
       <div class="content">
         <div class="flex justify-between items-center">
@@ -44,9 +50,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-#RenameModal {
+#CopyDocumentModal {
   .container {
-    @apply w-full h-screen fixed top-0 left-0 bg-[#0101015a] z-10;
+    @apply w-full h-screen fixed top-0 left-0 bg-[#e6e6e65a] z-20;
 
     .content {
       @apply w-[500px] h-[300px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8;
