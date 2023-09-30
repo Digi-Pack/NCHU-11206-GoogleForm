@@ -228,7 +228,9 @@ export default {
               confirmButtonText: '回列表',
               denyButtonText: '取消',
             }).then((result) => {
-              router.get(route('guide.index'));
+              if (result.isConfirmed) {
+                router.get(route('guide.index'));
+              }
               console.log(result);
             });
           }
