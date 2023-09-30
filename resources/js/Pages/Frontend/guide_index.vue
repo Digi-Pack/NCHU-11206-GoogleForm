@@ -12,8 +12,10 @@ import print from '/images/print.svg';
 import group_add from '/images/group_add.svg';
 import logo from '/images/logo.png';
 import view_list from '/images/view_list.png';
+import view_module from '/images/view_module.png';
 import sort_by_alpha from '/images/sort_by_alpha.png';
 import favicon_qp2 from '/images/favicon_qp2.png';
+import addnewform from '/images/addnewform.png';
 import dot from '/images/dot.png';
 import text from '/images/text.png';
 import open_in_new from '/images/open_in_new.png';
@@ -51,11 +53,17 @@ export default {
         dot,
         text,
         open_in_new,
+        view_module,
+        addnewform,
       },
       show: false,
       blockShow: false,
       isMenuOpen: {},
     };
+  },
+  mounted() {
+    const buttonElement = this.$refs.menuButton;
+    buttonElement.setAttribute('tabindex', '0');
   },
   methods: {
     toggleMenu(id) {
@@ -66,6 +74,9 @@ export default {
     },
     open() {
       this.show = !this.show;
+    },
+    closeMenu(id) {
+      this.isMenuOpen[id] = false;
     },
   },
 };
@@ -107,16 +118,19 @@ export default {
       </div>
       <div class="controlBar">
         <span>最近的表單</span>
-        <div class="flex gap-32 justify-center items-center">
+        <div class="flex w-[32%] justify-between items-center" :class="{ '!w-[52%]': blockShow }">
           <select name="ownerType" id="">
             <option value="">不限擁有者</option>
             <option value="">我擁有的項目</option>
             <option value="">不歸我所有</option>
           </select>
-          <span class="w-full" v-if="blockShow">我上次開啟的時間</span>
+          <span class="w-auto" v-if="blockShow">我上次開啟的時間</span>
           <div class="flex items-center gap-2 pr-6">
-            <button type="button" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
+            <button type="button" v-if="!blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
               <img :src="images.view_list" width="23" alt="">
+            </button>
+            <button type="button" v-if="blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
+              <img :src="images.view_module" width="23" alt="">
             </button>
             <input type="checkbox" class="hidden" id="sort">
             <label for="sort">
@@ -151,10 +165,9 @@ export default {
               <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
                 <img :src="images.dot" alt="">
               </button>
-              <div id="card-option-menu" v-if="isMenuOpen[item.id]">
+              <div class="card-option-menu" v-if="isMenuOpen[item.id]">
                 <button type="button" @click="open()"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
-                <button type="button"><img :src="images.del" class="opacity-60" alt="">移除</button>
-                <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
+                <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60" alt="">移除</button>
               </div>
             </div>
           </div>
@@ -171,11 +184,18 @@ export default {
           <div class="flex items-center justify-between w-[45%]">
             <span>我</span>
             <span>2023年9月28日</span>
-            <img :src="images.dot" class="rounded-sm" alt="">
+            <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @focus="openMenu(item.id)">
+              <img :src="images.dot" alt="">
+            </button>
+            <div class="card-option-menu" v-if="isMenuOpen[item.id]" @blur="closeMenu(item.id)" tabindex="0">
+              <button type="button" @click="open()"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
+              <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60" alt="">移除</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <button type="button" class="w-[60px] rounded-full drop-shadow-md border-grey shadow-lg bg-white p-3 fixed bottom-10 right-10"><img :src="images.addnewform" alt=""></button>
   </section>
 </template>
 <!-- <div v-for="item in response.rt_data" :key="item.id">
@@ -295,7 +315,7 @@ export default {
         //   #card-option:checked~#card-option-menu {
         //     @apply block;
         //   }
-          #card-option-menu {
+          .card-option-menu {
             @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md;
             button {
             @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
@@ -307,10 +327,16 @@ export default {
     .list-group {
       @apply pr-10;
       .list {
-        @apply flex items-center justify-between rounded-[25px] hover:bg-purple-middle py-2 px-4;
+        @apply flex items-center justify-between rounded-[25px] relative hover:bg-purple-middle py-2 px-4;
         span {
           @apply leading-[31px] text-[14px] text-gray-500;
         }
+        .card-option-menu {
+            @apply border bg-white border-green-light py-2 w-[210px] z-10 absolute top-[40px] -right-[80px] shadow-md drop-shadow-md;
+            button {
+            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
+            }
+          }
       }
     }
   }
