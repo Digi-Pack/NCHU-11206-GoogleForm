@@ -102,7 +102,7 @@ export default {
   methods: {
     addQuestion() {
       const { formData } = this;
-      this.a++;
+      this.a = formData.length + 1;
       const newQuestion = {
         id: this.a,
         title: '問題',
@@ -237,6 +237,7 @@ export default {
 </script>
 
 <template>
+  {{ formData.length }}
   {{ formData }}
   <section id="question">
     <div class="container">
