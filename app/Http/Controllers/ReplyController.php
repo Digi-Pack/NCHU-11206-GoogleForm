@@ -12,6 +12,7 @@ class ReplyController extends Controller
 
     public function reply_index(Request $request, $id)
     {
+        // dd($id);
         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第八份問卷)
         $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 22)->get();
         if (!$hasBeen->isEmpty()){
@@ -104,6 +105,7 @@ class ReplyController extends Controller
          $responseForm = Question::where('id', $request->getOldResponse['question_id'])->get();
         //  dd( $responseForm);
 
+        //  $responseForm = Question::where('id', 2)->get();
          $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
          // dd( $questionnaires);
          $response = [
