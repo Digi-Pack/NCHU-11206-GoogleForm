@@ -12,6 +12,7 @@ class ReplyController extends Controller
 
     public function reply_index(Request $request, $id)
     {
+        // dd($id);
         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第八份問卷)
         $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 8)->get();
         if (!$hasBeen->isEmpty()){
@@ -25,9 +26,11 @@ class ReplyController extends Controller
             $request->session()->put('redirectValue',$redirectValue);
             return redirect()->route('reply.review'); // 这里进行重定向
         }
-
+        // 利用random去找到表單
+        $responseForm = Question::where('random', $id)->get();
+        // dd($responseForm);
         // 先找到指定id的表單
-        $responseForm = Question::where('id', 8)->get();
+        // $responseForm = Question::where('id', 8)->get();
         //獲取亂數表單
         //$question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);
@@ -102,6 +105,7 @@ class ReplyController extends Controller
          $responseForm = Question::where('id', $request->getOldResponse['question_id'])->get();
         //  dd( $responseForm);
 
+        //  $responseForm = Question::where('id', 2)->get();
          $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
          // dd( $questionnaires);
          $response = [
