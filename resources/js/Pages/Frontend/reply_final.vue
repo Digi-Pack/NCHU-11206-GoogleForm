@@ -18,6 +18,7 @@ import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
 import { questionTypeOption } from '@/Composables/useQuestionType';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: {
@@ -47,27 +48,27 @@ export default {
       copy: copy,
       maxId: 1,
       questionTypeOption,
-      formData: this.response?.rt_data?.questionNaires?.map(questionnaire => {
-        return {
-          id: questionnaire.id,
-          answer: '',
-          manyOptions: [],
-          time: {
-            hour: '',
-            minute: '',
-            section: 'a.m.',
-          },
-        //   groupedData: {},
-        };
-      }) ?? [],
+      formData: this.response,
     };
   },
-
+  methods: {
+    submitData() {
+      const { formData } = this;
+      const getOldResponse = formData.rt_data;
+      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      // 驗證
+      router.visit(route('reply.review'), {
+        method: 'get', data: { getOldResponse }, preserveState: true,
+      });
+    },
+  },
 };
 </script>
 
 <template>
   <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">查看結果</button>
+  <!-- {{ formData }} -->
+  {{ formData.rt_data }}
 </template>
 
 <style lang="scss" scoped>

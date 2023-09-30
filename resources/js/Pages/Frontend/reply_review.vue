@@ -74,6 +74,7 @@ export default {
 </script>
 
 <template>
+  {{ response }}
   <!-- {{ response }} -->
   <!-- {{ response.rt_data.responseForm[0] }} -->
   <!-- {{ response.rt_data.questionNaires }} -->

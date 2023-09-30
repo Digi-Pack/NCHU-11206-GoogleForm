@@ -13,15 +13,21 @@ class ReplyController extends Controller
     public function reply_index(Request $request, $id)
     {
         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第八份問卷)
-        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 9)->get();
+        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 8)->get();
         if (!$hasBeen->isEmpty()){
             // 如果有，則前往修改答案的頁面
             //   dd($hasBeen);
+            $redirectValue = [
+                'user_id'=>$request->user()->id,
+                'question_id'=>8,
+            ];
+            // dd( $redirectValue );
+            $request->session()->put('redirectValue',$redirectValue);
             return redirect()->route('reply.review'); // 这里进行重定向
         }
 
         // 先找到指定id的表單
-        $responseForm = Question::where('id', 7)->get();
+        $responseForm = Question::where('id', 8)->get();
         //獲取亂數表單
         //$question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);
@@ -58,8 +64,44 @@ class ReplyController extends Controller
     }
     public function reply_review(Request $request)
     {
+
+        // -------第一種情況---填寫者之前填過問卷，又重新輸入問卷網址，也會被導向此function--------
+        $redirectValue = $request->session()->get('redirectValue','');
+
+        if ($redirectValue){
+             // 先找到指定id的表單
+         $responseForm = Question::where('id', $redirectValue['question_id'])->get();
+         //  dd( $responseForm);
+
+        $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
+          // dd( $questionnaires);
+          $response = [
+              'responseForm' => $responseForm,
+              'questionNaires' => $questionNaires,
+          ];
+
+         // 找到該使用者的回覆
+         $lastStore = Response::where('user_id', $redirectValue['user_id'])->where('question_id', $redirectValue['question_id'])->get();
+         // dd($responseForm[0]['questionnaires']);
+         // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
+         $lastAnswer = json_decode($lastStore[0]['answer'], true);
+         // dd( $questionnaires);
+         // dd($lastAnswer);
+         $response = [
+             'responseForm' => $responseForm,
+             'questionNaires' => $questionNaires,
+             'lastAnswer'=> $lastAnswer,
+         ];
+
+         return Inertia::render('Frontend/reply_review', ['response' => rtFormat($response)]);
+        }
+
+        // ------------第二種情況---填寫者第一次填完問卷後按「查看結果」回看問卷------------------
+
          // 先找到指定id的表單
-         $responseForm = Question::where('id', 8)->get();
+         $responseForm = Question::where('id', $request->getOldResponse['question_id'])->get();
+        //  dd( $responseForm);
+
          $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
          // dd( $questionnaires);
          $response = [
@@ -68,7 +110,7 @@ class ReplyController extends Controller
          ];
 
         // 找到該使用者的回覆
-        $lastStore = Response::where('user_id', $request->user()->id)->get();
+        $lastStore = Response::where('user_id', $request->user()->id)->where('question_id', $request->getOldResponse['question_id'])->get();
         // dd($responseForm[0]['questionnaires']);
         // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
         $lastAnswer = json_decode($lastStore[0]['answer'], true);
