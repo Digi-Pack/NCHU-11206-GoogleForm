@@ -53,12 +53,16 @@ export default {
         open_in_new,
       },
       show: false,
+      blockShow: false,
       isMenuOpen: {},
     };
   },
   methods: {
     toggleMenu(id) {
       this.isMenuOpen[id] = !this.isMenuOpen[id];
+    },
+    listChange() {
+      this.blockShow = !this.blockShow;
     },
     open() {
       this.show = !this.show;
@@ -103,14 +107,15 @@ export default {
       </div>
       <div class="controlBar">
         <span>最近的表單</span>
-        <div class="flex gap-20 justify-center items-center">
+        <div class="flex gap-32 justify-center items-center">
           <select name="ownerType" id="">
             <option value="">不限擁有者</option>
             <option value="">我擁有的項目</option>
             <option value="">不歸我所有</option>
           </select>
-          <div class="flex items-center gap-2 pr-10">
-            <button type="button" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light">
+          <span class="w-full" v-if="blockShow">我上次開啟的時間</span>
+          <div class="flex items-center gap-2 pr-6">
+            <button type="button" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
               <img :src="images.view_list" width="23" alt="">
             </button>
             <input type="checkbox" class="hidden" id="sort">
@@ -130,7 +135,7 @@ export default {
       </div>
     </nav>
     <div class="main">
-      <div class="card-group">
+      <div v-if="!blockShow" class="card-group">
         <!-- 表單方格 -->
         <div class="card" v-for="item in response.rt_data" :key="item.id">
           <Link :href="route('edit.old', { id: item.id })">
@@ -152,6 +157,21 @@ export default {
                 <button type="button"><img :src="images.open_in_new" class="opacity-60" alt="">在新分頁開啟</button>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="blockShow" class="list-group">
+        <div class="list" v-for="item in response.rt_data" :key="item.id">
+          <Link :href="route('edit.old', { id: item.id })">
+            <div class="flex items-center gap-10">
+              <img :src="images.favicon_qp2" class="rounded-sm" alt="">
+              <span>{{ item.qu_naires_title }}</span>
+            </div>
+          </Link>
+          <div class="flex items-center justify-between w-[45%]">
+            <span>我</span>
+            <span>2023年9月28日</span>
+            <img :src="images.dot" class="rounded-sm" alt="">
           </div>
         </div>
       </div>
@@ -246,15 +266,15 @@ export default {
         }
     }
     .controlBar {
-      @apply flex w-full h-[64px] px-[12%] justify-between items-center relative mb-5;
+      @apply flex w-full h-[64px] px-[17%] text-[15px] justify-between items-center relative mb-5;
       select {
-        @apply border-0 w-[55%] h-[45%] py-0 rounded-md hover:bg-grey-light focus:ring-0;
+        @apply border-0 h-[45%] text-[14px] px-4 py-1 rounded-md hover:bg-grey-light focus:ring-0;
       }
       #sort:checked~#sortMenu {
         @apply block;
       }
       #sortMenu {
-          @apply border bg-white z-10 border-green-light py-2 w-[210px] absolute top-[60px] right-[100px] shadow-md drop-shadow-md hidden;
+          @apply border bg-white z-10 border-green-light py-2 w-[210px] absolute top-[60px] right-[200px] shadow-md drop-shadow-md hidden;
           button {
             @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
           }
@@ -262,7 +282,7 @@ export default {
     }
   }
   .main {
-    @apply w-full px-[12%];
+    @apply w-full px-[17%];
     .card-group {
       @apply flex flex-wrap gap-5;
       .card {
@@ -281,6 +301,15 @@ export default {
             @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
             }
           }
+        }
+      }
+    }
+    .list-group {
+      @apply pr-10;
+      .list {
+        @apply flex items-center justify-between rounded-[25px] hover:bg-purple-middle py-2 px-4;
+        span {
+          @apply leading-[31px] text-[14px] text-gray-500;
         }
       }
     }
