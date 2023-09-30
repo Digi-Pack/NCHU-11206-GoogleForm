@@ -5,9 +5,9 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
-// Route::get('/', function () {
-//     return Inertia::render('Backend/Question');
-// })->name('response');
+Route::get('/submitted', function () {
+    return Inertia::render('Frontend/submitted');
+})->name('response');
 
 Route::get('/see',[EditorController::class,'index'])->name('see.index');
 
