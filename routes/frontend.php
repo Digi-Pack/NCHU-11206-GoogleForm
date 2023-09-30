@@ -17,4 +17,5 @@ Route::prefix('reply')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/final',[ReplyController::class,'reply_final'])->name('reply.final');
     // 查看填寫過表單
     Route::get('/review',[ReplyController::class,'reply_review'])->name('reply.review');
+    Route::post('/update',[ReplyController::class,'reply_update'])->name('reply.update');
 });

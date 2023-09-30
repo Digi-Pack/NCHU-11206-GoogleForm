@@ -18,7 +18,8 @@ import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
 import { questionTypeOption } from '@/Composables/useQuestionType';
-// import { router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
 export default {
   components: {
@@ -59,22 +60,37 @@ export default {
     };
   },
   methods: {
-    // submitData() {
-    //   const { formData, response } = this;
-    //   const formId = response.rt_data.responseForm[0].id;
-    // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
-    // 驗證
-    //   router.visit(route('reply.store'), {
-    //     method: 'post', data: { formData, formId }, preserveState: true,
-    //   });
-    // },
+    submitData() {
+      const { formData, response } = this;
+      const formId = response.rt_data.responseForm[0].id;
+      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      // 驗證
+      router.visit(route('reply.update'), {
+        method: 'post', data: { formData, formId }, preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '新增成功',
+              showDenyButton: true,
+              confirmButtonText: '回列表',
+              denyButtonText: '取消',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('guide.index'));
+              }
+              console.log(result);
+            });
+          }
+        },
+      });
+    },
   },
 
 };
 </script>
 
 <template>
-  {{ response }}
+  <!-- {{ response }} -->
   <!-- {{ response }} -->
   <!-- {{ response.rt_data.responseForm[0] }} -->
   <!-- {{ response.rt_data.questionNaires }} -->
@@ -228,7 +244,7 @@ export default {
           </div>
         </div>
       </div>
-      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">送出表單</button>
+      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">完成修改</button>
     </div>
   </section>
 </template>

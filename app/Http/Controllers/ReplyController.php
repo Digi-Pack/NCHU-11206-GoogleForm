@@ -129,5 +129,22 @@ class ReplyController extends Controller
         return Inertia::render('Frontend/reply_review', ['response' => rtFormat($response)]);
     }
 
+    public function reply_update(Request $request){
+        // dd($request);
+        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
+        // 找到表單id
+        // dd($request->formText['id']);
+        // dd($request->formData);
+        // dd($request->user()->id, $request->formId);
+        $updateForm = Response::where('user_id', $request->user()->id)->where('question_id', $request->formId)->get();
+        // dd($request->user()->id, $request->formId,$updateForm,$updateForm[0]);
+        $updateForm[0]->update([
+            'user_id' => $request->user()->id,
+            'question_id' =>$request->formId,
+            'answer' => $jsonText,
+        ]);
+        // dd(132);
+        return back()->with(['message' => rtFormat($updateForm)]);
+    }
 }
