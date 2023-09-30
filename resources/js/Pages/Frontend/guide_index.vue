@@ -184,7 +184,7 @@ export default {
           <div class="flex items-center justify-between w-[45%]">
             <span>我</span>
             <span>2023年9月28日</span>
-            <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @focus="openMenu(item.id)">
+            <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-purple-light cursor-pointer" @click="toggleMenu(item.id)">
               <img :src="images.dot" alt="">
             </button>
             <div class="card-option-menu" v-if="isMenuOpen[item.id]" @blur="closeMenu(item.id)" tabindex="0">
@@ -327,16 +327,16 @@ export default {
     .list-group {
       @apply pr-10;
       .list {
-        @apply flex items-center justify-between rounded-[25px] relative hover:bg-purple-middle py-2 px-4;
+        @apply flex items-center justify-between rounded-[25px] relative hover:bg-purple-light py-2 px-4;
         span {
           @apply leading-[31px] text-[14px] text-gray-500;
         }
         .card-option-menu {
-            @apply border bg-white border-green-light py-2 w-[210px] z-10 absolute top-[40px] -right-[80px] shadow-md drop-shadow-md;
-            button {
-            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
-            }
+          @apply border bg-white border-green-light py-2 w-[210px] z-10 absolute top-[40px] -right-[80px] shadow-md drop-shadow-md;
+          button {
+          @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
           }
+        }
       }
     }
   }

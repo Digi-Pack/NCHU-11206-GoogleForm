@@ -255,11 +255,10 @@ export default {
                 <div class="google">
                   <div class="option">asd783738777@gmail.com</div>
                   <div class="photo"></div>
-                  <div class="hello">shane，你好!</div>
+                  <div class="hello"><span>user</span>，你好!</div>
                   <div class="manage">管理你的 Google 帳戶</div>
-                  <div class="advice">建議採取的行動</div>
                   <div class="acc mb-3">
-                    <div class="add">新增帳戶</div>
+                    <div class="add">登入</div>
                     <div class="log-out">登出</div>
                   </div>
                 </div>

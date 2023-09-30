@@ -516,7 +516,7 @@ export default {
         @apply max-w-[770px] m-auto relative mt-[20px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[253px] flex flex-col fixed top-[160px] right-[20%] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+            @apply w-[49px] h-[253px] flex flex-col fixed top-[137px] right-[20%] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
 
             img {
                 @apply w-[22px];
