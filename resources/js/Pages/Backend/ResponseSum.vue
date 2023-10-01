@@ -29,7 +29,7 @@ export default {
 </script>
 
 <template>
-  <section id="response" class="pt-[10px]">
+  <section id="response-sum" class="pt-[10px]">
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
@@ -87,26 +87,32 @@ export default {
           </div>
         </div>
         <div class="head-fotter">
-          <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
+          <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
+          <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
+          <NavLink class="btn" :href="route('dashboard')" :active="currentUrl('dashboard')">
             個別
           </NavLink>
         </div>
       </div>
       <div class="response-body bg-white">
-        <span>待回應</span>
+        <div class="responser">
+          <div class="title">哪些人已回應?</div>
+          <div class="email">
+            <span>電子郵件</span>
+            <div class="email-address">user@gmail.com</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-#response {
+#response-sum {
     @apply h-screen mt-[20px] pb-[20px];
 .all {
     @apply m-auto max-w-[770px] relative z-[2];
@@ -211,15 +217,27 @@ export default {
     }
 
     .response-body {
-        @apply flex min-h-[80px] justify-center items-center border rounded-[10px] border-gray-200;
-            span {
-                @apply text-[#686868];
+        @apply flex min-h-[80px] justify-start items-center border rounded-[10px] border-gray-200;
+            .responser {
+                @apply w-full;
+                .title {
+                    @apply w-full text-[24px] font-semibold p-5 border-b;
+                }
+                .email {
+                    @apply p-5;
+                    span {
+                        @apply text-lg font-semibold p-3;
+                    }
+                    .email-address {
+                        @apply text-base py-3 pl-3 bg-gray-50 rounded-md;
+                    }
+                }
             }
         }
                 // @media (max-width:480px) {
                 //     .to-excel {
                 //         display: none;
-            }
+    }
 }
 
 </style>

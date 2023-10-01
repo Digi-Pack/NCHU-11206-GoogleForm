@@ -87,13 +87,13 @@ export default {
           </div>
         </div>
         <div class="head-fotter">
-          <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
+          <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
+          <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
+          <NavLink class="btn" :href="route('dashboard')" :active="currentUrl('dashboard')">
             個別
           </NavLink>
         </div>

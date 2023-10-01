@@ -18,6 +18,7 @@ import favicon_qp2 from '/images/favicon_qp2.png';
 import addnewform from '/images/addnewform.png';
 import dot from '/images/dot.png';
 import text from '/images/text.png';
+import user from '/images/user.svg';
 import open_in_new from '/images/open_in_new.png';
 import RenameModal from '@/Components/Modal/RenameModal.vue';
 import Swal from 'sweetalert2';
@@ -56,6 +57,7 @@ export default {
         open_in_new,
         view_module,
         addnewform,
+        user,
       },
       show: false,
       blockShow: false,
@@ -122,11 +124,12 @@ export default {
             <div id="account-menu">
               <div class="google">
                 <div class="option">asd783738777@gmail.com</div>
-                <div class="photo"></div>
-                <div class="hello">shane，你好!</div>
-                <div class="manage">管理你的 Google 帳戶</div>
+                <img class="photo" :src="images.user" alt="">
+                <div class="hello"><span>user</span>，你好!</div>
                 <div class="acc mb-3">
-                  <div class="add">新增帳戶</div>
+                  <Link class="manage" :href="route('dashboard')">
+                    <div>管理你的帳戶</div>
+                  </Link>
                   <div class="log-out">登出</div>
                 </div>
               </div>
@@ -258,41 +261,26 @@ export default {
                 #ham-menu-switch:checked~#menu {
                     @apply block;
                 }
-                .downMenu {
-                  @apply w-[45px] h-[45px] cursor-pointer flex justify-center items-center me-[5px] hover:bg-[#ededed] rounded-[50%];
-                }
                 .account {
                   @apply w-[30px] h-[30px] bg-purple rounded-[50%] mr-5;
                 }
                 #account-menu {
-                  @apply w-[400px] h-[400px] bg-[aliceblue] border border-[gainsboro] p-[5px] rounded-[30px] mt-[5px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
+                  @apply w-[350px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
                     .google {
                       @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
                         .photo {
-                          @apply w-[100px] h-[100px] rounded-[50%] bg-purple;
+                          @apply w-[100px] h-[100px] rounded-[50%] opacity-70;
                         }
                         .hello {
-                          @apply w-[80%] h-[30px] flex justify-center items-center;
-                        }
-                        .manage {
-                          @apply w-[50%] h-[30px] flex justify-center items-center border border-black rounded-[30px] text-[#0756ff] text-[14px];
-                        }
-                        .advice {
-                          @apply w-[80%] h-[50px] border border-black flex justify-center items-center rounded-[30px] bg-[#ededed];
+                          @apply w-[80%] h-[30px] text-xl flex justify-center items-center;
                         }
                         .acc {
                           @apply w-[80%] h-[50px] flex flex-row justify-between;
-                            .add {
-                              @apply w-[49.5%] h-[50px] border border-black rounded-l-[30px] flex justify-center items-center bg-[#ededed]
+                            .manage {
+                              @apply w-[59.5%] h-[50px] flex justify-center items-center bg-grey-gray drop-shadow-md border border-grey rounded-l-[30px] hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                             .log-out {
-                              @apply w-[49.5%] h-[50px] border border-black rounded-r-[30px] flex justify-center items-center bg-[#ededed]
-                            }
-                        }
-                        .footer {
-                          @apply w-[50%] h-auto flex flex-row justify-center items-center;
-                            .dot {
-                              @apply w-[5px] h-[5px] rounded-[50%] bg-black ms-[10px] me-[3px];
+                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md rounded-r-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                         }
                     }

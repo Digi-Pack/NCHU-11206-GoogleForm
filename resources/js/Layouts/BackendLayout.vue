@@ -13,6 +13,7 @@ import link from '/images/link.svg';
 import print from '/images/print.svg';
 import group_add from '/images/group_add.svg';
 import logo from '/images/logo.png';
+import user from '/images/user.svg';
 import { colorType } from '@/Composables/useBgColor';
 
 export default {
@@ -35,6 +36,7 @@ export default {
         print,
         group_add,
         logo,
+        user,
       },
       show1: false,
       show2: false,
@@ -255,13 +257,12 @@ export default {
               <div id="account-menu">
                 <div class="google">
                   <div class="option">asd783738777@gmail.com</div>
-                  <div class="photo"></div>
+                  <img class="photo" :src="images.user" alt="">
                   <div class="hello"><span>user</span>，你好!</div>
-                  <Link class="manage" :href="route('dashboard')">
-                    <div>管理你的 Google 帳戶</div>
-                  </Link>
                   <div class="acc mb-3">
-                    <div class="add">登入</div>
+                    <Link class="manage" :href="route('dashboard')">
+                      <div>管理你的帳戶</div>
+                    </Link>
                     <div class="log-out">登出</div>
                   </div>
                 </div>
@@ -374,9 +375,6 @@ nav {
                       @apply flex mb-[10px];
                       .colorbox {
                         @apply flex w-[30px] h-[30px] rounded-full ml-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
-                        .check {
-                          @apply py-[7px] px-[4px] hidden;
-                        }
                         .add {
                           @apply w-[24px];
                         }
@@ -387,14 +385,11 @@ nav {
                 .eye {
                   @apply mt-[5px] w-[45px] h-[45px] flex justify-center items-center mx-[10px] pb-[4px] hover:bg-[#ededed] rounded-[50%];
                 }
-                .sent {
-                  @apply w-[76.5px] h-[36px] rounded-[5px] text-white bg-purple flex justify-center items-center;
-                }
                 #menu {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start hover:bg-grey-light;
+                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-center;
                     span {
                         @apply ms-[10px];
                     }
@@ -409,34 +404,22 @@ nav {
                   @apply w-[30px] h-[30px] bg-purple rounded-[50%];
                 }
                 #account-menu {
-                  @apply w-[400px] h-[400px] bg-[aliceblue] border border-[gainsboro] p-[5px] rounded-[30px] mt-[5px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
+                  @apply w-[350px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
                     .google {
                       @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
                         .photo {
-                          @apply w-[100px] h-[100px] rounded-[50%] bg-purple;
+                          @apply w-[100px] h-[100px] rounded-[50%] opacity-70;
                         }
                         .hello {
-                          @apply w-[80%] h-[30px] flex justify-center items-center;
-                        }
-                        .manage {
-                          @apply w-[50%] h-[30px] flex justify-center items-center border border-black rounded-[30px] text-[#0756ff] text-[14px];
-                        }
-                        .advice {
-                          @apply w-[80%] h-[50px] border border-black flex justify-center items-center rounded-[30px] bg-[#ededed];
+                          @apply w-[80%] h-[30px] text-xl flex justify-center items-center;
                         }
                         .acc {
                           @apply w-[80%] h-[50px] flex flex-row justify-between;
-                            .add {
-                              @apply w-[49.5%] h-[50px] border border-black rounded-l-[30px] flex justify-center items-center bg-[#ededed]
+                            .manage {
+                              @apply w-[59.5%] h-[50px] flex justify-center items-center bg-grey-gray drop-shadow-md border border-grey rounded-l-[30px] hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                             .log-out {
-                              @apply w-[49.5%] h-[50px] border border-black rounded-r-[30px] flex justify-center items-center bg-[#ededed]
-                            }
-                        }
-                        .footer {
-                          @apply w-[50%] h-auto flex flex-row justify-center items-center;
-                            .dot {
-                              @apply w-[5px] h-[5px] rounded-[50%] bg-black ms-[10px] me-[3px];
+                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md rounded-r-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                         }
                     }
