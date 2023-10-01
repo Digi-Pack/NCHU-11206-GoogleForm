@@ -29,7 +29,8 @@ class ReplyController extends Controller
         }
         session()->forget('redirectValue');
         // 先找到指定id的表單
-        $responseForm = Question::where('random', $id)->get();
+        $responseForm = Question::where('id', 2)->get();
+        // $responseForm = Question::where('random', $id)->get();
         //獲取亂數表單
         //$question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);

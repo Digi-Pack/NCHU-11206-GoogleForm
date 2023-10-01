@@ -70,15 +70,17 @@ export default {
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
-              title: '新增成功',
+              title: '已完成修改',
               showDenyButton: true,
               confirmButtonText: '回列表',
-              denyButtonText: '取消',
+              denyButtonText: '再次修改',
             }).then((result) => {
               if (result.isConfirmed) {
                 router.get(route('guide.index'));
+              } else if (result.isDenied) {
+                router.visit(route('reply.update'), {
+                  method: 'post', data: { formData, formId }, preserveState: true });
               }
-              console.log(result);
             });
           }
         },
