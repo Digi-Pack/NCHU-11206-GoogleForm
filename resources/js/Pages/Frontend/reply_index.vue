@@ -103,6 +103,7 @@ export default {
         <!-- 表單說明 -->
         <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
       </div>
+
       <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
         <!-- 簡答 -->
         <div v-if="item.type === 1" class="!block">
@@ -124,7 +125,7 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-3">
             <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model=" formData[key].answer" type="radio" name="choice-questions" id="choice-1" :value="innerkey + 1">
+              <input v-model=" formData[key].answer" type="radio" :name="'choice-questions' + key" id="choice-1" :value="innerkey + 1">
               <label for="choice-1">{{ choose.value }}</label>
             </div>
           </div>
@@ -163,7 +164,8 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-7">
             <span>{{ item.linear.minText }}</span>
-            <div v-for="i in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key="i">
+            {{ item.linear.min }}{{ item.linear.max }}
+            <div v-for="(i, index) in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key=index>
               <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
                 {{ i - (item.linear.min === '1' ? 0 : 1) }}
               </label>

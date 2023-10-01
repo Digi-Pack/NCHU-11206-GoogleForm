@@ -128,7 +128,7 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-3">
             <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model=" formData[key].answer" type="radio" name="choice-questions" id="choice-1" :value="innerkey + 1">
+              <input v-model=" formData[key].answer" type="radio" :name="'choice-questions' + key" id="choice-1" :value="innerkey + 1">
               <label for="choice-1">{{ choose.value }}</label>
             </div>
           </div>
