@@ -22,7 +22,7 @@ import user from '/images/user.svg';
 import open_in_new from '/images/open_in_new.png';
 import RenameModal from '@/Components/Modal/RenameModal.vue';
 import Swal from 'sweetalert2';
-
+import { router } from '@inertiajs/vue3';
 export default {
   components: { RenameModal },
   props: {
@@ -90,11 +90,18 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            '刪除成功!',
-            '此表單已被刪除',
-            'success',
-          );
+          router.visit(route('edit.delete'), {
+            method: 'delete', data: { id }, preserveState: true,
+            onSuccess: ({ props }) => {
+              if (props.flash.message.rt_code === 1) {
+                Swal.fire(
+                  '刪除成功',
+                  '此表單已被刪除',
+                );
+              }
+            },
+          });
+
         }
       });
       this.isMenuOpen[id] = false;
@@ -104,6 +111,8 @@ export default {
 </script>
 
 <template>
+  <!-- {{ response }} -->
+  {{ response.rt_data[0].id }}
   <section id="guide">
     <RenameModal v-if="show">
     </RenameModal>

@@ -21,6 +21,7 @@ Route::prefix('edit')->middleware(['auth', 'verified'])->group(function () {
     // 編輯舊表單
     Route::get('/old', [EditorController::class, 'edit_old'])->name('edit.old');
     Route::post('/update', [EditorController::class, 'edit_update'])->name('edit.update');
+    Route::delete('/delete', [EditorController::class, 'edit_delete'])->name('edit.delete');
 });
 
 Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
