@@ -14,13 +14,13 @@ class ReplyController extends Controller
     {
         // dd($id);
         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第八份問卷)
-        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 22)->get();
+        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 2)->get();
         if (!$hasBeen->isEmpty()){
             // 如果有，則前往修改答案的頁面
             //   dd($hasBeen);
             $redirectValue = [
                 'user_id'=>$request->user()->id,
-                'question_id'=>22,
+                'question_id'=>2,
             ];
             // dd( $redirectValue );
             session()->forget('redirectValue');
@@ -73,7 +73,7 @@ class ReplyController extends Controller
 
         if ($redirectValue){
              // 先找到指定id的表單
-        dd(123);
+        // dd(123);
          $responseForm = Question::where('id', $redirectValue['question_id'])->get();
          //  dd( $responseForm);
 

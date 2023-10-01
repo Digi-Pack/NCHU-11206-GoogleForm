@@ -302,7 +302,7 @@ export default {
       }
 
       .form-explain-input-2 {
-        @apply h-[21px] text-[18px] text-grey;
+        @apply h-[34px] text-[18px] text-grey;
       }
     }
 
