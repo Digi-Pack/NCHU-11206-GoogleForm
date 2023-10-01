@@ -192,7 +192,7 @@ export default {
                 <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
                   <th>{{ choose.text }}</th>
                   <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
-                    <input v-model="formData[key].manyOptions[innerkey]" type="radio" :name="'only-' + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)">
+                    <input v-model="formData[key].manyOptions[innerkey]" type="radio" :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)">
                   </td>
                 </tr>
               </tbody>
