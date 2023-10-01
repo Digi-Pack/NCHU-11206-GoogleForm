@@ -2,15 +2,24 @@
 import close from '/images/close.svg';
 
 export default {
+  props: {
+    // show: Boolean, // 父组件传递的控制显示的属性
+    modalData: Object,
+  },
   data() {
     return {
       close,
       show: true,
+      newName: '',
     };
   },
   methods: {
     closing() {
       this.show = false;
+    },
+    sendName() {
+      // 在这里使用 modalData 数据
+      console.log(this.modalData);
     },
   },
 };
@@ -29,13 +38,14 @@ export default {
         <div class="pt-[15px]">
           <div>
             <div class="text-gray-400 text-lg">請輸入新的項目名稱:</div>
-            <input type="text" class="rounded-[5px] leading-5 mt-5 w-full">
+            {{ newName }}{{ modalData }}
+            <input v-model=" newName " type="text" class="rounded-[5px] leading-5 mt-5 w-full">
           </div>
           <div class="flex justify-end mt-7">
             <button type="button" class="btn px-5 py-2 border border-grey text-purple hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
               @click="closing()">取消</button>
             <button type="button"
-              class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400">確定</button>
+              class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400" @click="sendName()">確定</button>
           </div>
         </div>
       </div>

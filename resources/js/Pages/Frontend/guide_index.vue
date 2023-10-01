@@ -20,11 +20,11 @@ import dot from '/images/dot.png';
 import text from '/images/text.png';
 import user from '/images/user.svg';
 import open_in_new from '/images/open_in_new.png';
-import RenameModal from '@/Components/Modal/RenameModal.vue';
+// import RenameModal from '@/Components/Modal/RenameModal.vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 export default {
-  components: { RenameModal },
+//   components: { RenameModal },
   props: {
     response: {
       type: Object,
@@ -33,6 +33,7 @@ export default {
         return {};
       },
     },
+    // modalData: Object,
   },
   data() {
     return {
@@ -62,6 +63,11 @@ export default {
       show: false,
       blockShow: false,
       isMenuOpen: {},
+      modalData: {
+        // 你要传递的数据
+        id: '',
+        newName: '',
+      },
     };
   },
   mounted() {
@@ -75,7 +81,13 @@ export default {
     listChange() {
       this.blockShow = !this.blockShow;
     },
-    open() {
+    open(id) {
+      const { modalData } = this;
+      this.show = !this.show;
+      this.isMenuOpen[id] = false;
+      modalData.id = id;
+    },
+    closing() {
       this.show = !this.show;
     },
     closeMenu(id) {
@@ -106,16 +118,55 @@ export default {
       });
       this.isMenuOpen[id] = false;
     },
+    sendName() {
+      this.show = !this.show;
+      const { modalData } = this;
+      router.visit(route('edit.rename'), {
+        method: 'post', data: { modalData }, preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire(
+              '已修改表單標題',
+            );
+          }
+        },
+      });
+    },
   },
 };
 </script>
 
 <template>
   <!-- {{ response }} -->
-  {{ response.rt_data[0].id }}
+  <!-- {{ response.rt_data[0].id }} -->
+  {{ modalData.id }}
   <section id="guide">
-    <RenameModal v-if="show">
-    </RenameModal>
+    <!-- <RenameModal v-if="show" :data="modalData">
+    </RenameModal> -->
+    <section v-if="show" id="RenameModal">
+      <div class="container">
+        <div class="content">
+          <div class="flex justify-between items-center">
+            <h1 class="text-[24px] text-black">重新命名</h1>
+            <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
+              <img :src="close" alt="">
+            </button>
+          </div>
+          <div class="pt-[15px]">
+            <div>
+              <div class="text-gray-400 text-lg">請輸入新的項目名稱:</div>
+              <input v-model=" modalData.newName " type="text" class="rounded-[5px] leading-5 mt-5 w-full">
+            </div>
+            <div class="flex justify-end mt-7">
+              <button type="button" class="btn px-5 py-2 border border-grey text-purple hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
+                @click="closing()">取消</button>
+              <button type="button"
+                class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400" @click="sendName()">確定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <nav>
       <div class="container">
         <div class="top">
@@ -196,7 +247,7 @@ export default {
                 <img :src="images.dot" alt="">
               </button>
               <div class="card-option-menu" v-if="isMenuOpen[item.id]">
-                <button type="button" @click="open()"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
+                <button type="button" @click="open(item.id)"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
                 <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60" alt="">移除</button>
               </div>
             </div>
@@ -218,7 +269,7 @@ export default {
               <img :src="images.dot" alt="">
             </button>
             <div class="card-option-menu" v-if="isMenuOpen[item.id]" @blur="closeMenu(item.id)" tabindex="0">
-              <button type="button" @click="open()"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
+              <button type="button" @click="open(item.id)"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
               <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60" alt="">移除</button>
             </div>
           </div>
@@ -353,6 +404,15 @@ export default {
           }
         }
       }
+    }
+  }
+}
+#RenameModal {
+  .container {
+    @apply w-full h-screen fixed top-0 left-0 bg-[#0101015a] z-10;
+
+    .content {
+      @apply w-[500px] h-[300px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8;
     }
   }
 }

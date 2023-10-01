@@ -105,4 +105,21 @@ class EditorController extends Controller
         $formDel ->delete();
         return back()->with(['message' => rtFormat($formDel)]);
     }
+    public function  edit_rename(Request $request)
+    {
+        // 這段驗證不知道為甚麼沒效
+        // $request->validate([
+        //     'modalData.newName => required|string',
+        // ], [
+        //     'modalData.newName' => '表單標題必填',
+        // ]);
+
+        $updateForm = Question::find($request->modalData['id']);
+        // dd($updateForm);
+        $updateForm->update([
+            'qu_naires_title' => $request->modalData['newName']
+        ]);
+        // dd(132);
+        return back()->with(['message' => rtFormat($updateForm)]);
+    }
 }
