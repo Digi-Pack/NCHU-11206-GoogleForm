@@ -268,239 +268,244 @@ export default {
 <template>
   <section id="question" class="pt-[10px] z-2">
     <div class="container">
-      <form @submit.prevent="submitData()">
-        <!-- 側欄 -->
-        <div class="side">
-          <button type="button" class="side-func" @click="addQuestion()">
-            <label>
-              <img :src="add" alt="">
-            </label>
-            <span>新增問題</span>
-          </button>
-          <div class="side-func">
-            <img :src="upload" alt="">
-            <span>匯入問題</span>
-          </div>
-          <div class="side-func">
-            <img :src="text" alt="">
-            <span>新增標題與說明</span>
-          </div>
-          <div class="side-func">
-            <img :src="image" alt="">
-            <span>新增圖片</span>
-          </div>
-          <div class="side-func">
-            <img :src="video" alt="">
-            <span>新增影片</span>
-          </div>
-          <div class="side-func">
-            <img :src="view_agenda" alt="">
-            <span>新增區段</span>
-          </div>
-        </div>
+      <form class="min-w-[840px] flex justify-between items-end" @submit.prevent="submitData()">
         <!-- 表單命名處 -->
-        <div class="form-title">
-
-          <!-- 表單名稱 -->
-          <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required>
-          <!-- 表單說明 -->
-          <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
-        </div>
-        <!-- 問題設置 -->
-        <div v-for="item in formData" :key="item.id" class="question">
-          <!-- 第一行 -->
-          {{ item }}
-          <div class="question-top">
-            <div class="text-box">
-              <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input" required>
-            </div>
-            <label for="image">
-              <img :src="image" alt="" class="upload">
-              <input type="file" id="image" hidden>
-            </label>
-            <!-- 下拉選單 -->
-            <div class="check">
-              <select v-model="item.type" class="answer-type" name="" @change="clearOptions(item)">
-                <option v-for="items in questionTypeOption" :key="items.id" :value="items.id">{{ items.name }}
-                </option>
-              </select>
-            </div>
+        <div class="max-w-[770px]">
+          <div class="form-title">
+            <!-- 表單名稱 -->
+            <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required>
+            <!-- 表單說明 -->
+            <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
           </div>
-          <!-- 第二行 第一種 簡答 -->
-          <div v-if="item.type === 1" class="questype-1 !block">
-            <div class="short">簡答文字</div>
-          </div>
-          <!-- 第二行 第二種 詳答 -->
-          <div v-if="item.type === 2" class="questype-2 !block">
-            <div class="long">詳答文字</div>
-          </div>
-          <!-- 第二行 第三種 選擇題 -->
-          <div v-if="item.type === 3" class="questype-3">
-            <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-              <input type="checkbox" id="checkbox">
-              <label for="checkbox" class="checkbox"></label>
-              <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
-              <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
-            </div>
-            <div class="choose">
-              <input type="checkbox" id="checkbox2">
-              <label for="checkbox2" class="checkbox"></label>
-              <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>
-            </div>
-          </div>
-          <!-- 第二行 第四種 核取方塊 -->
-          <div v-if="item.type === 4" class="questype-4 !block">
-            <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-              <input type="checkbox" id="checkbox">
-              <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
-              <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
-            </div>
-            <div class="choose">
-              <input type="checkbox" id="checkbox2">
-              <button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>
-            </div>
-          </div>
-          <!-- 第二行 第五種 下拉式選單 -->
-          <div v-if="item.type === 5" class="questype-5 !block">
-            <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-              {{ index + 1 }}<span>。</span><input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
-              <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
-            </div>
-            <div class="choose">
-              {{ item.options.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px]" @click="addSelect(item)">新增選項</button>
-            </div>
-          </div>
-          <!-- 第二行 第六種  檔案上傳 -->
-          <div v-if="item.type === 6" class="questype-6 !block">
-            <h3>作答者可將檔案上傳到雲端硬碟</h3>
-            <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
-            <div><a href="">取消</a><a href="">繼續</a></div>
-          </div>
-          <!-- 第二行 第七種 線性刻度 -->
-          <div v-if="item.type === 7" class="questype-7 !block">
-            <!-- 範圍設定 -->
-            <select v-model="item.linear.min" name="min">
-              <option value="0">0</option>
-              <option value="1">1</option>
-            </select>
-            <span>到</span>
-            <select v-model="item.linear.max" name="max">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-            <!-- 最大值與最小值意義設定 -->
-            <div class="num-mean">
-              <div class="min">
-                <span>{{ item.linear.min }}</span>
-                <input type="text" class="num-mean-input" v-model="item.linear.minText" placeholder="標籤(選填)">
+          <!-- 問題設置 -->
+          <div v-for="item in formData" :key="item.id" class="question">
+            <!-- 第一行 -->
+            {{ item }}
+            <div class="question-top">
+              <div class="text-box">
+                <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input focus:ring-0 focus:bg-white" required>
               </div>
-              <div class="max">
-                <span>{{ item.linear.max }}</span>
-                <input type="text" class="num-mean-input" v-model="item.linear.maxText" placeholder="標籤(選填)">
-              </div>
-            </div>
-          </div>
-          <!-- 第二行 第八種  單選方格 -->
-          <div v-if="item.type === 8" class="questype-8 !block">
-            <div class="left_right">
-              <div class="left">
-                <div>列</div>
-                <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
-                  {{ index + 1 }}<span>。</span>
-                  <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                  <button type="button" @click="delrow(item, row.id)">
-                    <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                  </button>
-                </div>
-                <div class="choose">
-                  <button type="button" @click="addrow(item, item.id)">新增列</button>
-                </div>
-              </div>
-              <div class="right">
-                <div>欄</div>
-                <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
-                  <input type="checkbox">
-                  <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                  <button type="button" @click="delcolumn(item, column.id)">
-                    <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                  </button>
-                </div>
-                <div class="choose">
-                  <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 第二行 第九種  核取方塊格 -->
-          <div v-if="item.type === 9" class="questype-9 !block">
-            <div class="left_right">
-              <div class="left">
-                <div>列</div>
-                <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
-                  {{ index + 1 }}<span>。</span>
-                  <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                  <button type="button" @click="delrow(item, row.id)">
-                    <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                  </button>
-                </div>
-                <div class="choose">
-                  <button type="button" @click="addrow(item, item.id)">新增列</button>
-                </div>
-              </div>
-              <div class="right">
-                <div>欄</div>
-                <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
-                  <input type="checkbox">
-                  <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                  <button type="button" @click="delcolumn(item, column.id)">
-                    <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                  </button>
-                </div>
-                <div class="choose">
-                  <button type="button" @click="addcolumn(item, item.id)">新增欄</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 第二行 第十種  日期 -->
-          <div v-if="item.type === 10" class="questype-10 !block">
-            <div class="calender">日期<img :src="date" alt=""></div>
-          </div>
-          <!-- 第二行 第十一種  時間 -->
-          <div v-if="item.type === 11" class="questype-11 !block">
-            <input type="time" hidden>
-            <div class="clock">時間<img :src="time" alt=""></div>
-          </div>
-          <!-- 第三行 -->
-          <div class="question-bottom">
-            <div class="func">
-              <img :src="copy" alt="">
-              <button type="button" @click="delQuestion(item.id)">
-                <label>
-                  <img :src="del" alt="">
-                </label>
-              </button>
-            </div>
-            <!-- 必填選項開關 -->
-            <div class="switch">
-              <label>
-                <span class="text">必填</span>
-                <input v-model="item.request" type="checkbox" name="" id="" class="checkbox">
-                <div class="btn-box">
-                  <span class="btn"></span>
-                </div>
+              <label for="image">
+                <img :src="image" alt="" class="upload">
+                <input type="file" id="image" hidden>
               </label>
+              <!-- 下拉選單 -->
+              <div class="check">
+                <select v-model="item.type" class="answer-type" name="" @change="clearOptions(item)">
+                  <option v-for="items in questionTypeOption" :key="items.id" :value="items.id">{{ items.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <!-- 第二行 第一種 簡答 -->
+            <div v-if="item.type === 1" class="questype-1 !block">
+              <div class="short">簡答文字</div>
+            </div>
+            <!-- 第二行 第二種 詳答 -->
+            <div v-if="item.type === 2" class="questype-2 !block">
+              <div class="long">詳答文字</div>
+            </div>
+            <!-- 第二行 第三種 選擇題 -->
+            <div v-if="item.type === 3" class="questype-3">
+              <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="checkbox"></label>
+                <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+              </div>
+              <div class="choose">
+                <input type="checkbox" id="checkbox2">
+                <label for="checkbox2" class="checkbox"></label>
+                <button type="button" class="ml-[10px] mr-[5px] text-gray-500 text-[15px]" @click="addSelect(item)">新增選項</button>
+              </div>
+            </div>
+            <!-- 第二行 第四種 核取方塊 -->
+            <div v-if="item.type === 4" class="questype-4 !block">
+              <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+                <input type="checkbox" class="pointer-events-none">
+                <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+              </div>
+              <div class="choose">
+                <input type="checkbox" class="pointer-events-none">
+                <button type="button" class="ml-[20px] mr-[5px] text-[15px] text-gray-500" @click="addSelect(item)">新增選項</button>
+              </div>
+            </div>
+            <!-- 第二行 第五種 下拉式選單 -->
+            <div v-if="item.type === 5" class="questype-5 !block">
+              <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+                {{ index + 1 }}<span>。</span><input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+              </div>
+              <div class="choose">
+                {{ item.options.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px] text-gray-500 text-[15px]" @click="addSelect(item)">新增選項</button>
+              </div>
+            </div>
+            <!-- 第二行 第六種  檔案上傳 -->
+            <div v-if="item.type === 6" class="questype-6 !block">
+              <h3>作答者可將檔案上傳到雲端硬碟</h3>
+              <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
+              <div><a href="">取消</a><a href="">繼續</a></div>
+            </div>
+            <!-- 第二行 第七種 線性刻度 -->
+            <div v-if="item.type === 7" class="questype-7 !block">
+              <!-- 範圍設定 -->
+              <select v-model="item.linear.min" name="min">
+                <option value="0">0</option>
+                <option value="1">1</option>
+              </select>
+              <span>到</span>
+              <select v-model="item.linear.max" name="max">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <!-- 最大值與最小值意義設定 -->
+              <div class="num-mean">
+                <div class="min">
+                  <span>{{ item.linear.min }}</span>
+                  <input type="text" class="num-mean-input" v-model="item.linear.minText" placeholder="標籤(選填)">
+                </div>
+                <div class="max">
+                  <span>{{ item.linear.max }}</span>
+                  <input type="text" class="num-mean-input" v-model="item.linear.maxText" placeholder="標籤(選填)">
+                </div>
+              </div>
+            </div>
+            <!-- 第二行 第八種  單選方格 -->
+            <div v-if="item.type === 8" class="questype-8 !block">
+              <div class="left_right">
+                <div class="left">
+                  <div>列</div>
+                  <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
+                    {{ index + 1 }}<span>。</span>
+                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="row.text">
+                    <button type="button" @click="delrow(item, row.id)">
+                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                    </button>
+                  </div>
+                  <div class="choose">
+                    {{ item.square.row.length + 1 }}<span>。</span><button type="button" @click="addrow(item, item.id)" class="text-gray-500 text-[15px] ml-[9px]">新增列</button>
+                  </div>
+                </div>
+                <div class="right">
+                  <div>欄</div>
+                  <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
+                    <div class="checkbox"></div>
+                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="column.text">
+                    <button type="button" @click="delcolumn(item, column.id)">
+                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                    </button>
+                  </div>
+                  <div class="choose">
+                    <div class="checkbox"></div>
+                    <button type="button" @click="addcolumn(item, item.id)" class="ml-3 text-gray-500 text-[15px]">新增欄</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 第二行 第九種  核取方塊格 -->
+            <div v-if="item.type === 9" class="questype-9 !block">
+              <div class="left_right">
+                <div class="left">
+                  <div>列</div>
+                  <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
+                    {{ index + 1 }}<span>。</span>
+                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="row.text">
+                    <button type="button" @click="delrow(item, row.id)">
+                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                    </button>
+                  </div>
+                  <div class="choose">
+                    {{ item.square.row.length + 1 }}<span>。</span><button type="button" class="text-gray-500 text-[15px] ml-[9px]" @click="addrow(item, item.id)">新增列</button>
+                  </div>
+                </div>
+                <div class="right">
+                  <div>欄</div>
+                  <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
+                    <input type="checkbox" class="pointer-events-none">
+                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="column.text">
+                    <button type="button" @click="delcolumn(item, column.id)">
+                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                    </button>
+                  </div>
+                  <div class="choose">
+                    <input type="checkbox" class="pointer-events-none">
+                    <button type="button" @click="addcolumn(item, item.id)" class="ml-3 text-gray-500 text-[15px]">新增欄</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 第二行 第十種  日期 -->
+            <div v-if="item.type === 10" class="questype-10 !block">
+              <div class="calender">日期<img :src="date" alt=""></div>
+            </div>
+            <!-- 第二行 第十一種  時間 -->
+            <div v-if="item.type === 11" class="questype-11 !block">
+              <input type="time" hidden>
+              <div class="clock">時間<img :src="time" alt=""></div>
+            </div>
+            <!-- 第三行 -->
+            <div class="question-bottom">
+              <div class="func">
+                <img :src="copy" alt="">
+                <button type="button" @click="delQuestion(item.id)">
+                  <label>
+                    <img :src="del" alt="">
+                  </label>
+                </button>
+              </div>
+              <!-- 必填選項開關 -->
+              <div class="switch">
+                <label>
+                  <span class="text">必填</span>
+                  <input v-model="item.request" type="checkbox" name="" id="" class="checkbox">
+                  <div class="btn-box">
+                    <span class="btn"></span>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
-          <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">儲存表單</button>
-          <button type="button" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[150px] bottom-5" @click="open()">傳送</button>
+        </div>
+        <div class="flex flex-col justify-center items-center gap-10 sticky bottom-10 mb-[20px]">
+          <!-- 側欄 -->
+          <div class="side">
+            <button type="button" class="side-func" @click="addQuestion()">
+              <label>
+                <img :src="add" alt="">
+              </label>
+              <span>新增問題</span>
+            </button>
+            <div class="side-func">
+              <img :src="upload" alt="">
+              <span>匯入問題</span>
+            </div>
+            <div class="side-func">
+              <img :src="text" alt="">
+              <span>新增標題與說明</span>
+            </div>
+            <div class="side-func">
+              <img :src="image" alt="">
+              <span>新增圖片</span>
+            </div>
+            <div class="side-func">
+              <img :src="video" alt="">
+              <span>新增影片</span>
+            </div>
+            <div class="side-func">
+              <img :src="view_agenda" alt="">
+              <span>新增區段</span>
+            </div>
+          </div>
+          <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105">儲存</button>
+          <button type="button" class="bg-blue text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105" @click="open()">傳送</button>
           <SendLinkModal v-if="show" :form-url="formUrl">
           </SendLinkModal>
         </div>
@@ -511,12 +516,12 @@ export default {
 
 <style lang="scss" scoped>
 #question {
-    @apply h-full;
+    @apply min-h-[100vh] pl-[70px];
     .container {
-        @apply max-w-[770px] m-auto relative mt-[20px] pb-[20px];
+        @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[253px] flex flex-col fixed top-[137px] right-[20%] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+            @apply w-[49px] h-[253px] flex flex-col sticky top-[120px] right-[0px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
 
             img {
                 @apply w-[22px];
@@ -547,7 +552,7 @@ export default {
             @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
 
             .form-input {
-                @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
+                @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
             }
 
             .form-title-input {
@@ -588,7 +593,7 @@ export default {
                     }
 
                     .form-title-input {
-                        @apply border-x-0 border-t-0 border-b-gray-400 w-full h-[56px] text-base font-semibold focus:bg-gray-50 focus:border-b-[3px] focus:border-b-purple focus:outline-none rounded-tl-[10px] rounded-tr-[10px];
+                        @apply border-x-0 border-t-0 border-b-gray-400 w-full h-[56px] text-base font-semibold focus:bg-gray-50 focus:border-b-[3px] focus:border-b-purple focus:ring-0 rounded-tl-[10px] rounded-tr-[10px];
                     }
                 }
 
@@ -645,7 +650,7 @@ export default {
                       @apply w-[24px] h-[24px] inline-block rounded-full border-[2px] border-grey mr-[5px];
                     }
                     .choose_line {
-                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-b-purple focus:ring-0;
                     }
 
                     .choose_line2 {
@@ -668,11 +673,7 @@ export default {
                       @apply w-[24px] h-[24px] mr-[5px] pointer-events-none;
                     }
                     .choose_line {
-                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
-                    }
-
-                    .choose_line2 {
-                      @apply w-[100px] text-grey;
+                      @apply w-[80%] border-0 h-[30px] ml-2 text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:ring-0;
                     }
 
                     a {
@@ -692,7 +693,7 @@ export default {
                     }
 
                     .choose_line {
-                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:ring-0 focus:border-b-[3px] focus:border-b-purple;
                     }
 
                     .choose_line2 {
@@ -722,7 +723,7 @@ export default {
                     @apply text-grey text-base font-semibold;
                 }
                 .num-mean-input {
-                    @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple outline-none;
+                    @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple ring-0;
                 }
             }
 
@@ -739,7 +740,7 @@ export default {
                               @apply pt-3;
                             }
                             .choose_line {
-                              @apply w-4/5 border-0 h-[40px] text-base font-medium hover:border-b hover:border-b-grey focus:border-x-0 focus:border-t-0 focus:border-b-[3px] focus:border-b-purple focus:outline-none;
+                              @apply w-4/5 border-0 h-[40px] text-base font-medium hover:border-b hover:border-b-grey focus:border-x-0 focus:border-t-0 focus:border-b-[3px] focus:border-b-purple focus:ring-0;
                             }
                             .choose_line2 {
                               @apply w-[70px] text-grey;
@@ -750,6 +751,9 @@ export default {
                         #checkbox,
                         #checkbox2 {
                           @apply w-6 h-6 mr-[5px] pointer-events-none;
+                        }
+                        .checkbox {
+                          @apply w-[24px] h-[24px] inline-block rounded-full border-[2px] border-grey mr-[5px];
                         }
                     }
                 }

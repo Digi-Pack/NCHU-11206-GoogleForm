@@ -39,6 +39,7 @@ export default {
       show1: false,
       show2: false,
       show4: false,
+      showTopic: false,
       bgColor: 'bg-indigo-light',
     };
   },
@@ -62,6 +63,9 @@ export default {
     myStyle() {
       return this.bgColor;
     },
+    topicOpen() {
+      this.showTopic = !this.showTopic;
+    },
   },
 };
 </script>
@@ -73,7 +77,7 @@ export default {
         <div class="container">
           <div class="top h-[60%] bg-white flex justify-between p-[10px]">
             <div class="topL flex justify-start items-center">
-              <Link :href="route('guide')">
+              <Link :href="route('guide.index')">
                 <div class="square logo">
                   <img :src="images.logo" width="25" alt="">
                 </div>
@@ -81,17 +85,14 @@ export default {
               <span class="title">未命名表單</span>
             </div>
             <div class="topR">
-              <input type="checkbox" id="ham-menu-switch-3" class="hidden">
-              <label for="ham-menu-switch-3" class="ham-menu">
-                <div class="paletteB"><img :src="images.palette" width="25" height="25" alt=""></div>
-              </label>
-              <div class="topic z-50">
+              <button type="button" class="paletteB" @click="topicOpen()"><img :src="images.palette" width="25" height="25" alt=""></button>
+              <div v-if="showTopic" class="topic z-50">
                 <div class="topic-head">
                   <div class="top-text">
                     <img class="palette" :src="images.palette" alt="">
                     <span>主題</span>
                   </div>
-                  <img class="close" :src="images.close" alt="">
+                  <button type="button" class="close" @click="topicOpen()"><img :src="images.close" alt=""></button>
                 </div>
                 <div class="topic-body">
                   <div class="font-style">
@@ -256,7 +257,9 @@ export default {
                   <div class="option">asd783738777@gmail.com</div>
                   <div class="photo"></div>
                   <div class="hello"><span>user</span>，你好!</div>
-                  <div class="manage">管理你的 Google 帳戶</div>
+                  <Link class="manage" :href="route('dashboard')">
+                    <div>管理你的 Google 帳戶</div>
+                  </Link>
                   <div class="acc mb-3">
                     <div class="add">登入</div>
                     <div class="log-out">登出</div>
@@ -321,9 +324,9 @@ nav {
                 }
 
                 .topic {
-                  @apply shadow-lg w-[380px] absolute right-0 top-[107px] bg-white overflow-y-scroll hidden;
+                  @apply shadow-lg w-[350px] absolute right-0 top-[107px] bg-white;
                   .topic-head {
-                  @apply px-[20px] w-[350px] flex justify-between drop-shadow-sm;
+                  @apply px-[20px] w-full flex justify-between items-center drop-shadow-sm;
                     .top-text {
                       @apply py-[15px] flex items-center;
                       .palette {
@@ -334,7 +337,9 @@ nav {
                       }
                     }
                     .close {
-                      @apply p-[15px] hover:rounded-full hover:bg-[#e5e5e5];
+                      @apply
+
+                       hover:rounded-full hover:bg-[#e5e5e5];
                     }
                   }
                   .topic-body {
@@ -368,7 +373,7 @@ nav {
                     .col {
                       @apply flex mb-[10px];
                       .colorbox {
-                        @apply flex w-[30px] h-[30px] rounded-full me-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
+                        @apply flex w-[30px] h-[30px] rounded-full ml-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
                         .check {
                           @apply py-[7px] px-[4px] hidden;
                         }
@@ -381,9 +386,6 @@ nav {
                 }
                 .eye {
                   @apply mt-[5px] w-[45px] h-[45px] flex justify-center items-center mx-[10px] pb-[4px] hover:bg-[#ededed] rounded-[50%];
-                }
-                #ham-menu-switch-3:checked~.topic {
-                    @apply block;
                 }
                 .sent {
                   @apply w-[76.5px] h-[36px] rounded-[5px] text-white bg-purple flex justify-center items-center;

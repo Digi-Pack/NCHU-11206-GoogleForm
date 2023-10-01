@@ -20,6 +20,7 @@ import dot from '/images/dot.png';
 import text from '/images/text.png';
 import open_in_new from '/images/open_in_new.png';
 import RenameModal from '@/Components/Modal/RenameModal.vue';
+import Swal from 'sweetalert2';
 
 export default {
   components: { RenameModal },
@@ -62,8 +63,8 @@ export default {
     };
   },
   mounted() {
-    const buttonElement = this.$refs.menuButton;
-    buttonElement.setAttribute('tabindex', '0');
+    // const buttonElement = this.$refs.menuButton;
+    // buttonElement.setAttribute('tabindex', '0');
   },
   methods: {
     toggleMenu(id) {
@@ -76,6 +77,24 @@ export default {
       this.show = !this.show;
     },
     closeMenu(id) {
+      Swal.fire({
+        title: '要確欸',
+        text: '此筆刪除將會無法回復!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '刪除',
+        cancelButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            '刪除成功!',
+            '此表單已被刪除',
+            'success',
+          );
+        }
+      });
       this.isMenuOpen[id] = false;
     },
   },
@@ -106,7 +125,6 @@ export default {
                 <div class="photo"></div>
                 <div class="hello">shane，你好!</div>
                 <div class="manage">管理你的 Google 帳戶</div>
-                <div class="advice">建議採取的行動</div>
                 <div class="acc mb-3">
                   <div class="add">新增帳戶</div>
                   <div class="log-out">登出</div>
@@ -158,7 +176,7 @@ export default {
             </div>
           </Link>
           <div class="card-bottom">
-            <div class="text-[14px]">{{ item.qu_naires_title }}</div>
+            <div class="text-[14px] w-[140px] truncate">{{ item.qu_naires_title }}</div>
             <div class="flex gap-3 items-center">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
               <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
@@ -178,7 +196,7 @@ export default {
           <Link :href="route('edit.old', { id: item.id })">
             <div class="flex items-center gap-10">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
-              <span>{{ item.qu_naires_title }}</span>
+              <span class="w-[200px] truncate">{{ item.qu_naires_title }}</span>
             </div>
           </Link>
           <div class="flex items-center justify-between w-[45%]">
