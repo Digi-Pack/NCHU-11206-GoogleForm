@@ -489,12 +489,12 @@ export default {
           <!-- 側欄 -->
           <div class="side">
             <button type="button" class="side-func" @click="addQuestion()">
-              <label>
+              <label class="cursor-pointer">
                 <img :src="add" alt="">
               </label>
               <span>新增問題</span>
             </button>
-            <div class="side-func">
+            <div class="side-func !rounded-none">
               <img :src="upload" alt="">
               <span>匯入問題</span>
             </div>
@@ -502,10 +502,13 @@ export default {
               <img :src="text" alt="">
               <span>新增標題與說明</span>
             </div>
-            <div class="side-func">
-              <img :src="image" alt="">
-              <span>新增圖片</span>
-            </div>
+            <input type="file" id="addImage" class="hidden">
+            <label for="addImage">
+              <div class="side-func !rounded-none cursor-pointer">
+                <img :src="image" alt="">
+                <span>新增圖片</span>
+              </div>
+            </label>
             <div class="side-func">
               <img :src="video" alt="">
               <span>新增影片</span>
@@ -549,7 +552,7 @@ export default {
                     @apply rounded-tl-[10px] rounded-tr-[10px];
                 }
 
-                &:nth-of-type(6) {
+                &:nth-of-type(5) {
                     @apply rounded-bl-[10px] rounded-br-[10px];
                 }
 
