@@ -276,7 +276,11 @@ export default {
         </div>
       </div>
     </div>
-    <button type="button" class="w-[60px] rounded-full drop-shadow-md border-grey shadow-lg bg-white p-3 fixed bottom-10 right-10"><img :src="images.addnewform" alt=""></button>
+    <Link :href="route('edit.index')">
+      <button type="button" class="w-[60px] rounded-full drop-shadow-md border-grey shadow-lg bg-white p-3 fixed bottom-10 right-10">
+        <img :src="images.addnewform" alt="">
+      </button>
+    </Link>
   </section>
 </template>
 <!-- <div v-for="item in response.rt_data" :key="item.id">
@@ -354,7 +358,7 @@ export default {
     .controlBar {
       @apply flex w-full h-[64px] px-[17%] text-[15px] justify-between items-center relative mb-5;
       select {
-        @apply border-0 h-[45%] text-[14px] px-4 py-1 rounded-md hover:bg-grey-light focus:ring-0;
+        @apply border-0 h-[45%] text-[14px] pr-7 py-1 rounded-md hover:bg-grey-light focus:ring-0;
       }
       #sort:checked~#sortMenu {
         @apply block;
