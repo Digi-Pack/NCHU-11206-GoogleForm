@@ -96,6 +96,7 @@ export default {
       show: false,
       isSidebarFixed: false,
       formUrl: '',
+      imageSize: 0,
     };
   },
   mounted() {
@@ -215,7 +216,7 @@ export default {
     // 儲存表單
     submitData() {
       const { formData, formText } = this;
-      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
       // 驗證
       router.visit(route('edit.store'), {
         method: 'post', data: { formData, formText }, preserveState: true,
@@ -259,7 +260,14 @@ export default {
       // 根据滚动位置来判断是否固定导航栏
       this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
     },
-
+    uploadImage(event, item) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        item.image = reader.result;
+        this.imageSize += event.target.files[0].size;
+      };
+    },
   },
 };
 
@@ -285,9 +293,9 @@ export default {
               <div class="text-box">
                 <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input focus:ring-0 focus:bg-white" required>
               </div>
-              <label for="image">
+              <label>
                 <img :src="image" alt="" class="upload">
-                <input type="file" id="image" hidden>
+                <input type="file" id="image" @change="(event) => uploadImage(event, item)" hidden>
               </label>
               <!-- 下拉選單 -->
               <div class="check">
@@ -296,6 +304,9 @@ export default {
                   </option>
                 </select>
               </div>
+            </div>
+            <div>
+              <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
             </div>
             <!-- 第二行 第一種 簡答 -->
             <div v-if="item.type === 1" class="questype-1 !block">
@@ -566,10 +577,6 @@ export default {
 
         .question {
             @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white;
-
-            img {
-                @apply w-[22px];
-            }
 
             .question-top {
                 @apply flex flex-wrap justify-between items-center;

@@ -105,6 +105,9 @@ export default {
       </div>
 
       <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
+        <div>
+          <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
+        </div>
         <!-- 簡答 -->
         <div v-if="item.type === 1" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
@@ -306,10 +309,6 @@ export default {
 
     .question {
       @apply rounded-[10px] drop-shadow-md border border-grey-light p-[24px] my-[12px] bg-white;
-
-      img {
-        @apply w-[22px];
-      }
 
       .questype-1 {
         @apply pt-[20px] pb-[10px];

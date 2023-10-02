@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Inertia\Inertia;
+use App\Models\Seeall;
 use App\Models\Question;
 use App\Models\Response;
-use App\Models\Seeall;
-use Carbon\Carbon;
-use Egulias\EmailValidator\Result\Reason\Reason;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Validator;
 
 
 class EditorController extends Controller
 {
+    public function __construct(protected FileService $fileService)
+    {
+    }
     public function index()
     {
         return Inertia::render('Frontend/See');
@@ -41,9 +44,12 @@ class EditorController extends Controller
         ]);
         // :position 第幾個意思
         // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
-
+        // 處理圖片
+        foreach ($request->formData as $item) {
+            $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
+        }
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
-
+        $this->fileService->base64Upload($request->image, 'editor');
         $textData = Question::create([
             'qu_naires_title' => $request->formText['qu_naires_title'],
             'qu_naires_desc' => $request->formText['qu_naires_desc'],
@@ -88,6 +94,10 @@ class EditorController extends Controller
         // dd($request->formText['id']);
         // dd($request->formData);
         $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
+        // 處理圖片
+        foreach ($request->formData as $item) {
+            $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
+        }
         // dd($updateForm);
         $updateForm->update([
             'qu_naires_title' => $request->formText['qu_naires_title'],
@@ -102,7 +112,7 @@ class EditorController extends Controller
         // dd($request->id);
         $formDel = Question::find($request->id);
         // dd( $formDel );
-        $formDel ->delete();
+        $formDel->delete();
         return back()->with(['message' => rtFormat($formDel)]);
     }
     public function  edit_rename(Request $request)
