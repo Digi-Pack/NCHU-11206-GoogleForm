@@ -49,13 +49,13 @@ export default {
       close: close,
       questionTypeOption,
       formText: {
-        id: this.response?.rt_data?.responseForm[0].id ?? '',
+        id: this.response?.rt_data?.responseForm.id ?? '',
         modified_at: '',
         other_modified: '',
         opened_date: '',
         lead_author_id: '',
-        qu_naires_title: this.response?.rt_data?.responseForm[0].qu_naires_title ?? '',
-        qu_naires_desc: this.response?.rt_data?.responseForm[0].qu_naires_desc ?? '',
+        qu_naires_title: this.response?.rt_data?.responseForm.qu_naires_title ?? '',
+        qu_naires_desc: this.response?.rt_data?.responseForm.qu_naires_desc ?? '',
       },
 
       formData: this.response?.rt_data?.questionNaires?.map(questionnaire => {
