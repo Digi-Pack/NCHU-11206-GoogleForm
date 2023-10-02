@@ -192,7 +192,9 @@ export default {
                   <Link class="manage" :href="route('dashboard')">
                     <div>管理你的帳戶</div>
                   </Link>
-                  <div class="log-out">登出</div>
+                  <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
+                    登出
+                  </DropdownLink>
                 </div>
               </div>
             </div>

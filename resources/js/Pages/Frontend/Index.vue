@@ -23,7 +23,7 @@ export default {
     <h1 class="title">{{ title }}</h1>
     <div class="flex justify-center gap-5 mb-5">
       <Link :href="route('register')" class="btn-base">註冊</Link>
-      <Link :href="route('dashboard')" class="btn-base">登入</Link>
+      <Link :href="route('login')" class="btn-base">登入</Link>
     </div>
   </section>
 </template>
