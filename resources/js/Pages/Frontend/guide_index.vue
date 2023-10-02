@@ -19,6 +19,7 @@ import addnewform from '/images/addnewform.png';
 import dot from '/images/dot.png';
 import text from '/images/text.png';
 import user from '/images/user.svg';
+import account from '/images/account-circle.svg';
 import open_in_new from '/images/open_in_new.png';
 // import RenameModal from '@/Components/Modal/RenameModal.vue';
 import Swal from 'sweetalert2';
@@ -59,6 +60,7 @@ export default {
         view_module,
         addnewform,
         user,
+        account,
       },
       show: false,
       blockShow: false,
@@ -179,7 +181,7 @@ export default {
           <div class="topR">
             <input type="checkbox" id="ham-menu-switch-2" class="hidden">
             <label for="ham-menu-switch-2" class="ham-menu">
-              <div class="account"></div>
+              <img class="account" :src="images.account" alt="">
             </label>
             <div id="account-menu">
               <div class="google">
@@ -190,7 +192,9 @@ export default {
                   <Link class="manage" :href="route('dashboard')">
                     <div>管理你的帳戶</div>
                   </Link>
-                  <div class="log-out">登出</div>
+                  <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
+                    登出
+                  </DropdownLink>
                 </div>
               </div>
             </div>
@@ -326,7 +330,7 @@ export default {
                     @apply block;
                 }
                 .account {
-                  @apply w-[30px] h-[30px] bg-purple rounded-[50%] mr-5;
+                  @apply w-[40px] h-[40px] rounded-[50%] mr-5 cursor-pointer opacity-70;
                 }
                 #account-menu {
                   @apply w-[350px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
@@ -344,7 +348,7 @@ export default {
                               @apply w-[59.5%] h-[50px] flex justify-center items-center bg-grey-gray drop-shadow-md border border-grey rounded-l-[30px] hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                             .log-out {
-                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md rounded-r-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
+                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md cursor-pointer rounded-r-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                         }
                     }

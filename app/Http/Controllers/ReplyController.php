@@ -31,7 +31,7 @@ class ReplyController extends Controller
         $responseForm = Question::where('id', 24)->get();
         // $responseForm = Question::where('random', $id)->get();
         //獲取亂數表單
-        //$question = Question::where('random', $random)->first();
+        // $question = Question::where('random', $random)->first();
         // dd($responseForm[0]['questionnaires']);
         // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
         //    dd($responseForm );

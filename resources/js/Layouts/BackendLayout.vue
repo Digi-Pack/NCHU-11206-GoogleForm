@@ -15,6 +15,7 @@ import print from '/images/print.svg';
 import group_add from '/images/group_add.svg';
 import logo from '/images/logo.png';
 import user from '/images/user.svg';
+import account from '/images/account-circle.svg';
 import { colorType } from '@/Composables/useBgColor';
 
 export default {
@@ -39,6 +40,7 @@ export default {
         group_add,
         logo,
         user,
+        account,
       },
       show1: false,
       show2: false,
@@ -233,7 +235,9 @@ export default {
                 </div>
               </div>
               <Link :href="route('reply.index', 8)">
-                <button type="button" class="eye"><img :src="images.visibility" width="25" height="25" alt=""></button>
+                <button type="button" class="eye">
+                  <img :src="images.visibility" width="25" height="25" alt="">
+                </button>
               </Link>
               <input type="checkbox" id="ham-menu-switch" class="hidden">
               <label for="ham-menu-switch" class="ham-menu">
@@ -255,7 +259,9 @@ export default {
               </div>
               <input type="checkbox" id="ham-menu-switch-2" class="hidden">
               <label for="ham-menu-switch-2" class="ham-menu">
-                <div class="account"></div>
+                <div class="account">
+                  <img :src="images.account" alt="">
+                </div>
               </label>
               <div id="account-menu">
                 <div class="google">
@@ -266,7 +272,9 @@ export default {
                     <Link class="manage" :href="route('dashboard')">
                       <div>管理你的帳戶</div>
                     </Link>
-                    <div class="log-out">登出</div>
+                    <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
+                      登出
+                    </DropdownLink>
                   </div>
                 </div>
               </div>
@@ -386,13 +394,13 @@ nav {
                   }
                 }
                 .eye {
-                  @apply mt-[5px] w-[45px] h-[45px] flex justify-center items-center mx-[10px] pb-[4px] hover:bg-[#ededed] rounded-[50%];
+                  @apply w-[45px] h-[45px] flex justify-center items-center hover:bg-[#ededed] rounded-[50%];
                 }
                 #menu {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-center;
+                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start;
                     span {
                         @apply ms-[10px];
                     }
@@ -404,7 +412,7 @@ nav {
                   @apply w-[45px] h-[45px] cursor-pointer flex justify-center items-center me-[5px] hover:bg-[#ededed] rounded-[50%];
                 }
                 .account {
-                  @apply w-[30px] h-[30px] bg-purple rounded-[50%];
+                  @apply w-[45px] h-[45px] flex justify-center items-center hover:bg-[#ededed] rounded-[50%] cursor-pointer;
                 }
                 #account-menu {
                   @apply w-[350px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
