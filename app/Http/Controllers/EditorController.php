@@ -107,6 +107,7 @@ class EditorController extends Controller
             'qu_naires_title' => $request->formText['qu_naires_title'],
             'qu_naires_desc' => $request->formText['qu_naires_desc'],
             'questionnaires' => $jsonText,
+            'modified_at' => Carbon::now(),
         ]);
         // dd(132);
         return back()->with(['message' => rtFormat($updateForm)]);
