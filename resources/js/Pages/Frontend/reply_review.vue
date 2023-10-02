@@ -60,6 +60,13 @@ export default {
     };
   },
   methods: {
+    arrayData(min, max) {
+      let loopResult = [];
+      for (let i = min; i <= max; i++) {
+        loopResult.push(i);
+      }
+      return loopResult;
+    },
     submitData() {
       const { formData, response } = this;
       const formId = response.rt_data.responseForm[0].id;
@@ -163,15 +170,15 @@ export default {
           </div>
         </div>
         <!-- 線性刻度 -->
+        <!-- 線性刻度 -->
         <div v-if="item.type === 7" class="!block">
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-7">
             <span>{{ item.linear.minText }}</span>
-            <div v-for="i in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key="i">
-              <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
-                {{ i - (item.linear.min === '1' ? 0 : 1) }}
+            <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
+              <label> {{ i }}
               </label>
-              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)" :value="i">
+              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i">
             </div>
             <span class="">{{ item.linear.maxText }}</span>
           </div>

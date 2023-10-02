@@ -1,6 +1,7 @@
 <script>
 import CopyDocument from '@/Components/Modal/CopyDocument.vue';
 import TrashCanModal from '@/Components/Modal/TrashCanModal.vue';
+import AddCollaborator from '@/Components/Modal/AddCollaborator.vue';
 import palette from '/images/palette.svg';
 import close from '/images/close.svg';
 import image from '/images/image.svg';
@@ -20,6 +21,7 @@ export default {
   components: {
     CopyDocument,
     TrashCanModal,
+    AddCollaborator,
   },
   data() {
     return {
@@ -55,6 +57,7 @@ export default {
       return route().current(urlName);
     },
     open(num) {
+
       this['show' + num] = !this['show' + num];
     },
     changeColor(newColor) {

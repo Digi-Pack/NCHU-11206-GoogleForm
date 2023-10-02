@@ -3,20 +3,19 @@ import close from '/images/close.svg';
 import link from '/images/link.svg';
 
 export default {
-  props: {
-    formUrl: String,
-  },
+//   props: {
+//     formurl: String,
+//   },
   data() {
     return {
       images: {
         close,
         link,
+
       },
+      formurl: '',
       show: true,
     };
-  },
-  mounted() {
-    console.log(this.formUrl);
   },
   methods: {
     closing() {
@@ -39,12 +38,14 @@ export default {
         <div class="pt-[15px]">
           <div class="flex flex-col gap-4">
             <div class="px-8 flex flex-col gap-4">
-              <input type="text" class="w-full h-[45px] rounded-md text-[14px]" placeholder="新增使用者和群組">
+              <input type="text" class="w-full h-[45px] rounded-md text-[14px]" placeholder="新增使用者和群組" :value="formurl">
               <p>具有存取權的使用者</p>
+              {{ formurl }}
             </div>
             <div class="flex items-center gap-3 hover:bg-grey-light px-8 w-full">
               <div class="rounded-full bg-purple w-[22px] h-[22px]"></div>
               <div class="flex flex-col">
+                {{ formurl }}
                 <span class="text-[12px]">username(你)</span>
                 <span class="text-[12px] text-[#6e6e6e]">xxx123456@gmail.com</span>
               </div>

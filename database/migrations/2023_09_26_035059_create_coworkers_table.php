@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamps();
             $table->bigInteger('coworker_id')->comment('合作者id');
             $table->bigInteger('question_id')->comment('問卷id');
-
         });
     }
 

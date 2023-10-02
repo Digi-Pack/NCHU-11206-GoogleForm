@@ -45,8 +45,8 @@ class User extends Authenticatable
     ];
 
 
-    public function question ()
+    public function question()
     {
-        return $this->hasMany(Question::class,'lead_author_id','id');
+        return $this->hasMany(Question::class, 'lead_author_id', 'id');
     }
 }

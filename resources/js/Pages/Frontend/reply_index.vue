@@ -74,6 +74,13 @@ export default {
   //     },
   //   },
   methods: {
+    arrayData(min, max) {
+      let loopResult = [];
+      for (let i = min; i <= max; i++) {
+        loopResult.push(i);
+      }
+      return loopResult;
+    },
     submitData() {
       const { formData, response } = this;
       const formId = response.rt_data.responseForm[0].id;
@@ -164,12 +171,9 @@ export default {
           <span class="text-[18px]">{{ item.title }}</span>
           <div class="questype-7">
             <span>{{ item.linear.minText }}</span>
-            {{ item.linear.min }}{{ item.linear.max }}
-            <div v-for="(i, index) in (parseInt(item.linear.max) + (item.linear.min === '1' ? 0 : 1)) " class="linear" :key=index>
-              <label :for="'linear-' + (i - (item.linear.min === '1' ? 0 : 1))">
-                {{ i - (item.linear.min === '1' ? 0 : 1) }}
-              </label>
-              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + (i + item.linear.min + 1)" :value="i">
+            <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
+              {{ i }}
+              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i">
             </div>
             <span class="">{{ item.linear.maxText }}</span>
           </div>
