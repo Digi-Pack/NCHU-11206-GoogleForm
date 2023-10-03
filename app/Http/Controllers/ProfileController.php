@@ -88,12 +88,11 @@ class ProfileController extends Controller
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         Response::create([
-           'user_id'=>$user->id,
-            'question_id'=>$request-> formId,
-            'answer'=> $jsonText ,
+           'user_id' => $user->id,
+            'question_id' => $request-> formId,
+            'answer' => $jsonText ,
         ]);
 
         return Inertia::render('Frontend/reply_final');
     }
-
 }

@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Validator;
 
-
 class EditorController extends Controller
 {
     public function __construct(protected FileService $fileService)
@@ -21,12 +20,12 @@ class EditorController extends Controller
     {
         return Inertia::render('Frontend/See');
     }
-    public function  edit_index()
+    public function edit_index()
     {
         // dd(123);
         return Inertia::render('Backend/Editorindex');
     }
-    public function  edit_store(Request $request)
+    public function edit_store(Request $request)
     {
         // 與當下時間
         $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
@@ -60,7 +59,7 @@ class EditorController extends Controller
         ]);
         return back()->with(['message' => rtFormat($combinedString)]);
     }
-    public function  edit_old(Request $request)
+    public function edit_old(Request $request)
     {
         // dd(session()->all());
         // dd(session()->get('update_token'));
@@ -69,13 +68,13 @@ class EditorController extends Controller
         $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id', $request->id)->first();
          // dd($responseForm);
 
-       if(!session()->get('update_token') == $request->id ) {
-        $responseForm->update([
+        if (!session()->get('update_token') == $request->id) {
+            $responseForm->update([
             'opened_date' => Carbon::now(),
-        ]);
-       }
+            ]);
+        }
 
-       session()->forget('update_token');
+        session()->forget('update_token');
 
         // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
         $questionNaires = json_decode($responseForm['questionnaires'], true);
@@ -87,7 +86,7 @@ class EditorController extends Controller
 
         return Inertia::render('Backend/Editorold', ['response' => rtFormat($response)]);
     }
-    public function  edit_update(Request $request)
+    public function edit_update(Request $request)
     {
 
         $request->validate([
@@ -120,7 +119,7 @@ class EditorController extends Controller
         // dd(132);
         return back()->with(['message' => rtFormat($updateForm), 'update_token' => $request->formText['id']]);
     }
-    public function  edit_delete(Request $request)
+    public function edit_delete(Request $request)
     {
         // dd($request->id);
         $formDel = Question::find($request->id);
@@ -128,7 +127,7 @@ class EditorController extends Controller
         $formDel->delete();
         return back()->with(['message' => rtFormat($formDel)]);
     }
-    public function  edit_rename(Request $request)
+    public function edit_rename(Request $request)
     {
         // 這段驗證不知道為甚麼沒效
         // $request->validate([
