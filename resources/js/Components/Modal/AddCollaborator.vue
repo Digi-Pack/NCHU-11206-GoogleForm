@@ -3,9 +3,9 @@ import close from '/images/close.svg';
 import link from '/images/link.svg';
 
 export default {
-//   props: {
-//     formurl: String,
-//   },
+  props: {
+    coFormId: String,
+  },
   data() {
     return {
       images: {
@@ -28,7 +28,7 @@ export default {
 <template>
   <section v-if="show" id="AddCollaborator">
     <div class="container">
-      <div class="content">
+      <div class="content">{{ coFormId }}
         <div class="flex justify-between items-center px-8">
           <h1 class="text-[18px] text-black">將編輯者新增至<span>「未命名表單」</span></h1>
           <button type="button" class="text-[28px] font-bold text-black" @click="closing()">

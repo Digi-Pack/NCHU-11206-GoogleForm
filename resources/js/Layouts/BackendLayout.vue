@@ -47,7 +47,11 @@ export default {
       show4: false,
       showTopic: false,
       bgColor: 'bg-indigo-light',
+      coFormId: route()?.params?.id ?? '0',
     };
+  },
+  mounted() {
+    // console.log(this.testId);
   },
   methods: {
     /**
@@ -59,7 +63,6 @@ export default {
       return route().current(urlName);
     },
     open(num) {
-
       this['show' + num] = !this['show' + num];
     },
     changeColor(newColor) {
@@ -248,7 +251,7 @@ export default {
               <div id="menu">
                 <CopyDocument v-if="show1"></CopyDocument>
                 <TrashCanModal v-if="show2"></TrashCanModal>
-                <AddCollaborator v-if="show4"></AddCollaborator>
+                <AddCollaborator v-if="show4" :co-form-id="coFormId"></AddCollaborator>
                 <div class="">
                   <button type="button" class="option" @click="open(1)"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
                   <button type="button" class="option" @click="open(2)"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>

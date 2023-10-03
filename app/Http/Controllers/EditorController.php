@@ -61,7 +61,7 @@ class EditorController extends Controller
     }
     public function  edit_old(Request $request)
     {
-
+        // dd(session()->all());
         // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
         $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id', $request->id)->first();
         // dd($responseForm[0]['questionnaires']);
@@ -110,7 +110,7 @@ class EditorController extends Controller
             'modified_at' => Carbon::now(),
         ]);
         // dd(132);
-        return back()->with(['message' => rtFormat($updateForm)]);
+        return back()->with(['message' => rtFormat($updateForm), 'update_token' => $request->formText['id']]);
     }
     public function  edit_delete(Request $request)
     {
