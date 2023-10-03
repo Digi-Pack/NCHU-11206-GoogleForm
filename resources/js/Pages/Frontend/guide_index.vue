@@ -189,7 +189,7 @@ export default {
                 <img class="photo" :src="images.user" alt="">
                 <div class="hello"><span>user</span>，你好!</div>
                 <div class="acc mb-3">
-                  <Link class="manage" :href="route('dashboard')">
+                  <Link class="manage" :href="route('profile.edit')">
                     <div>管理你的帳戶</div>
                   </Link>
                   <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">

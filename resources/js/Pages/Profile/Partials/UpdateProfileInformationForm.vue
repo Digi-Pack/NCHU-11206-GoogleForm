@@ -21,16 +21,16 @@ const form = useForm({
 <template>
   <section>
     <header>
-      <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
+      <h2 class="text-lg font-medium text-gray-900">個人檔案</h2>
 
       <p class="mt-1 text-sm text-gray-600">
-        Update your account's profile information and email address.
+        更新帳戶的個人檔案和電子郵件地址。
       </p>
     </header>
 
     <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
       <div>
-        <InputLabel for="name" value="Name" />
+        <InputLabel for="name" value="使用者名稱" />
 
         <TextInput
           id="name"
@@ -82,10 +82,10 @@ const form = useForm({
       </div>
 
       <div class="flex items-center gap-4">
-        <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+        <PrimaryButton :disabled="form.processing">儲存</PrimaryButton>
 
         <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-          <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+          <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">儲存完成</p>
         </Transition>
       </div>
     </form>

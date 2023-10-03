@@ -1,6 +1,6 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+// import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -26,68 +26,69 @@ const submit = () => {
 </script>
 
 <template>
-  <GuestLayout>
-    <Head title="Log in" />
+  <!-- <GuestLayout> -->
+  <Head title="Log in" />
 
-    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-      {{ status }}
+  <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+    {{ status }}
+  </div>
+
+  <form @submit.prevent="submit">
+    <div class="flex justify-center items-center pt-2 pb-6 text-white text-xl">Google 表單</div>
+    <div>
+      <InputLabel for="email" value="電子郵件" />
+
+      <TextInput
+        id="email"
+        type="email"
+        class="mt-1 block w-full"
+        v-model="form.email"
+        required
+        autofocus
+        autocomplete="username"
+      />
+
+      <InputError class="mt-2" :message="form.errors.email" />
     </div>
 
-    <form @submit.prevent="submit">
-      <div>
-        <InputLabel for="email" value="Email" />
+    <div class="mt-4">
+      <InputLabel for="password" value="密碼" />
 
-        <TextInput
-          id="email"
-          type="email"
-          class="mt-1 block w-full"
-          v-model="form.email"
-          required
-          autofocus
-          autocomplete="username"
-        />
+      <TextInput
+        id="password"
+        type="password"
+        class="mt-1 block w-full"
+        v-model="form.password"
+        required
+        autocomplete="current-password"
+      />
 
-        <InputError class="mt-2" :message="form.errors.email" />
-      </div>
+      <InputError class="mt-2" :message="form.errors.password" />
+    </div>
 
-      <div class="mt-4">
-        <InputLabel for="password" value="Password" />
+    <div class="block mt-4">
+      <label class="flex items-center">
+        <Checkbox name="remember" v-model:checked="form.remember" />
+        <span class="ml-2 text-sm text-white">記住我</span>
+      </label>
+    </div>
 
-        <TextInput
-          id="password"
-          type="password"
-          class="mt-1 block w-full"
-          v-model="form.password"
-          required
-          autocomplete="current-password"
-        />
+    <div class="flex items-center gap-2 justify-end mt-4">
+      <a :href="route('register')">
+        <button type="button" class="text-white text-sm p-2 rounded-[10px] hover:text-gray-900">註冊</button>
+      </a>
+      <Link
+        v-if="canResetPassword"
+        :href="route('password.request')"
+        class="text-sm text-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        忘記密碼
+      </Link>
 
-        <InputError class="mt-2" :message="form.errors.password" />
-      </div>
-
-      <div class="block mt-4">
-        <label class="flex items-center">
-          <Checkbox name="remember" v-model:checked="form.remember" />
-          <span class="ml-2 text-sm text-gray-600">Remember me</span>
-        </label>
-        <a :href="route('register')">
-          <button type="button" class="mt-[15px] text-grey p-2 rounded-[10px] hover:bg-gray-100 hover:text-blue">Register</button>
-        </a>
-      </div>
-
-      <div class="flex items-center justify-end mt-4">
-        <Link
-          v-if="canResetPassword"
-          :href="route('password.request')"
-          class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Forgot your password?
-        </Link>
-
-        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Log in
-        </PrimaryButton>
-      </div>
-    </form>
-  </GuestLayout>
+      <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+        登入
+      </PrimaryButton>
+    </div>
+  </form>
+  <!-- </GuestLayout> -->
 </template>

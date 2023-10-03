@@ -272,7 +272,7 @@ export default {
                   <img class="photo" :src="images.user" alt="">
                   <div class="hello"><span>user</span>，你好!</div>
                   <div class="acc mb-3">
-                    <Link class="manage" :href="route('dashboard')">
+                    <Link class="manage" :href="route('profile.edit')">
                       <div>管理你的帳戶</div>
                     </Link>
                     <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
@@ -290,8 +290,11 @@ export default {
             <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
               回覆
             </NavLink>
-            <NavLink class="btn" :href="route('dashboard')" :active="currentUrl('dashboard')">
+            <NavLink class="btn">
               設定
+            </NavLink>
+            <NavLink class="btn" :href="route('profile.edit')" :active="currentUrl('profile.edit')">
+              帳戶
             </NavLink>
           </div>
         </div>
@@ -403,7 +406,7 @@ nav {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start;
+                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-center;
                     span {
                         @apply ms-[10px];
                     }
