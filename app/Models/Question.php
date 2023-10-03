@@ -58,6 +58,6 @@ class Question extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'lead_author_id',);
+        return $this->belongsTo(User::class,'lead_author_id');
     }
 }
