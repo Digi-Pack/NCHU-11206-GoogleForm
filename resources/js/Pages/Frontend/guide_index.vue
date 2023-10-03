@@ -70,6 +70,10 @@ export default {
         id: '',
         newName: '',
       },
+      selectShow: {
+        owner: 1,
+        sort: 1,
+      },
     };
   },
   mounted() {
@@ -132,6 +136,13 @@ export default {
             );
           }
         },
+      });
+    },
+    changeResponse() {
+    //   console.log(123);
+      const { selectShow } = this;
+      router.visit(route('guide.change'), {
+        method: 'post', data: selectShow, preserveState: true,
       });
     },
   },
@@ -204,10 +215,10 @@ export default {
       <div class="controlBar">
         <span>最近的表單</span>
         <div class="flex w-[32%] justify-between items-center" :class="{ '!w-[52%]': blockShow }">
-          <select name="ownerType" id="">
-            <option value="">不限擁有者</option>
-            <option value="">我擁有的項目</option>
-            <option value="">不歸我所有</option>
+          <select name="ownerType" v-model="selectShow.owner" id="" @change="changeResponse()">
+            <option value="1">不限擁有者</option>
+            <option value="2">我擁有的項目</option>
+            <option value="3">不歸我所有</option>
           </select>
           <span class="w-auto" v-if="blockShow">我上次開啟的時間</span>
           <div class="flex items-center gap-2 pr-6">
@@ -222,13 +233,19 @@ export default {
               <div class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
                 <img :src="images.sort_by_alpha" class="w-[23px]" alt="">
               </div>
-            </label>
-            <div id="sortMenu">
+            </label>{{ selectShow }}
+            <select name="sortType" v-model="selectShow.sort" id="" @change="changeResponse()">
+              <option value="1">我上次開啟的時間</option>
+              <option value="2">我上次修改的時間</option>
+              <option value="3">上次修改的時間</option>
+              <option value="4">標題</option>
+            </select>
+            <!-- <div id="sortMenu">
               <button type="button">我上次開啟的時間</button>
               <button type="button">我上次修改的時間</button>
               <button type="button">上次修改的時間</button>
               <button type="button">標題</button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

@@ -16,4 +16,10 @@ class GuideController extends Controller
         // dd($Guide);
         return Inertia::render('Frontend/guide_index', ['response' => rtFormat($Guide)]);
     }
+    public function guide_change(Request $request)
+    {
+       dd($request->owner);
+       dd($request->sort);
+       
+    }
 }

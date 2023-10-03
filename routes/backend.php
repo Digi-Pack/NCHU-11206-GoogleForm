@@ -29,4 +29,5 @@ Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
     // 新增表單
     Route::get('/index', [GuideController::class,'guide_index'])->name('guide.index');
     Route::delete('/destroy', [GuideController::class,'guide_destroy'])->name('guide.destroy');
+    Route::post('/change', [GuideController::class,'guide_change'])->name('guide.change');
 });
