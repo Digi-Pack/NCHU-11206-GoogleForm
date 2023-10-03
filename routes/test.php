@@ -5,8 +5,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
-Route::get('/submitted', function () {
-    return Inertia::render('Frontend/submitted');
+Route::get('/test4', function () {
+    return Inertia::render('Backend/ResponseSumTest');
 })->name('response');
 
 
