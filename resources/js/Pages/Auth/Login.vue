@@ -34,7 +34,7 @@ const submit = () => {
   </div>
 
   <form @submit.prevent="submit">
-    <div class="flex justify-center items-center pt-2 pb-6 text-white text-xl">Google 表單</div>
+    <div class="flex justify-center items-center pt-2 pb-6 text-white text-[30px]">Google 表單</div>
     <div>
       <InputLabel for="email" value="電子郵件" />
 
