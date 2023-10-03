@@ -23,6 +23,7 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
 export default {
+
   props: {
     flash: String,
   },
@@ -97,6 +98,8 @@ export default {
       isSidebarFixed: false,
       formUrl: '',
       imageSize: 0,
+      scrollHeight: 0,
+      interval: null,
     };
   },
   watch: {
@@ -111,6 +114,10 @@ export default {
         sessionStorage.setItem('formData', JSON.stringify(newValue));
       },
       deep: true,
+    },
+    scrollHeight() {
+      this.$refs.side.style.top = 500 + this.interval + 'px';
+      console.log(this.$refs.side.style.top);
     },
   },
   mounted() {
@@ -128,10 +135,12 @@ export default {
       this.formData = JSON.parse(sessionStorage.getItem('formData'));
       console.log(sessionStorage.getItem('formData'));
     }
-
+    this.interval = setInterval(() => {
+      this.scrollHeight = document.body.scrollHeight;
+    }, 100);
   },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+  unmounted() {
+    clearInterval(this.interval);
   },
   methods: {
     addQuestion() {
@@ -278,19 +287,6 @@ export default {
       // console.log(Object.hasOwn(err, `formData.${index}.title`));
       console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
-    },
-    created() {
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
-    handleScroll() {
-      // 获取滚动的垂直位置
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-      // 根据滚动位置来判断是否固定导航栏
-      this.isSidebarFixed = scrollTop > 100; // 例如，滚动超过100像素时固定导航栏
     },
     uploadImage(event, item) {
       const reader = new FileReader();
@@ -518,8 +514,8 @@ export default {
             </div>
           </div>
         </div>
-        <div class="flex flex-col justify-center items-center gap-10 sticky bottom-10 mb-[20px]">
-          <!-- 側欄 -->
+        <!-- 側欄 -->
+        <div class="flex h-full flex-col justify-start items-start gap-10 sticky" ref="side">
           <div class="side">
             <button type="button" class="side-func" @click="addQuestion()">
               <label class="cursor-pointer">
@@ -568,7 +564,7 @@ export default {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[253px] flex flex-col sticky top-[120px] right-[0px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+            @apply w-[49px] h-[253px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
 
             img {
                 @apply w-[22px];
