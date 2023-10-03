@@ -290,7 +290,7 @@ export default {
           <!-- 問題設置 -->
           <div v-for="item in formData" :key="item.id" class="question">
             <!-- 第一行 -->
-            {{ item }}
+            <!-- {{ item }} -->
             <div class="question-top">
               <div class="text-box">
                 <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input focus:ring-0 focus:bg-white" required>

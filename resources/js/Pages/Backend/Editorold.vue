@@ -247,8 +247,8 @@ export default {
 </script>
 
 <template>
-  {{ formData.length }}
-  {{ formData }}
+  <!-- {{ formData.length }} -->
+  <!-- {{ formData }} -->
   <section id="question">
     <div class="container">
       <form @submit.prevent="submitData()">
