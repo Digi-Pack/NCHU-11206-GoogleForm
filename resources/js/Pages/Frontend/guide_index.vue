@@ -225,7 +225,7 @@ export default {
             <option value="2">我擁有的項目</option>
             <option value="3">不歸我所有</option>
           </select>
-          <span class="w-auto" v-if="blockShow">我上次開啟的時間</span>
+          <!-- <span class="w-auto" v-if="blockShow">我上次開啟的時間</span> -->
           <div class="flex items-center gap-2 pr-6">
             <button type="button" v-if="!blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
               <img :src="images.view_list" width="23" alt="">

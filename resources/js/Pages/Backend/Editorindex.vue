@@ -99,8 +99,36 @@ export default {
       imageSize: 0,
     };
   },
+  watch: {
+    formText: {
+      handler(newValue) {
+        sessionStorage.setItem('formText', JSON.stringify(newValue));
+      },
+      deep: true,
+    },
+    formData: {
+      handler(newValue) {
+        sessionStorage.setItem('formData', JSON.stringify(newValue));
+      },
+      deep: true,
+    },
+  },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll);
+    if (!sessionStorage.getItem('formText')) {
+      sessionStorage.setItem('formText', JSON.stringify(this.formText));
+      console.log(sessionStorage);
+    } else {
+      this.formText = JSON.parse(sessionStorage.getItem('formText'));
+      console.log(sessionStorage.getItem('formText'));
+    }
+    if (!sessionStorage.getItem('formData')) {
+      sessionStorage.setItem('formData', JSON.stringify(this.formData));
+      console.log(sessionStorage);
+    } else {
+      this.formData = JSON.parse(sessionStorage.getItem('formData'));
+      console.log(sessionStorage.getItem('formData'));
+    }
+
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -223,6 +251,8 @@ export default {
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             this.formUrl = props.flash.message.rt_data;
+            sessionStorage.removeItem('formData');
+            sessionStorage.removeItem('formText');
             Swal.fire({
               title: '新增成功',
               showDenyButton: true,
@@ -270,6 +300,7 @@ export default {
         this.imageSize += event.target.files[0].size;
       };
     },
+
   },
 };
 
