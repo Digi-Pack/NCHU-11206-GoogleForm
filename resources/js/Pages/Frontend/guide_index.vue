@@ -238,7 +238,7 @@ export default {
               <div class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
                 <img :src="images.sort_by_alpha" class="w-[23px]" alt="">
               </div>
-            </label>{{ selectShow }}
+            </label>
             <select name="sortType" v-model="selectShow.sort" id="" @change="changeResponse()">
               <option value="1">我上次開啟的時間</option>
               <option value="2">我上次修改的時間</option>
