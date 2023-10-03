@@ -141,18 +141,23 @@ export default {
     changeResponse() {
     //   console.log(123);
       const { selectShow } = this;
-      router.visit(route('guide.change'), {
-        method: 'post', data: selectShow, preserveState: true,
+      router.visit(route('guide.index'), {
+        method: 'get', data: selectShow, preserveState: true,
       });
     },
   },
+//   computed:{
+//     data(){
+//         return this.response;
+//     }
+//   }
 };
 </script>
 
 <template>
   <!-- {{ response }} -->
   <!-- {{ response.rt_data[0].id }} -->
-  {{ modalData.id }}
+  <!-- {{ modalData.id }} -->
   <section id="guide">
     <!-- <RenameModal v-if="show" :data="modalData">
     </RenameModal> -->
