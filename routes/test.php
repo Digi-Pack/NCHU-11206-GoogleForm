@@ -11,9 +11,7 @@ Route::get('/test4', function () {
 
 
 Route::prefix('response')->group(function () {
-    Route::get('/sum', function () {
-        return Inertia::render('Backend/ResponseSum');
-    })->name('response.sum');
+    Route::get('/sum',[EditorController::class,'response_sum'])->name('response.sum');
     Route::get('/que', function () {
         return Inertia::render('Backend/ResponseQue');
     })->name('response.que');

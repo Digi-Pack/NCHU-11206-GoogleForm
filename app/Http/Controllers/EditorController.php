@@ -69,15 +69,15 @@ class EditorController extends Controller
 
         // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
         $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id', $request->id)->first();
-         // dd($responseForm);
+        // dd($responseForm);
 
-       if(!session()->get('update_token') == $request->id ) {
-        $responseForm->update([
-            'opened_date' => Carbon::now(),
-        ]);
-       }
+        if (!session()->get('update_token') == $request->id) {
+            $responseForm->update([
+                'opened_date' => Carbon::now(),
+            ]);
+        }
 
-       session()->forget('update_token');
+        session()->forget('update_token');
 
         // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
         $questionNaires = json_decode($responseForm['questionnaires'], true);
@@ -169,5 +169,10 @@ class EditorController extends Controller
             'coworker_id' => $user->id,
         ]);
         return back()->with(['message' => rtFormat($formId)]);
+    }
+    public function response_sum(Request $request)
+    {
+        $data = Question::where();
+        return Inertia::render('Backend/ResponseSum');
     }
 }

@@ -1,49 +1,97 @@
 <script>
-import * as echarts from 'echarts';
+import * as echarts from 'echarts/core';
+// 基礎柱狀、條形圖、柱狀圖標籤旋轉、按行按列分布、最簡單數據集
+import {
+  DatasetComponent,
+  ToolboxComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+} from 'echarts/components';
+import {
+  PieChart,
+  BarChart,
+} from 'echarts/charts';
+import { LabelLayout } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
 
-let chartDom = document.getElementById('main');
-let myChart = echarts.init(chartDom);
-let option;
+echarts.use([
+  DatasetComponent,
+  ToolboxComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  BarChart,
+  PieChart,
+  CanvasRenderer,
+  LabelLayout,
+]);
 
-option = {
-  title: {
-    text: 'Referer of a Website',
-    subtext: 'Fake Data',
-    left: 'center',
+import { ref } from 'vue';
+import VChart, { THEME_KEY } from 'vue-echarts';
+
+export default {
+  components: {
+    VChart,
   },
-  tooltip: {
-    trigger: 'item',
+  provide: {
+    [THEME_KEY]: 'white',
   },
-  legend: {
-    orient: 'vertical',
-    left: 'left',
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      radius: '50%',
-      data: [
-        { value: 1048, name: 'Search Engine' },
-        { value: 735, name: 'Direct' },
-        { value: 580, name: 'Email' },
-        { value: 484, name: 'Union Ads' },
-        { value: 300, name: 'Video Ads' },
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)',
-        },
+  setup() {
+    const option = ref({
+      title: {
+        text: 'Traffic Sources',
+        left: 'center',
       },
-    },
-  ],
-};
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)',
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['Direct', 'Email', 'Ad Networks', 'Video Ads', 'Search Engines'],
+      },
+      series: [
+        {
+          name: 'Traffic Sources',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          data: [
+            { value: 335, name: 'Direct' },
+            { value: 310, name: 'Email' },
+            { value: 234, name: 'Ad Networks' },
+            { value: 135, name: 'Video Ads' },
+            { value: 1548, name: 'Search Engines' },
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      ],
+    });
 
-option && myChart.setOption(option);
+    return { option };
+  },
+};
 </script>
 
 <template>
-  <div id="main" class="w-[600px] h-[400px]"></div>
+  <section id="chart">
+    <slot />
+    <VChart class="chart" :option="option" autoresize />
+  </section>
 </template>
+
+<style lang="scss" scoped>
+#chart {
+}
+</style>
+
