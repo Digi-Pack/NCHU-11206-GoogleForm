@@ -62,14 +62,21 @@ class EditorController extends Controller
     public function  edit_old(Request $request)
     {
         // dd(session()->all());
+        // dd(session()->get('update_token'));
+
         // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
         $responseForm = Question::where('lead_author_id', $request->user()->id)->where('id', $request->id)->first();
-        // dd($responseForm[0]['questionnaires']);
-        // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
+         // dd($responseForm);
+
+       if(!session()->get('update_token') == $request->id ) {
         $responseForm->update([
             'opened_date' => Carbon::now(),
         ]);
-        // dd($responseForm);
+       }
+
+       session()->forget('update_token');
+
+        // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
         $questionNaires = json_decode($responseForm['questionnaires'], true);
         // dd($questionNaires);
         $response = [
