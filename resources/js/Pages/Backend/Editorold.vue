@@ -214,19 +214,20 @@ export default {
       if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
       // 驗證
       router.visit(route('edit.update'), {
-        method: 'post', data: { formData, formText }, preserveState: true,
+        method: 'post', data: { formData, formText }, preserveState: false,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
-              title: '新增成功',
+              title: '修改成功',
               showDenyButton: true,
               confirmButtonText: '回列表',
-              denyButtonText: '取消',
+              denyButtonText: '編輯新表單',
             }).then((result) => {
               if (result.isConfirmed) {
                 router.get(route('guide.index'));
+              } else if (result.isDenied) {
+                router.visit(route('edit.index'));
               }
-              console.log(result);
             });
           }
         },
