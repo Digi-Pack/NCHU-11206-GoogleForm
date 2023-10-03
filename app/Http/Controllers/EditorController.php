@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Validator;
+use Nette\Utils\Json;
 
 class EditorController extends Controller
 {
@@ -171,7 +172,8 @@ class EditorController extends Controller
     }
     public function response_sum(Request $request)
     {
-        $data = Question::where();
-        return Inertia::render('Backend/ResponseSum');
+        $datas = Response::where('question_id',3)->get();
+        $data = json_decode($datas[0]['answer'], true);
+        return Inertia::render('Backend/ResponseSum',['response' => rtFormat($data)]);
     }
 }

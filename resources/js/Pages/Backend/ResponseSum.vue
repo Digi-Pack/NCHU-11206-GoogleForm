@@ -12,6 +12,9 @@ export default {
   components: {
     Echarts,
   },
+  props: {
+    response: Object,
+  },
   data() {
     return {
       excel: excel,
@@ -22,6 +25,9 @@ export default {
       check: check,
       linkoff: linkoff,
     };
+  },
+  computed: {
+
   },
   mounted() {
   },
@@ -35,6 +41,7 @@ export default {
 </script>
 
 <template>
+  {{ response }}
   <section id="response-sum" class="pt-[10px]">
     <div class="all">
       <div class="response-head bg-white">
