@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coworker;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Seeall;
 use App\Models\Question;
 use App\Models\Response;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Validator;
@@ -144,5 +146,28 @@ class EditorController extends Controller
         ]);
         // dd(132);
         return back()->with(['message' => rtFormat($updateForm)]);
+    }
+
+    public function coformid_index(Request $request)
+    {
+        // 利用關聯user找到 user=>id
+        $ownerids = Question::with('user')->where('id', $request->coFormId)->first();
+        $ownerid = $ownerids->user;
+        // 利用關聯user找到 user=>id
+        $formIds = Coworker::with('user')->where('question_id', $request->coFormId)->get();
+        return back()->with(['message' => rtFormat([$formIds, $ownerid])]);
+    }
+
+    public function coformid_store(Request $request)
+    {
+        $user = User::select('email', 'id')->where('email', $request->co_email)->first();
+        if (!$user) {
+            return redirect()->route('edit.old', ['id' => $request->coFormId])->with(['message' => rtFormat($user, 0, '查無資料')]);
+        }
+        $formId = Coworker::create([
+            'question_id' => $request->coFormId,
+            'coworker_id' => $user->id,
+        ]);
+        return back()->with(['message' => rtFormat($formId)]);
     }
 }

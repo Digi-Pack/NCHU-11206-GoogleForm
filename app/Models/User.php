@@ -47,6 +47,10 @@ class User extends Authenticatable
 
     public function question()
     {
-        return $this->hasMany(Question::class, 'lead_author_id', 'id');
+        return $this->hasMany(Question::class, 'lead_author_id');
+    }
+    public function coworker()
+    {
+        return $this->belongsTo(Coworker::class, 'coworker_id');
     }
 }

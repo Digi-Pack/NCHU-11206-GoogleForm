@@ -23,6 +23,8 @@ Route::prefix('edit')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/update', [EditorController::class, 'edit_update'])->name('edit.update');
     Route::delete('/delete', [EditorController::class, 'edit_delete'])->name('edit.delete');
     Route::post('/rename', [EditorController::class, 'edit_rename'])->name('edit.rename');
+    Route::get('/coformid',[EditorController::class,'coformid_index'])->name('coformid.index');
+    Route::post('/coformid/store',[EditorController::class,'coformid_store'])->name('coformid.store');
 });
 
 Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
