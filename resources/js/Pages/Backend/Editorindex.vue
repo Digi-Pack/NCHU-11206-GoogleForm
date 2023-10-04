@@ -25,12 +25,11 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
 export default {
-
   props: {
     flash: String,
     response: Object,
   },
-  emits: ['userInformation'],
+  emits: ['update:qu_title'],
   data() {
     return {
       add: add,
@@ -107,6 +106,7 @@ export default {
       imageSize: 0,
       scrollHeight: 0,
       interval: null,
+
     };
   },
   watch: {
@@ -124,6 +124,7 @@ export default {
     },
   },
   mounted() {
+    // console.log(props.qu_naires_title);
     if (!sessionStorage.getItem('formText')) {
       sessionStorage.setItem('formText', JSON.stringify(this.formText));
     //   console.log(sessionStorage);
@@ -139,6 +140,8 @@ export default {
     //   console.log(sessionStorage.getItem('formData'));
     }
     window.addEventListener('scroll', this.handleScroll);
+    this.$parent.formTitle = this.formText.qu_naires_title;
+    console.log(4585);
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -300,16 +303,21 @@ export default {
     handleScroll() {
       this.$refs.side.style.top = window.scrollY + this.interval + 'px';
     },
-    test() {
-      this.$emit('userInformation', this.userInformation) ;
+    updateFormTitle() {
+      // 当qu_naires_title属性发生变化时，同时更新this.$parent.formTitle
+      this.$parent.formTitle = this.formText.qu_naires_title;
     },
-
   },
 };
 
 </script>
 
-<template>{{ user }}
+<!-- <template v-slot:header>
+  {{ formText.qu_naires_title }}
+</template> -->
+
+<template>
+  {{ user }}
   <input hidden type="text" v-model="userInformation">
   <section id="question" class="pt-[10px] z-2" ref="main">
     <div class="container">
@@ -318,7 +326,7 @@ export default {
         <div class="max-w-[770px]">
           <div class="form-title">
             <!-- 表單名稱 -->
-            <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required>
+            <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required @input="updateFormTitle">
             <!-- 表單說明 -->
             <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
           </div>

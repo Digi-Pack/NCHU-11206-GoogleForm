@@ -137,6 +137,7 @@ export default {
       this.formData = JSON.parse(sessionStorage.getItem('formData'));
     //   console.log(sessionStorage.getItem('formData'));
     }
+    this.$parent.formTitle = this.formText.qu_naires_title;
     window.addEventListener('scroll', this.handleScroll);
   },
   unmounted() {
@@ -301,6 +302,10 @@ export default {
     handleScroll() {
       this.$refs.side.style.top = window.scrollY + this.interval + 'px';
     },
+    updateFormTitle() {
+      // 当qu_naires_title属性发生变化时，同时更新this.$parent.formTitle
+      this.$parent.formTitle = this.formText.qu_naires_title;
+    },
   },
 };
 
@@ -316,7 +321,7 @@ export default {
         <div class="max-w-[770px]">
           <div class="form-title">
             <!-- 表單名稱 -->
-            <input v-model="formText.qu_naires_title" :class="{ 'border-[red]': $page.props.errors['formText.qu_naires_title'] }" type="text" placeholder="未命名的表單" class="form-input form-title-input" required>
+            <input v-model="formText.qu_naires_title" :class="{ 'border-[red]': $page.props.errors['formText.qu_naires_title'] }" type="text" placeholder="未命名的表單" class="form-input form-title-input" required @input="updateFormTitle">
             <div class="text-[red]">{{ $page.props?.errors['formText.qu_naires_title'] ?? '' }}</div>
             <!-- 表單說明 -->
             <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">

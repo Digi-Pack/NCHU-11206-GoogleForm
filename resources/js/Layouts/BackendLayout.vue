@@ -19,7 +19,6 @@ import account from '/images/account-circle.svg';
 import { colorType } from '@/Composables/useBgColor';
 
 export default {
-
   components: {
     CopyDocument,
     TrashCanModal,
@@ -28,7 +27,6 @@ export default {
   props: {
     user: Object,
   },
-
   data() {
     return {
       images: {
@@ -51,7 +49,8 @@ export default {
       showTopic: false,
       bgColor: 'bg-indigo-light',
       coFormId: route()?.params?.id ?? '0',
-      userInformation: ' ',
+      qu_naires_title: '',
+      formTitle: '',
     };
   },
   mounted() {
@@ -80,8 +79,8 @@ export default {
     handleClose() {
       this.model = '';
     },
-    user_method(val) {
-      this.userInformation = val;
+    changeFormName(val) {
+      this.qu_naires_title = val;
     // 這樣就可以接收到來自子組件的值
     },
   },
@@ -99,8 +98,11 @@ export default {
                 <div class="square logo">
                   <img :src="images.logo" width="25" alt="">
                 </div>
+                {{ formTitle }}
               </Link>
-              <span class="title">未命名表單</span>
+              <span class="title">
+                <slot name="header" />
+              </span>
             </div>
             <div class="topR">
               <button type="button" class="paletteB" @click="topicOpen()"><img :src="images.palette" width="25" height="25" alt=""></button>
