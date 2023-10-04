@@ -13,13 +13,18 @@ class ReplyController extends Controller
     {
         // dd($id);
         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第x份問卷)
-        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', 24)->get();
+        $responseForm = Question::where('random', $id)->get();
+        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id',$responseForm[0]['id'])->get();
+        // $hasBeen =Question::where('random', $id)->orWhereHas('response', function ($query) use ($request) {
+        //     return $query->where('user_id', $request);
+        // })->get();
+
         if (!$hasBeen->isEmpty()) {
             // 如果有，則前往修改答案的頁面
             //   dd($hasBeen);
             $redirectValue = [
                 'user_id' => $request->user()->id,
-                'question_id' => 24,
+                'question_id' => $responseForm[0]['id'],
             ];
             // dd( $redirectValue );
             session()->forget('redirectValue');
