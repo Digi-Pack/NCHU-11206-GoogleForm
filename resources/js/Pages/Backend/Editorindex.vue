@@ -266,13 +266,13 @@ export default {
               title: '新增成功',
               showDenyButton: true,
               confirmButtonText: '回列表',
-              denyButtonText: '編輯新表單',
+              denyButtonText: '繼續編輯',
             }).then((result) => {
               if (result.isConfirmed) {
                 router.get(route('guide.index'));
               }
               if (result.isDenied) {
-                router.visit(route('edit.index'));
+                router.visit(route('edit.old'));
               }
             });
           }
