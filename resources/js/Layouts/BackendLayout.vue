@@ -19,11 +19,16 @@ import account from '/images/account-circle.svg';
 import { colorType } from '@/Composables/useBgColor';
 
 export default {
+
   components: {
     CopyDocument,
     TrashCanModal,
     AddCollaborator,
   },
+  props: {
+    user: Object,
+  },
+
   data() {
     return {
       images: {
@@ -46,6 +51,7 @@ export default {
       showTopic: false,
       bgColor: 'bg-indigo-light',
       coFormId: route()?.params?.id ?? '0',
+      userInformation: ' ',
     };
   },
   mounted() {
@@ -73,6 +79,10 @@ export default {
     },
     handleClose() {
       this.model = '';
+    },
+    user_method(val) {
+      this.userInformation = val;
+    // 這樣就可以接收到來自子組件的值
     },
   },
 };
@@ -266,9 +276,9 @@ export default {
               </label>
               <div id="account-menu">
                 <div class="google">
-                  <div class="option">asd783738777@gmail.com</div>
+                  <div class="option" @userInform="userInformation">{{ $page.props.auth.user.email }}</div>
                   <img class="photo" :src="images.user" alt="">
-                  <div class="hello"><span>user</span>，你好!</div>
+                  <div class="hello"><span>{{ $page.props.auth.user.name }}</span>，你好!</div>
                   <div class="acc mb-3">
                     <Link class="manage" :href="route('profile.edit')">
                       <div>管理你的帳戶</div>

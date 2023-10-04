@@ -181,7 +181,7 @@ export default {
         <div class="top">
           <div class="topL flex justify-start items-center">
             <div class="square logo"><img :src="images.logo" width="25" height="25" alt=""></div>
-            <span class="title">表單</span>
+            <span class="title"></span>
           </div>
           <!-- 搜尋欄 -->
           <div class="flex w-full justify-center">

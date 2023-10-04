@@ -23,10 +23,12 @@ class EditorController extends Controller
     {
         return Inertia::render('Frontend/See');
     }
-    public function edit_index()
+    public function edit_index(Request $request)
     {
         // dd(123);
-        return Inertia::render('Backend/Editorindex');
+        // dd($request->user());
+        $response = $request->user();
+        return Inertia::render('Backend/Editorindex', ['response' => rtFormat($response)]);
     }
     public function edit_store(Request $request)
     {

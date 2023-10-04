@@ -28,7 +28,9 @@ export default {
 
   props: {
     flash: String,
+    response: Object,
   },
+  emits: ['userInformation'],
   data() {
     return {
       add: add,
@@ -53,6 +55,7 @@ export default {
       save: save,
       send: send,
       questionTypeOption,
+      userInformation: this.response,
       formText: {
         modified_at: '',
         other_modified: '',
@@ -297,12 +300,17 @@ export default {
     handleScroll() {
       this.$refs.side.style.top = window.scrollY + this.interval + 'px';
     },
+    test() {
+      this.$emit('userInformation', this.userInformation) ;
+    },
+
   },
 };
 
 </script>
 
-<template>
+<template>{{ user }}
+  <input hidden type="text" v-model="userInformation">
   <section id="question" class="pt-[10px] z-2" ref="main">
     <div class="container">
       <form class="min-w-[840px] flex justify-between" @submit.prevent="submitData()">
