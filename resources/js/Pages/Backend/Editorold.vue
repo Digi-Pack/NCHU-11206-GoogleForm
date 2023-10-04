@@ -98,6 +98,7 @@ export default {
       selectedMin: '0',
       selectedMax: '2',
       imageSize: 0,
+      formUrl: '',
       show: false,
     };
   },
@@ -219,7 +220,7 @@ export default {
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
-              title: '修改成功',
+              title: '修改成功，按傳送可察看網址',
               showDenyButton: true,
               confirmButtonText: '回列表',
               denyButtonText: '繼續編輯',
@@ -227,7 +228,7 @@ export default {
               if (result.isConfirmed) {
                 router.get(route('guide.index'));
               } else if (result.isDenied) {
-                router.visit(route('edit.old'));
+                // router.visit(route('edit.old'));
               }
             });
           }
@@ -491,7 +492,7 @@ export default {
           </div>
           <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105" @click="submitData()">儲存</button>
           <button type="button" class="bg-blue text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105" @click="open()">傳送</button>
-          <SendLinkModal v-if="show"></SendLinkModal>
+          <SendLinkModal v-if="show" :form-url="formUrl"></SendLinkModal>
         </div>
       </form>
     </div>

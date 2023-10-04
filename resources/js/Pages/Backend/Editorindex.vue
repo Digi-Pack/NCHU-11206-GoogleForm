@@ -258,7 +258,7 @@ export default {
             sessionStorage.removeItem('formData');
             sessionStorage.removeItem('formText');
             Swal.fire({
-              title: '新增成功',
+              title: '新增成功，請按傳送',
               showDenyButton: true,
               confirmButtonText: '回列表',
               denyButtonText: '繼續編輯',
@@ -267,7 +267,7 @@ export default {
                 router.get(route('guide.index'));
               }
               if (result.isDenied) {
-                router.visit(route('edit.old'));
+                // router.visit(route('edit.old'));
               }
             });
           }
