@@ -77,8 +77,8 @@ export default {
     };
   },
   mounted() {
-    // const buttonElement = this.$refs.menuButton;
-    // buttonElement.setAttribute('tabindex', '0');
+    sessionStorage.removeItem('formData');
+    sessionStorage.removeItem('formText');
   },
   methods: {
     toggleMenu(id) {
@@ -145,10 +145,7 @@ export default {
         method: 'get', data: selectShow, preserveState: true,
       });
     },
-    mounted() {
-      sessionStorage.removeItem('formData');
-      sessionStorage.removeItem('formText');
-    },
+
   },
 //   computed:{
 //     data(){
