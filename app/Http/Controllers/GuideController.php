@@ -11,25 +11,17 @@ class GuideController extends Controller
 {
     public function guide_index(Request $request)
     {
-        // dd($request->owner);
-
-        // $Guide = Question::orderBy('id', 'desc')->where('lead_author_id', $request->user()->id)->get();
-        // $owner = $request->owner;
-        // $sort = $request->sort;
         $guide = Question::query();
-
-        // $guide = $guide->where('lead_author_id', $request->user()->id)->orWhereHas('coworker', function ($query) use ($request) {
-        //     return $query->where('coworker_id', $request->user()->id);
-        // })->orderBy('opened_date', 'desc')->get();
+        $guide->where('qu_naires_title', 'like', '%' . $request->keyword . '%')->get();
 
         if ($request->filled('owner')) {
             $owner = $request->owner;
             if ($owner == 1) {
                 // 不限擁有者
                 $guide->where('lead_author_id', $request->user()->id)
-                ->orWhereHas('coworker', function ($query) use ($request) {
-                    return $query->where('coworker_id', $request->user()->id);
-                });
+                    ->orWhereHas('coworker', function ($query) use ($request) {
+                        return $query->where('coworker_id', $request->user()->id);
+                    });
             } elseif ($owner == 2) {
                 // 我所擁有
                 $guide->where('lead_author_id', $request->user()->id);
@@ -49,7 +41,7 @@ class GuideController extends Controller
                 // 我上次修改的時間
                 $guide->orderBy('modified_at', 'desc');
             } elseif ($sort == 3) {
-             // 上次修改的時間
+                // 上次修改的時間
                 $guide->orderBy('updated_at', 'desc');
             } else {
                 // 標題
@@ -63,7 +55,6 @@ class GuideController extends Controller
                 return $query->where('coworker_id', $request->user()->id);
             })->orderBy('opened_date', 'desc')->get();
         }
-
         return Inertia::render('Frontend/guide_index', ['response' => rtFormat($guide)]);
     }
     // public function guide_change(Request $request)
