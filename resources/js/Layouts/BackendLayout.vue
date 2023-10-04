@@ -234,7 +234,7 @@ export default {
                     </div>
                   </div>
                 </div>
-              </div>{{ coFormId }}
+              </div>
               <Link :href="route('reply.index', { id: coFormId })">
                 <button type="button" class="eye">
                   <img :src="images.visibility" width="25" height="25" alt="">
