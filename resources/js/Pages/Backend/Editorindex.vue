@@ -543,8 +543,8 @@ export default {
               <span>新增區段</span>
             </div>
           </div>
-          <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105">儲存</button>
-          <button type="button" class="bg-blue text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105" @click="open()">傳送</button>
+          <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-xl duration-200 hover:shadow-lg hover:scale-110">儲存</button>
+          <button type="button" class="bg-blue text-white py-[10px] px-[10px] rounded-xl duration-200 hover:shadow-lg hover:scale-110" @click="open()">傳送</button>
           <SendLinkModal v-if="show" :form-url="formUrl">
           </SendLinkModal>
         </div>
