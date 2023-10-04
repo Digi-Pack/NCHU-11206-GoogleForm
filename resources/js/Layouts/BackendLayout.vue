@@ -42,7 +42,7 @@ export default {
         user,
         account,
       },
-      model: '',
+      model: '123',
       showTopic: false,
       bgColor: 'bg-indigo-light',
       coFormId: route()?.params?.id ?? '0',
@@ -71,6 +71,9 @@ export default {
     topicOpen() {
       this.showTopic = !this.showTopic;
     },
+    handleClose() {
+      this.model = '';
+    },
   },
 };
 </script>
@@ -79,6 +82,7 @@ export default {
   <section id="frontend-layout">
     <header id="header">
       <nav>
+        {{ model }}
         <div class="container">
           <div class="top h-[60%] bg-white flex justify-between p-[10px]">
             <div class="topL flex justify-start items-center">
@@ -244,15 +248,15 @@ export default {
                 </div>
               </label>
               <div id="menu">
-                <CopyDocument v-if="model === CopyDocument"></CopyDocument>
-                <TrashCanModal v-if="model === TrashCanModal"></TrashCanModal>
-                <AddCollaborator v-if="model === AddCollaborator" :co-form-id="coFormId"></AddCollaborator>
+                <CopyDocument v-if="model === 'CopyDocument'"></CopyDocument>
+                <TrashCanModal v-if="model === 'TrashCanModal'"></TrashCanModal>
+                <AddCollaborator v-if="model === 'AddCollaborator'" :co-form-id="coFormId" @close-model="handleClose"></AddCollaborator>
                 <div class="">
-                  <button type="button" class="option" @click="model = CopyDocument"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
-                  <button type="button" class="option" @click="model = TrashCanModal"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
+                  <button type="button" class="option" @click="model = 'CopyDocument'"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
+                  <button type="button" class="option" @click="model = 'TrashCanModal'"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
                   <!-- <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button> -->
                   <button type="button" class="option"><img :src="images.print" alt=""><span>列印</span></button>
-                  <button type="button" class="option" @click="model = AddCollaborator"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
+                  <button type="button" class="option" @click="model = 'AddCollaborator'"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
                 </div>
               </div>
               <input type="checkbox" id="ham-menu-switch-2" class="hidden">

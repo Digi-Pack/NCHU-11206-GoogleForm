@@ -161,6 +161,10 @@ class EditorController extends Controller
     public function coformid_store(Request $request)
     {
         $user = User::select('email', 'id')->where('email', $request->co_email)->first();
+        $repeatid =Coworker::where('coworker_id',$user->id)->first();
+        if ($repeatid) {
+            return redirect()->route('edit.old', ['id' => $request->coFormId])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
+        }
         if (!$user) {
             return redirect()->route('edit.old', ['id' => $request->coFormId])->with(['message' => rtFormat($user, 0, '查無資料')]);
         }

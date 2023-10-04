@@ -17,8 +17,6 @@ export default {
         close,
         link,
       },
-      formurl: '',
-      show: true,
       co_email: '',
       coformemail: [],
       formOwner: {},
@@ -70,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <section v-if="show" id="AddCollaborator">
+  <section id="AddCollaborator">
     <div class="container">
       <form @submit.prevent="submitDataId()">
         <div class="content">{{ coFormId }}
