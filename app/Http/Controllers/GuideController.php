@@ -55,7 +55,12 @@ class GuideController extends Controller
                 return $query->where('coworker_id', $request->user()->id);
             })->orderBy('opened_date', 'desc')->get();
         }
-        return Inertia::render('Frontend/guide_index', ['response' => rtFormat($guide)]);
+        // dd($request->user()->name);
+        $response = [
+            'guide' => $guide,
+            'user' => $request->user(),
+        ];
+        return Inertia::render('Frontend/guide_index', ['response' => rtFormat($response)]);
     }
     // public function guide_change(Request $request)
     // {

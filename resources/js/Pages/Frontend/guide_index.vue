@@ -196,9 +196,9 @@ export default {
             </label>
             <div id="account-menu">
               <div class="google">
-                <div class="option">asd783738777@gmail.com</div>
+                <div class="option">{{ response.rt_data.user.email }}</div>
                 <img class="photo" :src="images.user" alt="">
-                <div class="hello"><span>user</span>，你好!</div>
+                <div class="hello"><span>{{ response.rt_data.user.name }}</span>，你好!</div>
                 <div class="acc mb-3">
                   <Link class="manage" :href="route('profile.edit')">
                     <div>管理你的帳戶</div>
@@ -253,7 +253,7 @@ export default {
     <div class="main">
       <div v-if="!blockShow" class="card-group">
         <!-- 表單方格 -->
-        <div class="card" v-for="item in response.rt_data" :key="item.id">
+        <div class="card" v-for="item in response.rt_data.guide " :key="item.id">
           <Link :href="route('edit.old', { id: item.id })">
             <div class="card-top">
               <!-- 預覽頁面 -->
@@ -276,7 +276,7 @@ export default {
         </div>
       </div>
       <div v-if="blockShow" class="list-group">
-        <div class="list" v-for="item in response.rt_data" :key="item.id">
+        <div class="list" v-for="item in response.rt_data.guide " :key="item.id">
           <Link :href="route('edit.old', { id: item.id })">
             <div class="flex items-center gap-10">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">

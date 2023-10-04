@@ -172,7 +172,7 @@ class EditorController extends Controller
     {
         $user = User::select('email', 'id')->where('email', $request->co_email)->first();
         // 登入帳號不能填入自己email
-        if($request->user()->email === $request->co_email) {
+        if ($request->user()->email === $request->co_email) {
             return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
         }
         $repeatid = Coworker::where('coworker_id', $user->id)->get();
