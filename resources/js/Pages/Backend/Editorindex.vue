@@ -132,7 +132,6 @@ export default {
     //   console.log(sessionStorage.getItem('formData'));
     }
     window.addEventListener('scroll', this.handleScroll);
-    console.log(this.$refs.main.style.height);
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -293,7 +292,6 @@ export default {
     },
     handleScroll() {
       this.$refs.side.style.top = window.scrollY + this.interval + 'px';
-      console.log(this.$refs.side.style.top);
     },
   },
 };

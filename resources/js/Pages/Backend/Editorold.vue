@@ -100,7 +100,15 @@ export default {
       imageSize: 0,
       formUrl: '',
       show: false,
+      scrollHeight: 0,
+      interval: null,
     };
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     addQuestion() {
@@ -246,6 +254,9 @@ export default {
     open() {
       this.show = !this.show;
     },
+    handleScroll() {
+      this.$refs.side.style.top = window.scrollY + this.interval + 'px';
+    },
   },
 };
 
@@ -254,9 +265,9 @@ export default {
 <template>
   <!-- {{ formData.length }} -->
   <!-- {{ formData }} -->
-  <section id="question">
+  <section id="question" class="pt-[10px] z-2">
     <div class="container">
-      <form class="min-w-[840px] flex justify-between items-end" @submit.prevent="submitData()">
+      <form class="min-w-[840px] flex justify-between" @submit.prevent="submitData()">
         <!-- 表單命名處 -->
         <div class="max-w-[770px]">
           <div class="form-title">
@@ -458,7 +469,7 @@ export default {
           </div>
         </div>
         <!-- 側欄 -->
-        <div class="flex h-full flex-col justify-start items-start gap-10 sticky" ref="side">
+        <div class="flex flex-col justify-start gap-10 relative duration-500 self-start" ref="side">
           <div class="side">
             <button type="button" class="side-func" @click="addQuestion()">
               <label class="cursor-pointer">
@@ -501,14 +512,10 @@ export default {
 
 <style lang="scss" scoped>
 #question {
-    $grey: rgb(178, 176, 176);
-    $font-grey: rgb(108, 105, 105);
-    $grey-bac: rgb(104, 108, 113);
-    $blue: rgb(237, 244, 253);
-    $md-blue: rgb(39, 123, 233);
+    @apply min-h-[100vh] pl-[70px];
 
     .container {
-        @apply max-w-[770px] m-auto relative mt-[20px];
+        @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
             @apply w-[49px] h-[253px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
