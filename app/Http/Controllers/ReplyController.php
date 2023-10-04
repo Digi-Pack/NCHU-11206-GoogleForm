@@ -12,36 +12,44 @@ class ReplyController extends Controller
     public function reply_index(Request $request, $id)
     {
         // dd($id);
-        // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第x份問卷)
-        $responseForm = Question::where('random', $id)->get();
-        $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id',$responseForm[0]['id'])->get();
-        // $hasBeen =Question::where('random', $id)->orWhereHas('response', function ($query) use ($request) {
-        //     return $query->where('user_id', $request);
-        // })->get();
 
-        if (!$hasBeen->isEmpty()) {
-            // 如果有，則前往修改答案的頁面
-            //   dd($hasBeen);
-            $redirectValue = [
-                'user_id' => $request->user()->id,
-                'question_id' => $responseForm[0]['id'],
+        $responseForm = Question::where('id', $id)->get();
+        // 當自己是主編者時，可以訪問填寫問卷頁
+        if($request->user()->id == $responseForm[0]['lead_author_id']){
+            $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
+            $response = [
+                'responseForm' => $responseForm,
+                'questionNaires' => $questionNaires,
             ];
-            // dd( $redirectValue );
-            session()->forget('redirectValue');
-            $request->session()->put('redirectValue', $redirectValue);
-            return redirect()->route('reply.review'); // 这里进vend行重定向
+            return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
         }
-        session()->forget('redirectValue');
-        // 先找到指定id的表單
-        // $responseForm = Question::where('id', 24)->get();
+
         $responseForm = Question::where('random', $id)->get();
+         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第x份問卷)
+         if(!$responseForm->isEmpty()){
+            $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id',$responseForm[0]['id'])->get();
+            if (!$hasBeen->isEmpty()) {
+                        // 如果有，則前往修改答案的頁面
+                        //   dd($hasBeen);
+                        $redirectValue = [
+                            'user_id' => $request->user()->id,
+                            'question_id' => $responseForm[0]['id'],
+                        ];
+                        // dd( $redirectValue );
+                        session()->forget('redirectValue');
+                        $request->session()->put('redirectValue', $redirectValue);
+                        return redirect()->route('reply.review'); // 这里进vend行重定向
+                    }
+        }
+        // 忘掉帶到另一支function的section
+        session()->forget('redirectValue');
+
         //獲取亂數表單
-        // $question = Question::where('random', $random)->first();
-        // dd($responseForm[0]['questionnaires']);
+        $responseForm = Question::where('random', $id)->get();
+
         // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
-        //    dd($responseForm );
         $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
-        // dd( $questionnaires);
+
         $response = [
             'responseForm' => $responseForm,
             'questionNaires' => $questionNaires,
