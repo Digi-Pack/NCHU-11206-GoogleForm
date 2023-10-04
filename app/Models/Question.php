@@ -48,16 +48,16 @@ class Question extends Model
         'random'
     ];
 
-    public function coworker ()
+    public function coworker()
     {
-        return $this->hasMany(Coworker::class,'question_id','id');
+        return $this->hasMany(Coworker::class, 'question_id', 'id');
     }
-    public function response ()
+    public function response()
     {
-        return $this->hasMany(Response::class,'question_id','id');
+        return $this->hasMany(Response::class, 'question_id', 'id');
     }
     public function user()
     {
-        return $this->belongsTo(User::class,'lead_author_id');
+        return $this->belongsTo(User::class, 'lead_author_id');
     }
 }

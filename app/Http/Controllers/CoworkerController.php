@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class CoworkerController extends Controller
 {
-    public function index() {
-        
+    public function index()
+    {
     }
 }
