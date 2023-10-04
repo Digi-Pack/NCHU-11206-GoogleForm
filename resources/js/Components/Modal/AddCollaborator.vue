@@ -37,12 +37,14 @@ export default {
       });
     },
     closing() {
+      // this.show = false;
       this.$emit('closeModel');
     },
     submitDataId() {
-      const { co_email, coFormId } = this;
+      const { co_email } = this;
+      const coFormIdNumber = parseInt(this.coFormId, 10);
       router.visit(route('coformid.store'), {
-        method: 'post', data: { co_email, coFormId }, preserveState: true,
+        method: 'post', data: { co_email, coFormIdNumber }, preserveState: true,
         onSuccess: ({ props }) => {
           console.log(props);
           if (props.flash.message.rt_code === 1) {
@@ -70,7 +72,7 @@ export default {
   <section id="AddCollaborator">
     <div class="container">
       <form @submit.prevent="submitDataId()">
-        <div class="content">{{ coFormId }}
+        <div class="content">
           <div class="flex justify-between items-center px-8">
             <h1 class="text-[18px] text-black">將編輯者新增至<span>「未命名表單」</span></h1>
             <button type="button" class="text-[28px] font-bold text-black" @click="closing()">

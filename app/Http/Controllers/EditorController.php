@@ -71,10 +71,10 @@ class EditorController extends Controller
         // $responseForm = Question::where('lead_author_id', $request->user()->id)
         //     ->orWhereHas('coworker', fn ($coQuery) => $coQuery->where('coworker_id', $request->user()->id))
         //     ->find($request->id);
-        $responseForm = Question::where(function($query) use($request){
+        $responseForm = Question::where(function ($query) use ($request) {
             return $query->where('lead_author_id', $request->user()->id)
-                ->orWhereHas('coworker',function($coQuery) use($request){
-                    return $coQuery->where('coworker_id',$request->user()->id);
+                ->orWhereHas('coworker', function ($coQuery) use ($request) {
+                    return $coQuery->where('coworker_id', $request->user()->id);
                 });
         })->find($request->id);
         // dd($responseForm);
@@ -159,6 +159,7 @@ class EditorController extends Controller
 
     public function coformid_index(Request $request)
     {
+
         // 利用關聯user找到 user=>id
         $ownerids = Question::with('user')->where('id', $request->coFormId)->first();
         $ownerid = $ownerids->user;
@@ -170,15 +171,23 @@ class EditorController extends Controller
     public function coformid_store(Request $request)
     {
         $user = User::select('email', 'id')->where('email', $request->co_email)->first();
-        $repeatid = Coworker::where('coworker_id', $user->id)->first();
-        if ($repeatid) {
-            return redirect()->route('edit.old', ['id' => $request->coFormId])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
+        // 登入帳號不能填入自己email
+        if($request->user()->email === $request->co_email) {
+            return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
         }
+        $repeatid = Coworker::where('coworker_id', $user->id)->get();
+        // 找到此表單有一樣email就跳出
+        foreach ($repeatid as $index) {
+            if ($index->question_id === $request->coFormIdNumber) {
+                return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
+            }
+        }
+        // 找不到email跳出
         if (!$user) {
-            return redirect()->route('edit.old', ['id' => $request->coFormId])->with(['message' => rtFormat($user, 0, '查無資料')]);
+            return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '查無資料')]);
         }
         $formId = Coworker::create([
-            'question_id' => $request->coFormId,
+            'question_id' => $request->coFormIdNumber,
             'coworker_id' => $user->id,
         ]);
         return back()->with(['message' => rtFormat($formId)]);
