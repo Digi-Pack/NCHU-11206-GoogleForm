@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import * as echarts from 'echarts/core';
 // 基礎柱狀、條形圖、柱狀圖標籤旋轉、按行按列分布、最簡單數據集
 import {
@@ -30,43 +30,122 @@ echarts.use([
 ]);
 
 import VChart, { THEME_KEY } from 'vue-echarts';
+provide(THEME_KEY, 'light');
 
-export default {
-  components: {
-    VChart,
+const props = defineProps({
+  title: {
+    default: '',
   },
-  extends: echarts,
-  provide: {
-    [THEME_KEY]: 'white',
+  data: {
+    default: [],
   },
-  props: {
-    chartData: {
-      type: Object,
-      default: null,
+  theme: {
+    default: 'light',
+  },
+});
+
+// const dataname = computed(() => {
+//   return props.data.map((item) => item.name);
+// });
+
+const piedata = computed(() => {
+  //   return props.data.map((item) => item.answer);
+  console.log(props.data);
+});
+console.log(piedata);
+
+// 圓餅圖
+const pieOption = ref({
+  title: {
+    text: props.title,
+    subtext: 'Fake Data',
+    left: 'center',
+  },
+  tooltip: {
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left',
+  },
+  series: [
+    {
+    //   name: dataname,
+      type: 'pie',
+      radius: '50%',
+      data: [
+        { value: 735, name: 'Direct' },
+        { value: 580, name: 'Email' },
+        { value: 300, name: 'Video Ads' },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        },
+      },
     },
-    options: {
-      type: Object,
-      default: null,
-    },
+  ],
+});
+
+// 柱狀圖
+const barOption = ref({
+  title: {
+    text: props.title,
+    subtext: 'Fake Data',
+    left: 'center',
   },
-//   watch: {
-//     chartData() {
-//       this.renderChart();
-//     },
-//   },
-//   mounted() {
-//     this.renderChart(this.chartData, this.options);
-//   },
-};
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  },
+  yAxis: {
+    type: 'value',
+  },
+  series: [
+    {
+      data: [120, 200, 150, 80, 70, 110, 130],
+      type: 'bar',
+    },
+  ],
+});
+
+const dataBase = ref({
+  title: {
+    text: props.title,
+    subtext: 'Fake Data',
+    left: 'center',
+  },
+  legend: {},
+  tooltip: {},
+  dataset: {
+    source: [
+      ['product', '2015', '2016', '2017'],
+      ['Matcha Latte', 43.3, 85.8, 93.7],
+      ['Milk Tea', 83.1, 73.4, 55.1],
+      ['Cheese Cocoa', 86.4, 65.2, 82.5],
+      ['Walnut Brownie', 72.4, 53.9, 39.1],
+    ],
+  },
+  xAxis: { type: 'category' },
+  yAxis: {},
+  // Declare several bar series, each will be mapped
+  // to a column of dataset.source by default.
+  series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
+});
+
 </script>
 
-<template id="myChart">
-  <slot />
-  <VChart ref="chart" :options="options" autoresize />
+<template>
+  {{ data }}
+  <VChart class="chart" :option="pieOption" />
+  <VChart class="chart" :option="barOption" />
+  <VChart class="chart" :option="dataBase" />
 </template>
 
 <style lang="scss" scoped>
-#chart {
+.chart {
+  @apply w-full h-[500px];
 }
 </style>
 

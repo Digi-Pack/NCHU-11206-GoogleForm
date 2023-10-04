@@ -6,58 +6,15 @@ import print from '/resources/images/print.png';
 import del from '/resources/images/del.png';
 import check from '/resources/images/check.png';
 import linkoff from '/resources/images/link_off.png';
-// import Echarts from '@/Components/Echarts.vue';
-import { ref } from 'vue';
-import { GridComponent } from 'echarts/components';
-import { BarChart } from 'echarts/charts';
-import { use } from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { PieChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-} from 'echarts/components';
-import VChart, { THEME_KEY } from 'vue-echarts';
-use([
-  GridComponent,
-  CanvasRenderer,
-  BarChart,
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-]);
+import Echarts from '@/Components/Echarts.vue';
 
 export default {
   components: {
-    // Echarts,
-    VChart,
-  },
-  provide: {
-    [THEME_KEY]: 'dark',
+    Echarts,
   },
   props:
   {
     response: Object,
-  },
-  setup() {
-    const options = ref({
-      xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      },
-      yAxis: {
-        type: 'value',
-      },
-      series: [
-        {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: 'bar',
-        },
-      ],
-    });
-    return { options };
   },
   data() {
     return {
@@ -69,27 +26,21 @@ export default {
       check: check,
       linkoff: linkoff,
       //   loaded: false,
-      //   chartData: null,
+      data: this.response.rt_data,
       //   options: {},
     };
   },
-  //   computed: {
-
-  //   },
-  //   mounted() {
-  //     this.renderChart(this.chartData, this.options);
-  //   },
   methods: {
     currentUrl(urlName = '') {
       if (urlName === '') return;
       return route().current(urlName);
     },
   },
-  template: '#myChart',
 };
 </script>
 
 <template>
+  <!-- {{ response.rt_data }} -->
   {{ response }}
   <section id="response-sum" class="pt-[10px]">
     <div class="all">
@@ -169,20 +120,12 @@ export default {
           </div>
         </div>
       </div>
-      <div>
-        <VChart ref="chart" class="chart" :option="options" autoresize />
-      </div>
-      <!-- <template id="myChart">
-        <Echarts class="chart" :options="options" autoresize />
-      </template> -->
+      <Echarts :data="data" />
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-.chart {
-  @apply w-full h-[400px];
-}
 #response-sum {
     @apply h-screen mt-[20px] pb-[20px];
 .all {
