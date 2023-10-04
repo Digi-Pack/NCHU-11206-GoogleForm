@@ -11,7 +11,7 @@ class ResponseController extends Controller
     public function response_sum()
     {
         // dd(123);
-        $datas = Response::where('question_id', 18)->get();
+        $datas = Response::where('question_id', 11)->get();
         $data = json_decode($datas[0]['answer'], true);
         return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
         return Inertia::render('Backend/ResponseSum');
