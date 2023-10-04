@@ -151,7 +151,6 @@ export default {
 </script>
 
 <template>
-
   <section id="guide">
     <section v-if="show" id="RenameModal">
       <div class="container">
@@ -185,9 +184,12 @@ export default {
             <span class="title">表單</span>
           </div>
           <!-- 搜尋欄 -->
-          <input v-model="selectShow.keyword" type="text" class="search" placeholder="搜尋">
-          <button type="button" class="bg-purple text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105" @click="changeResponse()">收尋</button>
+          <div class="flex w-full justify-center">
+            <input v-model="selectShow.keyword" type="text" class="search" placeholder="輸入表單名稱...">
+            <button type="button" class="bg-grey text-white py-[10px] px-[10px] rounded-r-lg hover:bg-grey-dark hover:text-gray-700" @click="changeResponse()">搜尋</button>
+          </div>
           <div class="topR">
+            <!-- 帳戶 -->
             <input type="checkbox" id="ham-menu-switch-2" class="hidden">
             <label for="ham-menu-switch-2" class="ham-menu">
               <img class="account" :src="images.account" alt="">
@@ -319,7 +321,7 @@ export default {
                 }
             }
             .search {
-              @apply bg-grey-light flex justify-center items-center rounded-md border-0 w-[45%] focus:ring-0 focus:bg-white focus:drop-shadow-md;
+              @apply bg-grey-light flex justify-center items-center rounded-l-lg border-0 w-[45%] focus:ring-0 focus:bg-white focus:drop-shadow-md;
             }
             .topR {
                 @apply flex justify-between items-center;
