@@ -98,10 +98,10 @@ export default {
                 <div class="square logo">
                   <img :src="images.logo" width="25" alt="">
                 </div>
-                {{ formTitle }}
+
               </Link>
               <span class="title">
-                <slot name="header" />
+                {{ formTitle }}
               </span>
             </div>
             <div class="topR">
