@@ -5,10 +5,12 @@ export default {
   props: {
     formUrl: String,
   },
+  emits: [
+    'closeModel',
+  ],
   data() {
     return {
       close,
-      show: true,
     };
   },
   mounted() {
@@ -16,14 +18,14 @@ export default {
   },
   methods: {
     closing() {
-      this.show = false;
+      this.$emit('closeModel');
     },
   },
 };
 </script>
 
 <template>
-  <section v-if="show" id="TrashCanModal">
+  <section id="TrashCanModal">
     <div class="container">
       <div class="content">
         <div class="flex justify-between items-center">

@@ -37,7 +37,6 @@ export default {
       });
     },
     closing() {
-      // this.show = false;
       this.$emit('closeModel');
     },
     submitDataId() {

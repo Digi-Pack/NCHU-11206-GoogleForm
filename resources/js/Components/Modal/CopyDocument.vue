@@ -5,10 +5,12 @@ export default {
   props: {
     formUrl: String,
   },
+  emits: [
+    'closeModel',
+  ],
   data() {
     return {
       close,
-      show1: true,
     };
   },
   mounted() {
@@ -16,14 +18,14 @@ export default {
   },
   methods: {
     closing() {
-      this.show1 = false;
+      this.$emit('closeModel');
     },
   },
 };
 </script>
 
 <template>
-  <section v-if="show1" id="CopyDocumentModal">
+  <section id="CopyDocumentModal">
     <div class="container">
       <div class="content">
         <div class="flex justify-between items-center">

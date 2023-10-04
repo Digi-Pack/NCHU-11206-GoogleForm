@@ -248,8 +248,8 @@ export default {
                 </div>
               </label>
               <div id="menu">
-                <CopyDocument v-if="model === 'CopyDocument'"></CopyDocument>
-                <TrashCanModal v-if="model === 'TrashCanModal'"></TrashCanModal>
+                <CopyDocument v-if="model === 'CopyDocument'" @close-model="handleClose"></CopyDocument>
+                <TrashCanModal v-if="model === 'TrashCanModal'" @close-model="handleClose"></TrashCanModal>
                 <AddCollaborator v-if="model === 'AddCollaborator'" :co-form-id="coFormId" @close-model="handleClose"></AddCollaborator>
                 <div class="">
                   <button type="button" class="option" @click="model = 'CopyDocument'"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
