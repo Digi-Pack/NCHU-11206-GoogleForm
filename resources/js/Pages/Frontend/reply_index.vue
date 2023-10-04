@@ -63,16 +63,6 @@ export default {
       }) ?? [],
     };
   },
-  //   watch: {
-  //     'formData': {
-  //       deep: true, // 深度监听
-  //       handler(newVal) {
-  //         newVal.forEach(item => {
-  //           this.groupOptions(item); // 调用 groupOptions 方法来更新 groupedData
-  //         });
-  //       },
-  //     },
-  //   },
   methods: {
     arrayData(min, max) {
       let loopResult = [];
@@ -84,8 +74,6 @@ export default {
     submitData() {
       const { formData, response } = this;
       const formId = response.rt_data.responseForm[0].id;
-      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
-      // 驗證
       router.visit(route('reply.store'), {
         method: 'post', data: { formData, formId }, preserveState: true,
       });
@@ -102,157 +90,160 @@ export default {
   {{ formData }}
   <!-- {{ formData[3].answer }} -->
   <section id="question">
-    <div class="container">
-      <!-- 表單命名處 -->
-      <div class="form-title">
-        <!-- 表單名稱 -->
-        <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
-        <!-- 表單說明 -->
-        <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
+    <form @submit.prevent="submitData()">
+      <div class="container">
+        <!-- 表單命名處 -->
+        <div class="form-title">
+          <!-- 表單名稱 -->
+          <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
+          <!-- 表單說明 -->
+          <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
+        </div>
+
+        <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
+          {{ item }}
+          <div>
+            <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
+          </div>
+          <!-- 簡答 -->
+          <div v-if="item.type === 1" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-1">
+              <input v-model=" formData[key].answer " type="text" class="short" placeholder="簡答" :required="item.request">
+              {{ key }}
+            </div>
+          </div>
+          <!-- 詳答 -->
+          <div v-if="item.type === 2" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-2">
+              <input v-model=" formData[key].answer" type="text" class="long" placeholder="詳答" :required="item.request">
+            </div>
+          </div>
+          <!-- 選擇題 -->
+          <div v-if="item.type === 3" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-3">
+              <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
+                <input v-model=" formData[key].answer" type="radio" :name="'choice-questions' + key" id="choice-1" :value="innerkey + 1" :required="item.request">
+                <label for="choice-1">{{ choose.value }}</label>
+              </div>
+            </div>
+          </div>
+          <!-- 核取方塊 -->
+          <div v-if="item.type === 4" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-4">
+              <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
+                <input v-model="formData[key].manyOptions" type="checkbox" class="focus:" :name="'checkbox-' + key" :id="'checkbox-' + choose.id" :value="innerkey + 1" :required="item.request && formData[key].manyOptions.length === 0">
+                <label :for="'checkbox-' + choose.id">{{ choose.value }}</label>
+              </div>
+            </div>
+          </div>
+          <!-- 下拉式選單 -->
+          <div v-if="item.type === 5" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-5">
+              <label for="select"></label>
+              <select v-model="formData[key].answer" name="select" id="select">
+                <option v-for="(choose, innerkey) in item.options" :key="choose.id" :value="innerkey + 1" :required="item.request">{{ choose.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <!-- 檔案上傳 -->
+          <div v-if="item.type === 6" class="!block">
+            <span class="text-[18px]">檔案上傳</span>
+            <div class="questype-6">
+              <label for=""></label>
+              <input type="file" name="" id="">
+            </div>
+          </div>
+          <!-- 線性刻度 -->
+          <div v-if="item.type === 7" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-7">
+              <span>{{ item.linear.minText }}</span>
+              <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
+                {{ i }}
+                <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i" :required="item.request">
+              </div>
+              <span class="">{{ item.linear.maxText }}</span>
+            </div>
+          </div>
+          <!-- 單選方格 -->
+
+          <div v-if="item.type === 8" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-8">
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
+                    <th>{{ choose.text }}</th>
+                    <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
+                      <input v-model="formData[key].manyOptions[innerkey]" type="radio" :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" :required="item.request">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 核取方塊格 -->
+          <div v-if="item.type === 9" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-9">
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
+                    <th>{{ choose.text }}</th>
+                    <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
+                      <input v-model="formData[key].manyOptions" type="checkbox" :name="'many-' + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" :required="item.request && formData[key].manyOptions.length === 0">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 日期 -->
+          <div v-if="item.type === 10" class="!block">
+
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-10">
+              <input v-model=" formData[key].answer" type="date" :required="item.request">
+            </div>
+
+          </div>
+          <!-- 時間 -->
+          <div v-if="item.type === 11" class="!block">
+
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="questype-11">
+              <input type="text" v-model=" formData[key].time.hour" :required="item.request">
+              <span>:</span>
+              <input type="text" v-model=" formData[key].time.minute" :required="item.request">
+              <select name="" id="" v-model=" formData[key].time.section">
+                <option value="a.m.">上午</option>
+                <option value="p.m.">下午</option>
+              </select>
+
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">送出表單</button>
       </div>
-
-      <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
-        <div>
-          <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
-        </div>
-        <!-- 簡答 -->
-        <div v-if="item.type === 1" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-1">
-            <input v-model=" formData[key].answer " type="text" class="short" placeholder="簡答">
-            {{ key }}
-          </div>
-        </div>
-        <!-- 詳答 -->
-        <div v-if="item.type === 2" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-2">
-            <input v-model=" formData[key].answer" type="text" class="long" placeholder="詳答">
-          </div>
-        </div>
-        <!-- 選擇題 -->
-        <div v-if="item.type === 3" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-3">
-            <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model=" formData[key].answer" type="radio" :name="'choice-questions' + key" id="choice-1" :value="innerkey + 1">
-              <label for="choice-1">{{ choose.value }}</label>
-            </div>
-          </div>
-        </div>
-        <!-- 核取方塊 -->
-        <div v-if="item.type === 4" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-4">
-            <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-              <input v-model="formData[key].manyOptions" type="checkbox" class="focus:" :name="'checkbox-' + key" :id="'checkbox-' + choose.id" :value="innerkey + 1">
-              <label :for="'checkbox-' + choose.id">{{ choose.value }}</label>
-            </div>
-          </div>
-        </div>
-        <!-- 下拉式選單 -->
-        <div v-if="item.type === 5" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-5">
-            <label for="select"></label>
-            <select v-model="formData[key].answer" name="select" id="select">
-              <option v-for="(choose, innerkey) in item.options" :key="choose.id" :value="innerkey + 1">{{ choose.value }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <!-- 檔案上傳 -->
-        <div v-if="item.type === 6" class="!block">
-          <span class="text-[18px]">檔案上傳</span>
-          <div class="questype-6">
-            <label for=""></label>
-            <input type="file" name="" id="">
-          </div>
-        </div>
-        <!-- 線性刻度 -->
-        <div v-if="item.type === 7" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-7">
-            <span>{{ item.linear.minText }}</span>
-            <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
-              {{ i }}
-              <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i">
-            </div>
-            <span class="">{{ item.linear.maxText }}</span>
-          </div>
-        </div>
-        <!-- 單選方格 -->
-
-        <div v-if="item.type === 8" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-8">
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
-                  <th>{{ choose.text }}</th>
-                  <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
-                    <input v-model="formData[key].manyOptions[innerkey]" type="radio" :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- 核取方塊格 -->
-        <div v-if="item.type === 9" class="!block">
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-9">
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
-                  <th>{{ choose.text }}</th>
-                  <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
-                    <input v-model="formData[key].manyOptions" type="checkbox" :name="'many-' + innerkey + '-' + innerinnerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- 日期 -->
-        <div v-if="item.type === 10" class="!block">
-
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-10">
-            <input v-model=" formData[key].answer" type="date">
-          </div>
-
-        </div>
-        <!-- 時間 -->
-        <div v-if="item.type === 11" class="!block">
-
-          <span class="text-[18px]">{{ item.title }}</span>
-          <div class="questype-11">
-            <input type="text" v-model=" formData[key].time.hour">
-            <span>:</span>
-            <input type="text" v-model=" formData[key].time.minute">
-            <select name="" id="" v-model=" formData[key].time.section">
-              <option value="a.m.">上午</option>
-              <option value="p.m.">下午</option>
-            </select>
-
-          </div>
-        </div>
-      </div>
-      <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5" @click="submitData()">送出表單</button>
-    </div>
+    </form>
   </section>
 </template>
 
