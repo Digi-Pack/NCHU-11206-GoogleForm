@@ -180,13 +180,13 @@ export default {
       <div class="container">
         <div class="top">
           <div class="topL flex justify-start items-center">
-            <div class="square logo"><img :src="images.logo" width="25" alt=""></div>
+            <div class="square logo"><img :src="images.logo" width="25" height="25" alt=""></div>
             <span class="title">表單</span>
           </div>
           <!-- 搜尋欄 -->
           <div class="flex w-full justify-center">
             <input v-model="selectShow.keyword" type="text" class="search" placeholder="輸入表單名稱...">
-            <button type="button" class="bg-grey text-white py-[10px] px-[10px] rounded-r-lg hover:bg-grey-dark hover:text-gray-700" @click="changeResponse()">搜尋</button>
+            <button type="button" class="bg-grey text-white py-[10px] px-[10px] duration-200 rounded-r-lg hover:bg-grey-dark hover:text-gray-700" @click="changeResponse()">搜尋</button>
           </div>
           <div class="topR">
             <!-- 帳戶 -->
@@ -314,10 +314,10 @@ export default {
           @apply h-full bg-white flex justify-between p-[10px];
             .topL {
                 .logo {
-                    @apply mx-[10px];
+                    @apply mx-[10px] w-[30px];
                 }
                 .title {
-                  @apply text-[#202124] text-[18px] font-medium;
+                  @apply text-[#202124] text-[18px] font-medium w-[50px];
                 }
             }
             .search {
