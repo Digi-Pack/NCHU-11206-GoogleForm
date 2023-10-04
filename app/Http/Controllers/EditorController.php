@@ -68,8 +68,17 @@ class EditorController extends Controller
         // dd(session()->get('update_token'));
 
         // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
-        $responseForm = Question::where('lead_author_id', $request->user()->id)->find($request->id);
+        // $responseForm = Question::where('lead_author_id', $request->user()->id)
+        //     ->orWhereHas('coworker', fn ($coQuery) => $coQuery->where('coworker_id', $request->user()->id))
+        //     ->find($request->id);
+        $responseForm = Question::where(function($query) use($request){
+            return $query->where('lead_author_id', $request->user()->id)
+                ->orWhereHas('coworker',function($coQuery) use($request){
+                    return $coQuery->where('coworker_id',$request->user()->id);
+                });
+        })->find($request->id);
         // dd($responseForm);
+
 
         if (!session()->get('update_token') == $request->id) {
             $responseForm->update([

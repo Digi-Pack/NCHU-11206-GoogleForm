@@ -15,7 +15,7 @@ class ReplyController extends Controller
 
         $responseForm = Question::where('id', $id)->get();
         // 當自己是主編者時，可以訪問填寫問卷頁
-        if($request->user()->id == $responseForm[0]['lead_author_id']){
+        if ($request->user()->id == $responseForm[0]['lead_author_id']) {
             $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
             $response = [
                 'responseForm' => $responseForm,
@@ -26,8 +26,8 @@ class ReplyController extends Controller
 
         $responseForm = Question::where('random', $id)->get();
          // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第x份問卷)
-         if(!$responseForm->isEmpty()){
-            $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id',$responseForm[0]['id'])->get();
+        if (!$responseForm->isEmpty()) {
+            $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', $responseForm[0]['id'])->get();
             if (!$hasBeen->isEmpty()) {
                         // 如果有，則前往修改答案的頁面
                         //   dd($hasBeen);
@@ -39,7 +39,7 @@ class ReplyController extends Controller
                         session()->forget('redirectValue');
                         $request->session()->put('redirectValue', $redirectValue);
                         return redirect()->route('reply.review'); // 这里进vend行重定向
-                    }
+            }
         }
         // 忘掉帶到另一支function的section
         session()->forget('redirectValue');
