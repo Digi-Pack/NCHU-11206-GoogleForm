@@ -546,11 +546,11 @@ export default {
               <img :src="view_agenda" alt="">
               <span>新增區段</span>
             </div>
-            <button type="submit" class="side-func bg-grey-light">
+            <button type="submit" class="side-func bg-purple-dark hover:!bg-purple-middle">
               <img :src="save" alt="">
               <span>儲存表單</span>
             </button>
-            <button type="button" class="side-func bg-grey-light" @click="open()">
+            <button type="button" class="side-func bg-purple-dark hover:!bg-purple-middle" @click="open()">
               <img :src="send" alt="">
               <span>傳送</span>
             </button>
