@@ -71,6 +71,7 @@ export default {
         newName: '',
       },
       selectShow: {
+        keyword: '',
         owner: 1,
         sort: 1,
       },
@@ -139,7 +140,6 @@ export default {
       });
     },
     changeResponse() {
-    //   console.log(123);
       const { selectShow } = this;
       router.visit(route('guide.index'), {
         method: 'get', data: selectShow, preserveState: true,
@@ -147,21 +147,12 @@ export default {
     },
 
   },
-//   computed:{
-//     data(){
-//         return this.response;
-//     }
-//   }
 };
 </script>
 
 <template>
-  <!-- {{ response }} -->
-  <!-- {{ response.rt_data[0].id }} -->
-  <!-- {{ modalData.id }} -->
+
   <section id="guide">
-    <!-- <RenameModal v-if="show" :data="modalData">
-    </RenameModal> -->
     <section v-if="show" id="RenameModal">
       <div class="container">
         <div class="content">
@@ -194,7 +185,8 @@ export default {
             <span class="title">表單</span>
           </div>
           <!-- 搜尋欄 -->
-          <input type="text" class="search" placeholder="搜尋">
+          <input v-model="selectShow.keyword" type="text" class="search" placeholder="搜尋">
+          <button type="button" class="bg-purple text-white py-[10px] px-[10px] rounded-xl drop-shadow-md hover:scale-105" @click="changeResponse()">收尋</button>
           <div class="topR">
             <input type="checkbox" id="ham-menu-switch-2" class="hidden">
             <label for="ham-menu-switch-2" class="ham-menu">
@@ -310,12 +302,6 @@ export default {
     </Link>
   </section>
 </template>
-<!-- <div v-for="item in response.rt_data" :key="item.id">
-    <h1>{{ item.qu_naires_title }}</h1>
-    <Link :href="route('edit.old', { id: item.id })">
-      <button type="button" class="px-6 py-3 border border-black rounded-[5px]">編輯</button>
-    </Link>
-  </div> -->
 
 <style lang="scss" scoped>
 #guide {
