@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EditorController;
 use App\Http\Controllers\GuideController;
+use App\Http\Controllers\ResponseController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,8 @@ Route::prefix('edit')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/update', [EditorController::class, 'edit_update'])->name('edit.update');
     Route::delete('/delete', [EditorController::class, 'edit_delete'])->name('edit.delete');
     Route::post('/rename', [EditorController::class, 'edit_rename'])->name('edit.rename');
-    Route::get('/coformid',[EditorController::class,'coformid_index'])->name('coformid.index');
-    Route::post('/coformid/store',[EditorController::class,'coformid_store'])->name('coformid.store');
+    Route::get('/coformid', [EditorController::class,'coformid_index'])->name('coformid.index');
+    Route::post('/coformid/store', [EditorController::class,'coformid_store'])->name('coformid.store');
 });
 
 Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
@@ -32,4 +33,14 @@ Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/index', [GuideController::class,'guide_index'])->name('guide.index');
     Route::delete('/destroy', [GuideController::class,'guide_destroy'])->name('guide.destroy');
     Route::post('/change', [GuideController::class,'guide_change'])->name('guide.change');
+});
+
+Route::prefix('response')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/sum', [ResponseController::class,'response_sum'])->name('response.sum');
+    Route::get('/que', function () {
+        return Inertia::render('Backend/ResponseQue');
+    })->name('response.que');
+    Route::get('/ind', function () {
+        return Inertia::render('Backend/ResponseInd');
+    })->name('response.ind');
 });

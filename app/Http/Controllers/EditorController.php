@@ -161,7 +161,7 @@ class EditorController extends Controller
     public function coformid_store(Request $request)
     {
         $user = User::select('email', 'id')->where('email', $request->co_email)->first();
-        $repeatid =Coworker::where('coworker_id',$user->id)->first();
+        $repeatid = Coworker::where('coworker_id', $user->id)->first();
         if ($repeatid) {
             return redirect()->route('edit.old', ['id' => $request->coFormId])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
         }
@@ -174,10 +174,10 @@ class EditorController extends Controller
         ]);
         return back()->with(['message' => rtFormat($formId)]);
     }
-    public function response_sum(Request $request)
-    {
-        $datas = Response::where('question_id',3)->get();
-        $data = json_decode($datas[0]['answer'], true);
-        return Inertia::render('Backend/ResponseSum',['response' => rtFormat($data)]);
-    }
+    // public function response_sum(Request $request)
+    // {
+    //     $datas = Response::where('question_id',3)->get();
+    //     $data = json_decode($datas[0]['answer'], true);
+    //     return Inertia::render('Backend/ResponseSum',['response' => rtFormat($data)]);
+    // }
 }

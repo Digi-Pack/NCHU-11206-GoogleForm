@@ -145,6 +145,10 @@ export default {
         method: 'get', data: selectShow, preserveState: true,
       });
     },
+    mounted() {
+      sessionStorage.removeItem('formData');
+      sessionStorage.removeItem('formText');
+    },
   },
 //   computed:{
 //     data(){
