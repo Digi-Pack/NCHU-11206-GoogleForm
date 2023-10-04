@@ -42,9 +42,7 @@ export default {
         user,
         account,
       },
-      show1: false,
-      show2: false,
-      show4: false,
+      model: '',
       showTopic: false,
       bgColor: 'bg-indigo-light',
       coFormId: route()?.params?.id ?? '0',
@@ -61,9 +59,6 @@ export default {
     currentUrl(urlName = '') {
       if (urlName === '') return;
       return route().current(urlName);
-    },
-    open(num) {
-      this['show' + num] = !this['show' + num];
     },
     changeColor(newColor) {
       console.log(colorType);
@@ -249,15 +244,15 @@ export default {
                 </div>
               </label>
               <div id="menu">
-                <CopyDocument v-if="show1"></CopyDocument>
-                <TrashCanModal v-if="show2"></TrashCanModal>
-                <AddCollaborator v-if="show4" :co-form-id="coFormId"></AddCollaborator>
+                <CopyDocument v-if="model === CopyDocument"></CopyDocument>
+                <TrashCanModal v-if="model === TrashCanModal"></TrashCanModal>
+                <AddCollaborator v-if="model === AddCollaborator" :co-form-id="coFormId"></AddCollaborator>
                 <div class="">
-                  <button type="button" class="option" @click="open(1)"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
-                  <button type="button" class="option" @click="open(2)"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
-                  <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button>
-                  <button type="button" class="option" @click="open()"><img :src="images.print" alt=""><span>列印</span></button>
-                  <button type="button" class="option" @click="open(4)"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
+                  <button type="button" class="option" @click="model = CopyDocument"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
+                  <button type="button" class="option" @click="model = TrashCanModal"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
+                  <!-- <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button> -->
+                  <button type="button" class="option"><img :src="images.print" alt=""><span>列印</span></button>
+                  <button type="button" class="option" @click="model = AddCollaborator"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
                 </div>
               </div>
               <input type="checkbox" id="ham-menu-switch-2" class="hidden">
@@ -406,7 +401,7 @@ nav {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-center;
+                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start;
                     span {
                         @apply ms-[10px];
                     }

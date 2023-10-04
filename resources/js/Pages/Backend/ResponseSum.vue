@@ -6,14 +6,58 @@ import print from '/resources/images/print.png';
 import del from '/resources/images/del.png';
 import check from '/resources/images/check.png';
 import linkoff from '/resources/images/link_off.png';
-import Echarts from '@/Components/Echarts.vue';
+// import Echarts from '@/Components/Echarts.vue';
+import { ref } from 'vue';
+import { GridComponent } from 'echarts/components';
+import { BarChart } from 'echarts/charts';
+import { use } from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { PieChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+} from 'echarts/components';
+import VChart, { THEME_KEY } from 'vue-echarts';
+use([
+  GridComponent,
+  CanvasRenderer,
+  BarChart,
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+]);
 
 export default {
   components: {
-    Echarts,
+    // Echarts,
+    VChart,
   },
-  props: {
+  provide: {
+    [THEME_KEY]: 'dark',
+  },
+  props:
+  {
     response: Object,
+  },
+  setup() {
+    const options = ref({
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar',
+        },
+      ],
+    });
+    return { options };
   },
   data() {
     return {
@@ -24,19 +68,24 @@ export default {
       del: del,
       check: check,
       linkoff: linkoff,
+      //   loaded: false,
+      //   chartData: null,
+      //   options: {},
     };
   },
-  computed: {
+  //   computed: {
 
-  },
-  mounted() {
-  },
+  //   },
+  //   mounted() {
+  //     this.renderChart(this.chartData, this.options);
+  //   },
   methods: {
     currentUrl(urlName = '') {
       if (urlName === '') return;
       return route().current(urlName);
     },
   },
+  template: '#myChart',
 };
 </script>
 
@@ -120,9 +169,12 @@ export default {
           </div>
         </div>
       </div>
-      <section id="chart">
-        <Echarts class="chart" :option="option" autoresize />
-      </section>
+      <div>
+        <VChart ref="chart" class="chart" :option="options" autoresize />
+      </div>
+      <!-- <template id="myChart">
+        <Echarts class="chart" :options="options" autoresize />
+      </template> -->
     </div>
   </section>
 </template>
