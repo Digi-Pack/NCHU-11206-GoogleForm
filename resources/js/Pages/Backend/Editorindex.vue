@@ -115,32 +115,27 @@ export default {
       },
       deep: true,
     },
-    scrollHeight() {
-      this.$refs.side.style.top = 500 + this.interval + 'px';
-      console.log(this.$refs.side.style.top);
-    },
   },
   mounted() {
     if (!sessionStorage.getItem('formText')) {
       sessionStorage.setItem('formText', JSON.stringify(this.formText));
-      console.log(sessionStorage);
+    //   console.log(sessionStorage);
     } else {
       this.formText = JSON.parse(sessionStorage.getItem('formText'));
-      console.log(sessionStorage.getItem('formText'));
+    //   console.log(sessionStorage.getItem('formText'));
     }
     if (!sessionStorage.getItem('formData')) {
       sessionStorage.setItem('formData', JSON.stringify(this.formData));
-      console.log(sessionStorage);
+    //   console.log(sessionStorage);
     } else {
       this.formData = JSON.parse(sessionStorage.getItem('formData'));
-      console.log(sessionStorage.getItem('formData'));
+    //   console.log(sessionStorage.getItem('formData'));
     }
-    this.interval = setInterval(() => {
-      this.scrollHeight = document.body.scrollHeight;
-    }, 100);
+    window.addEventListener('scroll', this.handleScroll);
+    console.log(this.$refs.main.style.height);
   },
   unmounted() {
-    clearInterval(this.interval);
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     addQuestion() {
@@ -296,16 +291,19 @@ export default {
         this.imageSize += event.target.files[0].size;
       };
     },
-
+    handleScroll() {
+      this.$refs.side.style.top = window.scrollY + this.interval + 'px';
+      console.log(this.$refs.side.style.top);
+    },
   },
 };
 
 </script>
 
 <template>
-  <section id="question" class="pt-[10px] z-2">
+  <section id="question" class="pt-[10px] z-2" ref="main">
     <div class="container">
-      <form class="min-w-[840px] flex justify-between items-end" @submit.prevent="submitData()">
+      <form class="min-w-[840px] flex justify-between" @submit.prevent="submitData()">
         <!-- 表單命名處 -->
         <div class="max-w-[770px]">
           <div class="form-title">
@@ -515,7 +513,7 @@ export default {
           </div>
         </div>
         <!-- 側欄 -->
-        <div class="flex h-full flex-col justify-start items-start gap-10 sticky" ref="side">
+        <div class="flex flex-col justify-start gap-10 relative duration-500 self-start" ref="side">
           <div class="side">
             <button type="button" class="side-func" @click="addQuestion()">
               <label class="cursor-pointer">
@@ -648,7 +646,7 @@ export default {
                     }
 
                     .answer-type {
-                        @apply w-[209px] max-h-[380px] border border-grey rounded-[10px] overflow-y-scroll;
+                        @apply w-[209px] border border-grey rounded-[10px] overflow-y-scroll;
 
                         ul {
                             @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;

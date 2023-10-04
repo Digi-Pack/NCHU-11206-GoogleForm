@@ -82,7 +82,6 @@ export default {
   <section id="frontend-layout">
     <header id="header">
       <nav>
-        {{ model }}
         <div class="container">
           <div class="top h-[60%] bg-white flex justify-between p-[10px]">
             <div class="topL flex justify-start items-center">
