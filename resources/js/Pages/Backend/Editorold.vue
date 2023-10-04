@@ -17,6 +17,8 @@ import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
 import copy from '/resources/images/copy.png';
+import save from '/resources/images/save.svg';
+import send from '/resources/images/send.svg';
 import close from '/resources/images/close.svg';
 import { questionTypeOption } from '@/Composables/useQuestionType';
 import Swal from 'sweetalert2';
@@ -47,6 +49,8 @@ export default {
       del: del,
       copy: copy,
       close: close,
+      save: save,
+      send: send,
       questionTypeOption,
       formText: {
         id: this.response?.rt_data?.responseForm.id ?? '',
@@ -492,7 +496,7 @@ export default {
                 <span>新增圖片</span>
               </div>
             </label>
-            <div class="side-func">
+            <div class="side-func !rounded-none cursor-pointer">
               <img :src="video" alt="">
               <span>新增影片</span>
             </div>
@@ -500,9 +504,15 @@ export default {
               <img :src="view_agenda" alt="">
               <span>新增區段</span>
             </div>
+            <button type="submit" class="side-func bg-purple-dark hover:!bg-purple-middle">
+              <img :src="save" alt="">
+              <span>儲存表單</span>
+            </button>
+            <button type="button" class="side-func bg-purple-dark hover:!bg-purple-middle" @click="open()">
+              <img :src="send" alt="">
+              <span>傳送</span>
+            </button>
           </div>
-          <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-xl duration-200 hover:shadow-lg hover:scale-110" @click="submitData()">儲存</button>
-          <button type="button" class="bg-blue text-white py-[10px] px-[10px] rounded-xl duration-200 hover:shadow-lg hover:scale-110" @click="open()">傳送</button>
           <SendLinkModal v-if="show" :form-url="formUrl"></SendLinkModal>
         </div>
       </form>
@@ -518,7 +528,7 @@ export default {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[253px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+            @apply w-[49px] h-[336px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
 
             img {
                 @apply w-[22px];
@@ -535,7 +545,7 @@ export default {
                     @apply rounded-tl-[10px] rounded-tr-[10px];
                 }
 
-                &:nth-of-type(6) {
+                &:nth-of-type(3) {
                     @apply rounded-bl-[10px] rounded-br-[10px];
                 }
 
