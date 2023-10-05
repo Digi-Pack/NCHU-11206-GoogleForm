@@ -12,16 +12,17 @@ class ReplyController extends Controller
     public function reply_index(Request $request, $id)
     {
         // dd($id);
-
         $responseForm = Question::where('id', $id)->get();
         // 當自己是主編者時，可以訪問填寫問卷頁
-        if ($request->user()->id == $responseForm[0]['lead_author_id']) {
+        if (!$responseForm->isEmpty()){
+            if ($request->user()->id == $responseForm[0]['lead_author_id']) {
             $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
             $response = [
                 'responseForm' => $responseForm,
                 'questionNaires' => $questionNaires,
             ];
             return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
+        }
         }
 
         $responseForm = Question::where('random', $id)->get();

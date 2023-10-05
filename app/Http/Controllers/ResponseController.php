@@ -8,12 +8,13 @@ use App\Models\Response;
 
 class ResponseController extends Controller
 {
-    public function response_sum()
+    public function response_tzuchi()
     {
         // dd(123);
-        $datas = Response::where('question_id', 11)->get();
+        $datas = Response::where('question_id', 18)->get();
+        // dd($datas);
         $data = json_decode($datas[0]['answer'], true);
-        return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
-        return Inertia::render('Backend/ResponseSum');
+        return Inertia::render('Tzuchi-try/Echarts', ['response' => rtFormat($data)]);
+        // return Inertia::render('Backend/ResponseSum');
     }
 }

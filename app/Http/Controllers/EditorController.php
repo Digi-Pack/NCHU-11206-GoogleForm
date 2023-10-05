@@ -194,10 +194,10 @@ class EditorController extends Controller
         ]);
         return back()->with(['message' => rtFormat($formId)]);
     }
-    public function response_sum(Request $request)
-    {
-        $datas = Response::where('question_id', 3)->get();
-        $data = json_decode($datas[0]['answer'], true);
-        return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
-    }
+    // public function response_sum(Request $request)
+    // {
+    //     $datas = Response::where('question_id', 3)->get();
+    //     $data = json_decode($datas[0]['answer'], true);
+    //     return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
+    // }
 }
