@@ -586,29 +586,29 @@ export default {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[336px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
+            @apply w-[49px] h-[336px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
 
             img {
                 @apply w-[22px];
             }
 
             .side-func {
-                @apply flex justify-center items-center relative py-[10px] hover:bg-blue-light;
+                @apply flex justify-center items-center relative py-[10px] hover:bg-blue-light tablet:w-full tablet:h-full;
 
                 &:hover span {
                     @apply block;
                 }
 
                 &:nth-of-type(1) {
-                    @apply rounded-tl-[10px] rounded-tr-[10px];
+                    @apply rounded-tl-[10px] rounded-tr-[10px] tablet:rounded-bl-[10px] tablet:rounded-tr-none;
                 }
 
                 &:nth-of-type(3) {
-                    @apply rounded-bl-[10px] rounded-br-[10px];
+                    @apply rounded-bl-[10px] rounded-br-[10px] tablet:rounded-bl-none tablet:rounded-tr-[10px];
                 }
 
                 span {
-                    @apply hidden absolute w-auto whitespace-nowrap p-[6px] bg-gray-500 text-white text-xs rounded-[3px] top-[10px] left-[60px];
+                    @apply hidden absolute w-auto whitespace-nowrap p-[6px] bg-gray-500 text-white text-xs rounded-[3px] top-[10px] left-[60px] tablet:-top-9 tablet:left-9;
                 }
             }
         }

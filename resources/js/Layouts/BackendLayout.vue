@@ -371,7 +371,16 @@ nav {
                     }
                   }
                   .topic-body {
-                    @apply px-[20px] py-[10px] h-[calc(100vh-161px)];
+                    @apply px-[20px] py-[10px] h-[calc(100vh-161px)]  overflow-y-scroll;
+                    &::-webkit-scrollbar{
+                      @apply w-[4px];
+                    }
+                    &::-webkit-scrollbar-track {
+                      @apply bg-purple-dark my-[10px] rounded-[10px];
+                    }
+                    &::-webkit-scrollbar-thumb{
+                      @apply bg-purple rounded-[10px];
+                    }
                     .select-region {
                       @apply mb-[20px];
                       .region-title {

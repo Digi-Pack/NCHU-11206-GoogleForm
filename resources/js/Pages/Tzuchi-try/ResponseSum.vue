@@ -11,7 +11,6 @@
     </div>
 </div> -->
 
-
 <script>
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
