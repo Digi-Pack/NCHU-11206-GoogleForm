@@ -229,20 +229,6 @@ export default {
                         <button type="button" class="colorbox bg-blue-gray" @click="changeColor('blue-gray')"></button>
                         <button type="button" class="colorbox bg-grey" @click="changeColor('grey')"></button>
                       </div>
-                      <div class="col">
-                        <div class="colorbox bg-[#eeeeee]"><img class="add" :src="images.add"
-                          alt=""></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="page-background-color">
-                    <div class="text-[18px] font-semibold mb-[10px]">背景</div>
-                    <div class="col">
-                      <div class="colorbox"></div>
-                      <div class="colorbox"></div>
-                      <div class="colorbox"></div>
-                      <div class="colorbox border bg-[#f6f6f6]"></div>
                     </div>
                   </div>
                 </div>

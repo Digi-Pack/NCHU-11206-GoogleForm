@@ -347,8 +347,8 @@ export default {
                 </select>
               </div>
             </div>
-            <div>
-              <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
+            <div class="p-5">
+              <img v-if="item.image" :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
             </div>
             <!-- 第二行 第一種 簡答 -->
             <div v-if="item.type === 1" class="questype-1 !block">
@@ -535,8 +535,8 @@ export default {
               <span>新增標題與說明</span>
             </div>
             <input type="file" id="addImage" class="hidden">
-            <label for="addImage">
-              <div class="side-func !rounded-none cursor-pointer">
+            <label for="addImage" class="side-func !rounded-none cursor-pointer">
+              <div>
                 <img :src="image" alt="">
                 <span>新增圖片</span>
               </div>
@@ -544,10 +544,6 @@ export default {
             <div class="side-func !rounded-none cursor-pointer">
               <img :src="video" alt="">
               <span>新增影片</span>
-            </div>
-            <div class="side-func">
-              <img :src="view_agenda" alt="">
-              <span>新增區段</span>
             </div>
             <button type="submit" class="side-func bg-purple-dark hover:!bg-purple-middle">
               <img :src="save" alt="">
@@ -573,7 +569,7 @@ export default {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[336px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
+            @apply w-[49px] h-[294px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
 
             img {
                 @apply w-[22px];
