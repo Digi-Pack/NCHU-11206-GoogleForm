@@ -14,6 +14,7 @@ class ResponseController extends Controller
         $datas = Response::where('question_id', 18)->get();
         // dd($datas);
         $data = json_decode($datas[0]['answer'], true);
+        
         return Inertia::render('Tzuchi-try/Echarts', ['response' => rtFormat($data)]);
         // return Inertia::render('Backend/ResponseSum');
     }

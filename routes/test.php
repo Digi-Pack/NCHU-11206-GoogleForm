@@ -46,4 +46,7 @@ Route::get('/test2', function () {
 Route::prefix('response')->group(function () {
     // 新增表單
     Route::get('/tzuchi', [ResponseController::class,'response_tzuchi'])->name('response.tzuchi');
+    Route::get('/123', function () {
+        return Inertia::render('Tzuchitry/abc123');
+    });
 });
