@@ -350,8 +350,8 @@ export default {
                 </select>
               </div>
             </div>
-            <div>
-              <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
+            <div class="p-5">
+              <img v-if="item.image" :src="item.image" class="w-full aspect-[5/3.5] object-cover" alt="">
             </div>
             <!-- 第二行 第一種 簡答 -->
             <div v-if="item.type === 1" class="questype-1 !block">

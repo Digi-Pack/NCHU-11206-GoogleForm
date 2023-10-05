@@ -214,7 +214,7 @@ export default {
       </div>
       <div class="controlBar">
         <span>最近的表單</span>
-        <div class="flex w-[32%] justify-between items-center" :class="{ '!w-[52%]': blockShow }">
+        <div class="flex w-[42%] justify-between items-center">
           <select name="ownerType" v-model="selectShow.owner" id="" @change="changeResponse()">
             <option value="1">不限擁有者</option>
             <option value="2">我擁有的項目</option>
@@ -229,7 +229,7 @@ export default {
               <img :src="images.view_module" width="23" alt="">
             </button>
             <!-- <input type="checkbox" class="hidden" id="sort"> -->
-            <select name="sortType" v-model="selectShow.sort" id="sort" @change="changeResponse()">
+            <select name="sortType" v-model="selectShow.sort" @change="changeResponse()">
               <option value="1">我上次開啟的時間</option>
               <option value="2">我上次修改的時間</option>
               <option value="3">上次修改的時間</option>
@@ -272,7 +272,7 @@ export default {
               <span class="w-[200px] truncate">{{ item.qu_naires_title }}</span>
             </div>
           </Link>
-          <div class="flex items-center justify-between w-[45%]">
+          <div class="flex items-center justify-between w-[35%]">
             <span>我</span>
             <span>2023年9月28日</span>
             <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-purple-light cursor-pointer" @click="toggleMenu(item.id)">
@@ -361,7 +361,7 @@ export default {
         }
     }
     .controlBar {
-      @apply flex w-full bg-white h-[64px] px-[17%] text-[15px] justify-between items-center relative mb-5;
+      @apply flex w-full bg-white h-[64px] px-[13%] text-[15px] justify-between items-center relative mb-5;
       select {
         @apply border-0 h-[45%] text-[14px] pr-7 py-1 rounded-md hover:bg-grey-light focus:ring-0;
       }
@@ -377,9 +377,9 @@ export default {
     }
   }
   .main {
-    @apply w-full px-[17%] relative top-[138px];
+    @apply w-full px-[13%] relative top-[138px];
     .card-group {
-      @apply flex flex-wrap gap-5 pl-[60px];
+      @apply flex flex-wrap gap-5;
       .card {
         @apply w-[208px] h-[244px] border border-grey-middle hover:border-purple;
         .card-top {
