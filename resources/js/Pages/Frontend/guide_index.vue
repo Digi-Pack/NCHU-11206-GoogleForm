@@ -181,7 +181,7 @@ export default {
         <div class="top">
           <div class="topL flex justify-start items-center">
             <div class="square logo"><img :src="images.logo" width="25" height="25" alt=""></div>
-            <span class="title"></span>
+            <span class="title">表單</span>
           </div>
           <!-- 搜尋欄 -->
           <div class="flex w-full justify-center">
@@ -228,24 +228,13 @@ export default {
             <button type="button" v-if="blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
               <img :src="images.view_module" width="23" alt="">
             </button>
-            <input type="checkbox" class="hidden" id="sort">
-            <label for="sort">
-              <div class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer">
-                <img :src="images.sort_by_alpha" class="w-[23px]" alt="">
-              </div>
-            </label>
-            <select name="sortType" v-model="selectShow.sort" id="" @change="changeResponse()">
+            <!-- <input type="checkbox" class="hidden" id="sort"> -->
+            <select name="sortType" v-model="selectShow.sort" id="sort" @change="changeResponse()">
               <option value="1">我上次開啟的時間</option>
               <option value="2">我上次修改的時間</option>
               <option value="3">上次修改的時間</option>
               <option value="4">標題</option>
             </select>
-            <!-- <div id="sortMenu">
-              <button type="button">我上次開啟的時間</button>
-              <button type="button">我上次修改的時間</button>
-              <button type="button">上次修改的時間</button>
-              <button type="button">標題</button>
-            </div> -->
           </div>
         </div>
       </div>
@@ -308,6 +297,7 @@ export default {
 <style lang="scss" scoped>
 #guide {
   nav {
+    @apply fixed w-full z-50;
     .container {
       @apply flex h-[64px] flex-col justify-between bg-[#ededed] relative;
         .top {
@@ -371,7 +361,7 @@ export default {
         }
     }
     .controlBar {
-      @apply flex w-full h-[64px] px-[17%] text-[15px] justify-between items-center relative mb-5;
+      @apply flex w-full bg-white h-[64px] px-[17%] text-[15px] justify-between items-center relative mb-5;
       select {
         @apply border-0 h-[45%] text-[14px] pr-7 py-1 rounded-md hover:bg-grey-light focus:ring-0;
       }
@@ -387,9 +377,9 @@ export default {
     }
   }
   .main {
-    @apply w-full px-[17%];
+    @apply w-full px-[17%] relative top-[138px];
     .card-group {
-      @apply flex flex-wrap gap-5;
+      @apply flex flex-wrap gap-5 pl-[60px];
       .card {
         @apply w-[208px] h-[244px] border border-grey-middle hover:border-purple;
         .card-top {
