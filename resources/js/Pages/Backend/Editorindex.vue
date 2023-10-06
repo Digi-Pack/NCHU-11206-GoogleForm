@@ -97,7 +97,7 @@ export default {
           ],
         },
       }],
-      a: 1,
+      serial: 1,
       selectedMin: '0',
       selectedMax: '2',
       show: false,
@@ -106,7 +106,6 @@ export default {
       imageSize: 0,
       scrollHeight: 0,
       interval: null,
-
     };
   },
   watch: {
@@ -149,9 +148,9 @@ export default {
   methods: {
     addQuestion() {
       const { formData } = this;
-      this.a++;
+      this.serial++;
       const newQuestion = {
-        id: this.a,
+        id: this.serial,
         title: '問題',
         request: false,
         image: '',
@@ -296,6 +295,7 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
+        console.log(item);
         item.image = reader.result;
         this.imageSize += event.target.files[0].size;
       };
@@ -307,6 +307,54 @@ export default {
       // 当qu_naires_title属性发生变化时，同时更新this.$parent.formTitle
       this.$parent.formTitle = this.formText.qu_naires_title;
     },
+    // 側欄增加圖片區塊
+    addImage(e) {
+      const { formData } = this;
+      this.serial++;
+      const newQuestion = {
+        id: this.serial,
+        title: '問題',
+        request: false,
+        image: '',
+        video: '',
+        type: 12,
+        options: [
+          {
+            id: 1,
+            value: '',
+          },
+        ],
+        linear: {
+          min: 1,
+          max: 10,
+          minText: '',
+          maxText: '',
+        },
+        square: {
+          row: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+          column: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+        },
+      };
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        formData[formData.length - 1].image = reader.result;
+        this.imageSize += e.target.files[0].size;
+      };
+      if (e.target.files[0]) {
+        formData.push({ ...newQuestion });
+      }
+    },
   },
 };
 
@@ -317,7 +365,6 @@ export default {
 </template> -->
 
 <template>
-  {{ user }}
   <input hidden type="text" v-model="userInformation">
   <section id="question" class="pt-[10px] z-2" ref="main">
     <div class="container">
@@ -332,201 +379,219 @@ export default {
           </div>
           <!-- 問題設置 -->
           <div v-for="item in formData" :key="item.id" class="question">
-            <!-- 第一行 -->
-            <!-- {{ item }} -->
-            <div class="question-top">
-              <div class="text-box">
-                <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input focus:ring-0 focus:bg-white" required>
-              </div>
-              <label>
-                <img :src="image" alt="" class="upload">
-                <input type="file" id="image" @change="(event) => uploadImage(event, item)" hidden>
-              </label>
-              <!-- 下拉選單 -->
-              <div class="check">
-                <select v-model="item.type" class="answer-type" name="" @change="clearOptions(item)">
-                  <option v-for="items in questionTypeOption" :key="items.id" :value="items.id">{{ items.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <!-- 問題框內圖片 -->
-            <div class="p-5">
-              <img v-if="item.image" :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
-            </div>
-            <!-- 第二行 第一種 簡答 -->
-            <div v-if="item.type === 1" class="questype-1 !block">
-              <div class="short">簡答文字</div>
-            </div>
-            <!-- 第二行 第二種 詳答 -->
-            <div v-if="item.type === 2" class="questype-2 !block">
-              <div class="long">詳答文字</div>
-            </div>
-            <!-- 第二行 第三種 選擇題 -->
-            <div v-if="item.type === 3" class="questype-3">
-              <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-                <input type="checkbox" id="checkbox">
-                <label for="checkbox" class="checkbox"></label>
-                <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
-                <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
-              </div>
-              <div class="choose">
-                <input type="checkbox" id="checkbox2">
-                <label for="checkbox2" class="checkbox"></label>
-                <button type="button" class="ml-[10px] mr-[5px] text-gray-500 text-[15px]" @click="addSelect(item)">新增選項</button>
-              </div>
-            </div>
-            <!-- 第二行 第四種 核取方塊 -->
-            <div v-if="item.type === 4" class="questype-4 !block">
-              <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-                <input type="checkbox" class="pointer-events-none">
-                <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
-                <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
-              </div>
-              <div class="choose">
-                <input type="checkbox" class="pointer-events-none">
-                <button type="button" class="ml-[20px] mr-[5px] text-[15px] text-gray-500" @click="addSelect(item)">新增選項</button>
-              </div>
-            </div>
-            <!-- 第二行 第五種 下拉式選單 -->
-            <div v-if="item.type === 5" class="questype-5 !block">
-              <div v-for="(option, index) in item.options" :key="option.id" class="choose">
-                {{ index + 1 }}<span>。</span><input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
-                <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
-              </div>
-              <div class="choose">
-                {{ item.options.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px] text-gray-500 text-[15px]" @click="addSelect(item)">新增選項</button>
-              </div>
-            </div>
-            <!-- 第二行 第六種  檔案上傳 -->
-            <div v-if="item.type === 6" class="questype-6 !block">
-              <h3>作答者可將檔案上傳到雲端硬碟</h3>
-              <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
-              <div><a href="">取消</a><a href="">繼續</a></div>
-            </div>
-            <!-- 第二行 第七種 線性刻度 -->
-            <div v-if="item.type === 7" class="questype-7 !block">
-              <!-- 範圍設定 -->
-              <select v-model="item.linear.min" name="min">
-                <option value="0">0</option>
-                <option value="1">1</option>
-              </select>
-              <span>到</span>
-              <select v-model="item.linear.max" name="max">
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-              <!-- 最大值與最小值意義設定 -->
-              <div class="num-mean">
-                <div class="min">
-                  <span>{{ item.linear.min }}</span>
-                  <input type="text" class="num-mean-input" v-model="item.linear.minText" placeholder="標籤(選填)">
+            <div v-if="item.type !== 12">
+              <!-- 第一行 -->
+              <div class="question-top">
+                <div class="text-box">
+                  <input v-model="item.title" type="text" placeholder="問題" class="form-input form-title-input focus:ring-0 focus:bg-white" required>
                 </div>
-                <div class="max">
-                  <span>{{ item.linear.max }}</span>
-                  <input type="text" class="num-mean-input" v-model="item.linear.maxText" placeholder="標籤(選填)">
-                </div>
-              </div>
-            </div>
-            <!-- 第二行 第八種  單選方格 -->
-            <div v-if="item.type === 8" class="questype-8 !block">
-              <div class="left_right">
-                <div class="left">
-                  <div>列</div>
-                  <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
-                    {{ index + 1 }}<span>。</span>
-                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                    <button type="button" @click="delrow(item, row.id)">
-                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                    </button>
-                  </div>
-                  <div class="choose">
-                    {{ item.square.row.length + 1 }}<span>。</span><button type="button" @click="addrow(item, item.id)" class="text-gray-500 text-[15px] ml-[9px]">新增列</button>
-                  </div>
-                </div>
-                <div class="right">
-                  <div>欄</div>
-                  <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
-                    <div class="checkbox"></div>
-                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                    <button type="button" @click="delcolumn(item, column.id)">
-                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                    </button>
-                  </div>
-                  <div class="choose">
-                    <div class="checkbox"></div>
-                    <button type="button" @click="addcolumn(item, item.id)" class="ml-3 text-gray-500 text-[15px]">新增欄</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 第二行 第九種  核取方塊格 -->
-            <div v-if="item.type === 9" class="questype-9 !block">
-              <div class="left_right">
-                <div class="left">
-                  <div>列</div>
-                  <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
-                    {{ index + 1 }}<span>。</span>
-                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="row.text">
-                    <button type="button" @click="delrow(item, row.id)">
-                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                    </button>
-                  </div>
-                  <div class="choose">
-                    {{ item.square.row.length + 1 }}<span>。</span><button type="button" class="text-gray-500 text-[15px] ml-[9px]" @click="addrow(item, item.id)">新增列</button>
-                  </div>
-                </div>
-                <div class="right">
-                  <div>欄</div>
-                  <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
-                    <input type="checkbox" class="pointer-events-none">
-                    <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="column.text">
-                    <button type="button" @click="delcolumn(item, column.id)">
-                      <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
-                    </button>
-                  </div>
-                  <div class="choose">
-                    <input type="checkbox" class="pointer-events-none">
-                    <button type="button" @click="addcolumn(item, item.id)" class="ml-3 text-gray-500 text-[15px]">新增欄</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 第二行 第十種  日期 -->
-            <div v-if="item.type === 10" class="questype-10 !block">
-              <div class="calender">日期<img :src="date" alt=""></div>
-            </div>
-            <!-- 第二行 第十一種  時間 -->
-            <div v-if="item.type === 11" class="questype-11 !block">
-              <input type="time" hidden>
-              <div class="clock">時間<img :src="time" alt=""></div>
-            </div>
-            <!-- 第三行 -->
-            <div class="question-bottom">
-              <div class="func">
-                <img :src="copy" alt="">
-                <button type="button" @click="delQuestion(item.id)">
-                  <label>
-                    <img :src="del" alt="">
-                  </label>
-                </button>
-              </div>
-              <!-- 必填選項開關 -->
-              <div class="switch">
                 <label>
-                  <span class="text">必填</span>
-                  <input v-model="item.request" type="checkbox" name="" id="" class="checkbox">
-                  <div class="btn-box">
-                    <span class="btn"></span>
-                  </div>
+                  <img :src="image" alt="" class="upload">
+                  <input type="file" id="image" @change="(event) => uploadImage(event, item)" hidden>
                 </label>
+                <!-- 下拉選單 -->
+                <div class="check">
+                  <select v-model="item.type" class="answer-type" name="" @change="clearOptions(item)">
+                    <option v-for="items in questionTypeOption" :key="items.id" :value="items.id">{{ items.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <!-- 問題框內圖片 -->
+              <div class="p-5">
+                <img v-if="item.image" :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
+              </div>
+              <!-- 第二行 第一種 簡答 -->
+              <div v-if="item.type === 1" class="questype-1 !block">
+                <div class="short">簡答文字</div>
+              </div>
+              <!-- 第二行 第二種 詳答 -->
+              <div v-if="item.type === 2" class="questype-2 !block">
+                <div class="long">詳答文字</div>
+              </div>
+              <!-- 第二行 第三種 選擇題 -->
+              <div v-if="item.type === 3" class="questype-3">
+                <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+                  <input type="checkbox" id="checkbox">
+                  <label for="checkbox" class="checkbox"></label>
+                  <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                  <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+                </div>
+                <div class="choose">
+                  <input type="checkbox" id="checkbox2">
+                  <label for="checkbox2" class="checkbox"></label>
+                  <button type="button" class="ml-[10px] mr-[5px] text-gray-500 text-[15px]" @click="addSelect(item)">新增選項</button>
+                </div>
+              </div>
+              <!-- 第二行 第四種 核取方塊 -->
+              <div v-if="item.type === 4" class="questype-4 !block">
+                <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+                  <input type="checkbox" class="pointer-events-none">
+                  <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                  <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+                </div>
+                <div class="choose">
+                  <input type="checkbox" class="pointer-events-none">
+                  <button type="button" class="ml-[20px] mr-[5px] text-[15px] text-gray-500" @click="addSelect(item)">新增選項</button>
+                </div>
+              </div>
+              <!-- 第二行 第五種 下拉式選單 -->
+              <div v-if="item.type === 5" class="questype-5 !block">
+                <div v-for="(option, index) in item.options" :key="option.id" class="choose">
+                  {{ index + 1 }}<span>。</span><input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                  <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
+                </div>
+                <div class="choose">
+                  {{ item.options.length + 1 }}<span>。</span><button type="button" class="ml-[10px] mr-[5px] text-gray-500 text-[15px]" @click="addSelect(item)">新增選項</button>
+                </div>
+              </div>
+              <!-- 第二行 第六種  檔案上傳 -->
+              <div v-if="item.type === 6" class="questype-6 !block">
+                <h3>作答者可將檔案上傳到雲端硬碟</h3>
+                <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
+                <div><a href="">取消</a><a href="">繼續</a></div>
+              </div>
+              <!-- 第二行 第七種 線性刻度 -->
+              <div v-if="item.type === 7" class="questype-7 !block">
+                <!-- 範圍設定 -->
+                <select v-model="item.linear.min" name="min">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                </select>
+                <span>到</span>
+                <select v-model="item.linear.max" name="max">
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+                <!-- 最大值與最小值意義設定 -->
+                <div class="num-mean">
+                  <div class="min">
+                    <span>{{ item.linear.min }}</span>
+                    <input type="text" class="num-mean-input" v-model="item.linear.minText" placeholder="標籤(選填)">
+                  </div>
+                  <div class="max">
+                    <span>{{ item.linear.max }}</span>
+                    <input type="text" class="num-mean-input" v-model="item.linear.maxText" placeholder="標籤(選填)">
+                  </div>
+                </div>
+              </div>
+              <!-- 第二行 第八種  單選方格 -->
+              <div v-if="item.type === 8" class="questype-8 !block">
+                <div class="left_right">
+                  <div class="left">
+                    <div>列</div>
+                    <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
+                      {{ index + 1 }}<span>。</span>
+                      <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="row.text">
+                      <button type="button" @click="delrow(item, row.id)">
+                        <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                      </button>
+                    </div>
+                    <div class="choose">
+                      {{ item.square.row.length + 1 }}<span>。</span><button type="button" @click="addrow(item, item.id)" class="text-gray-500 text-[15px] ml-[9px]">新增列</button>
+                    </div>
+                  </div>
+                  <div class="right">
+                    <div>欄</div>
+                    <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
+                      <div class="checkbox"></div>
+                      <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="column.text">
+                      <button type="button" @click="delcolumn(item, column.id)">
+                        <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                      </button>
+                    </div>
+                    <div class="choose">
+                      <div class="checkbox"></div>
+                      <button type="button" @click="addcolumn(item, item.id)" class="ml-3 text-gray-500 text-[15px]">新增欄</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 第二行 第九種  核取方塊格 -->
+              <div v-if="item.type === 9" class="questype-9 !block">
+                <div class="left_right">
+                  <div class="left">
+                    <div>列</div>
+                    <div v-for="(row, index) in item.square.row" :key="row.id" class="choose">
+                      {{ index + 1 }}<span>。</span>
+                      <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="row.text">
+                      <button type="button" @click="delrow(item, row.id)">
+                        <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                      </button>
+                    </div>
+                    <div class="choose">
+                      {{ item.square.row.length + 1 }}<span>。</span><button type="button" class="text-gray-500 text-[15px] ml-[9px]" @click="addrow(item, item.id)">新增列</button>
+                    </div>
+                  </div>
+                  <div class="right">
+                    <div>欄</div>
+                    <div v-for="(column, index) in item.square.column" :key="column.id" class="choose">
+                      <input type="checkbox" class="pointer-events-none">
+                      <input type="text" class="choose_line placeholder:text-black" :placeholder="'選項' + (index + 1)" v-model="column.text">
+                      <button type="button" @click="delcolumn(item, column.id)">
+                        <img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt="">
+                      </button>
+                    </div>
+                    <div class="choose">
+                      <input type="checkbox" class="pointer-events-none">
+                      <button type="button" @click="addcolumn(item, item.id)" class="ml-3 text-gray-500 text-[15px]">新增欄</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 第二行 第十種  日期 -->
+              <div v-if="item.type === 10" class="questype-10 !block">
+                <div class="calender">日期<img :src="date" alt=""></div>
+              </div>
+              <!-- 第二行 第十一種  時間 -->
+              <div v-if="item.type === 11" class="questype-11 !block">
+                <input type="time" hidden>
+                <div class="clock">時間<img :src="time" alt=""></div>
+              </div>
+              <!-- 第三行 -->
+              <div class="question-bottom">
+                <div class="func">
+                  <img :src="copy" alt="">
+                  <button type="button" @click="delQuestion(item.id)">
+                    <label>
+                      <img :src="del" alt="">
+                    </label>
+                  </button>
+                </div>
+                <!-- 必填選項開關 -->
+                <div class="switch">
+                  <label>
+                    <span class="text">必填</span>
+                    <input v-model="item.request" type="checkbox" name="" id="" class="checkbox">
+                    <div class="btn-box">
+                      <span class="btn"></span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- 側欄新增圖片 -->
+            <div v-else>
+              {{ item.id }}
+              <div class="question-bottom">
+                <div class="func !border-r-0">
+                  <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
+                  <button type="button" @click="delQuestion(item.id)">
+                    <label>
+                      <img :src="del" alt="">
+                    </label>
+                  </button>
+                </div>
+              </div>
+              <div class="p-5">
+                <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
               </div>
             </div>
           </div>
@@ -548,7 +613,7 @@ export default {
               <img :src="text" alt="">
               <span>新增標題與說明</span>
             </div>
-            <input type="file" id="addImage" class="hidden">
+            <input type="file" id="addImage" class="hidden" @change="(e) => addImage(e)">
             <label for="addImage" class="side-func !rounded-none cursor-pointer">
               <div>
                 <img :src="image" alt="">
