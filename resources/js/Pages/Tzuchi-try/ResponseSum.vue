@@ -80,50 +80,50 @@ export default defineComponent({
         },
       ],
     });
-    const barOption = ref({
-      title: {
-        // text: props.title,
-        subtext: 'Fake Data',
-        left: 'center',
-      },
-      xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      },
-      yAxis: {
-        type: 'value',
-      },
-      series: [
-        {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: 'bar',
-        },
-      ],
-    });
+    // const barOption = ref({
+    //   title: {
+    //     // text: props.title,
+    //     subtext: 'Fake Data',
+    //     left: 'center',
+    //   },
+    //   xAxis: {
+    //     type: 'category',
+    //     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    //   },
+    //   yAxis: {
+    //     type: 'value',
+    //   },
+    //   series: [
+    //     {
+    //       data: [120, 200, 150, 80, 70, 110, 130],
+    //       type: 'bar',
+    //     },
+    //   ],
+    // });
 
-    const dataBase = ref({
-      title: {
-        // text: props.title,
-        subtext: 'Fake Data',
-        left: 'center',
-      },
-      legend: {},
-      tooltip: {},
-      dataset: {
-        source: [
-          ['product', '2015', '2016', '2017'],
-          ['Matcha Latte', 43.3, 85.8, 93.7],
-          ['Milk Tea', 83.1, 73.4, 55.1],
-          ['Cheese Cocoa', 86.4, 65.2, 82.5],
-          ['Walnut Brownie', 72.4, 53.9, 39.1],
-        ],
-      },
-      xAxis: { type: 'category' },
-      yAxis: {},
-      // Declare several bar series, each will be mapped
-      // to a column of dataset.source by default.
-      series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
-    });
+    // const dataBase = ref({
+    //   title: {
+    //     // text: props.title,
+    //     subtext: 'Fake Data',
+    //     left: 'center',
+    //   },
+    //   legend: {},
+    //   tooltip: {},
+    //   dataset: {
+    //     source: [
+    //       ['product', '2015', '2016', '2017'],
+    //       ['Matcha Latte', 43.3, 85.8, 93.7],
+    //       ['Milk Tea', 83.1, 73.4, 55.1],
+    //       ['Cheese Cocoa', 86.4, 65.2, 82.5],
+    //       ['Walnut Brownie', 72.4, 53.9, 39.1],
+    //     ],
+    //   },
+    //   xAxis: { type: 'category' },
+    //   yAxis: {},
+    //   // Declare several bar series, each will be mapped
+    //   // to a column of dataset.source by default.
+    //   series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
+    // });
 
     return { option };
   },

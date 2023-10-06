@@ -23,8 +23,10 @@ import send from '/resources/images/send.svg';
 import { questionTypeOption } from '@/Composables/useQuestionType';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
+import UploadYtVideo from '@/Components/Modal/UploadYtVideo.vue';
 
 export default {
+  components: { UploadYtVideo },
   props: {
     flash: String,
     response: Object,
@@ -101,6 +103,7 @@ export default {
       selectedMin: '0',
       selectedMax: '2',
       show: false,
+      model: '123',
       isSidebarFixed: false,
       formUrl: '',
       imageSize: 0,
@@ -126,17 +129,19 @@ export default {
     // console.log(props.qu_naires_title);
     if (!sessionStorage.getItem('formText')) {
       sessionStorage.setItem('formText', JSON.stringify(this.formText));
-    //   console.log(sessionStorage);
-    } else {
+      //   console.log(sessionStorage);
+    }
+    else {
       this.formText = JSON.parse(sessionStorage.getItem('formText'));
-    //   console.log(sessionStorage.getItem('formText'));
+      //   console.log(sessionStorage.getItem('formText'));
     }
     if (!sessionStorage.getItem('formData')) {
       sessionStorage.setItem('formData', JSON.stringify(this.formData));
-    //   console.log(sessionStorage);
-    } else {
+      //   console.log(sessionStorage);
+    }
+    else {
       this.formData = JSON.parse(sessionStorage.getItem('formData'));
-    //   console.log(sessionStorage.getItem('formData'));
+      //   console.log(sessionStorage.getItem('formData'));
     }
     window.addEventListener('scroll', this.handleScroll);
     this.$parent.formTitle = this.formText.qu_naires_title;
@@ -247,7 +252,6 @@ export default {
         minText: '',
         maxText: '',
       };
-
       item.options.splice(0, optionsLength, newQuestion);
       item.square.row.splice(0, squarerow, squareRow);
       item.square.column.splice(0, squarecolumn, squareColumn);
@@ -256,7 +260,8 @@ export default {
     // 儲存表單
     submitData() {
       const { formData, formText } = this;
-      if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
+      if (this.imageSize > 3145728)
+        return Swal.fire('圖片檔案過大');
       // 驗證
       router.visit(route('edit.store'), {
         method: 'post', data: { formData, formText }, preserveState: true,
@@ -354,6 +359,9 @@ export default {
       if (e.target.files[0]) {
         formData.push({ ...newQuestion });
       }
+    }
+    handleClose() {
+      this.model = '';
     },
   },
 };
@@ -620,10 +628,10 @@ export default {
                 <span>新增圖片</span>
               </div>
             </label>
-            <div class="side-func !rounded-none cursor-pointer">
+            <button type="button" class="side-func !rounded-none" @click="model = 'UploadYtVideo'">
               <img :src="video" alt="">
               <span>新增影片</span>
-            </div>
+            </button>
             <button type="submit" class="side-func bg-purple-dark hover:!bg-purple-middle">
               <img :src="save" alt="">
               <span>儲存表單</span>
@@ -635,6 +643,8 @@ export default {
           </div>
           <SendLinkModal v-if="show" :form-url="formUrl">
           </SendLinkModal>
+          <UploadYtVideo v-if="model === 'UploadYtVideo'" @close-model="handleClose">
+          </UploadYtVideo>
         </div>
       </form>
     </div>
