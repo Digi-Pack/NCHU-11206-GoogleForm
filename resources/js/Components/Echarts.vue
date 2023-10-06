@@ -215,11 +215,11 @@ const dataBase = ref({
   @apply w-full h-[500px];
 }
 .text-area {
-    @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 bg-white;
+    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white;
     .que-top {
         @apply p-5;
         .title {
-            @apply w-full text-[16px] font-medium mb-1 px-3;
+            @apply w-full text-lg font-semibold mb-1 px-3;
         }
         .subtitle{
             @apply text-sm px-3;
