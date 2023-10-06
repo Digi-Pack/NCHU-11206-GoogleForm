@@ -46,4 +46,7 @@ Route::prefix('response')->group(function () {
     Route::get('/op', function () {
         return Inertia::render('Tzuchitry/abc456Copy');
     });
+    Route::get('/dropDownMenu', function () {
+        return Inertia::render('Tzuchitry/dropDownMenu');
+    });
 });
