@@ -350,6 +350,7 @@ export default {
                 </select>
               </div>
             </div>
+            <!-- 問題框內圖片 -->
             <div class="p-5">
               <img v-if="item.image" :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
             </div>
