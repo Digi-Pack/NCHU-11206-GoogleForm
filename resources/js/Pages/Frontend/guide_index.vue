@@ -220,7 +220,6 @@ export default {
             <option value="2">我擁有的項目</option>
             <option value="3">不歸我所有</option>
           </select>
-          <!-- <span class="w-auto" v-if="blockShow">我上次開啟的時間</span> -->
           <div class="flex items-center gap-2 pr-6">
             <button type="button" v-if="!blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
               <img :src="images.view_list" width="23" alt="">
@@ -364,15 +363,6 @@ export default {
       @apply flex w-full bg-white h-[64px] px-[13%] text-[15px] justify-between items-center relative mb-5;
       select {
         @apply border-0 h-[45%] text-[14px] pr-7 py-1 rounded-md hover:bg-grey-light focus:ring-0;
-      }
-      #sort:checked~#sortMenu {
-        @apply block;
-      }
-      #sortMenu {
-          @apply border bg-white z-10 border-green-light py-2 w-[210px] absolute top-[60px] right-[200px] shadow-md drop-shadow-md hidden;
-          button {
-            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
-          }
       }
     }
   }

@@ -146,7 +146,7 @@ export default {
             <div class="questype-5">
               <label for="select"></label>
               <select v-model="formData[key].answer" name="select" id="select">
-                <option v-for="(choose, innerkey) in item.options" :key="choose.id" :value="innerkey + 1" :required="item.request">{{ choose.value }}
+                <option v-for="choose in item.options" :key="choose.id" :value="choose.value" :required="item.request">{{ choose.value }}
                 </option>
               </select>
             </div>
