@@ -49,9 +49,20 @@ const props = defineProps({
 // });
 
 const piedata = computed(() => {
-  //   return props.data.map((item) => item.answer);
-  console.log(props.data);
+  return props.data.flat().reduce((acc, obj) => {
+    const { id, answer } = obj;
+    acc[id] = [...(acc[id] || []), answer];
+    return acc;
+  }, {});
 });
+piedata = piedata.map(str => parseInt(str));
+
+// const idToAnswerMap = data.flat()
+//     .reduce((acc, obj) => {
+//         const { id, answer } = obj;
+//         acc[id] = [...(acc[id] || []), answer];
+//         return acc;
+//     }, {});
 console.log(piedata);
 
 // 圓餅圖
@@ -73,9 +84,7 @@ const pieOption = ref({
       type: 'pie',
       radius: '50%',
       data: [
-        { value: 735, name: 'Direct' },
-        { value: 580, name: 'Email' },
-        { value: 300, name: 'Video Ads' },
+        { value: 1, name: piedata },
       ],
       emphasis: {
         itemStyle: {
@@ -97,7 +106,7 @@ const barOption = ref({
   },
   xAxis: {
     type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    data: piedata,
   },
   yAxis: {
     type: 'value',
@@ -137,8 +146,8 @@ const dataBase = ref({
 </script>
 
 <template>
-  51515
   <!-- {{ data }} -->
+  {{ piedata[1] }}
   <VChart class="chart" :option="pieOption" />
   {{ barOption }}
   <VChart class="chart" :option="barOption" />

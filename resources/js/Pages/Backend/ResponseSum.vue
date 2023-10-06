@@ -40,8 +40,7 @@ export default {
 </script>
 
 <template>
-  <!-- {{ response.rt_data }} -->
-  {{ response }}
+  {{ response.rt_data }}
   <section id="response-sum" class="pt-[10px]">
     <div class="all">
       <div class="response-head bg-white">

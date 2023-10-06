@@ -18,10 +18,21 @@ class ResponseController extends Controller
         return Inertia::render('Tzuchi-try/Echarts', ['response' => rtFormat($data)]);
         // return Inertia::render('Backend/ResponseSum');
     }
-     public function response_sum(Request $request)
+    //  public function response_sum(Request $request)
+    // {
+    //     $datas = Response::where('question_id', 18)->get();
+    //     $data = json_decode($datas[0]['answer'], true);
+    //     return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
+    // }
+    public function response_sum()
     {
-        $datas = Response::where('question_id', 18)->get();
-        $data = json_decode($datas[0]['answer'], true);
-        return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
+     $datas = Response::where('question_id', 1)->get();
+            $results = [];
+            foreach ($datas as $data) {
+                $answer = json_decode($data['answer'], true);
+                $results[] = $answer;
+            }
+            // $data = json_decode($datas[1]['answer'], true);
+            return Inertia::render('Backend/ResponseSum',['response' => rtFormat($results)]);
     }
 }
