@@ -138,6 +138,7 @@ const dataBase = ref({
 
 <template>
   {{ data }}
+  {{ barOption }}
   <VChart class="chart" :option="pieOption" />
   <VChart class="chart" :option="barOption" />
   <VChart class="chart" :option="dataBase" />

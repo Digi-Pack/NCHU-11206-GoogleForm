@@ -495,106 +495,106 @@
 //     return { A, B, C };
 //   },
 // };
-// export default {
-//   props: {
-//     flash: String,
-//     response: Object,
-//   },
-//   data() {
-//     const A = [
-//       {
-//         'id': 3,
-//         'title': '我是核取方塊格第三題',
-//         'request': false,
-//         'image': null,
-//         'video': null,
-//         'type': 9,
-//         'options': [{ 'id': 1, 'value': null }],
-//         'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null },
-//         'square': {
-//           'row': [
-//             { 'id': 1, 'text': '第一列' },
-//             { 'id': 2, 'text': '第二列' },
-//             { 'id': 3, 'text': '第三列' },
-//             { 'id': 4, 'text': '第四列' },
-//           ],
-//           'column': [
-//             { 'id': 1, 'text': '第一欄' },
-//             { 'id': 2, 'text': '第二欄' },
-//             { 'id': 3, 'text': '第三欄' },
-//             { 'id': 4, 'text': '第四欄' },
-//           ],
-//         },
-//       },
-//     ];
+export default {
+  props: {
+    flash: String,
+    response: Object,
+  },
+  data() {
+    const A = [
+      {
+        'id': 3,
+        'title': '我是核取方塊格第三題',
+        'request': false,
+        'image': null,
+        'video': null,
+        'type': 9,
+        'options': [{ 'id': 1, 'value': null }],
+        'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null },
+        'square': {
+          'row': [
+            { 'id': 1, 'text': '第一列' },
+            { 'id': 2, 'text': '第二列' },
+            { 'id': 3, 'text': '第三列' },
+            { 'id': 4, 'text': '第四列' },
+          ],
+          'column': [
+            { 'id': 1, 'text': '第一欄' },
+            { 'id': 2, 'text': '第二欄' },
+            { 'id': 3, 'text': '第三欄' },
+            { 'id': 4, 'text': '第四欄' },
+          ],
+        },
+      },
+    ];
 
-//     const B = [
-//       {
-//         'id': 3,
-//         'answer': null,
-//         'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'],
-//         'time': { 'hour': null, 'minute': null, 'section': 'a.m.' },
-//       },
-//       {
-//         'id': 3,
-//         'answer': null,
-//         'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'],
-//         'time': { 'hour': null, 'minute': null, 'section': 'a.m.' },
-//       },
-//       {
-//         'id': 3,
-//         'answer': null,
-//         'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'],
-//         'time': { 'hour': null, 'minute': null, 'section': 'a.m.' },
-//       },
-//     ];
+    const B = [
+      {
+        'id': 3,
+        'answer': null,
+        'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'],
+        'time': { 'hour': null, 'minute': null, 'section': 'a.m.' },
+      },
+      {
+        'id': 3,
+        'answer': null,
+        'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'],
+        'time': { 'hour': null, 'minute': null, 'section': 'a.m.' },
+      },
+      {
+        'id': 3,
+        'answer': null,
+        'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'],
+        'time': { 'hour': null, 'minute': null, 'section': 'a.m.' },
+      },
+    ];
 
-//     // 初始化 C 数组
-//     const rowCount = A[0].square.row.length;
-//     const columnCount = A[0].square.column.length;
-//     const C = new Array(rowCount + 1).fill(null).map(() => new Array(columnCount + 1).fill(0));
+    // 初始化 C 数组
+    const rowCount = A[0].square.row.length;
+    const columnCount = A[0].square.column.length;
+    const C = new Array(rowCount + 1).fill(null).map(() => new Array(columnCount + 1).fill(0));
 
-//     // 将首行和首列的数据设置为列的标题和行的标题
-//     C[0][0] = '欄';
-//     for (let col = 1; col <= columnCount; col++) {
-//       C[0][col] = A[0].square.column[col - 1].text;
-//     }
-//     for (let row = 1; row <= rowCount; row++) {
-//       C[row][0] = A[0].square.row[row - 1].text;
-//     }
+    // 将首行和首列的数据设置为列的标题和行的标题
+    C[0][0] = '欄';
+    for (let col = 1; col <= columnCount; col++) {
+      C[0][col] = A[0].square.column[col - 1].text;
+    }
+    for (let row = 1; row <= rowCount; row++) {
+      C[row][0] = A[0].square.row[row - 1].text;
+    }
 
-//     // 遍历 B 数组，统计每个值的个数
-//     for (const item of B) {
-//       for (const option of item.manyOptions) {
-//         const matches = option.match(/row(\d+)col(\d+)/);
-//         if (matches) {
-//           const row = parseInt(matches[1]); // 不再需要减 1
-//           const col = parseInt(matches[2]); // 不再需要减 1
-//           C[row][col]++;
-//         }
-//       }
-//     }
+    // 遍历 B 数组，统计每个值的个数
+    for (const item of B) {
+      for (const option of item.manyOptions) {
+        const matches = option.match(/row(\d+)col(\d+)/);
+        if (matches) {
+          const row = parseInt(matches[1]); // 不再需要减 1
+          const col = parseInt(matches[2]); // 不再需要减 1
+          C[row][col]++;
+        }
+      }
+    }
 
-//     return { A, B, C };
-//   },
-// };
+    return { A, B, C };
+  },
+};
 </script>
 
 <template>
-  <section id="">
-    <!-- 打印問題和答案混和結果 -->
-    <!-- {{ C }} -->
-    <!-- 打印特定項目統計的結果 -->
-    <!-- {{ B }} -->
-    <!-- 打印核取方塊統計的結果 -->
-    <!-- {{ countManyOptions }} -->
-    <!-- {{ B }} -->
-    <!-- 打印線性方塊統計結果 -->
-    <!-- {{ C }} -->
-    <!-- 打印核取方塊格統計結果 -->
-    {{ C }}
+  <!-- <section id=""> -->
+  <!-- 打印問題和答案混和結果 -->
+  <!-- {{ C }} -->
+  <!-- 打印特定項目統計的結果 -->
+  <!-- {{ B }} -->
+  <!-- 打印核取方塊統計的結果 -->
+  <!-- {{ countManyOptions }} -->
+  <!-- {{ B }} -->
+  <!-- 打印線性方塊統計結果 -->
+  <!-- {{ C }} -->
+  <!-- 打印核取方塊格統計結果 -->
+  {{ C }}
 
-  </section>
+  <!-- </section> -->
 </template>
 
 <style lang="scss" scoped>

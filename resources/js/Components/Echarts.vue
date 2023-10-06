@@ -104,7 +104,7 @@ const barOption = ref({
   },
   series: [
     {
-      data: [120, 200, 150, 80, 70, 110, 130],
+      data: [120, 200, 150, 80, 70, 110, 1300],
       type: 'bar',
     },
   ],
@@ -137,8 +137,10 @@ const dataBase = ref({
 </script>
 
 <template>
-  {{ data }}
+  51515
+  <!-- {{ data }} -->
   <VChart class="chart" :option="pieOption" />
+  {{ barOption }}
   <VChart class="chart" :option="barOption" />
   <VChart class="chart" :option="dataBase" />
 </template>
