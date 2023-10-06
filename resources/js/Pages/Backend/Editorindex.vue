@@ -24,6 +24,7 @@ import { questionTypeOption } from '@/Composables/useQuestionType';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 import UploadYtVideo from '@/Components/Modal/UploadYtVideo.vue';
+import { ref } from 'vue';
 
 export default {
   components: { UploadYtVideo },
@@ -31,7 +32,49 @@ export default {
     flash: String,
     response: Object,
   },
-  emits: ['update:qu_title'],
+  emits: ['update:qu_title', 'updateFormData'],
+  //   setup() {
+  //     const updateFormData = ref([
+  //       {
+  //         id: 1,
+  //         title: '問題',
+  //         request: false,
+  //         image: '',
+  //         video: '',
+  //         type: 3,
+  //         options: [
+  //           {
+  //             id: 1,
+  //             value: '',
+  //           },
+  //         ],
+  //         linear: {
+  //           min: 1,
+  //           max: 10,
+  //           minText: '',
+  //           maxText: '',
+  //         },
+  //         square: {
+  //           row: [
+  //             {
+  //               id: 1,
+  //               text: '',
+  //             },
+  //           ],
+  //           column: [
+  //             {
+  //               id: 1,
+  //               text: '',
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     ]);
+
+  //     return {
+  //       updateFormData,
+  //     };
+  //   },
   data() {
     return {
       add: add,
@@ -359,9 +402,51 @@ export default {
       if (e.target.files[0]) {
         formData.push({ ...newQuestion });
       }
-    }
+    },
     handleClose() {
       this.model = '';
+    },
+    addVideo(newVideo) {
+    //   console.log(newVideo);
+      const { formData } = this;
+      this.serial++;
+      const updateFormData = ref([
+        {
+          id: this.serial,
+          title: '問題',
+          request: false,
+          image: '',
+          video: newVideo,
+          type: 13,
+          options: [
+            {
+              id: 1,
+              value: '',
+            },
+          ],
+          linear: {
+            min: 1,
+            max: 10,
+            minText: '',
+            maxText: '',
+          },
+          square: {
+            row: [
+              {
+                id: 1,
+                text: '',
+              },
+            ],
+            column: [
+              {
+                id: 1,
+                text: '',
+              },
+            ],
+          },
+        },
+      ]);
+      formData.push(updateFormData);
     },
   },
 };
@@ -380,6 +465,7 @@ export default {
         <!-- 表單命名處 -->
         <div class="max-w-[770px]">
           <div class="form-title">
+            {{ formData }}
             <!-- 表單名稱 -->
             <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required @input="updateFormTitle">
             <!-- 表單說明 -->
@@ -387,7 +473,41 @@ export default {
           </div>
           <!-- 問題設置 -->
           <div v-for="item in formData" :key="item.id" class="question">
-            <div v-if="item.type !== 12">
+            <!-- 側欄新增圖片 -->
+            <div v-if="item.type === 12">
+              {{ item.video }}
+              <div class="question-bottom">
+                <div class="func !border-r-0">
+                  <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
+                  <button type="button" @click="delQuestion(item.id)">
+                    <label>
+                      <img :src="del" alt="">
+                    </label>
+                  </button>
+                </div>
+              </div>
+              <div class="p-5">
+                <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
+              </div>
+            </div>
+            <!-- 側欄新增影片 -->
+            <div v-else-if="item.type === 13">
+              {{ item.id }}
+              <div class="question-bottom">
+                <div class="func !border-r-0">
+                  <input :value="item.title" type="text" placeholder="影片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
+                  <button type="button" @click="delQuestion(item.id)">
+                    <label>
+                      <img :src="del" alt="">
+                    </label>
+                  </button>
+                </div>
+              </div>
+              <div class="p-5">
+                <iframe class="w-1/2 h-screen" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div v-else>
               <!-- 第一行 -->
               <div class="question-top">
                 <div class="text-box">
@@ -585,23 +705,6 @@ export default {
                 </div>
               </div>
             </div>
-            <!-- 側欄新增圖片 -->
-            <div v-else>
-              {{ item.id }}
-              <div class="question-bottom">
-                <div class="func !border-r-0">
-                  <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
-                  <button type="button" @click="delQuestion(item.id)">
-                    <label>
-                      <img :src="del" alt="">
-                    </label>
-                  </button>
-                </div>
-              </div>
-              <div class="p-5">
-                <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
-              </div>
-            </div>
           </div>
         </div>
         <!-- 側欄 -->
@@ -643,7 +746,7 @@ export default {
           </div>
           <SendLinkModal v-if="show" :form-url="formUrl">
           </SendLinkModal>
-          <UploadYtVideo v-if="model === 'UploadYtVideo'" @close-model="handleClose">
+          <UploadYtVideo v-if="model === 'UploadYtVideo'" :form-data="formData" @close-model="handleClose" @update-formdata="addVideo">
           </UploadYtVideo>
         </div>
       </form>

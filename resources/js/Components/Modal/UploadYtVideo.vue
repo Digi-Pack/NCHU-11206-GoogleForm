@@ -3,9 +3,10 @@ import close from '/images/close.svg';
 import youtube from '/images/youtube.png';
 
 export default {
-  emits: [
-    'closeModel',
-  ],
+  props: {
+    formData: Object,
+  },
+  emits: ['closeModel', 'updateFormData'],
   data() {
     return {
       close,
@@ -17,17 +18,13 @@ export default {
   },
   computed: {
     embedUrl() {
-      // 将YouTube URL转换为嵌入URL
       if (this.url.includes('youtube.com/watch?v=')) {
         return this.url.replace('watch?v=', 'embed/');
       }
       // 如果需要，处理其他URL格式
-      return this.url; // 如果不符合预期的格式，则返回原始URL
+      return this.url;
     },
-    methods: {
-      closing() {
-        this.$emit('closeModel');
-      },
+
     // showSearch() {
     //   this.yturl = false;
     //   this.search = true;
@@ -36,8 +33,24 @@ export default {
     //   this.search = false;
     //   this.yturl = true;
     // },
+  },
+  mounted() {
+    // console.log(formData);
+  },
+  methods: {
+    closing() {
+      this.$emit('closeModel');
+    },
+    addvideo() {
+      const updatedFormData = { ...this.formData };
+      // 替换需要替换的属性
+      updatedFormData[0].video = this.url;
+      //   console.log(updatedFormData);
+      // 将副本分配回formData
+      this.$emit('updateFormData');
     },
   },
+
 };
 </script>
 
@@ -45,6 +58,7 @@ export default {
   <section id="UploadYtVideo">
     <div class="container">
       <div class="content">
+        {{ formData[0].video }}
         <div class="top">
           <div class="w-full flex justify-between items-center mb-4">
             <h1 class="text-[24px] text-black">選取影片</h1>
@@ -85,7 +99,7 @@ export default {
         </div>
         <div class="flex py-4 px-7">
           <button type="button"
-            class="btn bg-blue text-white hover:shadow-gray-400 mr-5">選取</button>
+            class="btn bg-blue text-white hover:shadow-gray-400 mr-5" @click="addvideo()">選取</button>
           <button type="button" class="btn border-grey-light bg-grey-middle hover:bg-blue-light mr-3"
             @click="closing()">取消</button>
         </div>
