@@ -16,58 +16,43 @@
 </div>
 </template> -->
 
-<!-- <script setup>
-import * as echarts from 'echarts/core';
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-} from 'echarts/components';
-import { PieChart, BarChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  PieChart,
-  BarChart,
-  CanvasRenderer,
-]);
-</script> -->
-
-<!-- <script>
-import VChart from 'vue-echarts'; // 在這裡導入 VChart -->
-<script setup>
-import * as echarts from 'echarts/core';
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  GridComponent,
-  // 在這裡加入你需要的其他 ECharts 組件
-} from 'echarts/components';
-import { PieChart, BarChart, LineChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  GridComponent,
-  // 在這裡也加入你需要的其他 ECharts 組件
-  PieChart,
-  BarChart,
-  LineChart, // 這裡加入了 LineChart，你可以根據需要再加入其他組件
-  CanvasRenderer,
-]);
-
-// import VChart from 'vue-echarts';
-</script>
-
 <script>
+import * as echarts from 'echarts/core';
+// 基礎柱狀、條形圖、柱狀圖標籤旋轉、按行按列分布、最簡單數據集
+import {
+  DatasetComponent,
+  ToolboxComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+} from 'echarts/components';
+import {
+  PieChart,
+  BarChart,
+} from 'echarts/charts';
+import { LabelLayout } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+
+echarts.use([
+  DatasetComponent,
+  ToolboxComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  BarChart,
+  PieChart,
+  CanvasRenderer,
+  LabelLayout,
+]);
+
 import VChart from 'vue-echarts';
+
 export default {
+  components: {
+    VChart,
+  },
   data() {
     return {
       chartOptions: [],
@@ -77,7 +62,7 @@ export default {
     const data = [
       { type: 1 /* 数据配置项用于生成圆饼图 */ },
       { type: 2 /* 数据配置项用于生成长条图 */ },
-      { type: 1 /* 数据配置项用于生成圆饼图 */ },
+      { type: 4 /* 数据配置项用于生成圆饼图 */ },
       { type: 1 /* 数据配置项用于生成圆饼图 */ },
       { type: 3 /* 数据配置项用于生成长条图 */ },
     ];
@@ -148,13 +133,33 @@ export default {
             stack: '业务',
             data: [5, 20, 36, 10, 10, 20],
           },
-          {
-            name: '二月销量',
-            type: 'bar',
-            stack: '业务',
-            data: [15, 25, 26, 20, 10, 20],
-          },
           ],
+        };
+      } else if (item.type === 4) {
+        // 生成縱向长条图的配置项
+        return {
+          type: 4,
+          title: {
+            text: '核取方塊格',
+            subtext: 'Fake Data',
+            left: 'center',
+          },
+          legend: {},
+          tooltip: {},
+          dataset: {
+            source: [
+              ['product', '2015', '2016', '2017'],
+              ['Matcha Latte', 43.3, 85.8, 93.7],
+              ['Milk Tea', 83.1, 73.4, 55.1],
+              ['Cheese Cocoa', 86.4, 65.2, 82.5],
+              ['Walnut Brownie', 72.4, 53.9, 39.1],
+            ],
+          },
+          xAxis: { type: 'category' },
+          yAxis: {},
+          // Declare several bar series, each will be mapped
+          // to a column of dataset.source by default.
+          series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
         };
       }
       return {};
