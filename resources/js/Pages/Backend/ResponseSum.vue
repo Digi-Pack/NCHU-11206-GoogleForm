@@ -116,6 +116,9 @@ export default {
           <div class="email">
             <span>電子郵件</span>
             <div class="email-address">user@gmail.com</div>
+            <div class="email-address">user@gmail.com</div>
+            <div class="email-address">user@gmail.com</div>
+            <div class="email-address">user@gmail.com</div>
           </div>
         </div>
       </div>
@@ -242,7 +245,7 @@ export default {
                         @apply text-lg font-semibold p-3;
                     }
                     .email-address {
-                        @apply text-base py-3 pl-3 bg-gray-50 rounded-md;
+                        @apply text-base mb-2 py-3 pl-3 bg-gray-50 rounded-md;
                     }
                 }
             }

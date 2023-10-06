@@ -55,7 +55,6 @@ const piedata = computed(() => {
     return acc;
   }, {});
 });
-piedata = piedata.map(str => parseInt(str));
 
 // const idToAnswerMap = data.flat()
 //     .reduce((acc, obj) => {
@@ -84,7 +83,7 @@ const pieOption = ref({
       type: 'pie',
       radius: '50%',
       data: [
-        { value: 1, name: piedata },
+        { value: 1, name: 'piedata' },
       ],
       emphasis: {
         itemStyle: {
@@ -119,6 +118,41 @@ const barOption = ref({
   ],
 });
 
+// 橫的長條
+const horizonOption = ref({
+  title: {
+    text: 'World Population',
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+    },
+  },
+  legend: {},
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true,
+  },
+  xAxis: {
+    type: 'value',
+    boundaryGap: [0, 0.01],
+  },
+  yAxis: {
+    type: 'category',
+    data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World'],
+  },
+  series: [
+    {
+      type: 'bar',
+      data: [18203, 23489, 29034, 104970, 131744, 630230],
+    },
+  ],
+});
+
+// 數據集
 const dataBase = ref({
   title: {
     text: props.title,
@@ -147,16 +181,54 @@ const dataBase = ref({
 
 <template>
   <!-- {{ data }} -->
-  {{ piedata[1] }}
-  <VChart class="chart" :option="pieOption" />
-  {{ barOption }}
-  <VChart class="chart" :option="barOption" />
-  <VChart class="chart" :option="dataBase" />
+  <!-- {{ piedata[1] }} -->
+  <div>
+    <div class="text-area">
+      <div class="que-top">
+        <div class="title">題目</div>
+        <div class="subtitle">1則回應</div>
+      </div>
+      <div class="px-5 py-3">
+        <div class="text-answer">你好啊</div>
+        <div class="text-answer">你好啊</div>
+        <div class="text-answer">你好啊</div>
+        <div class="text-answer">你好啊</div>
+      </div>
+    </div>
+  </div>
+  <div v-if="chartType === 1">
+    <VChart class="chart" :option="pieOption" />
+  </div>
+  <div v-if="chartType === 2">
+    <VChart class="chart" :option="barOption" />
+  </div>
+  <div v-if="chartType === 3">
+    <VChart class="chart" :option="dataBase" />
+  </div>
+  <div v-if="chartType === 4">
+    <VChart class="chart" :option="horizonOption" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .chart {
   @apply w-full h-[500px];
+}
+.text-area {
+    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white;
+    .que-top {
+        @apply p-5;
+        .title {
+            @apply w-full text-lg font-semibold mb-1 px-3;
+        }
+        .subtitle{
+            @apply text-sm px-3;
+        }
+    }
+    .text-answer {
+        @apply text-base mb-2 py-3 pl-3 bg-gray-50 rounded-md;
+    }
+
 }
 </style>
 
