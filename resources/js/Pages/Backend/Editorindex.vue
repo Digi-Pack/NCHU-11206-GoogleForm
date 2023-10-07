@@ -24,7 +24,7 @@ import { questionTypeOption } from '@/Composables/useQuestionType';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 import UploadYtVideo from '@/Components/Modal/UploadYtVideo.vue';
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 export default {
   components: { UploadYtVideo },
@@ -406,48 +406,49 @@ export default {
     handleClose() {
       this.model = '';
     },
-    addVideo(newVideo) {
+    // addVideo(newVideo) {
     //   console.log(newVideo);
-      const { formData } = this;
-      this.serial++;
-      const updateFormData = ref([
-        {
-          id: this.serial,
-          title: '問題',
-          request: false,
-          image: '',
-          video: newVideo,
-          type: 13,
-          options: [
-            {
-              id: 1,
-              value: '',
-            },
-          ],
-          linear: {
-            min: 1,
-            max: 10,
-            minText: '',
-            maxText: '',
-          },
-          square: {
-            row: [
-              {
-                id: 1,
-                text: '',
-              },
-            ],
-            column: [
-              {
-                id: 1,
-                text: '',
-              },
-            ],
-          },
-        },
-      ]);
-      formData.push(updateFormData);
-    },
+    //   const { formData } = this;
+    //   this.serial++;
+    //   const updateFormData = ref([
+    //     {
+    //       id: this.serial,
+    //       title: '問題',
+    //       request: false,
+    //       image: '',
+    //       video: newVideo,
+    //       type: 13,
+    //       options: [
+    //         {
+    //           id: 1,
+    //           value: '',
+    //         },
+    //       ],
+    //       linear: {
+    //         min: 1,
+    //         max: 10,
+    //         minText: '',
+    //         maxText: '',
+    //       },
+    //       square: {
+    //         row: [
+    //           {
+    //             id: 1,
+    //             text: '',
+    //           },
+    //         ],
+    //         column: [
+    //           {
+    //             id: 1,
+    //             text: '',
+    //           },
+    //         ],
+    //       },
+    //     },
+    //   ]);
+    //   console.log(updateFormData);
+    //   formData.push(updateFormData);
+    // },
   },
 };
 
@@ -503,8 +504,8 @@ export default {
                   </button>
                 </div>
               </div>
-              <div class="p-5">
-                <iframe class="w-1/2 h-screen" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+              <div class="p-5 flex justify-center">
+                <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
               </div>
             </div>
             <div v-else>
