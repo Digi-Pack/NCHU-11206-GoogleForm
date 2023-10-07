@@ -25,8 +25,6 @@ class EditorController extends Controller
     }
     public function edit_index(Request $request)
     {
-        // dd(123);
-        // dd($request->user());
         $response = $request->user();
         return Inertia::render('Backend/Editorindex', ['response' => rtFormat($response)]);
     }
@@ -38,7 +36,6 @@ class EditorController extends Controller
         $randomString = bin2hex(random_bytes(15));
         $combinedString = $data . $randomString;
         $user = $request->user();
-        // dd($request->formText['qu_naires_title']);
         $request->validate([
             'formData.*.title' => 'required|min:0',
             'formData.*.type' => 'required|numeric',
@@ -48,7 +45,6 @@ class EditorController extends Controller
             'formText.qu_naires_title.required' => '表單標題必填',
         ]);
         // :position 第幾個意思
-        // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
         // 處理圖片
         foreach ($request->formData as $item) {
             $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
@@ -66,8 +62,6 @@ class EditorController extends Controller
     }
     public function edit_old(Request $request)
     {
-        // dd(session()->all());
-        // dd(session()->get('update_token'));
 
         // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
         // $responseForm = Question::where('lead_author_id', $request->user()->id)
@@ -79,8 +73,6 @@ class EditorController extends Controller
                     return $coQuery->where('coworker_id', $request->user()->id);
                 });
         })->find($request->id);
-        // dd($responseForm);
-
 
         if (!session()->get('update_token') == $request->id) {
             $responseForm->update([
@@ -92,7 +84,6 @@ class EditorController extends Controller
 
         // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
         $questionNaires = json_decode($responseForm['questionnaires'], true);
-        // dd($questionNaires);
         $response = [
             'responseForm' => $responseForm,
             'questionNaires' => $questionNaires,
@@ -116,8 +107,6 @@ class EditorController extends Controller
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         // 找到表單id
-        // dd($request->formText['id']);
-        // dd($request->formData);
         $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
         // 處理圖片
         foreach ($request->formData as $item) {

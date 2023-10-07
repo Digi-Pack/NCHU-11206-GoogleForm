@@ -13,8 +13,7 @@ export default {
       youtube,
       url: '',
       countvideo: 1,
-    //   search: true,
-    //   yturl: false,
+
     };
   },
   computed: {
@@ -25,15 +24,6 @@ export default {
       // 如果需要，处理其他URL格式
       return this.url;
     },
-
-    // showSearch() {
-    //   this.yturl = false;
-    //   this.search = true;
-    // },
-    // showUrl() {
-    //   this.search = false;
-    //   this.yturl = true;
-    // },
   },
   mounted() {
     // console.log(formData);
@@ -80,17 +70,6 @@ export default {
           </div>
         </div>
         <div class="pt-[15px] h-[270px] border-b">
-          <!-- <div v-if="search" class="px-8">
-            <div class="flex gap-5 mt-2 mb-5">
-              <img :src="youtube" class="w-[30px] h-[30px]" alt="">
-              <span class="text-xl font-bold">Youtube</span>
-              <input type="text" class="w-[300px] h-[30px] border-gray-300 text-lg" id="name">
-              <button type="button" class="border border-grey px-5 bg-gray-100 rounded-[3px]">搜尋</button>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="text-[14px]">請在上方的方塊中輸入搜尋字詞，即可尋找影片。</div>
-            </div>
-          </div> -->
           <div class="px-8">
             <div class="flex gap-5 mt-2 mb-5">
               <span class="text-normal font-bold">在這裡貼上Youtube網址:</span>

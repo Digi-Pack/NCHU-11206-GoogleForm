@@ -57,8 +57,6 @@ class ReplyController extends Controller
         ];
 
         return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
-        //   return Inertia::render('Frontend/reply_index');
-        // return Inertia::render('Backend/Guideindex', ['response' => rtFormat($Guide)]);
     }
     public function reply_store(Request $request)
     {
@@ -86,12 +84,8 @@ class ReplyController extends Controller
 
         if ($redirectValue) {
              // 先找到指定id的表單
-        // dd(123);
             $responseForm = Question::where('id', $redirectValue['question_id'])->get();
-         //  dd( $responseForm);
-
             $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
-          // dd( $questionnaires);
             $response = [
               'responseForm' => $responseForm,
               'questionNaires' => $questionNaires,
@@ -99,11 +93,8 @@ class ReplyController extends Controller
 
          // 找到該使用者的回覆
             $lastStore = Response::where('user_id', $redirectValue['user_id'])->where('question_id', $redirectValue['question_id'])->get();
-         // dd($responseForm[0]['questionnaires']);
          // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
             $lastAnswer = json_decode($lastStore[0]['answer'], true);
-         // dd( $questionnaires);
-         // dd($lastAnswer);
             $response = [
              'responseForm' => $responseForm,
              'questionNaires' => $questionNaires,
@@ -117,11 +108,7 @@ class ReplyController extends Controller
 
          // 先找到指定id的表單
          $responseForm = Question::where('id', $request->getOldResponse['question_id'])->get();
-        //  dd( $responseForm);
-
-        //  $responseForm = Question::where('id', 2)->get();
          $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
-         // dd( $questionnaires);
          $response = [
              'responseForm' => $responseForm,
              'questionNaires' => $questionNaires,
@@ -129,11 +116,8 @@ class ReplyController extends Controller
 
         // 找到該使用者的回覆
          $lastStore = Response::where('user_id', $request->user()->id)->where('question_id', $request->getOldResponse['question_id'])->get();
-        // dd($responseForm[0]['questionnaires']);
         // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
          $lastAnswer = json_decode($lastStore[0]['answer'], true);
-        // dd( $questionnaires);
-        // dd($lastAnswer);
          $response = [
             'responseForm' => $responseForm,
             'questionNaires' => $questionNaires,
@@ -149,17 +133,12 @@ class ReplyController extends Controller
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         // 找到表單id
-        // dd($request->formText['id']);
-        // dd($request->formData);
-        // dd($request->user()->id, $request->formId);
         $updateForm = Response::where('user_id', $request->user()->id)->where('question_id', $request->formId)->get();
-        // dd($request->user()->id, $request->formId,$updateForm,$updateForm[0]);
         $updateForm[0]->update([
             'user_id' => $request->user()->id,
             'question_id' => $request->formId,
             'answer' => $jsonText,
         ]);
-        // dd(132);
         return back()->with(['message' => rtFormat($updateForm)]);
     }
 }

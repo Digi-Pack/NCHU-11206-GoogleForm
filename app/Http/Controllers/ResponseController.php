@@ -11,39 +11,27 @@ class ResponseController extends Controller
 {
     public function response_tzuchi()
     {
-        // dd(123);
         $datas = Response::where('question_id', 18)->get();
-        // dd($datas);
         $data = json_decode($datas[0]['answer'], true);
 
         return Inertia::render('Tzuchi-try/Echarts', ['response' => rtFormat($data)]);
-        // return Inertia::render('Backend/ResponseSum');
     }
-    //  public function response_sum(Request $request)
-    // {
-    //     $datas = Response::where('question_id', 18)->get();
-    //     $data = json_decode($datas[0]['answer'], true);
-    //     return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($data)]);
-    // }
     public function response_sum()
     {
-     $datas = Response::where('question_id', 15)->get();
+     $datas = Response::where('question_id', 12)->get();
     //  dd($datas);
             $results = [];
             foreach ($datas as $data) {
                 $answer = json_decode($data['answer'], true);
                 $results[] = $answer;
             }
-            // $data = json_decode($datas[1]['answer'], true);
-            $responseForm = Question::where('id', 15)->first();
+            $responseForm = Question::where('id', 12)->first();
             $questionNaires = json_decode($responseForm['questionnaires'], true);
 
             $response=[
                 'results' => $results,
                 'questionNaires' => $questionNaires,
             ];
-
-            // dd($response);
 
             return Inertia::render('Backend/ResponseSum',['response' => rtFormat($response)]);
     }
