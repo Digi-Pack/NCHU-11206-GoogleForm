@@ -12,6 +12,7 @@ export default {
       close,
       youtube,
       url: '',
+      countvideo: 1,
     //   search: true,
     //   yturl: false,
     };
@@ -44,13 +45,21 @@ export default {
     addvideo() {
       const updatedFormData = { ...this.formData };
       // 替换需要替换的属性
+      if (this.url.includes('youtube.com/watch?v=')) {
+        this.url = this.url.replace('watch?v=', 'embed/');
+      }
+      //   console.log(this.url);
+      updatedFormData[0].id = this.countvideo;
       updatedFormData[0].video = this.url;
+      updatedFormData[0].type = 13;
+      this.countvideo++;
       //   console.log(updatedFormData);
       // 将副本分配回formData
       this.$emit('updateFormData');
+      this.url = '';
+      this.closing();
     },
   },
-
 };
 </script>
 
@@ -58,7 +67,6 @@ export default {
   <section id="UploadYtVideo">
     <div class="container">
       <div class="content">
-        {{ formData[0].video }}
         <div class="top">
           <div class="w-full flex justify-between items-center mb-4">
             <h1 class="text-[24px] text-black">選取影片</h1>
