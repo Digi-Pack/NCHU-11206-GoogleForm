@@ -33,48 +33,6 @@ export default {
     response: Object,
   },
   emits: ['update:qu_title', 'updateFormData'],
-  //   setup() {
-  //     const updateFormData = ref([
-  //       {
-  //         id: 1,
-  //         title: '問題',
-  //         request: false,
-  //         image: '',
-  //         video: '',
-  //         type: 3,
-  //         options: [
-  //           {
-  //             id: 1,
-  //             value: '',
-  //           },
-  //         ],
-  //         linear: {
-  //           min: 1,
-  //           max: 10,
-  //           minText: '',
-  //           maxText: '',
-  //         },
-  //         square: {
-  //           row: [
-  //             {
-  //               id: 1,
-  //               text: '',
-  //             },
-  //           ],
-  //           column: [
-  //             {
-  //               id: 1,
-  //               text: '',
-  //             },
-  //           ],
-  //         },
-  //       },
-  //     ]);
-
-  //     return {
-  //       updateFormData,
-  //     };
-  //   },
   data() {
     return {
       add: add,
@@ -406,6 +364,7 @@ export default {
     handleClose() {
       this.model = '';
     },
+    // 測欄增加影片
     // addVideo(newVideo) {
     //   console.log(newVideo);
     //   const { formData } = this;
@@ -466,7 +425,7 @@ export default {
         <!-- 表單命名處 -->
         <div class="max-w-[770px]">
           <div class="form-title">
-            {{ formData }}
+            <!-- {{ formData }} -->
             <!-- 表單名稱 -->
             <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required @input="updateFormTitle">
             <!-- 表單說明 -->
@@ -476,7 +435,6 @@ export default {
           <div v-for="item in formData" :key="item.id" class="question">
             <!-- 側欄新增圖片 -->
             <div v-if="item.type === 12">
-              {{ item.video }}
               <div class="question-bottom">
                 <div class="func !border-r-0">
                   <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
@@ -493,7 +451,6 @@ export default {
             </div>
             <!-- 側欄新增影片 -->
             <div v-else-if="item.type === 13">
-              {{ item.id }}
               <div class="question-bottom">
                 <div class="func !border-r-0">
                   <input :value="item.title" type="text" placeholder="影片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
@@ -508,6 +465,7 @@ export default {
                 <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
               </div>
             </div>
+            <!-- 一般問題類型 -->
             <div v-else>
               <!-- 第一行 -->
               <div class="question-top">
@@ -721,10 +679,10 @@ export default {
               <img :src="upload" alt="">
               <span>匯入問題</span>
             </div>
-            <div class="side-func">
+            <button type="button" class="side-func" @click="addTitle()">
               <img :src="text" alt="">
               <span>新增標題與說明</span>
-            </div>
+            </button>
             <input type="file" id="addImage" class="hidden" @change="(e) => addImage(e)">
             <label for="addImage" class="side-func !rounded-none cursor-pointer">
               <div>
@@ -779,7 +737,7 @@ export default {
                     @apply rounded-tl-[10px] rounded-tr-[10px] tablet:rounded-bl-[10px] tablet:rounded-tr-none;
                 }
 
-                &:nth-of-type(3) {
+                &:nth-of-type(5) {
                     @apply rounded-bl-[10px] rounded-br-[10px] tablet:rounded-bl-none tablet:rounded-tr-[10px];
                 }
 
@@ -790,7 +748,7 @@ export default {
         }
 
         .form-title {
-            @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+            @apply max-w-[770px] rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
 
             .form-input {
                 @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
