@@ -4,6 +4,7 @@
     {{ option }}
     <VChart class="chart" :option="option" />
   </div>
+  <!-- {{ arrayC }} -->
 </template>
 
 <script>
@@ -47,59 +48,50 @@ export default {
     return {
       arrayA: [
         { 'id': 1, 'title': '我是下拉式選單第一題', 'request': false, 'image': null, 'video': null, 'type': 5, 'options': [{ 'id': 1, 'value': '下拉選項一' }, { 'id': 2, 'value': '下拉選項二' }, { 'id': 3, 'value': '下拉選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+
         { 'id': 2, 'title': '我是下拉式選單第二題', 'request': false, 'image': null, 'video': null, 'type': 5, 'options': [{ 'id': 1, 'value': '下拉選項一' }, { 'id': 2, 'value': '下拉選項二' }, { 'id': 3, 'value': '下拉選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
-        { 'id': 3, 'title': '我是下拉式選單第三題', 'request': false, 'image': null, 'video': null, 'type': 5, 'options': [{ 'id': 1, 'value': '下拉選項一' }, { 'id': 2, 'value': '下拉選項二' }, { 'id': 3, 'value': '下拉選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+        {
+          'id': 3,
+          'title': '我是第一個選擇題',
+          'request': false, 'image': null, 'video': null, 'type': 3, 'options': [{ 'id': 1, 'value': '我選項1' }, { 'id': 2, 'value': '我選項2' }, { 'id': 3, 'value': '我選項3' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] },
+        },
         {
           'id': 4,
-          'title': '我是第一個選擇題',
-          'request': false,
-          'image': null,
-          'video': null,
-          'type': 3,
-          'options': [
-            { 'id': 1, 'value': '我選項1' },
-            { 'id': 2, 'value': '我選項2' },
-            { 'id': 3, 'value': '我選項3' },
-          ],
-          'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null },
-          'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] },
-        },
-        {
-          'id': 5,
           'title': '我是第二個選擇題',
-          'request': false,
-          'image': null,
-          'video': null,
-          'type': 3,
-          'options': [
-            { 'id': 1, 'value': '咖啡不要喝太多(改資料)' },
-            { 'id': 2, 'value': '餅乾有吃就好(改資料)' },
-          ],
-          'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null },
-          'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] },
+          'request': false, 'image': null, 'video': null, 'type': 3, 'options': [{ 'id': 1, 'value': '咖啡不要喝太多(改資料)' }, { 'id': 2, 'value': '餅乾有吃就好(改資料)' },
+          ], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] },
         },
+        { 'id': 5,
+          'title': '我是核取方塊第一題',
+          'request': false, 'image': null, 'video': null, 'type': 4, 'options': [{ 'id': 1, 'value': '核取選項一' }, { 'id': 2, 'value': '核取選項二' }, { 'id': 3, 'value': '核取選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+
+        { 'id': 6,
+          'title': '我是核取方塊第二題', 'request': false, 'image': null, 'video': null, 'type': 4, 'options': [{ 'id': 1, 'value': '核取選項一' }, { 'id': 2, 'value': '核取選項二' }, { 'id': 3, 'value': '核取選項三' }, { 'id': 4, 'value': '核取選項四' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
       ],
       arrayB: [
         [{ 'id': 1, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 2, 'answer': 2, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 3, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 4, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 5, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 4, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 5, 'answer': null, 'manyOptions': [1, 3], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 6, 'answer': null, 'manyOptions': [1, 3, 2], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
         ]
         ,
 
         [{ 'id': 1, 'answer': 2, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 2, 'answer': 2, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 3, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 4, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 5, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 4, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 5, 'answer': null, 'manyOptions': [1, 3], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 6, 'answer': null, 'manyOptions': [1, 3, 2], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
         ],
 
         [{ 'id': 1, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 2, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 3, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 4, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 5, 'answer': 2, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 3, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 4, 'answer': 2, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 5, 'answer': null, 'manyOptions': [1, 3], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 6, 'answer': null, 'manyOptions': [1, 3, 2], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
         ],
       ],
       arrayC: [],
@@ -107,7 +99,7 @@ export default {
     };
   },
   mounted() {
-    this.generateArrayC();
+    this.generateArrayC(),
     this.chartOptions = this.arrayC.map(item => {
       if (item.type === 5 || item.type === 3) {
         // 生成圆饼图的配置项
@@ -163,7 +155,7 @@ export default {
             name: '',
             type: 'bar',
             stack: '',
-            data: [5, 20, 36, 10, 10, 20],
+            data: item.data,
           },
           ],
         };
@@ -195,34 +187,65 @@ export default {
     });
   },
   methods: {
-    // 寫法二
-    generateArrayC() {
-      this.arrayC = this.arrayA
-        .filter((question) => question.type === 5 || question.type === 3)
-        .map((question) => {
+    pieSum(question) {
+      return {
+        type: question.type,
+        text: question.title,
+        data: question.options.map((option) => {
+          this.count = 0; // 在這裡定義並初始化 count
+          this.arrayB.forEach((answerSet) => {
+            // console.log(answerSet);
+            const answer = answerSet.find((answer) => answer.id === question.id);
+            // console.log(answer);
+            // console.log(13);
+            if (answer && answer.answer === option.id) { // 比較 answer.answer 和 option.id
+              this.count++;
+            }
+          });
           return {
-            type: question.type,
-            text: question.title,
-            data: question.options.map((option) => {
-              this.count = 0; // 在這裡定義並初始化 count
-              this.arrayB.forEach((answerSet) => {
-                // console.log(answerSet);
-                const answer = answerSet.find((answer) => answer.id === question.id);
-                // console.log(answer);
-                // console.log(13);
-                if (answer && answer.answer === option.id) { // 比較 answer.answer 和 option.id
-                  this.count++;
-                }
-              });
-              return {
-                value: this.count,
-                name: option.value,
-              };
-            }),
+            value: this.count,
+            name: option.value,
           };
+        }),
+      };
+    },
+    checkboxSum(question) {
+      const data = question.options.map((option) => {
+        const count = this.checkboxCount(question.id, option.id);
+        return count;
+      });
+
+      return {
+        type: question.type,
+        text: question.title,
+        yAxis: question.options.map((option) => option.value),
+        data: data,
+      };
+    },
+    checkboxCount(questionId, optionId) {
+      let count = 0;
+      this.arrayB.forEach((answerSet) => {
+        answerSet.forEach((answer) => {
+          if (answer.id === questionId && answer.manyOptions.includes(optionId)) {
+            count++;
+          }
         });
+      });
+      return count;
+    },
+    generateArrayC() {
+      this.arrayC = this.arrayA.map((question) => {
+        if (question.type === 3 || question.type === 5) {
+        //   this.count = 0;
+          console.log(123);
+          return this.pieSum(question);
+        } else if (question.type === 4) {
+          return this.checkboxSum(question);
+        }
+      });
     },
   },
+
 };
 </script>
 

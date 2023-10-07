@@ -67,4 +67,7 @@ Route::prefix('response')->group(function () {
     Route::get('/checkbox ', function () {
         return Inertia::render('Tzuchitry/checkbox');
     });
+    Route::get('/combine3s ', function () {
+        return Inertia::render('Tzuchitry/combine3s');
+    });
 });
