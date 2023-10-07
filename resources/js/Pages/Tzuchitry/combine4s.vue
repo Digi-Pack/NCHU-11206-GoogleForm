@@ -121,6 +121,13 @@ export default {
             text: item.text,
             left: 'center',
           },
+          tooltip: {
+            trigger: 'item',
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+          },
           series: [
             {
               type: 'pie',
