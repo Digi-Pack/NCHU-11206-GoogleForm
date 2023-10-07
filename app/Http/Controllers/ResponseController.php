@@ -27,14 +27,15 @@ class ResponseController extends Controller
     // }
     public function response_sum()
     {
-     $datas = Response::where('question_id', 19)->get();
+     $datas = Response::where('question_id', 15)->get();
+    //  dd($datas);
             $results = [];
             foreach ($datas as $data) {
                 $answer = json_decode($data['answer'], true);
                 $results[] = $answer;
             }
             // $data = json_decode($datas[1]['answer'], true);
-            $responseForm = Question::where('id', 19)->first();
+            $responseForm = Question::where('id', 15)->first();
             $questionNaires = json_decode($responseForm['questionnaires'], true);
 
             $response=[
