@@ -51,9 +51,9 @@ export default {
           }
 
           for (const answerSet of this.arrayB) {
-            const manyOptionsValue = answerSet[0].manyOptions;
+            const manyOptionsValue = answerSet[this.arrayA.indexOf(question)].manyOptions; // 使用问题的索引获取manyOptions值
             if (manyOptionsValue >= min && manyOptionsValue <= max) {
-              // 计算数据数组的索引
+            // 计算数据数组的索引
               const dataIndex = manyOptionsValue - min;
               data[dataIndex]++;
             }
