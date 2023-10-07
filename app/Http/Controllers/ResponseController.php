@@ -18,8 +18,7 @@ class ResponseController extends Controller
     }
     public function response_sum()
     {
-     $datas = Response::where('question_id', 12)->get();
-    //  dd($datas);
+     $datas = Response::where('question_id', 10)->get();
             $results = [];
             foreach ($datas as $data) {
                 $answer = json_decode($data['answer'], true);
@@ -27,10 +26,13 @@ class ResponseController extends Controller
             }
             $responseForm = Question::where('id', 12)->first();
             $questionNaires = json_decode($responseForm['questionnaires'], true);
+            // $data = json_decode($datas[1]['answer'], true);
+            // $responseForm = Question::where('id', 8)->first();
+            // $questionNaires = json_decode($responseForm['questionnaires'], true);
 
             $response=[
                 'results' => $results,
-                'questionNaires' => $questionNaires,
+                // 'questionNaires' => $questionNaires,
             ];
 
             return Inertia::render('Backend/ResponseSum',['response' => rtFormat($response)]);

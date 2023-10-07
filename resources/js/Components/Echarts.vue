@@ -56,13 +56,14 @@ const piedata = computed(() => {
   }, {});
 });
 
+const flatData = props.data.results.flat();
+
 // const idToAnswerMap = data.flat()
 //     .reduce((acc, obj) => {
 //         const { id, answer } = obj;
 //         acc[id] = [...(acc[id] || []), answer];
 //         return acc;
 //     }, {});
-console.log(piedata);
 
 // 圓餅圖
 const pieOption = ref({
@@ -180,7 +181,7 @@ const dataBase = ref({
 </script>
 
 <template>
-  <!-- {{ data }} -->
+  {{ data }}
   <!-- {{ piedata[1] }} -->
   <!-- 簡答/詳答 -->
   <div class="text-area">
@@ -262,20 +263,23 @@ const dataBase = ref({
       </div>
       <div class="px-5 flex items-center py-2">
         <div class="time">晚上10:28</div>
+        <div v-for="item in flatData" :key="item.id" class="px-5 py-3">
+          <div class="text-answer">{{ item.answer }}</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div v-if="chartType === 1">
-    <VChart class="chart" :option="pieOption" />
-  </div>
-  <div v-if="chartType === 2">
-    <VChart class="chart" :option="barOption" />
-  </div>
-  <div v-if="chartType === 3">
-    <VChart class="chart" :option="dataBase" />
-  </div>
-  <div v-if="chartType === 4">
-    <VChart class="chart" :option="horizonOption" />
+    <div v-if="chartType === 1">
+      <VChart class="chart" :option="pieOption" />
+    </div>
+    <div v-if="chartType === 2">
+      <VChart class="chart" :option="barOption" />
+    </div>
+    <div v-if="chartType === 3">
+      <VChart class="chart" :option="dataBase" />
+    </div>
+    <div v-if="chartType === 4">
+      <VChart class="chart" :option="horizonOption" />
+    </div>
   </div>
 </template>
 

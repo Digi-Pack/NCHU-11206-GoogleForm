@@ -123,7 +123,6 @@ export default {
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-1">
               <input v-model=" formData[key].answer " type="text" class="short" placeholder="簡答" :required="item.request">
-              {{ key }}
             </div>
           </div>
           <!-- 詳答 -->
