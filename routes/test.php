@@ -49,4 +49,16 @@ Route::prefix('response')->group(function () {
     Route::get('/dropDownMenu', function () {
         return Inertia::render('Tzuchitry/dropDownMenu');
     });
+    Route::get('/multipleChoice ', function () {
+        return Inertia::render('Tzuchitry/multipleChoice');
+    });
+    Route::get('/multipleChoice0 ', function () {
+        return Inertia::render('Tzuchitry/multipleChoice0');
+    });
+    Route::get('/multipleChoice1 ', function () {
+        return Inertia::render('Tzuchitry/multipleChoice1');
+    });
+    Route::get('/choose ', function () {
+        return Inertia::render('Tzuchitry/choose');
+    });
 });

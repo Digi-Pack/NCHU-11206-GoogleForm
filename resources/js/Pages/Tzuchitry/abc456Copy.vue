@@ -136,12 +136,11 @@ export default {
           ],
         };
       } else if (item.type === 4) {
-        // 生成縱向长条图的配置项
+        // 生成database的配置项
         return {
           type: 4,
           title: {
             text: '核取方塊格',
-            subtext: 'Fake Data',
             left: 'center',
           },
           legend: {},
