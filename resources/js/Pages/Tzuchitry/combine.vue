@@ -131,7 +131,6 @@ export default {
           type: 2,
           title: {
             text: '長條圖',
-            subtext: 'Fake Data',
             left: 'center',
           },
           xAxis: {
@@ -149,40 +148,25 @@ export default {
           ],
         };
       } else if (item.type === 18) {
-        // 生成縱向长条图的配置项
+        // 生成橫向长条图的配置项
         return {
           type: 3,
           title: {
             text: 'ECharts横向柱状图 树懒课堂',
           },
-          tooltip: {},
-          legend: {
-            data: ['一月销量', '二月销量'],
-            right: '25%',
-          },
           yAxis: {
             data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
           },
           xAxis: {},
-          series: [{
-            name: '一月销量',
-            type: 'bar',
-            stack: '业务',
-            data: [5, 20, 36, 10, 10, 20],
-          },
-          ],
         };
       } else if (item.type === 4) {
-        // 生成縱向长条图的配置项
+        // 生成核取方塊格的配置项
         return {
           type: 4,
           title: {
             text: '核取方塊格',
-            subtext: 'Fake Data',
             left: 'center',
           },
-          legend: {},
-          tooltip: {},
           dataset: {
             source: [
               ['product', '2015', '2016', '2017'],
