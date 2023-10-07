@@ -411,7 +411,7 @@ nav {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-center;
+                  @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start;
                     span {
                         @apply ms-[10px];
                     }
