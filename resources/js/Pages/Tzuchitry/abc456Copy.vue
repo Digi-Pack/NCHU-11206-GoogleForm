@@ -125,7 +125,7 @@ export default {
           series: [{
             name: '',
             type: 'bar',
-            stack: '',
+            stack: '业务',
             data: [5, 20, 36, 10, 10, 20],
           },
           ],

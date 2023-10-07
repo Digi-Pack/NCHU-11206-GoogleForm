@@ -39,15 +39,15 @@ export default {
     };
   },
   mounted() {
-    this.generateArrayC();
+    this.checkboxSum();
   },
   methods: {
-    generateArrayC() {
+    checkboxSum() {
       this.arrayC = this.arrayA
         .filter((question) => question.type === 4)
         .map((question) => {
           const data = question.options.map((option) => {
-            const count = this.getCount(question.id, option.id);
+            const count = this.checkboxCount(question.id, option.id);
             return count;
           });
 
@@ -59,7 +59,7 @@ export default {
           };
         });
     },
-    getCount(questionId, optionId) {
+    checkboxCount(questionId, optionId) {
       let count = 0;
       this.arrayB.forEach((answerSet) => {
         answerSet.forEach((answer) => {

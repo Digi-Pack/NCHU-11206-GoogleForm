@@ -147,19 +147,27 @@ export default {
             },
           ],
         };
-      } else if (item.type === 18) {
+      } else if (item.type === 4) {
         // 生成橫向长条图的配置项
         return {
-          type: 3,
+          type: item.type,
           title: {
-            text: 'ECharts横向柱状图 树懒课堂',
+            text: item.text,
+            left: 'center',
           },
           yAxis: {
-            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+            data: item.yAxis,
           },
           xAxis: {},
+          series: [{
+            name: '',
+            type: 'bar',
+            stack: '',
+            data: [5, 20, 36, 10, 10, 20],
+          },
+          ],
         };
-      } else if (item.type === 4) {
+      } else if (item.type === 9) {
         // 生成核取方塊格的配置项
         return {
           type: 4,

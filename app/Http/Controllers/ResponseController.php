@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Response;
+use App\Models\Question;
 
 class ResponseController extends Controller
 {
@@ -26,13 +27,23 @@ class ResponseController extends Controller
     // }
     public function response_sum()
     {
-     $datas = Response::where('question_id', 1)->get();
+     $datas = Response::where('question_id', 19)->get();
             $results = [];
             foreach ($datas as $data) {
                 $answer = json_decode($data['answer'], true);
                 $results[] = $answer;
             }
             // $data = json_decode($datas[1]['answer'], true);
-            return Inertia::render('Backend/ResponseSum',['response' => rtFormat($results)]);
+            $responseForm = Question::where('id', 19)->first();
+            $questionNaires = json_decode($responseForm['questionnaires'], true);
+
+            $response=[
+                'results' => $results,
+                'questionNaires' => $questionNaires,
+            ];
+
+            // dd($response);
+
+            return Inertia::render('Backend/ResponseSum',['response' => rtFormat($response)]);
     }
 }
