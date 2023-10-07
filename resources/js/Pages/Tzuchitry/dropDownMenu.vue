@@ -156,32 +156,30 @@ export default {
   methods: {
     // 寫法二
     generateArrayC() {
-      // 初始化 arrayC 为具有默认值的数据
       this.arrayC = this.arrayA
         .filter((question) => question.type === 5)
         .map((question) => {
           return {
             type: question.type,
             text: question.title,
-            data: question.options.map((option) => ({
-              value: 0, // 设置默认值为0
-              name: option.value,
-            })),
+            data: question.options.map((option) => {
+              this.count = 0; // 在這裡定義並初始化 count
+              this.arrayB.forEach((answerSet) => {
+                // console.log(answerSet);
+                const answer = answerSet.find((answer) => answer.id === question.id);
+                // console.log(answer);
+                // console.log(13);
+                if (answer && answer.answer === option.id) { // 比較 answer.answer 和 option.id
+                  this.count++;
+                }
+              });
+              return {
+                value: this.count,
+                name: option.value,
+              };
+            }),
           };
         });
-
-      // 遍历 arrayB 更新数据
-      this.arrayA.forEach((question) => {
-        if (question.type === 5) {
-          this.arrayB.forEach((answerSet, index) => {
-            const answer = answerSet.find((answer) => answer.id === question.id);
-
-            if (answer) {
-              this.arrayC[index].data[answer.answer - 1].value = answer.answer;
-            }
-          });
-        }
-      });
     },
   },
 };
