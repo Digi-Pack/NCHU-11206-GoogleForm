@@ -117,24 +117,24 @@ export default {
             },
           ],
         };
-      } else if (item.type === 2) {
+      } else if (item.type === 7) {
         // 生成縱向长条图的配置项
         return {
-          type: 2,
+          type: item.type,
           title: {
-            text: '長條圖',
+            text: item.text,
             left: 'center',
           },
           xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: item.xAxis,
           },
           yAxis: {
             type: 'value',
           },
           series: [
             {
-              data: [120, 200, 150, 80, 70, 110, 130],
+              data: item.data,
               type: 'bar',
             },
           ],
@@ -159,27 +159,19 @@ export default {
           },
           ],
         };
-      } else if (item.type === 9) {
+      } else if (item.type === 8 || item.type === 9) {
         // 生成核取方塊格的配置项
         return {
-          type: 4,
+          type: item.type,
           title: {
-            text: '核取方塊格',
+            text: item.text,
             left: 'center',
           },
           dataset: {
-            source: [
-              ['product', '2015', '2016', '2017'],
-              ['Matcha Latte', 43.3, 85.8, 93.7],
-              ['Milk Tea', 83.1, 73.4, 55.1],
-              ['Cheese Cocoa', 86.4, 65.2, 82.5],
-              ['Walnut Brownie', 72.4, 53.9, 39.1],
-            ],
+            source: item.source,
           },
           xAxis: { type: 'category' },
           yAxis: {},
-          // Declare several bar series, each will be mapped
-          // to a column of dataset.source by default.
           series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
         };
       }
