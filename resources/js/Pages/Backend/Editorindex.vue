@@ -24,15 +24,13 @@ import { questionTypeOption } from '@/Composables/useQuestionType';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 import UploadYtVideo from '@/Components/Modal/UploadYtVideo.vue';
-// import { ref } from 'vue';
 
 export default {
   components: { UploadYtVideo },
   props: {
-    flash: String,
     response: Object,
   },
-  emits: ['update:qu_title', 'updateFormData'],
+  emits: ['update:qu_title', 'videoUrl'],
   data() {
     return {
       add: add,
@@ -365,49 +363,45 @@ export default {
       this.model = '';
     },
     // 測欄增加影片
-    // addVideo(newVideo) {
-    //   console.log(newVideo);
-    //   const { formData } = this;
-    //   this.serial++;
-    //   const updateFormData = ref([
-    //     {
-    //       id: this.serial,
-    //       title: '問題',
-    //       request: false,
-    //       image: '',
-    //       video: newVideo,
-    //       type: 13,
-    //       options: [
-    //         {
-    //           id: 1,
-    //           value: '',
-    //         },
-    //       ],
-    //       linear: {
-    //         min: 1,
-    //         max: 10,
-    //         minText: '',
-    //         maxText: '',
-    //       },
-    //       square: {
-    //         row: [
-    //           {
-    //             id: 1,
-    //             text: '',
-    //           },
-    //         ],
-    //         column: [
-    //           {
-    //             id: 1,
-    //             text: '',
-    //           },
-    //         ],
-    //       },
-    //     },
-    //   ]);
-    //   console.log(updateFormData);
-    //   formData.push(updateFormData);
-    // },
+    addVideo(newVideo) {
+      const { formData } = this;
+      this.serial++;
+      const newQuestion = {
+        id: this.serial,
+        title: '問題',
+        request: false,
+        image: '',
+        video: `${newVideo}`,
+        type: 13,
+        options: [
+          {
+            id: 1,
+            value: '',
+          },
+        ],
+        linear: {
+          min: 1,
+          max: 10,
+          minText: '',
+          maxText: '',
+        },
+        square: {
+          row: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+          column: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+        },
+      };
+      formData.push(newQuestion);
+    },
   },
 };
 
@@ -452,6 +446,7 @@ export default {
             </div>
             <!-- 側欄新增影片 -->
             <div v-else-if="item.type === 13">
+              {{ item }}
               <div class="question-bottom">
                 <div class="func !border-r-0">
                   <input :value="item.title" type="text" placeholder="影片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
@@ -697,7 +692,7 @@ export default {
           </div>
           <SendLinkModal v-if="show" :form-url="formUrl">
           </SendLinkModal>
-          <UploadYtVideo v-if="model === 'UploadYtVideo'" :form-data="formData" @close-model="handleClose" @update-formdata="addVideo">
+          <UploadYtVideo v-if="model === 'UploadYtVideo'" @close-model="handleClose" @video-url="addVideo">
           </UploadYtVideo>
         </div>
       </form>

@@ -6,14 +6,12 @@ export default {
   props: {
     formData: Object,
   },
-  emits: ['closeModel', 'updateFormData'],
+  emits: ['closeModel', 'videoUrl'],
   data() {
     return {
       close,
       youtube,
       url: '',
-      countvideo: 1,
-
     };
   },
   computed: {
@@ -33,19 +31,10 @@ export default {
       this.$emit('closeModel');
     },
     addvideo() {
-      const updatedFormData = { ...this.formData };
-      // 替换需要替换的属性
       if (this.url.includes('youtube.com/watch?v=')) {
         this.url = this.url.replace('watch?v=', 'embed/');
       }
-      //   console.log(this.url);
-      updatedFormData[0].id = this.countvideo;
-      updatedFormData[0].video = this.url;
-      updatedFormData[0].type = 13;
-      this.countvideo++;
-      //   console.log(updatedFormData);
-      // 将副本分配回formData
-      this.$emit('updateFormData');
+      this.$emit('videoUrl', this.url);
       this.url = '';
       this.closing();
     },

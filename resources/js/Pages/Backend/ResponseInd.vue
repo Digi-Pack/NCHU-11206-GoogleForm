@@ -36,13 +36,13 @@ export default {
           <h2>0則回應</h2>
         </div>
         <div class="head-fotter">
-          <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
+          <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
+          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('dashboard')" :active="currentUrl('dashboard')">
+          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
             個別
           </NavLink>
         </div>

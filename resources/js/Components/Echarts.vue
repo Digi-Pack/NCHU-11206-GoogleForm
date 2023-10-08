@@ -181,7 +181,7 @@ const dataBase = ref({
 </script>
 
 <template>
-  {{ data }}
+  <!-- {{ data }} -->
   <!-- {{ piedata[1] }} -->
   <!-- 簡答/詳答 -->
   <div class="text-area">
@@ -288,7 +288,7 @@ const dataBase = ref({
   @apply w-full h-[500px];
 }
 .text-area {
-    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white py-5;
+    @apply w-full min-h-[80px] mb-[15px] border rounded-[10px] border-gray-200 bg-white py-5;
     .que-top {
         @apply p-5;
         .title {
