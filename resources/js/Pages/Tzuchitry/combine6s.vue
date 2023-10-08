@@ -19,7 +19,7 @@
     </div>
   </div>
   <!-- 日期 -->
-  <div v-for="item in arrayD" :key="item.id">
+  <div v-for="item in arrayE" :key="item.id">
     <div class="text-area">
       <div class="que-top">
         {{ item.title }}
@@ -219,9 +219,7 @@ export default {
       ],
       arrayC: [],
       chartOptions: [],
-      arrayD: [
-        { type: 10, title: '問題文本', subtext: 3, date: [{ year: 2023, month: 7, day: [{ day: 1, count: 2 }, { day: 15, count: 3 }] }, { year: 2023, month: 11, day: [{ day: 1, count: 2 }, { day: 15, count: 3 }] }] },
-      ],
+      arrayE: [{ 'type': 10, 'title': '這是日期第一題', 'subtext': 4, 'date': [{ 'year': 2023, 'month': 7, 'day': [{ 'day': 1, 'count': 1 }, { 'day': 15, 'count': 1 }] }, { 'year': 2023, 'month': 8, 'day': [{ 'day': 1, 'count': 2 }] }] }, { 'type': 10, 'title': '這是日期第二題', 'subtext': 4, 'date': [{ 'year': 2023, 'month': 8, 'day': [{ 'day': 2, 'count': 2 }, { 'day': 1, 'count': 2 }] }] }, { 'type': 10, 'title': '這是日期第三題', 'subtext': 4, 'date': [{ 'year': 2024, 'month': 9, 'day': [{ 'day': 3, 'count': 1 }] }, { 'year': 2023, 'month': 9, 'day': [{ 'day': 3, 'count': 1 }, { 'day': 4, 'count': 1 }] }, { 'year': 2024, 'month': 10, 'day': [{ 'day': 3, 'count': 1 }] }] }],
     };
   },
   mounted() {

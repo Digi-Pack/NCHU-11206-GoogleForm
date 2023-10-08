@@ -62,4 +62,7 @@ Route::prefix('response')->group(function () {
     Route::get('/combine6s ', function () {
         return Inertia::render('Tzuchitry/combine6s');
     });
+    Route::get('/date ', function () {
+        return Inertia::render('Tzuchitry/dateDate');
+    });
 });
