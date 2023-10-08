@@ -186,8 +186,11 @@ export default {
           type: item.type,
           title: {
             text: item.text,
+            subtext: item.subtext,
             left: 'center',
           },
+          legend: {},
+          tooltip: {},
           dataset: {
             source: item.source,
           },
