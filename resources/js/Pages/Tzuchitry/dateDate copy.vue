@@ -37,19 +37,14 @@ export default {
   },
   methods: {
     dateTotal() {
-      this.arrayD = [];
-      for (const question of this.arrayA) {
-        if (question.type === 10) {
-          const subtext = this.calculateSubtext(question.id);
-          const date = this.calculateDate(question.id);
-          this.arrayD.push({
-            type: question.type,
-            title: question.title,
-            subtext: subtext,
-            date: date,
-          });
-        }
-      }
+      const subtext = this.calculateSubtext(question.id);
+      const date = this.calculateDate(question.id);
+      return {
+        type: question.type,
+        title: question.title,
+        subtext: subtext,
+        date: date,
+      };
     },
     calculateSubtext(questionId) {
       let subtextCount = 0;
