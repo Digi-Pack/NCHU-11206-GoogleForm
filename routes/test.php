@@ -68,4 +68,7 @@ Route::prefix('response')->group(function () {
     Route::get('/combine7s ', function () {
         return Inertia::render('Tzuchitry/combine7s');
     });
+    Route::get('/combine8s ', function () {
+        return Inertia::render('Tzuchitry/combine8s');
+    });
 });

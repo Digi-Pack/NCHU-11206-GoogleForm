@@ -2,26 +2,45 @@
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- {{ option }} -->
-    <VChart class="chart" :option="option" />
-    <!-- 日期 -->
-    <div v-if="item.type === 10" class="text-area">
+    <VChart v-if="option.type !== 10" class="chart" :option="option" />
+    <div v-if="option.type === 10" class="text-area">
       <div class="que-top">
-        {{ item.title }}
-        <div class="subtitle">{{ item.subtext }}則回應</div>
+        {{ option.item.title }} <!-- 这里使用 option.item.title -->
+        <div class="subtitle">{{ option.item.subtext }}則回應</div> <!-- 这里使用 option.item.subtext -->
       </div>
-      <div v-for="itemIn in item.date" :key="itemIn.id" class="px-5 flex items-center">
+      <div v-for="itemIn in option.item.date" :key="itemIn.id" class="px-5 flex items-center">
         <div class="w-[100px] border-r border-black ml-5 py-3">
           <span class="text-bold">{{ itemIn.year }}年</span>
           <span class="text-bold">{{ itemIn.month }}月</span>
         </div>
         <div v-for="itemInDay in itemIn.day" :key="itemInDay.day" class="px-5 flex items-center py-3">
-          <div class="day">{{ itemInDay.day }}日</div>
-          <div class="count">{{ itemInDay.count }}</div>
+          <div class="day">{{ itemInDay.day }}日<div class="count">{{ itemInDay.count }}</div></div>
+
         </div>
       </div>
     </div>
   </div>
-  {{ arrayC }}
+
+  <!-- 時間 -->
+  <div v-for="(item, index) in arrayD"
+    :key="index" class="text-area">
+    <!-- { type: 11, text:'這是時間的題目', subtext: 3, zone: 10, time: '上午10點' } -->
+    <div class="que-top">
+      {{ item.text }}
+      <div class="subtitle">{{ item.subtext }}則回應</div>
+    </div>
+    <div v-for="(itemIn, index) in item.timeAll" :key="index" class="px-5 flex items-center">
+      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">{{ itemIn.zone }} B</span>
+        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+      </div>
+      <div class="px-5 flex items-center py-2">
+        <div class="time">{{ itemIn.time }}</div>
+      </div>
+    </div>
+  </div>
+  <!-- {{ arrayC }} -->
+  <!-- {{ chartOptions }} -->
   <!-- 簡答/詳答 -->
   <div class="text-area">
     <div class="que-top">
@@ -35,22 +54,6 @@
       <div class="text-answer">你好啊</div>
     </div>
   </div>
-  <!-- 時間 -->
-  <div class="text-area">
-    <div class="que-top">
-      <div class="subtitle">1則回應</div>
-    </div>
-    <div class="px-5 flex items-center">
-      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
-        <span class="text-bold">00 B</span>
-        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
-      </div>
-      <div class="px-5 flex items-center py-2">
-        <div class="time">午夜12:00</div>
-      </div>
-    </div>
-  </div>
-
 </template>
 
 <script>
@@ -92,6 +95,7 @@ export default {
   },
   data() {
     return {
+      arrayD: [{ type: 11, text: '這是時間的題目', subtext: 3, timeAll: [{ zone: '10', time: '上午10:00' }, { zone: '07', time: '上午07:30' }] }, { type: 11, text: '這是時間的題目', subtext: 3, zone: 10, time: '上午10:00' }],
       arrayA: [
         { 'id': 1, 'title': '我是下拉式選單第一題', 'request': false, 'image': null, 'video': null, 'type': 5, 'options': [{ 'id': 1, 'value': '下拉選項一' }, { 'id': 2, 'value': '下拉選項二' }, { 'id': 3, 'value': '下拉選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
@@ -128,7 +132,7 @@ export default {
 
         { 'id': 13, 'title': '這是日期第一題', 'request': false, 'image': null, 'video': null, 'type': 10, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
-        { 'id': 14, 'title': '這是日期第三題', 'request': false, 'image': null, 'video': null, 'type': 10, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+        { 'id': 14, 'title': '這是日期第二題', 'request': false, 'image': null, 'video': null, 'type': 10, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
       ],
       arrayB: [
         [{ 'id': 1, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
@@ -144,7 +148,7 @@ export default {
           { 'id': 11, 'answer': null, 'manyOptions': ['row1col2', 'row2col2', 'row3col1', 'row4col1'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 12, 'answer': null, 'manyOptions': ['row1col5', 'row2col5', 'row3col1'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 13, 'answer': '2023-07-01', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 14, 'answer': '2024-09-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 14, 'answer': '2024-10-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
 
         ]
         ,
@@ -178,13 +182,14 @@ export default {
           { 'id': 10, 'answer': null, 'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 11, 'answer': null, 'manyOptions': ['row1col2', 'row2col2', 'row3col1', 'row4col1'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 12, 'answer': null, 'manyOptions': ['row1col5', 'row2col5', 'row3col1'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 13, 'answer': '2023-08-01', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
-          { 'id': 14, 'answer': '2024-10-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 13, 'answer': '2023-07-01', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 14, 'answer': '2024-09-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+
         ],
       ],
       arrayC: [],
       chartOptions: [],
-    //   arrayE: [{ 'type': 10, 'title': '這是日期第一題', 'subtext': 4, 'date': [{ 'year': 2023, 'month': 7, 'day': [{ 'day': 1, 'count': 1 }, { 'day': 15, 'count': 1 }] }, { 'year': 2023, 'month': 8, 'day': [{ 'day': 1, 'count': 2 }] }] }, { 'type': 10, 'title': '這是日期第二題', 'subtext': 4, 'date': [{ 'year': 2023, 'month': 8, 'day': [{ 'day': 2, 'count': 2 }, { 'day': 1, 'count': 2 }] }] }, { 'type': 10, 'title': '這是日期第三題', 'subtext': 4, 'date': [{ 'year': 2024, 'month': 9, 'day': [{ 'day': 3, 'count': 1 }] }, { 'year': 2023, 'month': 9, 'day': [{ 'day': 3, 'count': 1 }, { 'day': 4, 'count': 1 }] }, { 'year': 2024, 'month': 10, 'day': [{ 'day': 3, 'count': 1 }] }] }],
+
     };
   },
   mounted() {
@@ -237,6 +242,9 @@ export default {
             {
               data: item.data,
               type: 'bar',
+              itemStyle: {
+                color: '#AA90D3', // 在这里设置bar的颜色
+              },
             },
           ],
         };
@@ -260,6 +268,9 @@ export default {
             type: 'bar',
             stack: '',
             data: item.data,
+            itemStyle: {
+              color: '#AA90D3', // 在这里设置bar的颜色
+            },
           },
           ],
         };
@@ -283,8 +294,9 @@ export default {
         };
       } else if (item.type === 10) {
         // 生成核取方塊格的配置项
-        return { item };
+        return { type: 10, item };
       }
+      return {};
     });
   },
   methods: {
@@ -423,24 +435,16 @@ export default {
 
     },
     dateTotal(question) {
-      console.log('我在第十題');
-      const subtext = this.calculateSubtext(question.id);
-      const date = this.calculateDate(question.id);
-      console.log('我在第十題尾');
-      console.log(subtext);
-      console.log(date);
-      console.log(question.type);
-
+      const subtext = this.dateSubtext(question.id);
+      const date = this.dateCalculate(question.id);
       return {
         type: question.type,
         title: question.title,
         subtext: subtext,
         date: date,
       };
-
     },
-    calculateSubtext(questionId) {
-      console.log('10-1');
+    dateSubtext(questionId) {
       let subtextCount = 0;
       for (const answerSet of this.arrayB) {
         const answer = answerSet.find((answer) => answer.id === questionId);
@@ -450,8 +454,7 @@ export default {
       }
       return subtextCount;
     },
-    calculateDate(questionId) {
-      console.log('10-2');
+    dateCalculate(questionId) {
       const dateData = [];
       for (const answerSet of this.arrayB) {
         const answer = answerSet.find((answer) => answer.id === questionId);
@@ -480,23 +483,18 @@ export default {
       this.arrayC = this.arrayA.map((question) => {
         if (question.type === 3 || question.type === 5) {
         //   this.count = 0;
-        //   console.log(123);
+          console.log(123);
           return this.pieSum(question);
         } else if (question.type === 4) {
-        //   console.log(456);
+          console.log(456);
           return this.checkboxSum(question);
         } else if (question.type === 7) {
-        //   console.log(789);
+          console.log(789);
           return this.linearData(question);
         } else if (question.type === 8 || question.type === 9) {
-          console.log(this.arrayC);
           return this.choiceSquare(question);
         } else if (question.type === 10) {
-          console.log(this.arrayC);
-          //   console.log(this.dateTotal(question));
-          console.log(this.arrayC, 123456);
           return this.dateTotal(question);
-
         }
         console.log('陣列結束了');
       });
@@ -525,10 +523,13 @@ export default {
         @apply text-base mb-2 py-3 pl-3 bg-gray-50 rounded-md;
     }
     .day {
-        @apply bg-blue rounded-[20px] px-3 mr-2;
+        @apply bg-purple-middle rounded-[20px] px-3 mr-2;
     }
     .time {
-        @apply bg-blue rounded-[20px] px-3 py-1 mr-2 text-sm;
+        @apply bg-purple-middle rounded-[20px] px-3 py-1 mr-2 text-sm;
+    }
+    .count {
+        @apply bg-white rounded-[20px] px-3 py-1 mr-2 text-sm;
     }
 }
   </style>

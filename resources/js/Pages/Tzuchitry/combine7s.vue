@@ -20,22 +20,6 @@
       </div>
     </div>
   </div>
-  <!-- {{ arrayC }} -->
-  <!-- {{ chartOptions }} -->
-  <!-- 簡答/詳答 -->
-  <div class="text-area">
-    <div class="que-top">
-      <div class="title">題目</div>
-      <div class="subtitle">1則回應</div>
-    </div>
-    <div class="px-5 py-3">
-      <div class="text-answer">你好啊</div>
-      <div class="text-answer">你好啊</div>
-      <div class="text-answer">你好啊</div>
-      <div class="text-answer">你好啊</div>
-    </div>
-  </div>
-  <!-- 日期 -->
 
   <!-- 時間 -->
   <div class="text-area">
@@ -51,38 +35,22 @@
         <div class="time">午夜12:00</div>
       </div>
     </div>
-    <div class="px-5 flex items-center">
-      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
-        <span class="text-bold">01 B</span>
-        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
-      </div>
-      <div class="px-5 flex items-center py-2">
-        <div class="time">凌晨1:20</div>
-      </div>
+  </div>
+  <!-- {{ arrayC }} -->
+  <!-- {{ chartOptions }} -->
+  <!-- 簡答/詳答 -->
+  <div class="text-area">
+    <div class="que-top">
+      <div class="title">題目</div>
+      <div class="subtitle">1則回應</div>
     </div>
-    <div class="px-5 flex items-center">
-      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
-        <span class="text-bold">10 B</span>
-        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
-      </div>
-      <div class="px-5 flex items-center py-2">
-        <div class="time">上午10:51</div>
-      </div>
-    </div>
-    <div class="px-5 flex items-center">
-      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
-        <span class="text-bold">22 B</span>
-        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
-      </div>
-      <div class="px-5 flex items-center py-2">
-        <div class="time">晚上10:28</div>
-        <div v-for="item in flatData" :key="item.id" class="px-5 py-3">
-          <div class="text-answer">{{ item.answer }}</div>
-        </div>
-      </div>
+    <div class="px-5 py-3">
+      <div class="text-answer">你好啊</div>
+      <div class="text-answer">你好啊</div>
+      <div class="text-answer">你好啊</div>
+      <div class="text-answer">你好啊</div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -217,7 +185,6 @@ export default {
       ],
       arrayC: [],
       chartOptions: [],
-    //   arrayE: [{ 'type': 10, 'title': '這是日期第一題', 'subtext': 4, 'date': [{ 'year': 2023, 'month': 7, 'day': [{ 'day': 1, 'count': 1 }, { 'day': 15, 'count': 1 }] }, { 'year': 2023, 'month': 8, 'day': [{ 'day': 1, 'count': 2 }] }] }, { 'type': 10, 'title': '這是日期第二題', 'subtext': 4, 'date': [{ 'year': 2023, 'month': 8, 'day': [{ 'day': 2, 'count': 2 }, { 'day': 1, 'count': 2 }] }] }, { 'type': 10, 'title': '這是日期第三題', 'subtext': 4, 'date': [{ 'year': 2024, 'month': 9, 'day': [{ 'day': 3, 'count': 1 }] }, { 'year': 2023, 'month': 9, 'day': [{ 'day': 3, 'count': 1 }, { 'day': 4, 'count': 1 }] }, { 'year': 2024, 'month': 10, 'day': [{ 'day': 3, 'count': 1 }] }] }],
     };
   },
   mounted() {
@@ -457,8 +424,8 @@ export default {
 
     },
     dateTotal(question) {
-      const subtext = this.calculateSubtext(question.id);
-      const date = this.calculateDate(question.id);
+      const subtext = this.dateSubtext(question.id);
+      const date = this.dateCalculate(question.id);
       return {
         type: question.type,
         title: question.title,
@@ -466,7 +433,7 @@ export default {
         date: date,
       };
     },
-    calculateSubtext(questionId) {
+    dateSubtext(questionId) {
       let subtextCount = 0;
       for (const answerSet of this.arrayB) {
         const answer = answerSet.find((answer) => answer.id === questionId);
@@ -476,7 +443,7 @@ export default {
       }
       return subtextCount;
     },
-    calculateDate(questionId) {
+    dateCalculate(questionId) {
       const dateData = [];
       for (const answerSet of this.arrayB) {
         const answer = answerSet.find((answer) => answer.id === questionId);
