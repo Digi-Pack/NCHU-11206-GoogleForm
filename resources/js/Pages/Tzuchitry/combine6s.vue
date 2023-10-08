@@ -30,8 +30,9 @@
           <span class="text-bold">{{ itemIn.year }}年</span>
           <span class="text-bold">{{ itemIn.month }}月</span>
         </div>
-        <div v-for="itemInDay in itemIn.day" :key="itemInDay" class="px-5 flex items-center py-3">
-          <div class="day">{{ itemInDay }}日</div>
+        <div v-for="itemInDay in itemIn.day" :key="itemInDay.day" class="px-5 flex items-center py-3">
+          <div class="day">{{ itemInDay.day }}日</div>
+          <div class="count">{{ itemInDay.count }}</div>
         </div>
       </div>
     </div>
@@ -219,7 +220,7 @@ export default {
       arrayC: [],
       chartOptions: [],
       arrayD: [
-        { type: 10, title: '問題文本', subtext: 3, date: [{ year: 2023, month: 10, day: [8, 12, 13, 15, 17] }, { year: 2023, month: 11, day: [8, 12, 13, 15, 17] }] },
+        { type: 10, title: '問題文本', subtext: 3, date: [{ year: 2023, month: 7, day: [{ day: 1, count: 2 }, { day: 15, count: 3 }] }, { year: 2023, month: 11, day: [{ day: 1, count: 2 }, { day: 15, count: 3 }] }] },
       ],
     };
   },
