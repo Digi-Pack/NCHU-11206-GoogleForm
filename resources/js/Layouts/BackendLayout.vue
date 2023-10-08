@@ -264,7 +264,7 @@ export default {
               </label>
               <div id="account-menu">
                 <div class="google">
-                  <div class="option" @userInform="userInformation">{{ $page.props.auth.user.email }}</div>
+                  <div class="option !justify-center" @userInform="userInformation">{{ $page.props.auth.user.email }}</div>
                   <img class="photo" :src="images.user" alt="">
                   <div class="hello"><span>{{ $page.props.auth.user.name }}</span>，你好!</div>
                   <div class="acc mb-3">

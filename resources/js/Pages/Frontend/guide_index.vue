@@ -367,7 +367,7 @@ export default {
     }
   }
   .main {
-    @apply w-full px-[13%] relative top-[138px];
+    @apply w-full px-[13%] relative top-[138px] pb-20;
     .card-group {
       @apply flex flex-wrap gap-5;
       .card {
