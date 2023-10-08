@@ -26,7 +26,7 @@ export default {
     this.generateResults();
   },
   methods: {
-    generateStatistics(arrayA, arrayB) {
+    choiceSquare(arrayA, arrayB) {
       // 初始化数组C
       const arrayC = [];
 
@@ -86,8 +86,8 @@ export default {
     },
 
     generateResults() {
-      // 调用 generateStatistics 方法生成统计结果
-      this.Results = this.generateStatistics(this.questionNaire, this.Answers);
+      // 调用 choiceSquare 方法生成统计结果
+      this.Results = this.choiceSquare(this.questionNaire, this.Answers);
     },
   },
 };
