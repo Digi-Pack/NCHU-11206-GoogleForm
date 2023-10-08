@@ -145,6 +145,7 @@ export default {
             text: item.text,
             left: 'center',
           },
+
           xAxis: {
             type: 'category',
             data: item.xAxis,
@@ -206,6 +207,7 @@ export default {
     pieSum(question) {
       return {
         type: question.type,
+        // subtext:questios.有填寫此題的,
         text: question.title,
         data: question.options.map((option) => {
           this.count = 0; // 在這裡定義並初始化 count
