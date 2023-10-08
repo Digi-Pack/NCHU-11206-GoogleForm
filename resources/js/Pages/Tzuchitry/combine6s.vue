@@ -1,10 +1,109 @@
 <template>
   <div v-for="(option, index) in chartOptions"
     :key="index">
-    {{ option }}
+    <!-- {{ option }} -->
     <VChart class="chart" :option="option" />
   </div>
-  {{ arrayC }}
+  <!-- {{ arrayC }} -->
+  <!-- 簡答/詳答 -->
+  <div class="text-area">
+    <div class="que-top">
+      <div class="title">題目</div>
+      <div class="subtitle">1則回應</div>
+    </div>
+    <div class="px-5 py-3">
+      <div class="text-answer">你好啊</div>
+      <div class="text-answer">你好啊</div>
+      <div class="text-answer">你好啊</div>
+      <div class="text-answer">你好啊</div>
+    </div>
+  </div>
+  <!-- 日期 -->
+  <div class="text-area">
+    <div class="que-top">
+      <div class="subtitle">1則回應</div>
+    </div>
+    <div class="px-5 flex items-center">
+      <div class="w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">2023年</span>
+        <span class="text-bold">10月</span>
+      </div>
+      <div class="px-5 flex items-center py-3">
+        <div class="day">3日</div>
+        <div class="day">5日</div>
+        <div class="day">10日</div>
+      </div>
+    </div>
+    <div class="px-5 flex items-center">
+      <div class="w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">2023年</span>
+        <span class="text-bold">4月</span>
+      </div>
+      <div class="px-5 flex items-center py-3">
+        <div class="day">3日</div>
+        <div class="day">5日</div>
+        <div class="day">10日</div>
+      </div>
+    </div>
+  </div>
+  <!-- 時間 -->
+  <div class="text-area">
+    <div class="que-top">
+      <div class="subtitle">1則回應</div>
+    </div>
+    <div class="px-5 flex items-center">
+      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">00 B</span>
+        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+      </div>
+      <div class="px-5 flex items-center py-2">
+        <div class="time">午夜12:00</div>
+      </div>
+    </div>
+    <div class="px-5 flex items-center">
+      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">01 B</span>
+        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+      </div>
+      <div class="px-5 flex items-center py-2">
+        <div class="time">凌晨1:20</div>
+      </div>
+    </div>
+    <div class="px-5 flex items-center">
+      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">10 B</span>
+        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+      </div>
+      <div class="px-5 flex items-center py-2">
+        <div class="time">上午10:51</div>
+      </div>
+    </div>
+    <div class="px-5 flex items-center">
+      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">22 B</span>
+        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+      </div>
+      <div class="px-5 flex items-center py-2">
+        <div class="time">晚上10:28</div>
+        <div v-for="item in flatData" :key="item.id" class="px-5 py-3">
+          <div class="text-answer">{{ item.answer }}</div>
+        </div>
+      </div>
+    </div>
+    <div v-if="chartType === 1">
+      <VChart class="chart" :option="pieOption" />
+    </div>
+    <div v-if="chartType === 2">
+      <VChart class="chart" :option="barOption" />
+    </div>
+    <div v-if="chartType === 3">
+      <VChart class="chart" :option="dataBase" />
+    </div>
+    <div v-if="chartType === 4">
+      <VChart class="chart" :option="horizonOption" />
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -360,7 +459,6 @@ export default {
       };
 
     },
-
     generateArrayC() {
       this.arrayC = this.arrayA.map((question) => {
         if (question.type === 3 || question.type === 5) {
@@ -388,4 +486,25 @@ export default {
   .chart {
     @apply w-full h-[500px];
   }
+  .text-area {
+    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white py-5;
+    .que-top {
+        @apply p-5;
+        .title {
+            @apply w-full text-lg font-semibold mb-1 px-3;
+        }
+        .subtitle{
+            @apply text-sm px-3;
+        }
+    }
+    .text-answer {
+        @apply text-base mb-2 py-3 pl-3 bg-gray-50 rounded-md;
+    }
+    .day {
+        @apply bg-blue rounded-[20px] px-3 mr-2;
+    }
+    .time {
+        @apply bg-blue rounded-[20px] px-3 py-1 mr-2 text-sm;
+    }
+}
   </style>
