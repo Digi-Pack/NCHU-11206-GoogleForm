@@ -19,30 +19,20 @@
     </div>
   </div>
   <!-- 日期 -->
-  <div class="text-area">
-    <div class="que-top">
-      <div class="subtitle">1則回應</div>
-    </div>
-    <div class="px-5 flex items-center">
-      <div class="w-[100px] border-r border-black ml-5 py-3">
-        <span class="text-bold">2023年</span>
-        <span class="text-bold">10月</span>
+  <div v-for="item in arrayD" :key="item.id">
+    <div class="text-area">
+      <div class="que-top">
+        {{ item.title }}
+        <div class="subtitle">{{ item.subtext }}則回應</div>
       </div>
-      <div class="px-5 flex items-center py-3">
-        <div class="day">3日</div>
-        <div class="day">5日</div>
-        <div class="day">10日</div>
-      </div>
-    </div>
-    <div class="px-5 flex items-center">
-      <div class="w-[100px] border-r border-black ml-5 py-3">
-        <span class="text-bold">2023年</span>
-        <span class="text-bold">4月</span>
-      </div>
-      <div class="px-5 flex items-center py-3">
-        <div class="day">3日</div>
-        <div class="day">5日</div>
-        <div class="day">10日</div>
+      <div v-for="itemIn in item.date" :key="itemIn.id" class="px-5 flex items-center">
+        <div class="w-[100px] border-r border-black ml-5 py-3">
+          <span class="text-bold">{{ itemIn.year }}年</span>
+          <span class="text-bold">{{ itemIn.month }}月</span>
+        </div>
+        <div v-for="itemInDay in itemIn.day" :key="itemInDay" class="px-5 flex items-center py-3">
+          <div class="day">{{ itemInDay }}日</div>
+        </div>
       </div>
     </div>
   </div>
@@ -228,6 +218,9 @@ export default {
       ],
       arrayC: [],
       chartOptions: [],
+      arrayD: [
+        { type: 10, title: '問題文本', subtext: 3, date: [{ year: 2023, month: 10, day: [8, 12, 13, 15, 17] }, { year: 2023, month: 11, day: [8, 12, 13, 15, 17] }] },
+      ],
     };
   },
   mounted() {
