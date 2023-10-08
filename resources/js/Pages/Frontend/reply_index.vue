@@ -16,6 +16,7 @@ import dots from '/resources/images/dots.png';
 import check_box from '/resources/images/check_box.png';
 import arrow_down from '/resources/images/arrow_down.png';
 import del from '/resources/images/del.png';
+import save from '/resources/images/save.svg';
 import copy from '/resources/images/copy.png';
 import { questionTypeOption } from '@/Composables/useQuestionType';
 import { router } from '@inertiajs/vue3';
@@ -45,6 +46,7 @@ export default {
       check_box: check_box,
       arrow_down: arrow_down,
       del: del,
+      save: save,
       copy: copy,
       maxId: 1,
       questionTypeOption,
@@ -90,16 +92,15 @@ export default {
   {{ formData }}
   <!-- {{ formData[3].answer }} -->
   <section id="question">
-    <form @submit.prevent="submitData()">
+    <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] min-h-screen relative">
       <div class="container">
         <!-- 表單命名處 -->
         <div class="form-title">
           <!-- 表單名稱 -->
-          <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
+          <div class="form-input form-title-input truncate">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
           <!-- 表單說明 -->
-          <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
+          <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
         </div>
-
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
           {{ item }}
           <div>
@@ -160,18 +161,17 @@ export default {
           </div>
           <!-- 線性刻度 -->
           <div v-if="item.type === 7" class="!block">
-            <span class="text-[18px]">{{ item.title }}</span>
+            <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
             <div class="questype-7">
               <span>{{ item.linear.minText }}</span>
               <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
                 {{ i }}
                 <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i" :required="item.request">
               </div>
-              <span class="">{{ item.linear.maxText }}</span>
+              <span class="w-[120px] truncate">{{ item.linear.maxText }}</span>
             </div>
           </div>
           <!-- 單選方格 -->
-
           <div v-if="item.type === 8" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-8">
@@ -217,16 +217,13 @@ export default {
           </div>
           <!-- 日期 -->
           <div v-if="item.type === 10" class="!block">
-
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-10">
               <input v-model=" formData[key].answer" type="date" :required="item.request">
             </div>
-
           </div>
           <!-- 時間 -->
           <div v-if="item.type === 11" class="!block">
-
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-11">
               <input type="text" v-model=" formData[key].time.hour" :required="item.request">
@@ -236,12 +233,11 @@ export default {
                 <option value="a.m.">上午</option>
                 <option value="p.m.">下午</option>
               </select>
-
             </div>
           </div>
         </div>
-        <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">送出表單</button>
       </div>
+      <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[90%] truncate">送出</button>
     </form>
   </section>
 </template>
@@ -362,6 +358,9 @@ export default {
 
       .questype-7 {
         @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
+        @media (max-width: 690px) {
+          @apply flex-col items-start pl-5;
+        }
 
         .linear {
           @apply flex flex-col;

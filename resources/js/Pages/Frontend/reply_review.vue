@@ -105,7 +105,7 @@ export default {
   <!-- {{ formData }} -->
   <!-- {{ formData[3].answer }} -->
   <section id="question">
-    <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] relative">
+    <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] relative min-h-screen">
       <div class="container">
         <!-- 表單命名處 -->
         <div class="form-title">
@@ -255,16 +255,16 @@ export default {
           </div>
         </div>
       </div>
-      <button type="submit" class="bg-purple text-white flex self-start py-[10px] px-[15px] sticky top-[92%] rounded-lg drop-shadow-md hover:scale-105">完成修改</button>
+      <button type="submit" class="bg-purple text-white flex self-start py-[10px] px-[15px] sticky top-[92%] rounded-lg drop-shadow-md hover:scale-105 truncate">完成修改</button>
     </form>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #question {
-  @apply min-h-[100vh] pl-[150px];
+  @apply pl-[150px];
   .container {
-    @apply max-w-[770px] relative mt-[20px];
+    @apply max-w-[770px] m-auto relative mt-[20px];
 
     .side {
       @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;
@@ -371,7 +371,9 @@ export default {
 
       .questype-7 {
         @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
-
+        @media (max-width: 690px) {
+          @apply flex-col items-start pl-5;
+        }
         .linear {
           @apply flex flex-col;
 

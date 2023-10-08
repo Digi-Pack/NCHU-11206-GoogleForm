@@ -138,6 +138,7 @@ export default {
           }
         },
       });
+      modalData.newName = '';
     },
     changeResponse() {
       const { selectShow } = this;
@@ -164,7 +165,7 @@ export default {
           <div class="pt-[15px]">
             <div>
               <div class="text-gray-400 text-lg">請輸入新的項目名稱:</div>
-              <input v-model=" modalData.newName " type="text" class="rounded-[5px] leading-5 mt-5 w-full">
+              <input v-model=" modalData.newName " type="text" placeholder="請輸入新的名稱" class="rounded-[5px] leading-5 mt-5 w-full">
             </div>
             <div class="flex justify-end mt-7">
               <button type="button" class="btn px-5 py-2 border border-grey text-purple hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
