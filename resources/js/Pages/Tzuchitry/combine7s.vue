@@ -160,7 +160,7 @@ export default {
 
         { 'id': 13, 'title': '這是日期第一題', 'request': false, 'image': null, 'video': null, 'type': 10, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
-        { 'id': 14, 'title': '這是日期第三題', 'request': false, 'image': null, 'video': null, 'type': 10, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+        { 'id': 14, 'title': '這是日期第二題', 'request': false, 'image': null, 'video': null, 'type': 10, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
       ],
       arrayB: [
         [{ 'id': 1, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
