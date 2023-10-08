@@ -50,6 +50,8 @@ export default {
             data.push(0); // 初始化数据数组
           }
 
+          let subtextCount = 0; // 初始化 subtext 计数
+
           for (const answerSet of this.arrayB) {
             const manyOptionsValue = answerSet[this.arrayA.indexOf(question)].manyOptions; // 使用问题的索引获取manyOptions值
             if (manyOptionsValue >= min && manyOptionsValue <= max) {
@@ -57,11 +59,15 @@ export default {
               const dataIndex = manyOptionsValue - min;
               data[dataIndex]++;
             }
+            if (manyOptionsValue >= 0) {
+              subtextCount++;
+            }
           }
 
           const resultObject = {
             type: question.type,
             text: question.title,
+            subtext: subtextCount,
             xAxis: xAxis,
             data: data,
           };
