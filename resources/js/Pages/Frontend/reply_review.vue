@@ -105,7 +105,7 @@ export default {
   <!-- {{ formData }} -->
   <!-- {{ formData[3].answer }} -->
   <section id="question">
-    <form @submit.prevent="submitData()">
+    <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] relative">
       <div class="container">
         <!-- 表單命名處 -->
         <div class="form-title">
@@ -254,22 +254,17 @@ export default {
             </div>
           </div>
         </div>
-        <button type="submit" class="bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 fixed right-[250px] bottom-5">完成修改</button>
       </div>
+      <button type="submit" class="bg-purple text-white flex self-start py-[10px] px-[15px] sticky top-[92%] rounded-lg drop-shadow-md hover:scale-105">完成修改</button>
     </form>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #question {
-  $grey: rgb(178, 176, 176);
-  $font-grey: rgb(108, 105, 105);
-  $grey-bac: rgb(104, 108, 113);
-  $blue: rgb(237, 244, 253);
-  $md-blue: rgb(39, 123, 233);
-
+  @apply min-h-[100vh] pl-[150px];
   .container {
-    @apply max-w-[770px] m-auto relative mt-[20px];
+    @apply max-w-[770px] relative mt-[20px];
 
     .side {
       @apply w-[49px] h-[253px] flex flex-col absolute top-0 -right-[70px] bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-0;

@@ -353,13 +353,13 @@ export default {
       };
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
+      if (this.imageSize > 3145728) return Swal.fire('表單內圖片已達上限');
+      if (e.target.files[0].size > 314572) return Swal.fire('圖片檔案過大');
+      formData.push({ ...newQuestion });
       reader.onload = () => {
         formData[formData.length - 1].image = reader.result;
         this.imageSize += e.target.files[0].size;
       };
-      if (e.target.files[0]) {
-        formData.push({ ...newQuestion });
-      }
     },
     handleClose() {
       this.model = '';
@@ -427,15 +427,16 @@ export default {
           <div class="form-title">
             <!-- {{ formData }} -->
             <!-- 表單名稱 -->
-            <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input" required @input="updateFormTitle">
+            <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input truncate" required @input="updateFormTitle">
             <!-- 表單說明 -->
-            <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
+            <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2 truncate">
           </div>
           <!-- 問題設置 -->
           <div v-for="item in formData" :key="item.id" class="question">
             <!-- 側欄新增圖片 -->
             <div v-if="item.type === 12">
               <div class="question-bottom">
+                {{ imageSize }}
                 <div class="func !border-r-0">
                   <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
                   <button type="button" @click="delQuestion(item.id)">
@@ -534,9 +535,8 @@ export default {
               </div>
               <!-- 第二行 第六種  檔案上傳 -->
               <div v-if="item.type === 6" class="questype-6 !block">
-                <h3>作答者可將檔案上傳到雲端硬碟</h3>
-                <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
-                <div><a href="">取消</a><a href="">繼續</a></div>
+                <h3>作答者可將檔案上傳到表單</h3>
+                <span> 在表單中新增檔案上傳問題後。請務必只與你信任的對象共用這份表單。</span>
               </div>
               <!-- 第二行 第七種 線性刻度 -->
               <div v-if="item.type === 7" class="questype-7 !block">
@@ -675,14 +675,6 @@ export default {
               </label>
               <span>新增問題</span>
             </button>
-            <div class="side-func !rounded-none">
-              <img :src="upload" alt="">
-              <span>匯入問題</span>
-            </div>
-            <button type="button" class="side-func" @click="addTitle()">
-              <img :src="text" alt="">
-              <span>新增標題與說明</span>
-            </button>
             <input type="file" id="addImage" class="hidden" @change="(e) => addImage(e)">
             <label for="addImage" class="side-func !rounded-none cursor-pointer">
               <div>
@@ -720,7 +712,7 @@ export default {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[294px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
+            @apply w-[49px] h-[210px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
 
             img {
                 @apply w-[22px];
@@ -737,7 +729,7 @@ export default {
                     @apply rounded-tl-[10px] rounded-tr-[10px] tablet:rounded-bl-[10px] tablet:rounded-tr-none;
                 }
 
-                &:nth-of-type(5) {
+                &:nth-of-type(4) {
                     @apply rounded-bl-[10px] rounded-br-[10px] tablet:rounded-bl-none tablet:rounded-tr-[10px];
                 }
 

@@ -100,7 +100,7 @@ export default {
                 </div>
 
               </Link>
-              <span class="title">
+              <span class="title truncate">
                 {{ formTitle }}
               </span>
             </div>
@@ -286,9 +286,6 @@ export default {
             <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
               回覆
             </NavLink>
-            <NavLink class="btn">
-              設定
-            </NavLink>
             <NavLink class="btn" :href="route('profile.edit')" :active="currentUrl('profile.edit')">
               帳戶
             </NavLink>
@@ -325,7 +322,7 @@ nav {
                     @apply mx-[10px];
                 }
                 .title {
-                  @apply text-[#202124] text-[18px] font-medium;
+                  @apply text-[#202124] text-[18px] w-[300px] font-medium;
                 }
             }
             .topR {

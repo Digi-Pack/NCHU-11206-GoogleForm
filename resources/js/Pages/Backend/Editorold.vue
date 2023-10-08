@@ -344,9 +344,10 @@ export default {
           ],
         },
       };
-      formData.push({ ...newQuestion });
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0].size > 314572) return Swal.fire('圖片檔案過大');
+      formData.push({ ...newQuestion });
       reader.onload = () => {
         formData[formData.length - 1].image = reader.result;
         this.imageSize += e.target.files[0].size;
@@ -367,7 +368,7 @@ export default {
         <div class="max-w-[770px]">
           <div class="form-title">
             <!-- 表單名稱 -->
-            <input v-model="formText.qu_naires_title" :class="{ 'border-[red]': $page.props.errors['formText.qu_naires_title'] }" type="text" placeholder="未命名的表單" class="form-input form-title-input" required @input="updateFormTitle">
+            <input v-model="formText.qu_naires_title" :class="{ 'border-[red]': $page.props.errors['formText.qu_naires_title'] }" type="text" placeholder="未命名的表單" class="form-input form-title-input truncate" required @input="updateFormTitle">
             <div class="text-[red]">{{ $page.props?.errors['formText.qu_naires_title'] ?? '' }}</div>
             <!-- 表單說明 -->
             <input v-model="formText.qu_naires_desc" type="text" placeholder="表單說明" class="form-input form-explain-input-2">
@@ -379,7 +380,7 @@ export default {
               <div class="question-top">
                 <div class="text-box">
                   {{ $page.props?.errors[`formData.${index}.title`] ?? '' }}
-                  <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input" required>
+                  <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input truncate" required>
                   <div class="text-[red]">{{ $page.props?.errors[`formData.${index}.title`] ?? '' }}</div>
                 </div>
                 <label>
@@ -444,9 +445,8 @@ export default {
               </div>
               <!-- 第二行 第六種  檔案上傳 -->
               <div v-if="item.type === 6" class="questype-6 !block">
-                <h3>作答者可將檔案上傳到雲端硬碟</h3>
-                <span>  檔案會上傳到表單擁有者的 Google 雲端硬碟。在表單中新增檔案上傳問題後，作答者必須登入 Google 才能回答問題。請務必只與你信任的對象共用這份表單。</span>
-                <div><a href="">取消</a><a href="">繼續</a></div>
+                <h3>作答者可將檔案上傳到表單</h3>
+                <span>  在表單中新增檔案上傳問題後。請務必只與你信任的對象共用這份表單。</span>
               </div>
               <!-- 第二行 第七種 線性刻度 -->
               <div v-if="item.type === 7" class="questype-7 !block">
@@ -591,14 +591,6 @@ export default {
               </label>
               <span>新增問題</span>
             </button>
-            <div class="side-func !rounded-none">
-              <img :src="upload" alt="">
-              <span>匯入問題</span>
-            </div>
-            <div class="side-func">
-              <img :src="text" alt="">
-              <span>新增標題與說明</span>
-            </div>
             <input type="file" id="addImage" class="hidden" @change="(e) => addImage(e)">
             <label for="addImage" class="side-func !rounded-none cursor-pointer">
               <div>
@@ -606,10 +598,10 @@ export default {
                 <span>新增圖片</span>
               </div>
             </label>
-            <div class="side-func !rounded-none cursor-pointer">
+            <button type="button" class="side-func !rounded-none cursor-pointer">
               <img :src="video" alt="">
               <span>新增影片</span>
-            </div>
+            </button>
             <button type="submit" class="side-func bg-purple-dark hover:!bg-purple-middle">
               <img :src="save" alt="">
               <span>儲存表單</span>
@@ -634,7 +626,7 @@ export default {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
 
         .side {
-            @apply w-[49px] h-[294px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
+            @apply w-[49px] h-[210px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
 
             img {
                 @apply w-[22px];
@@ -651,7 +643,7 @@ export default {
                     @apply rounded-tl-[10px] rounded-tr-[10px] tablet:rounded-bl-[10px] tablet:rounded-tr-none;
                 }
 
-                &:nth-of-type(3) {
+                &:nth-of-type(4) {
                     @apply rounded-bl-[10px] rounded-br-[10px] tablet:rounded-bl-none tablet:rounded-tr-[10px];
                 }
 
