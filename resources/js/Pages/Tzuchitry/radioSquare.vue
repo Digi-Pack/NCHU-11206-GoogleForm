@@ -71,6 +71,10 @@ export default {
             }
             data.push(rowData);
           }
+          const series = [];
+          for (let i = 0; i < columnNames.length; i++) {
+            series.push({ type: 'bar' });
+          }
 
           // 构建对象X并加入数组C
           const objectX = {
@@ -78,6 +82,7 @@ export default {
             text: question.title,
             subtext: arrayB.filter(answers => answers[question.id - 1].manyOptions.length > 0).length,
             data: data,
+            series: series,
           };
 
           arrayC.push(objectX);

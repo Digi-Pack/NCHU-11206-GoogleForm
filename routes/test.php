@@ -81,4 +81,7 @@ Route::prefix('response')->group(function () {
     Route::get('/radioSquare ', function () {
         return Inertia::render('Tzuchitry/radioSquare');
     });
+    Route::get('/combine6s ', function () {
+        return Inertia::render('Tzuchitry/combine6s');
+    });
 });
