@@ -267,6 +267,8 @@ export default {
             subtext: `${item.subtext}則回覆`,
             left: 'center',
           },
+          legend: {},
+          tooltip: {},
           xAxis: {
             type: 'category',
             data: item.xAxis,
@@ -290,6 +292,8 @@ export default {
             text: item.text,
             left: 'center',
           },
+          legend: {},
+          tooltip: {},
           yAxis: {
             data: item.yAxis,
           },
