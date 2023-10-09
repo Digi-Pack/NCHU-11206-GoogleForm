@@ -43,58 +43,7 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2>0則回應</h2>
-          <div class="func">
-            <div class="excel-link">
-              <a class="to-excel" href="">
-                <img class="excel" :src="excel" alt="">
-                <span>連結至試算表</span>
-                <span class="directions">將回覆傳送至試算表</span>
-              </a>
-            </div>
-            <div>
-              <input type="checkbox" id="dot-box-switch">
-              <label for="dot-box-switch" class="menu">
-                <img :src="dot" class="dot" alt="">
-              </label>
-              <div class="dot-box-all">
-                <li>
-                  <img :src="check" alt="">
-                  <span class="text">有新回應時透過電子郵件通知我</span>
-                </li>
-                <li>
-                  <span class="text pl-[40px]">選取回應目標位置</span>
-                </li>
-                <li>
-                  <img :src="linkoff" alt="">
-                  <span class="text">取消連結表單</span>
-                </li>
-                <li>
-                  <img :src="download" alt="">
-                  <span class="text">下載回應(.csv)</span>
-                </li>
-                <li>
-                  <img :src="print" alt="">
-                  <span class="text">列印所有回應</span>
-                </li>
-                <li>
-                  <img :src="del" alt="">
-                  <span class="text">刪除所有回應</span>
-                </li>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="head-middle">
-          <div class="switch">
-            <label>
-              <span>接受回應</span>
-              <input type="checkbox" name="" id="" class="checkbox">
-              <div class="btn-box">
-                <span class="btn"></span>
-              </div>
-            </label>
-          </div>
+          <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
         </div>
         <div class="head-fotter">
           <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
@@ -130,7 +79,7 @@ export default {
 
 <style lang="scss" scoped>
 #response-sum {
-    @apply h-screen mt-[20px] pb-[20px];
+    @apply min-h-[100vh] mt-[20px] pb-[20px];
 .all {
     @apply m-auto max-w-[770px] relative z-[2];
     .response-head {
@@ -190,40 +139,8 @@ export default {
                 }
             }
         }
-
-        .head-middle {
-            @apply p-[24px] flex justify-end items-center;
-
-            span {
-                @apply mr-[20px] text-[#686868];
-            }
-            .switch {
-                @apply w-[150px];
-                label {
-                  @apply w-full flex justify-between items-center;
-                }
-                span {
-                    @apply mr-0;
-                }
-                .btn-box {
-                    @apply inline-block align-middle w-[40px] h-[20px] rounded-[100px] bg-grey-middle shadow-inner;
-                }
-                .btn-box .btn {
-                    @apply inline-block -translate-y-1 drop-shadow-lg w-[25px] h-[25px] rounded-[50%] bg-[#673ab7] shadow-sm;
-                }
-                .checkbox {
-                    @apply absolute opacity-0;
-                }
-                .checkbox:checked + .btn-box {
-                    @apply bg-purple-light;
-                }
-                .checkbox:checked + .btn-box .btn {
-                    @apply ml-[20px];
-                }
-            }
-        }
         .head-fotter {
-            @apply flex justify-around h-[40px];
+            @apply flex justify-around h-[50px];
             .btn {
               @apply p-[10px] text-[16px] rounded-none focus:bg-purple-light;
             }

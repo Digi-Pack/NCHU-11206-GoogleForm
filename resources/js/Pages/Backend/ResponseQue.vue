@@ -33,7 +33,6 @@ export default {
       if (this.num === 1) return;
       this.num--;
     },
-
     plus() {
       this.num++;
     },
@@ -45,8 +44,8 @@ export default {
   <section id="response" class="pt-[10px]">
     <div class="all">
       <div class="response-head bg-white">
-        <div class="head-top mb-10">
-          <h2>0則回應</h2>
+        <div class="head-top">
+          <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
         </div>
         <div class="head-middle">
           <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
@@ -76,10 +75,24 @@ export default {
         <div class="noreply">
           <span>待回應</span>
         </div>
-        <div class="responser !flex-row">
-          <div class="text-grey flex flex-col">mm <span>10</span></div>
-          <div class="text-grey flex flex-col">dd <span>03</span></div>
-          <div class="text-grey flex flex-col">yy <span>23</span></div>
+        <div class="responser">
+          <div class="flex justify-start gap-3 w-full px-3 py-8 border-b">
+            <div class="date">MM <span>10 /</span></div>
+            <div class="date">DD <span>03 /</span></div>
+            <div class="date">YYYY <span>2023</span></div>
+          </div>
+          <div class="px-3 py-2 my-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
+        </div>
+        <div class="responser">
+          <div class="flex flex-col items-start gap-3 w-full px-3 py-8 border-b">
+            <div class="date">時間</div>
+            <div>
+              <span class="border-b">12</span> :
+              <span class="border-b">00</span>
+              <span class="ml-3 text-grey font-bold">上午</span>
+            </div>
+          </div>
+          <div class="px-3 py-2 my-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
         </div>
       </div>
     </div>
@@ -88,7 +101,7 @@ export default {
 
 <style lang="scss" scoped>
 #response {
-    @apply h-screen mt-[20px] pb-[20px];
+    @apply min-h-[100vh] mt-[20px] pb-[20px];
 .all {
     @apply m-auto max-w-[770px] relative z-[2];
     .response-head {
@@ -123,7 +136,13 @@ export default {
             @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
         }
         .responser {
-            @apply flex flex-col justify-center items-start w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white;
+            @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white;
+            .date {
+                @apply text-grey flex flex-col gap-3 items-end;
+                span {
+                    @apply text-black border-b;
+                }
+            }
         }
     }
 }
