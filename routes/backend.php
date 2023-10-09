@@ -37,9 +37,7 @@ Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {
 
 Route::prefix('response')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/sum', [ResponseController::class,'response_sum'])->name('response.sum');
-    Route::get('/que', function () {
-        return Inertia::render('Backend/ResponseQue');
-    })->name('response.que');
+    Route::get('/que/{id}',[ResponseController::class,'responseQue'])->name('response.que');
     Route::get('/ind', function () {
         return Inertia::render('Backend/ResponseInd');
     })->name('response.ind');

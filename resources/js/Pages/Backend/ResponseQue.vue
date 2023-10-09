@@ -10,6 +10,10 @@ import chevron_right from '/resources/images/chevron_right.svg';
 import linkoff from '/resources/images/link_off.png';
 
 export default {
+  props:
+  {
+    response: Object,
+  },
   data() {
     return {
       excel: excel,
@@ -64,7 +68,7 @@ export default {
           </select>
           <div class="flex ml-3">
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
-            <div>第
+            <div>
               <input type="number" :value="num" class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共 4 項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>

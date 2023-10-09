@@ -30,4 +30,17 @@ class ResponseController extends Controller
 
             return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($response)]);
     }
+    public function responseQue(Request $request, $id) 
+    {   
+        $datas = Response::where('question_id', $id)->get();
+        $results = [];
+        foreach ($datas as $data) {
+            $answer = json_decode($data['answer'], true);
+            $results[] = $answer;
+        }
+        $response = [
+            'results' => $results,
+        ];
+        return Inertia::render('Backend/ResponseQue',['response' => rtFormat($response)]);
+    }
 }
