@@ -19,6 +19,7 @@ import addnewform from '/images/addnewform.png';
 import dot from '/images/dot.png';
 import text from '/images/text.png';
 import user from '/images/user.svg';
+import description from '/images/description.svg';
 import account from '/images/account-circle.svg';
 import open_in_new from '/images/open_in_new.png';
 // import RenameModal from '@/Components/Modal/RenameModal.vue';
@@ -61,6 +62,7 @@ export default {
         addnewform,
         user,
         account,
+        description,
       },
       show: false,
       blockShow: false,
@@ -99,7 +101,7 @@ export default {
     },
     closeMenu(id) {
       Swal.fire({
-        title: '要確欸',
+        title: '確定刪除嗎?',
         text: '此筆刪除將會無法回復!',
         icon: 'warning',
         showCancelButton: true,
@@ -246,6 +248,7 @@ export default {
           <Link :href="route('edit.old', { id: item.id })">
             <div class="card-top">
               <!-- 預覽頁面 -->
+              <img :src="images.description" class="w-[50%] opacity-40 object-covAer" alt="">
             </div>
           </Link>
           <div class="card-bottom">
@@ -296,6 +299,7 @@ export default {
 
 <style lang="scss" scoped>
 #guide {
+  @apply min-h-screen;
   nav {
     @apply fixed w-full z-50;
     .container {
@@ -368,13 +372,13 @@ export default {
     }
   }
   .main {
-    @apply w-full px-[13%] relative top-[138px] pb-20;
+    @apply w-full px-[13%] relative top-[138px] pb-24;
     .card-group {
       @apply flex flex-wrap gap-5;
       .card {
         @apply w-[208px] h-[244px] border border-grey-middle hover:border-purple;
         .card-top {
-          @apply h-[70%] bg-grey-dark;
+          @apply h-[70%] bg-grey-light flex justify-center items-center;
         }
         .card-bottom {
           @apply h-[30%] w-full px-5 py-2 border-grey-middle border-t relative;
