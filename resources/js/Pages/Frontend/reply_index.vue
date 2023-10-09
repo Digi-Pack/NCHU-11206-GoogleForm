@@ -103,9 +103,6 @@ export default {
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
           {{ item }}
-          <div>
-            <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
-          </div>
           <!-- 簡答 -->
           <div v-if="item.type === 1" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
@@ -233,6 +230,20 @@ export default {
                 <option value="a.m.">上午</option>
                 <option value="p.m.">下午</option>
               </select>
+            </div>
+          </div>
+          <!-- 圖片 -->
+          <div v-if="item.type === 12" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="p-5">
+              <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
+            </div>
+          </div>
+          <!-- 影片 -->
+          <div v-if="item.type === 13" class="!block">
+            <span class="text-[18px]">{{ item.title }}</span>
+            <div class="p-5 flex justify-center">
+              <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
         </div>

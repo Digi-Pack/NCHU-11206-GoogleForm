@@ -27,6 +27,16 @@ export default {
     messageUrl() {
       return route('reply.index', { 'id': this.formUrl });
     },
+    copy() {
+      let copyText = document.getElementById('url');
+      // Select the text field
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); // For mobile devices
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText.value);
+      // Alert the copied text
+      alert('Copied the text: ' + copyText.value);
+    },
   },
 };
 </script>
@@ -54,16 +64,12 @@ export default {
         </div>
         <div class="pt-[30px]">
           <h3 class="font-semibold text-[20px]">連結</h3>
-          <input type="url" class="border-x-0 border-t-0 w-[90%]" :value="messageUrl()">
-          <div class="mt-3">
-            <input type="checkbox" name="" id="checkbox">
-            <label for="checkbox" class="ml-3 text-gray-700">縮短網址</label>
-          </div>
-          <div class="flex justify-end">
+          <input type="url" class="border-x-0 border-t-0 w-[90%]" :value="messageUrl()" id="url">
+          <div class="flex justify-end mt-5">
             <button type="button" class="btn px-5 py-2 text-gray-700 hover:bg-grey-light rounded-[10px] mr-3"
               @click="closing()">取消</button>
             <button type="button"
-              class="btn px-5 py-2 border border-grey rounded-[10px] text-gray-700 hover:bg-grey-light">複製</button>
+              class="btn px-5 py-2 border border-grey rounded-[10px] text-gray-700 hover:bg-grey-light" @click="copy()">複製</button>
           </div>
         </div>
       </div>

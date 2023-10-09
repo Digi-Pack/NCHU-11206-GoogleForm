@@ -70,9 +70,6 @@ export default {
         subtext: subtext,
         timeAll: timeAll,
       };
-
-      return {};
-
     },
     timeSubtext(questionId) {
       let subtextCount = 0;
