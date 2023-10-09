@@ -639,7 +639,6 @@ export default {
               <!-- 第三行 -->
               <div class="question-bottom">
                 <div class="func">
-                  <img :src="copy" alt="">
                   <button type="button" @click="delQuestion(item.id)">
                     <label>
                       <img :src="del" alt="">

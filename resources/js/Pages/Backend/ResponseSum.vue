@@ -87,57 +87,6 @@ export default {
 
         .head-top {
             @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
-
-            .func {
-                @apply flex items-center;
-
-                .excel-link {
-                    @apply relative;
-
-                    .to-excel {
-                        @apply py-[10px] px-[24px] text-[20px] flex;
-
-                        .excel {
-                            @apply w-[25px] h-[25px] mr-[10px] leading-[25px];
-                        }
-
-                        .directions {
-                            @apply hidden absolute top-[36px] left-[12px] text-white text-[14px] rounded-[3px] p-[8px] cursor-none hover:rounded-[10px] hover:block;
-                        }
-                    }
-                }
-
-                .dot {
-                    @apply relative w-[55px] h-[55px] p-[16px] text-center cursor-pointer hover:bg-gray-100 rounded-[50%];
-                }
-
-                .dot-box-all {
-                    @apply absolute top-[40px] z-[9] bg-white rounded-[10px] py-[10px] w-[300px] h-[200px] overflow-auto shadow-[0_2px_1px_0_rgba(0,0,0,0.3)] hidden;
-
-                        &::-webkit-scrollbar {
-                            width: 1em;
-                        };
-
-                        &::-webkit-scrollbar-thumb {
-                            background-color: rgb(180, 180, 180);
-                            border: 1px solid white;
-                        };
-
-                    li {
-                        @apply list-none leading-[25px] hover:bg-[#e6e6e6] flex py-[10px];
-
-                        img {
-                            @apply ml-[15px] w-[25px] h-[25px];
-                        }
-                        .text {
-                            @apply pr-[10px] ml-[20px];
-                        }
-                    }
-                }
-                #dot-box-switch:checked~.dot-box-all {
-                    @apply block;
-                }
-            }
         }
         .head-fotter {
             @apply flex justify-around h-[50px];

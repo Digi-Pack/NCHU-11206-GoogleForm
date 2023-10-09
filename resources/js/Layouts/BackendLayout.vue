@@ -111,7 +111,7 @@ export default {
                 <div class="topic-head">
                   <div class="top-text">
                     <img class="palette" :src="images.palette" alt="">
-                    <span>主題</span>
+                    <span>主題顏色</span>
                   </div>
                   <button type="button" class="close" @click="topicOpen()"><img :src="images.close" alt=""></button>
                 </div>
@@ -259,16 +259,7 @@ nav {
                     }
                   }
                   .topic-body {
-                    @apply px-[20px] py-[10px] h-[calc(100vh-161px)]  overflow-y-scroll;
-                    &::-webkit-scrollbar{
-                      @apply w-[4px];
-                    }
-                    &::-webkit-scrollbar-track {
-                      @apply bg-purple-dark my-[10px] rounded-[10px];
-                    }
-                    &::-webkit-scrollbar-thumb{
-                      @apply bg-purple rounded-[10px];
-                    }
+                    @apply px-[20px] py-[10px];
                     .select-region {
                       @apply mb-[20px];
                       .region-title {
