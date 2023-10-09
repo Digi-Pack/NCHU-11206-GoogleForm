@@ -234,12 +234,12 @@ export default {
     }
 
     .response-body {
-        @apply flex flex-col mt-[15px] bg-white;
+        @apply flex flex-col mt-[15px];
         .noreply {
-            @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px];
+            @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
         }
             .responser {
-                @apply flex flex-col justify-center items-start w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px];
+                @apply flex flex-col justify-center items-start w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
                 .title {
                     @apply w-full text-[24px] font-semibold p-5 border-b;
                 }

@@ -188,7 +188,7 @@ export default {
             <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
               問題
             </NavLink>
-            <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
+            <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
               回覆
             </NavLink>
             <NavLink class="btn" :href="route('profile.edit')" :active="currentUrl('profile.edit')">
