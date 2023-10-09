@@ -1,5 +1,5 @@
 <template>
-  <!-- {{ chartdata }}123 -->
+  <!-- {{ chartdata }} -->
   {{ arrayA }}<hr>{{ arrayB }}
   <div v-for="(option, index) in chartOptions"
     :key="index">
@@ -27,9 +27,11 @@
           <span class="text-bold">{{ itemIn.year }}年</span>
           <span class="text-bold">{{ itemIn.month }}月</span>
         </div>
-        <div v-for="itemInDay in itemIn.day" :key="itemInDay.day" class="px-5 flex items-center py-3">
-          <div class="day">{{ itemInDay.day }}日<div class="count">{{ itemInDay.count }}</div></div>
-
+        <div v-for="itemInDay in itemIn.day" :key="itemInDay.day" class="pl-5 flex items-center py-3">
+          <div class="flex bg-purple-middle rounded-[20px] justify-between items-center py-1 ">
+            <div class="day">{{ itemInDay.day }}日</div>
+            <div class="count">{{ itemInDay.count }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -41,12 +43,15 @@
         <div class="subtitle">{{ option.item.subtext }}則回應</div>
       </div>
       <div v-for="(itemIn, index) in option.item.timeAll" :key="index" class="px-5 flex items-center">
-        <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-4">
           <span class="text-bold">{{ itemIn.zone }} B</span>
           <div class="border-red-400 w-[30px] border-b-[3px]"></div>
         </div>
         <div v-for="(itemInTime, index) in itemIn.time" :key="index" class="px-5 flex items-center py-2">
-          <div class="time">{{ itemInTime.time }}<div class="count">{{ itemInTime.count }}</div></div>
+          <div class="bg-purple-middle flex justify-between items-center rounded-[20px] py-1">
+            <div class="time">{{ itemInTime.time }}</div>
+            <div class="count">{{ itemInTime.count }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -130,7 +135,7 @@ export default {
         };
       } else if (item.type === 7) {
         // 生成縱向长条图的配置项
-        console.log('我是type7');
+        console.log(item);
         return {
           type: item.type,
           title: {
@@ -509,30 +514,30 @@ export default {
 
   <style lang="scss" scoped>
   .chart {
-    @apply w-[700px] h-[400px] mt-[100px] m-auto;
+    @apply w-[770px] h-[350px] mt-5 border rounded-[10px] border-gray-200 bg-white pt-10 flex justify-center items-center px-3;
   }
   .text-area {
-    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white py-5;
+    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white py-2;
     .que-top {
         @apply p-5;
         .title {
             @apply w-full text-lg font-semibold mb-1 px-3;
         }
         .subtitle{
-            @apply text-sm px-3;
+            @apply text-sm;
         }
     }
     .text-answer {
         @apply text-base mb-2 py-3 pl-3 bg-gray-50 rounded-md;
     }
     .day {
-        @apply bg-purple-middle rounded-[20px] px-3 mr-2;
+        @apply rounded-[20px] pl-3 pr-2;
     }
     .time {
-        @apply bg-purple-middle rounded-[20px] px-3 py-1 mr-2 text-sm;
+        @apply rounded-[20px] pl-3 pr-2 text-sm;
     }
     .count {
-        @apply bg-white rounded-[20px] px-3 py-1 mr-2 text-sm;
+        @apply bg-purple-light rounded-full px-3 py-1 mr-2 text-sm;
     }
 }
   </style>
