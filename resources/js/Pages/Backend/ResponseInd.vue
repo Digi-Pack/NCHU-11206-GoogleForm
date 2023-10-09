@@ -22,6 +22,7 @@ export default {
       chevron_left: chevron_left,
       chevron_right: chevron_right,
       num: 1,
+      coFormId: route()?.params?.id ?? '0',
     };
   },
   methods: {
@@ -51,7 +52,7 @@ export default {
           <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
+          <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
             問題
           </NavLink>
           <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">

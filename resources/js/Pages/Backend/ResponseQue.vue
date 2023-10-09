@@ -10,9 +10,12 @@ import chevron_right from '/resources/images/chevron_right.svg';
 import linkoff from '/resources/images/link_off.png';
 
 export default {
-  props:
-  {
-    response: Object,
+  props: {
+    response: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -26,7 +29,11 @@ export default {
       chevron_left: chevron_left,
       chevron_right: chevron_right,
       num: 1,
+      coFormId: route()?.params?.id ?? '0',
     };
+  },
+  mounted() {
+    console.log(this.response);
   },
   methods: {
     currentUrl(urlName = '') {
@@ -55,7 +62,7 @@ export default {
           <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
+          <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
             問題
           </NavLink>
           <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
