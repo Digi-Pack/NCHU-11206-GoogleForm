@@ -1,6 +1,24 @@
 
 <template>
   {{ arrayD }}
+  <!-- 時間 -->
+  <div v-for="(item, index) in arrayD"
+    :key="index" class="text-area">
+    <!-- { type: 11, text:'這是時間的題目', subtext: 3, zone: 10, time: '上午10點' } -->
+    <div class="que-top">
+      {{ item.text }}
+      <div class="subtitle">{{ item.subtext }}則回應</div>
+    </div>
+    <div v-for="(itemIn, index) in item.timeAll" :key="index" class="px-5 flex items-center">
+      <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+        <span class="text-bold">{{ itemIn.zone }} B</span>
+        <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+      </div>
+      <div v-for="(itemInTime, index) in itemIn.time" :key="index" class="px-5 flex items-center py-2">
+        <div class="time">{{ itemInTime.time }}<div class="count">{{ itemInTime.count }}</div></div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -41,6 +59,13 @@ export default {
         if (question.type === 11) {
           const subtext = this.calculateSubtext(question.id);
           const timeAll = this.calculateTimeAll(question.id);
+
+          // 在每个timeAll对象内对time进行排序
+          timeAll.sort((a, b) => {
+            // 比较ZONE值，愈小的排后面
+            return a.zone.localeCompare(b.zone);
+          });
+
           return {
             type: question.type,
             text: question.title,
