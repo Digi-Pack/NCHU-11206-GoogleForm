@@ -28,6 +28,7 @@ export default {
   props: {
     response: Object,
   },
+  emits: ['videoUrl'],
   data() {
     return {
       add: add,
@@ -106,6 +107,7 @@ export default {
       show: false,
       scrollHeight: 0,
       interval: null,
+      model: '',
     };
   },
   watch: {
@@ -353,6 +355,49 @@ export default {
         this.imageSize += e.target.files[0].size;
       };
     },
+    handleClose() {
+      this.model = '';
+    },
+    // 測欄增加影片
+    addVideo(newVideo) {
+      const { formData } = this;
+      this.serial++;
+      const newQuestion = {
+        id: this.serial,
+        title: '問題',
+        request: false,
+        image: '',
+        video: `${newVideo}`,
+        type: 13,
+        options: [
+          {
+            id: 1,
+            value: '',
+          },
+        ],
+        linear: {
+          min: 1,
+          max: 10,
+          minText: '',
+          maxText: '',
+        },
+        square: {
+          row: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+          column: [
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+        },
+      };
+      formData.push(newQuestion);
+    },
   },
 };
 
@@ -375,7 +420,39 @@ export default {
           </div>
           <!-- 問題設置 -->
           <div v-for="(item, index) in formData" :key="item.id" class="question">
-            <div v-if="item.type !== 12">
+            <!-- 側欄新增圖片 -->
+            <div v-if="item.type === 12">
+              <div class="question-bottom">
+                <div class="func !border-r-0">
+                  <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
+                  <button type="button" @click="delQuestion(item.id)">
+                    <label>
+                      <img :src="del" alt="">
+                    </label>
+                  </button>
+                </div>
+              </div>
+              <div class="p-5">
+                <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
+              </div>
+            </div>
+            <!-- 側欄新增影片 -->
+            <div v-else-if="item.type === 13">
+              <div class="question-bottom">
+                <div class="func !border-r-0">
+                  <input :value="item.title" type="text" placeholder="影片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
+                  <button type="button" @click="delQuestion(item.id)">
+                    <label>
+                      <img :src="del" alt="">
+                    </label>
+                  </button>
+                </div>
+              </div>
+              <div class="p-5 flex justify-center">
+                <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div v-else>
               <!-- 第一行 -->
               <div class="question-top">
                 <div class="text-box">
@@ -564,22 +641,6 @@ export default {
                 </div>
               </div>
             </div>
-            <!-- 側欄新增圖片 -->
-            <div v-else>
-              <div class="question-bottom">
-                <div class="func !border-r-0">
-                  <input :value="item.title" type="text" placeholder="圖片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">
-                  <button type="button" @click="delQuestion(item.id)">
-                    <label>
-                      <img :src="del" alt="">
-                    </label>
-                  </button>
-                </div>
-              </div>
-              <div class="p-5">
-                <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
-              </div>
-            </div>
           </div>
         </div>
         <!-- 側欄 -->
@@ -598,7 +659,7 @@ export default {
                 <span>新增圖片</span>
               </div>
             </label>
-            <button type="button" class="side-func !rounded-none cursor-pointer">
+            <button type="button" class="side-func !rounded-none" @click="model = 'UploadYtVideo'">
               <img :src="video" alt="">
               <span>新增影片</span>
             </button>
@@ -612,6 +673,8 @@ export default {
             </button>
           </div>
           <SendLinkModal v-if="show" :form-url="formUrl"></SendLinkModal>
+          <UploadYtVideo v-if="model === 'UploadYtVideo'" @close-model="handleClose" @video-url="addVideo">
+          </UploadYtVideo>
         </div>
       </form>
     </div>

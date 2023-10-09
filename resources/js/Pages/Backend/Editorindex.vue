@@ -419,7 +419,6 @@ export default {
         <!-- 表單命名處 -->
         <div class="max-w-[770px]">
           <div class="form-title">
-            <!-- {{ formData }} -->
             <!-- 表單名稱 -->
             <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input truncate" required @input="updateFormTitle">
             <!-- 表單說明 -->
