@@ -2,7 +2,18 @@
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
-    <VChart v-if="option.type !== 10 && option.type !== 11" class="chart" :option="option" />
+    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11" class="chart" :option="option" />
+    <!-- 簡答 -->
+    <div v-if="option.type === 1 || option.type === 2" class="text-area">
+      <div class="que-top">
+        <div class="title">{{ option.item.text }}</div>
+        <div class="subtitle">{{ option.item.subtext }}則回應</div>
+      </div>
+      <div v-for="(optionIn, index) in option.item.answer"
+        :key="index" class="px-5 py-3">
+        <div class="text-answer">{{ optionIn }}</div>
+      </div>
+    </div>
     <!-- 日期 -->
     <div v-if="option.type === 10" class="text-area">
       <div class="que-top">
@@ -40,19 +51,9 @@
   </div>
 
   <!-- {{ arrayC }} -->
-  {{ chartOptions }}
+  <!-- {{ chartOptions }} -->
   <!-- 簡答/詳答 -->
-  <div v-for="(option, index) in arrayD"
-    :key="index" class="text-area">
-    <div class="que-top">
-      <div class="title">{{ option.text }}</div>
-      <div class="subtitle">{{ option.subtext }}則回應</div>
-    </div>
-    <div v-for="(optionIn, index) in option.answer"
-      :key="index" class="px-5 py-3">
-      <div class="text-answer">{{ optionIn }}</div>
-    </div>
-  </div>
+
   <!-- {type:1,text:'我是第一題簡答',subtext:3,answer:'我是簡答第一題回答'} -->
 </template>
 
@@ -95,7 +96,7 @@ export default {
   },
   data() {
     return {
-      arrayD: [{ type: 1, text: '我是第一題簡答', subtext: 3, answer: ['我是簡答第一題回答', '我是簡答第一題回答2'] }, { type: 1, text: '我是第二題簡答', subtext: 3, answer: ['我是簡答第二題回答', '我是簡答第二題回答2', '我是簡答第二題回答3'] }],
+    //   arrayD: [{ type: 1, text: '我是第一題簡答', subtext: 3, answer: ['我是簡答第一題回答', '我是簡答第一題回答2'] }, { type: 1, text: '我是第二題簡答', subtext: 3, answer: ['我是簡答第二題回答', '我是簡答第二題回答2', '我是簡答第二題回答3'] }],
       arrayA: [
         { 'id': 1, 'title': '我是下拉式選單第一題', 'request': false, 'image': null, 'video': null, 'type': 5, 'options': [{ 'id': 1, 'value': '下拉選項一' }, { 'id': 2, 'value': '下拉選項二' }, { 'id': 3, 'value': '下拉選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
@@ -136,6 +137,8 @@ export default {
         { 'id': 15, 'title': '我是時間第一題', 'request': false, 'image': null, 'video': null, 'type': 11, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
         { 'id': 16, 'title': '我是時間第二題', 'request': false, 'image': null, 'video': null, 'type': 11, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+        { 'id': 17, 'title': '設置3個以上簡答題1', 'request': false, 'image': null, 'video': null, 'type': 1, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+        { 'id': 18, 'title': '我是詳答第一題', 'request': false, 'image': null, 'video': null, 'type': 2, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
       ],
       arrayB: [
         [{ 'id': 1, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
@@ -154,7 +157,8 @@ export default {
           { 'id': 14, 'answer': '2024-10-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 15, 'answer': null, 'manyOptions': [], 'time': { 'hour': '02', 'minute': '02', 'section': 'p.m.' } },
           { 'id': 16, 'answer': null, 'manyOptions': [], 'time': { 'hour': '03', 'minute': '03', 'section': 'p.m.' } },
-
+          { 'id': 17, 'answer': '我是簡答第一題回答', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 18, 'answer': '我是詳答第一題的回答', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
         ]
         ,
 
@@ -174,6 +178,8 @@ export default {
           { 'id': 14, 'answer': '2023-09-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 15, 'answer': null, 'manyOptions': [], 'time': { 'hour': '02', 'minute': '15', 'section': 'p.m.' } },
           { 'id': 16, 'answer': null, 'manyOptions': [], 'time': { 'hour': '03', 'minute': '03', 'section': 'p.m.' } },
+          { 'id': 17, 'answer': '我是簡答第一題回答2', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 18, 'answer': '我是詳答第一題的回答', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
 
         ],
 
@@ -193,7 +199,8 @@ export default {
           { 'id': 14, 'answer': '2024-09-03', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 15, 'answer': null, 'manyOptions': [], 'time': { 'hour': '04', 'minute': '02', 'section': 'p.m.' } },
           { 'id': 16, 'answer': null, 'manyOptions': [], 'time': { 'hour': '01', 'minute': '03', 'section': 'p.m.' } },
-
+          { 'id': 17, 'answer': '我是簡答第一題回答3', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 18, 'answer': '我是詳答第一題的回答', 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
         ],
       ],
       arrayC: [],
@@ -305,6 +312,10 @@ export default {
         return { type: 10, item };
       } else if (item.type === 11) {
         return { type: 11, item };
+      } else if (item.type === 1) {
+        return { type: 1, item };
+      } else if (item.type === 2) {
+        return { type: 2, item };
       }
       return {};
     });
@@ -551,6 +562,29 @@ export default {
       }
       return '';
     },
+    shortLongAnswer(question) {
+      let subtext = 0;
+      let answerArray = [];
+
+      // 遍历数组B中的子数组
+      for (let j = 0; j < this.arrayB.length; j++) {
+        let answerSet = this.arrayB[j];
+        let answer = answerSet[question.id - 1].answer; // 获取对应问题的答案
+
+        // 检查答案是否不为 null 或空字符串
+        if (answer !== null && answer.trim() !== '') {
+          subtext++;
+          answerArray.push(answer);
+        }
+      }
+
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: subtext,
+        answer: answerArray,
+      };
+    },
     generateArrayC() {
       this.arrayC = this.arrayA.map((question) => {
         if (question.type === 3 || question.type === 5) {
@@ -569,6 +603,8 @@ export default {
           return this.dateTotal(question);
         } else if (question.type === 11) {
           return this.timeTotal(question);
+        } else if (question.type === 1 || question.type === 2) {
+          return this.shortLongAnswer(question);
         }
         console.log('陣列結束了');
       });

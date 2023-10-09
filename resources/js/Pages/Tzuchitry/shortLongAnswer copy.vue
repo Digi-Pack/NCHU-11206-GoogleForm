@@ -42,46 +42,35 @@ export default {
   },
   mounted() {
     // 在mounted生命周期中调用generateArrayD方法
-    this.arrayD = this.generateArrayD(this.arrayA, this.arrayB);
+    this.arrayD = this.generateArrayD();
   },
 
   methods: {
-    generateArrayD(arrayA, arrayB) {
-    // 创建一个空数组D来存储结果
-      let arrayD = [];
+    generateArrayD(question) {
+      let questionText = question.title;
+      let subtext = 0;
+      let answerArray = [];
 
-      // 遍历数组A
-      for (let i = 0; i < arrayA.length; i++) {
-        let questionA = arrayA[i];
+      // 遍历数组B中的子数组
+      for (let j = 0; j < this.arrayB.length; j++) {
+        let answerSet = arrayB[j];
+        let answer = answerSet[i].answer;
 
-        // 如果type属性为1，创建一个新的对象X
-        if (questionA.type === 1) {
-          let questionText = questionA.title;
-          let subtext = 0;
-          let answerArray = [];
-
-          // 遍历数组B中的子数组
-          for (let j = 0; j < arrayB.length; j++) {
-            let answerSet = arrayB[j];
-            let answer = answerSet[i].answer;
-
-            // 检查答案是否为空字符串
-            if (answer.trim() !== '') {
-              subtext++;
-              answerArray.push(answer);
-            }
-          }
-
-          // 创建对象X并添加到数组D中
-          let objectX = {
-            type: 1,
-            text: questionText,
-            subtext: subtext,
-            answer: answerArray,
-          };
-          arrayD.push(objectX);
+        // 检查答案是否为空字符串
+        if (answer.trim() !== '') {
+          subtext++;
+          answerArray.push(answer);
         }
       }
+
+      // 创建对象X并添加到数组D中
+      let objectX = {
+        type: 1,
+        text: questionText,
+        subtext: subtext,
+        answer: answerArray,
+      };
+      arrayD.push(objectX);
 
       // 返回结果数组D
       return arrayD;
