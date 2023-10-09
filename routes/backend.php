@@ -44,3 +44,11 @@ Route::prefix('response')->middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Backend/ResponseInd');
     })->name('response.ind');
 });
+
+Route::prefix('response')->group(function () {
+    // 新增表單
+    Route::get('/combine11s ', function () {
+        return Inertia::render('Tzuchitry/combine11s');
+    });
+
+});

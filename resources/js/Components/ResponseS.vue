@@ -1,0 +1,538 @@
+<template>
+  <!-- {{ chartdata }}123 -->
+  {{ arrayA }}
+  <div v-for="(option, index) in chartOptions"
+    :key="index">
+    <!-- Echart -->
+    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11" class="chart" :option="option" />
+    <!-- 簡答 -->
+    <div v-if="option.type === 1 || option.type === 2" class="text-area">
+      <div class="que-top">
+        <div class="title">{{ option.item.text }}</div>
+        <div class="subtitle">{{ option.item.subtext }}則回應</div>
+      </div>
+      <div v-for="(optionIn, index) in option.item.answer"
+        :key="index" class="px-5 py-3">
+        <div class="text-answer">{{ optionIn }}</div>
+      </div>
+    </div>
+    <!-- 日期 -->
+    <div v-if="option.type === 10" class="text-area">
+      <div class="que-top">
+        {{ option.item.text }} <!-- 这里使用 option.item.title -->
+        <div class="subtitle">{{ option.item.subtext }}則回應</div> <!-- 这里使用 option.item.subtext -->
+      </div>
+      <div v-for="itemIn in option.item.date" :key="itemIn.id" class="px-5 flex items-center">
+        <div class="w-[100px] border-r border-black ml-5 py-3">
+          <span class="text-bold">{{ itemIn.year }}年</span>
+          <span class="text-bold">{{ itemIn.month }}月</span>
+        </div>
+        <div v-for="itemInDay in itemIn.day" :key="itemInDay.day" class="px-5 flex items-center py-3">
+          <div class="day">{{ itemInDay.day }}日<div class="count">{{ itemInDay.count }}</div></div>
+
+        </div>
+      </div>
+    </div>
+    <!-- 時間 -->
+    <div v-if="option.type === 11" class="text-area">
+      <!-- { type: 11, text:'這是時間的題目', subtext: 3, zone: 10, time: '上午10點' } -->
+      <div class="que-top">
+        {{ option.item.text }}
+        <div class="subtitle">{{ option.item.subtext }}則回應</div>
+      </div>
+      <div v-for="(itemIn, index) in option.item.timeAll" :key="index" class="px-5 flex items-center">
+        <div class="flex gap-2 w-[100px] border-r border-black ml-5 py-3">
+          <span class="text-bold">{{ itemIn.zone }} B</span>
+          <div class="border-red-400 w-[30px] border-b-[3px]"></div>
+        </div>
+        <div v-for="(itemInTime, index) in itemIn.time" :key="index" class="px-5 flex items-center py-2">
+          <div class="time">{{ itemInTime.time }}<div class="count">{{ itemInTime.count }}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import * as echarts from 'echarts/core';
+// 基礎柱狀、條形圖、柱狀圖標籤旋轉、按行按列分布、最簡單數據集
+import {
+  DatasetComponent,
+  ToolboxComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+} from 'echarts/components';
+import {
+  PieChart,
+  BarChart,
+} from 'echarts/charts';
+import { LabelLayout } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+
+echarts.use([
+  DatasetComponent,
+  ToolboxComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  BarChart,
+  PieChart,
+  CanvasRenderer,
+  LabelLayout,
+]);
+
+import VChart from 'vue-echarts';
+
+export default {
+  components: {
+    VChart,
+  },
+  props: {
+    chartdata: Object,
+  },
+  data() {
+    return {
+      arrayA: this.chartdata.questionNaires,
+      arrayB: this.chartdata.results,
+      arrayC: [],
+      chartOptions: [],
+    };
+  },
+  mounted() {
+    this.generateArrayC(),
+    this.chartOptions = this.arrayC.map(item => {
+      if (item.type === 5 || item.type === 3) {
+        // 生成圆饼图的配置项
+        console.log('我是type3或5');
+        return {
+          type: item.type,
+          title: {
+            text: item.text,
+            left: 'center',
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: '50%',
+              data: item.data,
+            },
+          ],
+        };
+      } else if (item.type === 7) {
+        // 生成縱向长条图的配置项
+        console.log('我是type7');
+        return {
+          type: item.type,
+          title: {
+            text: item.text,
+            subtext: `${item.subtext}則回覆`,
+            left: 'center',
+          },
+          legend: {},
+          tooltip: {},
+          xAxis: {
+            type: 'category',
+            data: item.xAxis,
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: [
+            {
+              data: item.data,
+              type: 'bar',
+              itemStyle: {
+                color: '#AA90D3', // 在这里设置bar的颜色
+              },
+            },
+          ],
+        };
+      } else if (item.type === 4) {
+        // 生成橫向长条图的配置项
+        console.log('我是type4');
+        return {
+          type: item.type,
+          title: {
+            text: item.text,
+            left: 'center',
+          },
+          legend: {},
+          tooltip: {},
+          yAxis: {
+            data: item.yAxis,
+          },
+          xAxis: {},
+          series: [{
+            name: '',
+            type: 'bar',
+            stack: '',
+            data: item.data,
+            itemStyle: {
+              color: '#AA90D3', // 在这里设置bar的颜色
+            },
+          },
+          ],
+        };
+      } else if (item.type === 8 || item.type === 9) {
+        // 生成核取方塊格的配置项
+        return {
+          type: item.type,
+          title: {
+            text: item.text,
+            subtext: `${item.subtext}則回覆`,
+            left: 'center',
+          },
+          legend: {},
+          tooltip: {},
+          dataset: {
+            source: item.data,
+          },
+          xAxis: { type: 'category' },
+          yAxis: {},
+          series: item.series,
+        };
+      } else if (item.type === 10) {
+        return { type: 10, item };
+      } else if (item.type === 11) {
+        return { type: 11, item };
+      } else if (item.type === 1) {
+        return { type: 1, item };
+      } else if (item.type === 2) {
+        return { type: 2, item };
+      }
+      return {};
+    });
+  },
+  methods: {
+    pieSum(question) {
+      return {
+        type: question.type,
+        text: question.title,
+        data: question.options.map((option) => {
+          this.count = 0; // 在這裡定義並初始化 count
+          this.arrayB.forEach((answerSet) => {
+            // console.log(answerSet);
+            const answer = answerSet.find((answer) => answer.id === question.id);
+            // console.log(answer);
+            // console.log(13);
+            if (answer && answer.answer === option.id) { // 比較 answer.answer 和 option.id
+              this.count++;
+            }
+          });
+          return {
+            value: this.count,
+            name: option.value,
+          };
+        }),
+      };
+    },
+    checkboxSum(question) {
+      const data = question.options.map((option) => {
+        const count = this.checkboxCount(question.id, option.id);
+        return count;
+      });
+
+      return {
+        type: question.type,
+        text: question.title,
+        yAxis: question.options.map((option) => option.value),
+        data: data,
+      };
+    },
+    checkboxCount(questionId, optionId) {
+      let count = 0;
+      this.arrayB.forEach((answerSet) => {
+        answerSet.forEach((answer) => {
+          if (answer.id === questionId && answer.manyOptions.includes(optionId)) {
+            count++;
+          }
+        });
+      });
+      return count;
+    },
+    linearData(question) {
+      console.log('我是線性刻度function的頭');
+      const xAxis = [];
+      const data = [];
+
+      const min = parseInt(question.linear.min);
+      const max = parseInt(question.linear.max);
+
+      for (let i = min; i <= max; i++) {
+        xAxis.push(i);
+        data.push(0); // 初始化数据数组
+      }
+
+      let subtextCount = 0; // 初始化 subtext 计数
+
+      for (const answerSet of this.arrayB) {
+        const manyOptionsValue = answerSet[this.arrayA.indexOf(question)].manyOptions; // 使用问题的索引获取manyOptions值
+        if (manyOptionsValue >= min && manyOptionsValue <= max) {
+          // 计算数据数组的索引
+          const dataIndex = manyOptionsValue - min;
+          data[dataIndex]++;
+        }
+        if (manyOptionsValue >= 0) {
+          subtextCount++;
+        }
+      }
+
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: subtextCount,
+        xAxis: xAxis,
+        data: data,
+      };
+    },
+    choiceSquare(question) {
+      const { arrayB } = this;
+      // 初始化行和列名
+      const rowNames = question.square.row.map(row => row.text);
+      const columnNames = question.square.column.map(col => col.text);
+
+      // 初始化数据数组
+      const data = [['欄', ...columnNames]];
+
+      // 初始化时间统计对象
+      const timeCounts = {};
+
+      // 遍历数组B，统计各个row-col组合的出现次数
+      for (const answers of arrayB) {
+        for (const answer of answers) {
+          if (answer.id === question.id) {
+            for (const option of answer.manyOptions) {
+              const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
+              if (!timeCounts[row]) {
+                timeCounts[row] = {};
+              }
+              if (!timeCounts[row][col]) {
+                timeCounts[row][col] = 0;
+              }
+              timeCounts[row][col]++;
+            }
+          }
+        }
+      }
+
+      // 构建数据数组
+      for (let i = 1; i <= rowNames.length; i++) {
+        const rowData = [rowNames[i - 1]];
+        for (let j = 1; j <= columnNames.length; j++) {
+          rowData.push(timeCounts[i] && timeCounts[i][j] ? timeCounts[i][j] : 0);
+        }
+        data.push(rowData);
+      }
+      const series = [];
+      for (let i = 0; i < columnNames.length; i++) {
+        series.push({ type: 'bar' });
+      }
+
+      // 构建对象X并加入数组C
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: arrayB.filter(answers => answers[question.id - 1].manyOptions.length > 0).length,
+        data: data,
+        series: series,
+      };
+
+    },
+    dateTotal(question) {
+      const subtext = this.dateSubtext(question.id);
+      const date = this.dateCalculate(question.id);
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: subtext,
+        date: date,
+      };
+    },
+    dateSubtext(questionId) {
+      let subtextCount = 0;
+      for (const answerSet of this.arrayB) {
+        const answer = answerSet.find((answer) => answer.id === questionId);
+        if (answer && answer.answer !== null && answer.answer !== '') {
+          subtextCount++;
+        }
+      }
+      return subtextCount;
+    },
+    dateCalculate(questionId) {
+      const dateData = [];
+      for (const answerSet of this.arrayB) {
+        const answer = answerSet.find((answer) => answer.id === questionId);
+        if (answer && answer.answer !== null && answer.answer !== '') {
+          const [year, month, day] = answer.answer.split('-').map(Number);
+          const existingDate = dateData.find((dateItem) => dateItem.year === year && dateItem.month === month);
+          if (existingDate) {
+            const existingDay = existingDate.day.find((dayItem) => dayItem.day === day);
+            if (existingDay) {
+              existingDay.count++;
+            } else {
+              existingDate.day.push({ day, count: 1 });
+            }
+          } else {
+            dateData.push({
+              year,
+              month,
+              day: [{ day, count: 1 }],
+            });
+          }
+        }
+      }
+      return dateData;
+    },
+    timeTotal(question) {
+      const subtext = this.timeSubtext(question.id);
+      const timeAll = this.timeAll(question.id);
+
+      // 在每个timeAll对象内对time进行排序
+      timeAll.sort((a, b) => {
+        // 比较ZONE值，愈小的排后面
+        return a.zone.localeCompare(b.zone);
+      });
+
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: subtext,
+        timeAll: timeAll,
+      };
+
+    },
+    timeSubtext(questionId) {
+      let subtextCount = 0;
+      for (const answerSet of this.arrayB) {
+        const answer = answerSet.find((answer) => answer.id === questionId);
+        if (answer && answer.time && (answer.time.hour !== null || answer.time.minute !== null)) {
+          subtextCount++;
+        }
+      }
+      return subtextCount;
+    },
+    timeAll(questionId) {
+    //   const timeAll = [];
+      const zoneMap = new Map();
+      for (const answerSet of this.arrayB) {
+        const answer = answerSet.find((answer) => answer.id === questionId);
+        if (answer && answer.time && (answer.time.hour !== null || answer.time.minute !== null)) {
+          const zone = answer.time.hour || answer.time.minute;
+          if (!zoneMap.has(zone)) {
+            zoneMap.set(zone, { zone: zone, time: [] });
+          }
+          const existingZone = zoneMap.get(zone);
+          const formattedTime = this.formatTime(answer.time);
+          const existingTime = existingZone.time.find((item) => item.time === formattedTime);
+          if (existingTime) {
+            existingTime.count++;
+          } else {
+            existingZone.time.push({ time: formattedTime, count: 1 });
+          }
+        }
+      }
+      return Array.from(zoneMap.values());
+    },
+    formatTime(time) {
+      const hour = time.hour || '00';
+      const minute = time.minute || '00';
+      if (time.hour !== null && time.minute !== null) {
+        return `凌晨${hour}:${minute}`;
+      } else if (time.hour !== null) {
+        return `上午${hour}:${minute}`;
+      } else if (time.minute !== null) {
+        return `凌晨${minute}`;
+      }
+      return '';
+    },
+    shortLongAnswer(question) {
+      let subtext = 0;
+      let answerArray = [];
+
+      // 遍历数组B中的子数组
+      for (let j = 0; j < this.arrayB.length; j++) {
+        let answerSet = this.arrayB[j];
+        let answer = answerSet[question.id - 1].answer; // 获取对应问题的答案
+
+        // 检查答案是否不为 null 或空字符串
+        if (answer !== null && answer.trim() !== '') {
+          subtext++;
+          answerArray.push(answer);
+        }
+      }
+
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: subtext,
+        answer: answerArray,
+      };
+    },
+    generateArrayC() {
+      this.arrayC = this.arrayA.map((question) => {
+        if (question.type === 3 || question.type === 5) {
+        //   this.count = 0;
+          console.log(123);
+          return this.pieSum(question);
+        } else if (question.type === 4) {
+          console.log(456);
+          return this.checkboxSum(question);
+        } else if (question.type === 7) {
+          console.log(789);
+          return this.linearData(question);
+        } else if (question.type === 8 || question.type === 9) {
+          return this.choiceSquare(question);
+        } else if (question.type === 10) {
+          return this.dateTotal(question);
+        } else if (question.type === 11) {
+          return this.timeTotal(question);
+        } else if (question.type === 1 || question.type === 2) {
+          return this.shortLongAnswer(question);
+        }
+        console.log('陣列結束了');
+      });
+    },
+  },
+
+};
+</script>
+
+  <style lang="scss" scoped>
+  .chart {
+    @apply w-[700px] h-[400px] mt-[100px] m-auto;
+  }
+  .text-area {
+    @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white py-5;
+    .que-top {
+        @apply p-5;
+        .title {
+            @apply w-full text-lg font-semibold mb-1 px-3;
+        }
+        .subtitle{
+            @apply text-sm px-3;
+        }
+    }
+    .text-answer {
+        @apply text-base mb-2 py-3 pl-3 bg-gray-50 rounded-md;
+    }
+    .day {
+        @apply bg-purple-middle rounded-[20px] px-3 mr-2;
+    }
+    .time {
+        @apply bg-purple-middle rounded-[20px] px-3 py-1 mr-2 text-sm;
+    }
+    .count {
+        @apply bg-white rounded-[20px] px-3 py-1 mr-2 text-sm;
+    }
+}
+  </style>

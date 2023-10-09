@@ -6,11 +6,11 @@ import print from '/resources/images/print.png';
 import del from '/resources/images/del.png';
 import check from '/resources/images/check.png';
 import linkoff from '/resources/images/link_off.png';
-import Echarts from '@/Components/Echarts.vue';
+import ResponseS from '@/Components/ResponseS.vue';
 
 export default {
   components: {
-    Echarts,
+    ResponseS,
   },
   props:
   {
@@ -26,6 +26,7 @@ export default {
       check: check,
       linkoff: linkoff,
       data: this.response.rt_data,
+      chartdata: this.response.rt_data,
     };
   },
   methods: {
@@ -38,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <!-- {{ response.rt_data }} -->
+
   <section id="response-sum" class="pt-[10px]">
     <div class="all">
       <div class="response-head bg-white">
@@ -71,10 +72,11 @@ export default {
             <div class="email-address">user@gmail.com</div>
           </div>
         </div>
+        <ResponseS :chartdata="chartdata" />
       </div>
-      <Echarts :data="data" />
     </div>
   </section>
+
 </template>
 
 <style lang="scss" scoped>
