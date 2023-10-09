@@ -27,6 +27,7 @@ export default {
       linkoff: linkoff,
       data: this.response.rt_data,
       chartdata: this.response.rt_data,
+      coFormId: route()?.params?.id ?? '0',
     };
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
           <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
+          <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
             問題
           </NavLink>
           <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
