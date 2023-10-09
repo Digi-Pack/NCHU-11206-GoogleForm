@@ -18,23 +18,23 @@ class ResponseController extends Controller
     }
     public function response_sum()
     {
-     $datas = Response::where('question_id', 10)->get();
-            $results = [];
-            foreach ($datas as $data) {
-                $answer = json_decode($data['answer'], true);
-                $results[] = $answer;
-            }
-            $responseForm = Question::where('id', 12)->first();
+        $datas = Response::where('question_id', 1)->get();
+        $results = [];
+        foreach ($datas as $data) {
+            $answer = json_decode($data['answer'], true);
+            $results[] = $answer;
+        }
+            $responseForm = Question::where('id', 1)->first();
             $questionNaires = json_decode($responseForm['questionnaires'], true);
             // $data = json_decode($datas[1]['answer'], true);
             // $responseForm = Question::where('id', 8)->first();
             // $questionNaires = json_decode($responseForm['questionnaires'], true);
 
-            $response=[
+            $response = [
                 'results' => $results,
                 // 'questionNaires' => $questionNaires,
             ];
 
-            return Inertia::render('Backend/ResponseSum',['response' => rtFormat($response)]);
+            return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($response)]);
     }
 }

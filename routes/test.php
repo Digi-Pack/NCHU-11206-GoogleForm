@@ -10,17 +10,6 @@ Route::get('/test4', function () {
     return Inertia::render('Backend/ResponseSumTest');
 })->name('response');
 
-
-// Route::prefix('response')->group(function () {
-//     Route::get('/sum',[EditorController::class,'response_sum'])->name('response.sum');
-//     Route::get('/que', function () {
-//         return Inertia::render('Backend/ResponseQue');
-//     })->name('response.que');
-//     Route::get('/ind', function () {
-//         return Inertia::render('Backend/ResponseInd');
-//     })->name('response.ind');
-// });
-
 Route::get('/see', [EditorController::class,'index'])->name('see.index');
 
 Route::post('/see/store', [EditorController::class,'seeStore'])->name('see.store');
