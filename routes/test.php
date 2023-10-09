@@ -53,4 +53,10 @@ Route::prefix('response')->group(function () {
     Route::get('/time ', function () {
         return Inertia::render('Tzuchitry/time');
     });
+    Route::get('/combine9s ', function () {
+        return Inertia::render('Tzuchitry/combine9s');
+    });
+    Route::get('/combine9s22 ', function () {
+        return Inertia::render('Tzuchitry/combine9s22');
+    });
 });
