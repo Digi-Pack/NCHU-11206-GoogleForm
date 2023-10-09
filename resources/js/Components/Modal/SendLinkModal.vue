@@ -37,6 +37,16 @@ export default {
       // Alert the copied text
       alert('Copied the text: ' + copyText.value);
     },
+    // 發佈到fb
+    shareOnFacebook() {
+      const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.messageUrl())}`;
+      window.open(fbShareUrl, '_blank');
+    },
+    // 發佈到twitter
+    shareOnTwitter() {
+      const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(this.messageUrl())}`;
+      window.open(twitterShareUrl, '_blank');
+    },
   },
 };
 </script>
@@ -58,8 +68,12 @@ export default {
             </button>
           </div>
           <div class="flex">
-            <img :src="facebook" class="mr-[10px] w-[28px] h-[28px]" alt="">
-            <img :src="twitter" class="mr-[10px] w-[28px] h-[28px]" alt="">
+            <button type="button" @click="shareOnFacebook()">
+              <img :src="facebook" class="mr-[10px] w-[28px] h-[28px]" alt="">
+            </button>
+            <button type="button" @click="shareOnTwitter()">
+              <img :src="twitter" class="mr-[10px] w-[28px] h-[28px]" alt="">
+            </button>
           </div>
         </div>
         <div class="pt-[30px]">
