@@ -110,9 +110,9 @@ export default {
         <!-- 表單命名處 -->
         <div class="form-title">
           <!-- 表單名稱 -->
-          <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
+          <div class="form-input form-title-input truncate">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
           <!-- 表單說明 -->
-          <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
+          <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
           <!-- 簡答 -->
@@ -173,7 +173,7 @@ export default {
           </div>
           <!-- 線性刻度 -->
           <div v-if="item.type === 7" class="!block">
-            <span class="text-[18px]">{{ item.title }}</span>
+            <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
             <div class="questype-7">
               <span>{{ item.linear.minText }}</span>
               <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
@@ -181,7 +181,7 @@ export default {
                 </label>
                 <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i" :required="item.request">
               </div>
-              <span class="">{{ item.linear.maxText }}</span>
+              <span class="w-[120px] truncate">{{ item.linear.maxText }}</span>
             </div>
           </div>
           <!-- 單選方格 -->
@@ -240,7 +240,6 @@ export default {
           </div>
           <!-- 時間 -->
           <div v-if="item.type === 11" class="!block">
-
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-11">
               <input type="text" v-model=" formData[key].time.hour" :required="item.request">
@@ -251,6 +250,12 @@ export default {
                 <option value="p.m.">下午</option>
               </select>
 
+            </div>
+          </div>
+          <!-- 影片 -->
+          <div v-if="item.type === 13" class="!block">
+            <div class="p-5 flex justify-center">
+              <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
         </div>

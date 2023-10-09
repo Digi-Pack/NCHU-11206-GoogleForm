@@ -456,7 +456,7 @@ export default {
               <!-- 第一行 -->
               <div class="question-top">
                 <div class="text-box">
-                  {{ $page.props?.errors[`formData.${index}.title`] ?? '' }}
+                  <!-- {{ $page.props?.errors[`formData.${index}.title`] ?? '' }} -->
                   <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input truncate" required>
                   <div class="text-[red]">{{ $page.props?.errors[`formData.${index}.title`] ?? '' }}</div>
                 </div>
