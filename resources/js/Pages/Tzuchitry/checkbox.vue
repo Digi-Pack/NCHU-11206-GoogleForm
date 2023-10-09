@@ -50,10 +50,18 @@ export default {
             const count = this.checkboxCount(question.id, option.id);
             return count;
           });
+          let subtextCount = 0; // 初始化 subtext 计数
 
+          this.arrayB.forEach((answerSet, index) => {
+            const thirdAnswer = answerSet[index];
+            if (thirdAnswer && Array.isArray(thirdAnswer.manyOptions) && thirdAnswer.manyOptions.length > 0) {
+              subtextCount++;
+            }
+          });
           return {
             type: question.type,
             text: question.title,
+            subtext: subtextCount,
             yAxis: question.options.map((option) => option.value),
             data: data,
           };

@@ -47,10 +47,11 @@ export default {
       },
       model: '123',
       showTopic: false,
-      bgColor: 'bg-indigo-light',
+      bgColor: 'bg-purple',
       coFormId: route()?.params?.id ?? '0',
       qu_naires_title: '',
       formTitle: '',
+      colorType,
     };
   },
   mounted() {
@@ -66,8 +67,8 @@ export default {
       return route().current(urlName);
     },
     changeColor(newColor) {
-      console.log(colorType);
-      let myNewColor = `bg-${newColor}`;
+      console.log(this.bgColor);
+      let myNewColor = `${newColor}`;
       this.bgColor = myNewColor;
     },
     myStyle() {
@@ -100,7 +101,7 @@ export default {
                 </div>
 
               </Link>
-              <span class="title">
+              <span class="title truncate">
                 {{ formTitle }}
               </span>
             </div>
@@ -115,119 +116,23 @@ export default {
                   <button type="button" class="close" @click="topicOpen()"><img :src="images.close" alt=""></button>
                 </div>
                 <div class="topic-body">
-                  <div class="font-style">
-                    <h4>文字樣式</h4>
-                    <div class="select-region">
-                      <div class="region-title">頁首</div>
-                      <select name="" id="font-family" value="Roboto">
-                        <option value="">更多字型</option>
-                        <option value="">近期</option>
-                        <option value="">微軟正黑體</option>
-                        <option value="">Arial</option>
-                        <option value="">Comic Sans MS</option>
-                        <option value="">Courier New</option>
-                        <option value="">Georgia</option>
-                        <option value="">Impact</option>
-                        <option value="">Times New Roman</option>
-                        <option value="">Trebuchet MS</option>
-                        <option value="">Verdana</option>
-                        <option value="">微軟正黑體</option>
-                        <option value="">新細明體</option>
-                        <option value="">新細明體-ExtB</option>
-                      </select>
-                      <select name="" id="font-size">
-                        <option value="">18</option>
-                        <option value="">19</option>
-                        <option value="">20</option>
-                        <option value="">21</option>
-                        <option value="">22</option>
-                        <option value="">23</option>
-                        <option value="">24</option>
-                      </select>
-                    </div>
-                    <div class="select-region">
-                      <div class="region-title">問題</div>
-                      <select name="" id="font-family" value="Roboto">
-                        <option value="">更多字型</option>
-                        <option value="">近期</option>
-                        <option value="">微軟正黑體</option>
-                        <option value="">Arial</option>
-                        <option value="">Comic Sans MS</option>
-                        <option value="">Courier New</option>
-                        <option value="">Georgia</option>
-                        <option value="">Impact</option>
-                        <option value="">Times New Roman</option>
-                        <option value="">Trebuchet MS</option>
-                        <option value="">Verdana</option>
-                        <option value="">微軟正黑體</option>
-                        <option value="">新細明體</option>
-                        <option value="">新細明體-ExtB</option>
-                      </select>
-                      <select name="" id="font-size">
-                        <option value="">12</option>
-                        <option value="">13</option>
-                        <option value="">14</option>
-                        <option value="">15</option>
-                        <option value="">16</option>
-                        <option value="">17</option>
-                        <option value="">18</option>
-                      </select>
-                    </div>
-                    <div class="select-region">
-                      <div class="region-title">文字</div>
-                      <select name="" id="font-family" value="Roboto">
-                        <option value="">更多字型</option>
-                        <option value="">近期</option>
-                        <option value="">微軟正黑體</option>
-                        <option value="">Arial</option>
-                        <option value="">Comic Sans MS</option>
-                        <option value="">Courier New</option>
-                        <option value="">Georgia</option>
-                        <option value="">Impact</option>
-                        <option value="">Times New Roman</option>
-                        <option value="">Trebuchet MS</option>
-                        <option value="">Verdana</option>
-                        <option value="">微軟正黑體</option>
-                        <option value="">新細明體</option>
-                        <option value="">新細明體-ExtB</option>
-                      </select>
-                      <select name="" id="font-size">
-                        <option value="">9</option>
-                        <option value="">10</option>
-                        <option value="">11</option>
-                        <option value="">12</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="page-top mb-[20px]">
-                    <div class="text-[18px] font-semibold mb-[10px]">頁首</div>
-                    <label for="image">
-                      <div class="choice-image">
-                        <img :src="images.image" alt="">
-                        <input type="file" name="" id="image" hidden>
-                        <span>選擇圖片</span>
-                      </div>
-                    </label>
-                  </div>
                   <div class="page-color mb-[20px]">
                     <div class="text-[18px] font-semibold mb-[10px]">顏色</div>
                     <div class="colorbox-all">
                       <div class="col">
-                        <button type="button" class="colorbox bg-red" @click="changeColor('red')"></button>
-                        <button type="button" class="colorbox bg-purple" @click="changeColor('purple')"></button>
-                        <button type="button" class="colorbox bg-indigo" @click="changeColor('indigo')"></button>
-                        <button type="button" class="colorbox bg-blue" @click="changeColor('blue')"></button>
-                        <button type="button" class="colorbox bg-light-blue" @click="changeColor('light-blue')"></button>
-                        <button type="button" class="colorbox bg-cyan-blue" @click="changeColor('cyan-blue')"></button>
-                      </div>
-                      <div class="col">
-                        <button type="button" class="colorbox bg-orange-red" @click="changeColor('orange-red')"></button>
-                        <button type="button" class="colorbox bg-orange" @click="changeColor('orange')"></button>
-                        <button type="button" class="colorbox bg-blue-green" @click="changeColor('blue-green')"></button>
-                        <button type="button" class="colorbox bg-green" @click="changeColor('green')"></button>
-                        <button type="button" class="colorbox bg-blue-gray" @click="changeColor('blue-gray')"></button>
-                        <button type="button" class="colorbox bg-grey" @click="changeColor('grey')"></button>
+                        <button type="button" class="colorbox" :class="color.name" @click="changeColor(color.name)" v-for="color in colorType" :key="color.id"></button>
+                        <div class="bg-red hidden"></div>
+                        <div class="bg-purple hidden"></div>
+                        <div class="bg-indigo hidden"></div>
+                        <div class="bg-blue hidden"></div>
+                        <div class="bg-light-blue hidden"></div>
+                        <div class="bg-cyan-blue hidden"></div>
+                        <div class="bg-orange-red hidden"></div>
+                        <div class="bg-orange hidden"></div>
+                        <div class="bg-blue-green hidden"></div>
+                        <div class="bg-green hidden"></div>
+                        <div class="bg-blue-gray hidden"></div>
+                        <div class="bg-grey hidden"></div>
                       </div>
                     </div>
                   </div>
@@ -264,7 +169,7 @@ export default {
               </label>
               <div id="account-menu">
                 <div class="google">
-                  <div class="option" @userInform="userInformation">{{ $page.props.auth.user.email }}</div>
+                  <div class="option !justify-center" @userInform="userInformation">{{ $page.props.auth.user.email }}</div>
                   <img class="photo" :src="images.user" alt="">
                   <div class="hello"><span>{{ $page.props.auth.user.name }}</span>，你好!</div>
                   <div class="acc mb-3">
@@ -286,9 +191,6 @@ export default {
             <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
               回覆
             </NavLink>
-            <NavLink class="btn">
-              設定
-            </NavLink>
             <NavLink class="btn" :href="route('profile.edit')" :active="currentUrl('profile.edit')">
               帳戶
             </NavLink>
@@ -297,7 +199,7 @@ export default {
       </nav>
     </header>
     <main id="main" :class="myStyle()">
-      <div class="fixed top-0 w-full h-screen bg-white opacity-80"></div>
+      <div class="fixed top-0 w-full h-screen bg-white opacity-90"></div>
       <slot />
     </main>
   </section>
@@ -309,7 +211,7 @@ export default {
 }
 
 #main {
-  @apply h-auto relative;
+  @apply h-auto w-full relative;
 }
 
 #header {
@@ -325,7 +227,7 @@ nav {
                     @apply mx-[10px];
                 }
                 .title {
-                  @apply text-[#202124] text-[18px] font-medium;
+                  @apply text-[#202124] text-[18px] w-[300px] font-medium;
                 }
             }
             .topR {
@@ -394,9 +296,9 @@ nav {
                       }
                     }
                     .col {
-                      @apply flex mb-[10px];
+                      @apply flex flex-wrap mb-[10px];
                       .colorbox {
-                        @apply flex w-[30px] h-[30px] rounded-full ml-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
+                        @apply flex w-[30px] h-[30px] rounded-full ml-[10px] mb-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
                         .add {
                           @apply w-[24px];
                         }

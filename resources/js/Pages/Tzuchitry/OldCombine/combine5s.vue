@@ -71,6 +71,10 @@ export default {
         { 'id': 7, 'title': '我是線性刻度第一題    範圍1-7', 'request': false, 'image': null, 'video': null, 'type': 7, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': '1', 'max': '7', 'minText': '不快樂', 'maxText': '快樂' }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
         { 'id': 8, 'title': '我是線性刻度第二題    範圍0-6', 'request': false, 'image': null, 'video': null, 'type': 7, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': '0', 'max': '6', 'minText': '不快樂', 'maxText': '快樂' }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
+
+        { 'id': 9, 'title': '我是核取方塊格第一題', 'request': false, 'image': null, 'video': null, 'type': 9, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': '第一列' }], 'column': [{ 'id': 1, 'text': '第一欄' }, { 'id': 2, 'text': '第二欄' }, { 'id': 3, 'text': '第三欄' }, { 'id': 4, 'text': '第四欄' }] } },
+
+        { 'id': 10, 'title': '我是核取方塊格第二題', 'request': false, 'image': null, 'video': null, 'type': 9, 'options': [{ 'id': 1, 'value': null }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': '第一列' }, { 'id': 2, 'text': '第二列' }, { 'id': 3, 'text': '第三列' }, { 'id': 4, 'text': '第四列' }], 'column': [{ 'id': 1, 'text': '第一欄' }, { 'id': 2, 'text': '第二欄' }, { 'id': 3, 'text': '第三欄' }, { 'id': 4, 'text': '第四欄' }] } },
       ],
       arrayB: [
         [{ 'id': 1, 'answer': 3, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
@@ -81,6 +85,8 @@ export default {
           { 'id': 6, 'answer': null, 'manyOptions': [1, 3, 2], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 7, 'answer': null, 'manyOptions': 7, 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 8, 'answer': null, 'manyOptions': 5, 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 9, 'answer': null, 'manyOptions': ['row1col2', 'row1col3'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 10, 'answer': null, 'manyOptions': ['row1col1', 'row2col1', 'row3col2', 'row4col3', 'row1col4', 'row2col4', 'row3col4'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
 
         ]
         ,
@@ -93,6 +99,9 @@ export default {
           { 'id': 6, 'answer': null, 'manyOptions': [1, 3, 2], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 7, 'answer': null, 'manyOptions': 7, 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 8, 'answer': null, 'manyOptions': 1, 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 9, 'answer': null, 'manyOptions': ['row1col4', 'row1col3'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 10, 'answer': null, 'manyOptions': ['row1col2', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+
         ],
 
         [{ 'id': 1, 'answer': 1, 'manyOptions': [], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
@@ -103,6 +112,9 @@ export default {
           { 'id': 6, 'answer': null, 'manyOptions': [1, 3, 2], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 7, 'answer': null, 'manyOptions': 3, 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
           { 'id': 8, 'answer': null, 'manyOptions': 5, 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 9, 'answer': null, 'manyOptions': ['row1col4', 'row1col3'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+          { 'id': 10, 'answer': null, 'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } },
+
         ],
       ],
       arrayC: [],
@@ -186,10 +198,13 @@ export default {
           type: item.type,
           title: {
             text: item.text,
+            subtext: `${item.subtext}則回覆`,
             left: 'center',
           },
+          legend: {},
+          tooltip: {},
           dataset: {
-            source: item.source,
+            source: item.data,
           },
           xAxis: { type: 'category' },
           yAxis: {},
@@ -275,6 +290,55 @@ export default {
         data: data,
       };
     },
+    choiceSquare(question) {
+      const { arrayB } = this;
+      // 初始化行和列名
+      const rowNames = question.square.row.map(row => row.text);
+      const columnNames = question.square.column.map(col => col.text);
+
+      // 初始化数据数组
+      const data = [['欄', ...columnNames]];
+
+      // 初始化时间统计对象
+      const timeCounts = {};
+
+      // 遍历数组B，统计各个row-col组合的出现次数
+      for (const answers of arrayB) {
+        for (const answer of answers) {
+          if (answer.id === question.id) {
+            for (const option of answer.manyOptions) {
+              const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
+              if (!timeCounts[row]) {
+                timeCounts[row] = {};
+              }
+              if (!timeCounts[row][col]) {
+                timeCounts[row][col] = 0;
+              }
+              timeCounts[row][col]++;
+            }
+          }
+        }
+      }
+
+      // 构建数据数组
+      for (let i = 1; i <= rowNames.length; i++) {
+        const rowData = [rowNames[i - 1]];
+        for (let j = 1; j <= columnNames.length; j++) {
+          rowData.push(timeCounts[i] && timeCounts[i][j] ? timeCounts[i][j] : 0);
+        }
+        data.push(rowData);
+      }
+
+      // 构建对象X并加入数组C
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: arrayB.filter(answers => answers[question.id - 1].manyOptions.length > 0).length,
+        data: data,
+      };
+
+    },
+
     generateArrayC() {
       this.arrayC = this.arrayA.map((question) => {
         if (question.type === 3 || question.type === 5) {
@@ -287,6 +351,8 @@ export default {
         } else if (question.type === 7) {
           console.log(789);
           return this.linearData(question);
+        } else if (question.type === 9) {
+          return this.choiceSquare(question);
         }
         console.log('陣列結束了');
       });

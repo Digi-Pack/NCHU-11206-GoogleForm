@@ -17,10 +17,6 @@ export default {
     closing() {
       this.show = false;
     },
-    sendName() {
-      // 在这里使用 modalData 数据
-      console.log(this.modalData);
-    },
   },
 };
 </script>
@@ -38,7 +34,6 @@ export default {
         <div class="pt-[15px]">
           <div>
             <div class="text-gray-400 text-lg">請輸入新的項目名稱:</div>
-            {{ newName }}{{ modalData }}
             <input v-model=" newName " type="text" class="rounded-[5px] leading-5 mt-5 w-full">
           </div>
           <div class="flex justify-end mt-7">

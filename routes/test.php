@@ -25,13 +25,6 @@ Route::get('/test2', function () {
 
 Route::prefix('response')->group(function () {
     // 新增表單
-    Route::get('/tzuchi', [ResponseController::class,'response_tzuchi'])->name('response.tzuchi');
-    Route::get('/123', function () {
-        return Inertia::render('Tzuchitry/abc123');
-    });
-    Route::get('/echarts', function () {
-        return Inertia::render('Tzuchitry/abc123Copy');
-    });
     Route::get('/op', function () {
         return Inertia::render('Tzuchitry/abc456Copy');
     });
@@ -41,28 +34,30 @@ Route::prefix('response')->group(function () {
     Route::get('/multipleChoice ', function () {
         return Inertia::render('Tzuchitry/multipleChoice');
     });
-    Route::get('/multipleChoice0 ', function () {
-        return Inertia::render('Tzuchitry/multipleChoice0');
-    });
-    Route::get('/multipleChoice1 ', function () {
-        return Inertia::render('Tzuchitry/multipleChoice1');
-    });
     Route::get('/choose ', function () {
         return Inertia::render('Tzuchitry/choose');
-    });
-    Route::get('/combine ', function () {
-        return Inertia::render('Tzuchitry/combine');
     });
     Route::get('/checkbox ', function () {
         return Inertia::render('Tzuchitry/checkbox');
     });
-    Route::get('/combine3s ', function () {
-        return Inertia::render('Tzuchitry/combine3s');
-    });
+
     Route::get('/linear ', function () {
         return Inertia::render('Tzuchitry/linear');
     });
-    Route::get('/combine4s ', function () {
-        return Inertia::render('Tzuchitry/combine4s');
+
+    Route::get('/radioSquare ', function () {
+        return Inertia::render('Tzuchitry/radioSquare');
+    });
+    Route::get('/combine6s ', function () {
+        return Inertia::render('Tzuchitry/combine6s');
+    });
+    Route::get('/date ', function () {
+        return Inertia::render('Tzuchitry/dateDate');
+    });
+    Route::get('/combine7s ', function () {
+        return Inertia::render('Tzuchitry/combine7s');
+    });
+    Route::get('/combine8s ', function () {
+        return Inertia::render('Tzuchitry/combine8s');
     });
 });

@@ -17,72 +17,77 @@ export default {
         [{ 'id': 1, 'answer': null, 'manyOptions': ['row3col1', 'row4col1'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } }, { 'id': 2, 'answer': null, 'manyOptions': ['row1col4', 'row1col3'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } }, { 'id': 3, 'answer': null, 'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } }],
         [{ 'id': 1, 'answer': null, 'manyOptions': ['row3col1', 'row4col1'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } }, { 'id': 2, 'answer': null, 'manyOptions': ['row1col4', 'row1col3'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } }, { 'id': 3, 'answer': null, 'manyOptions': ['row1col3', 'row2col3', 'row3col3', 'row4col3', 'row1col4', 'row2col4', 'row3col4'], 'time': { 'hour': null, 'minute': null, 'section': 'a.m.' } }],
       ],
-      //   arrayC: [],
-      //   chartOptions: [],
       rowCount: 0,
       columnCount: 0,
       Results: [],
     };
   },
   mounted() {
-    this.initializeC();
+    this.generateResults();
   },
   methods: {
-    initializeC() {
-      const Results = [];
+    choiceSquare(arrayA, arrayB) {
+      // 初始化数组C
+      const arrayC = [];
 
-      for (const question of this.questionNaire) {
+      // 遍历数组A，筛选出type === 9的问题
+      for (const question of arrayA) {
         if (question.type === 9) {
+          // 初始化行和列名
+          const rowNames = question.square.row.map(row => row.text);
+          const columnNames = question.square.column.map(col => col.text);
+
+          // 初始化数据数组
+          const data = [['欄', ...columnNames]];
+
+          // 初始化时间统计对象
+          const timeCounts = {};
+
+          // 遍历数组B，统计各个row-col组合的出现次数
+          for (const answers of arrayB) {
+            for (const answer of answers) {
+              if (answer.id === question.id) {
+                for (const option of answer.manyOptions) {
+                  const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
+                  if (!timeCounts[row]) {
+                    timeCounts[row] = {};
+                  }
+                  if (!timeCounts[row][col]) {
+                    timeCounts[row][col] = 0;
+                  }
+                  timeCounts[row][col]++;
+                }
+              }
+            }
+          }
+
+          // 构建数据数组
+          for (let i = 1; i <= rowNames.length; i++) {
+            const rowData = [rowNames[i - 1]];
+            for (let j = 1; j <= columnNames.length; j++) {
+              rowData.push(timeCounts[i] && timeCounts[i][j] ? timeCounts[i][j] : 0);
+            }
+            data.push(rowData);
+          }
+
+          // 构建对象X并加入数组C
           const objectX = {
             type: question.type,
             text: question.title,
-            data: [],
+            subtext: arrayB.filter(answers => answers[question.id - 1].manyOptions.length > 0).length,
+            data: data,
           };
 
-          const rowCount = question.square.row.length;
-          const columnCount = question.square.column.length;
-
-          // 初始化表头
-          const headerRow = ['欄'];
-          for (let col = 1; col <= columnCount; col++) {
-            headerRow.push(question.square.column[col - 1].text);
-          }
-          objectX.data.push(headerRow);
-
-          // 初始化行
-          for (let row = 1; row <= rowCount; row++) {
-            const rowData = [question.square.row[row - 1].text];
-
-            // 初始化列
-            for (let col = 1; col <= columnCount; col++) {
-              const count = this.countOccurrences(question.id, row, col);
-              rowData.push(count);
-            }
-
-            objectX.data.push(rowData);
-          }
-
-          Results.push(objectX);
+          arrayC.push(objectX);
         }
       }
 
-      this.Results = Results;
+      return arrayC;
     },
-    countOccurrences(questionId, row, col) {
-      // 计算在 this.Answers 中 questionId 对应的题目的 row 和 col 的 manyOptions 出现次数
-      let count = 0;
 
-      // 找到对应题目的答案
-      const questionAnswers = this.Answers[questionId - 1];
-      if (questionAnswers) {
-        for (const answer of questionAnswers) {
-          if (answer.manyOptions.includes(`row${row}col${col}`)) {
-            count++;
-          }
-        }
-      }
-
-      return count;
+    generateResults() {
+      // 调用 choiceSquare 方法生成统计结果
+      this.Results = this.choiceSquare(this.questionNaire, this.Answers);
     },
   },
 };

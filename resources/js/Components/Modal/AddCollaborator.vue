@@ -104,10 +104,7 @@ export default {
                 <span class="w-[60%] text-[14px] text-grey flex justify-end">編輯者</span>
               </div>
             </div>
-            <div class="flex justify-between mt-7 px-8">
-              <button type="button"
-                class="btn px-5 flex items-center gap-2 py-2 border border-grey hover:bg-blue-light hover:shadow rounded-[45px] mr-3"><img
-                  :src="images.link" alt=""><span class="leading-[25px]">複製作答者連結</span></button>
+            <div class="flex justify-end mt-7 px-8">
               <button type="submit"
                 class="btn px-5 py-2 rounded-[45px] bg-blue text-white hover:shadow hover:shadow-gray-400">完成</button>
             </div>

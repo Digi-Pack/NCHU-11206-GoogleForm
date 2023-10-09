@@ -25,9 +25,7 @@ export default {
       del: del,
       check: check,
       linkoff: linkoff,
-      //   loaded: false,
       data: this.response.rt_data,
-      //   options: {},
     };
   },
   methods: {
@@ -99,18 +97,21 @@ export default {
           </div>
         </div>
         <div class="head-fotter">
-          <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
+          <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
             摘要
           </NavLink>
-          <NavLink class="btn" :href="route('nav2')" :active="currentUrl('nav2')">
+          <NavLink class="btn" :href="route('response.que')" :active="currentUrl('response.que')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('dashboard')" :active="currentUrl('dashboard')">
+          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
             個別
           </NavLink>
         </div>
       </div>
-      <div class="response-body bg-white">
+      <div class="response-body">
+        <div class="noreply">
+          <span>待回應</span>
+        </div>
         <div class="responser">
           <div class="title">哪些人已回應?</div>
           <div class="email">
@@ -133,7 +134,7 @@ export default {
 .all {
     @apply m-auto max-w-[770px] relative z-[2];
     .response-head {
-        @apply my-[15px] rounded-[10px] border border-gray-200;
+        @apply mt-[15px] rounded-[10px] border border-gray-200;
 
         .head-top {
             @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
@@ -233,9 +234,12 @@ export default {
     }
 
     .response-body {
-        @apply flex min-h-[80px] justify-start items-center border rounded-[10px] border-gray-200;
+        @apply flex flex-col mt-[15px] bg-white;
+        .noreply {
+            @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px];
+        }
             .responser {
-                @apply w-full;
+                @apply flex flex-col justify-center items-start w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px];
                 .title {
                     @apply w-full text-[24px] font-semibold p-5 border-b;
                 }
