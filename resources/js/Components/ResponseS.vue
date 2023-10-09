@@ -1,6 +1,6 @@
 <template>
   <!-- {{ chartdata }}123 -->
-  {{ arrayA }}
+  {{ arrayA }}<hr>{{ arrayB }}
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
