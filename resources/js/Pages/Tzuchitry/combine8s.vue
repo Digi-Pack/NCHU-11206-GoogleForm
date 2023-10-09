@@ -5,7 +5,7 @@
     <VChart v-if="option.type !== 10" class="chart" :option="option" />
     <div v-if="option.type === 10" class="text-area">
       <div class="que-top">
-        {{ option.item.title }} <!-- 这里使用 option.item.title -->
+        {{ option.item.text }} <!-- 这里使用 option.item.title -->
         <div class="subtitle">{{ option.item.subtext }}則回應</div> <!-- 这里使用 option.item.subtext -->
       </div>
       <div v-for="itemIn in option.item.date" :key="itemIn.id" class="px-5 flex items-center">
@@ -34,11 +34,13 @@
         <span class="text-bold">{{ itemIn.zone }} B</span>
         <div class="border-red-400 w-[30px] border-b-[3px]"></div>
       </div>
-      <div class="px-5 flex items-center py-2">
-        <div class="time">{{ itemIn.time }}</div>
+      <div v-for="(itemInTime, index) in itemIn.time" :key="index" class="px-5 flex items-center py-2">
+        <div class="time">{{ itemInTime.time }}<div class="count">{{ itemInTime.count }}</div></div>
       </div>
     </div>
   </div>
+  <!-- { type: 11, text: '這是時間的題目', subtext: 3, timeAll: [{ zone: '10', time: [{ time: '上午10:00', count: 1 }, { time: '上午10:05', count: 1 }] }, { zone: '07', time: [{ time: '上午07:15', count: 2 }] }] }, -->
+
   <!-- {{ arrayC }} -->
   <!-- {{ chartOptions }} -->
   <!-- 簡答/詳答 -->
@@ -95,7 +97,13 @@ export default {
   },
   data() {
     return {
-      arrayD: [{ type: 11, text: '這是時間的題目', subtext: 3, timeAll: [{ zone: '10', time: '上午10:00' }, { zone: '07', time: '上午07:30' }] }, { type: 11, text: '這是時間的題目', subtext: 3, zone: 10, time: '上午10:00' }],
+      arrayD: [
+
+        { type: 11, text: '這是時間的題目', subtext: 3, timeAll: [{ zone: '10', time: [{ time: '上午10:00', count: 1 }, { time: '上午10:05', count: 1 }] }, { zone: '07', time: [{ time: '上午07:15', count: 2 }] }] },
+
+        { type: 11, text: '這是時間的題目', subtext: 3, timeAll: [{ zone: '10', time: [{ time: '上午10:00', count: 1 }, { time: '上午10:05', count: 1 }] }, { zone: '07', time: [{ time: '上午07:15', count: 2 }] }] },
+
+      ],
       arrayA: [
         { 'id': 1, 'title': '我是下拉式選單第一題', 'request': false, 'image': null, 'video': null, 'type': 5, 'options': [{ 'id': 1, 'value': '下拉選項一' }, { 'id': 2, 'value': '下拉選項二' }, { 'id': 3, 'value': '下拉選項三' }], 'linear': { 'min': 1, 'max': 10, 'minText': null, 'maxText': null }, 'square': { 'row': [{ 'id': 1, 'text': null }], 'column': [{ 'id': 1, 'text': null }] } },
 
@@ -439,7 +447,7 @@ export default {
       const date = this.dateCalculate(question.id);
       return {
         type: question.type,
-        title: question.title,
+        text: question.title,
         subtext: subtext,
         date: date,
       };
@@ -506,7 +514,7 @@ export default {
 
   <style lang="scss" scoped>
   .chart {
-    @apply w-full h-[500px];
+    @apply w-[700px] h-[400px] mt-[100px] m-auto;
   }
   .text-area {
     @apply w-full min-h-[80px] mt-5 border rounded-[10px] border-gray-200 bg-white py-5;
