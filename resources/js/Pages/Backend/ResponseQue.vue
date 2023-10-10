@@ -8,8 +8,12 @@ import check from '/resources/images/check.png';
 import chevron_left from '/resources/images/chevron_left.svg';
 import chevron_right from '/resources/images/chevron_right.svg';
 import linkoff from '/resources/images/link_off.png';
+import FindAns from '@/Components/Modal/FindAns.vue';
 
 export default {
+  components: {
+    FindAns,
+  },
   props: {
     response: {
       type: Object,
@@ -30,10 +34,37 @@ export default {
       chevron_right: chevron_right,
       num: 1,
       coFormId: route()?.params?.id ?? '0',
+      titles: 1,
+      type: this.response.rt_data,
     };
   },
+  computed: {
+    formStringJson() {
+      const { response: { rt_data } } = this;
+      // const formString = this.response.rt_data.results.questionnaires;
+      return JSON.parse(rt_data?.results?.questionnaires ?? '[]');
+    },
+    ansStringJson() {
+      const { response: { rt_data } } = this;
+      // const formString = this.response.rt_data.results.questionnaires;
+      // return JSON.parse(rt_data.results);
+      return rt_data.results.response.map(item => {
+        return JSON.parse(item?.answer ?? '[]');
+      });
+    },
+    findAns() {
+      const { ansStringJson, formStringJson, titles } = this;
+      return ansStringJson.map((item, index) => {
+        return {
+          id: index + 1,
+          ans: item.find(ans => ans.id === titles),
+          qus: formStringJson.find(qus => qus.id === titles),
+        };
+      });
+    },
+  },
   mounted() {
-    console.log(this.response);
+    console.log(this.ansStringJson);
   },
   methods: {
     currentUrl(urlName = '') {
@@ -46,6 +77,9 @@ export default {
     },
     plus() {
       this.num++;
+    },
+    chooseTitle(e) {
+      this.type = this.response.rt_data.responseForm[e.target.value];
     },
   },
 };
@@ -70,8 +104,10 @@ export default {
           </NavLink>
         </div>
         <div class="head-fotter">
-          <select name="" id="">
-            <option value=""></option>
+          <select v-model="titles" name="" id="" @change="chooseTitle">
+            <option v-for="item in response.rt_data.responseForm" :key="item.id" :value="item.id">
+              {{ item.title }}
+            </option>
           </select>
           <div class="flex ml-3">
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
@@ -83,10 +119,13 @@ export default {
         </div>
       </div>
       <div class="response-body">
-        <div class="noreply">
-          <span>待回應</span>
+        <!-- {{ response.rt_data.results.response }} -->
+        <div v-for="item in findAns" :key="item.id" class="noreply">
+          <!-- {{ item }} -->
+          <!-- {{ item.qus.type }} -->
+          <FindAns :value="item" />
         </div>
-        <div class="responser">
+        <!-- <div class="responser">
           <div class="flex justify-start gap-3 w-full px-3 py-8 border-b">
             <div class="date">MM <span>10 /</span></div>
             <div class="date">DD <span>03 /</span></div>
@@ -104,7 +143,7 @@ export default {
             </div>
           </div>
           <div class="px-3 py-2 my-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>

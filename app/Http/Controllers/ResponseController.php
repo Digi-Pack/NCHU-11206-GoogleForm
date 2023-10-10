@@ -12,14 +12,13 @@ class ResponseController extends Controller
 {
     public function response_sum()
     {
-        // 找到對應的問券
-        $responseForm = Question::where('id', 20)->first();
+          // 找到對應的問券
+        $responseForm = Question::where('id', 1)->first();
         // $questionNaires是問卷的題目內容
         $questionNaires = json_decode($responseForm['questionnaires'], true);
-
         // 找到對應該份問卷的所有回覆
-        $datas = Response::where('question_id', 20)->get();
         //$results會裝取出來的回覆資料
+        $datas = Response::where('question_id', 1)->get();
         $results = [];
         foreach ($datas as $data) {
             $answer = json_decode($data['answer'], true);
@@ -48,17 +47,14 @@ class ResponseController extends Controller
 
         return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($response)]);
     }
-    public function responseQue(Request $request, $id)
-    {   //dd($id);
-        $datas = Response::where('question_id', $id)->get();
-        $results = [];
-        foreach ($datas as $data) {
-            $answer = json_decode($data['answer'], true);
-            $results[] = $answer;
-        }
+    public function responseQue($id)
+    {
+        $responseForm = Question::with('response')->find($id);
+        $questionNaires = json_decode($responseForm['questionnaires'], true);
         $response = [
-            'results' => $results,
+            'results' => $responseForm,
+            'responseForm' => $questionNaires,
         ];
-        return Inertia::render('Backend/ResponseQue',['response' => rtFormat($response)]);
+        return Inertia::render('Backend/ResponseQue', ['response' => rtFormat($response)]);
     }
 }
