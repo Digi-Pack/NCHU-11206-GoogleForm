@@ -89,9 +89,18 @@ class ReplyController extends Controller
             'question_id' => $request-> formId,
             'answer' => $jsonText ,
         ]);
+
+        $cantModify = false;
+        $updatedForm = Question::where('id',$request-> formId)->first();
+        $author = $updatedForm['lead_author_id'];
+        if($author === $user->id){
+            $cantModify = true;
+        };
+
         $response = [
             'user_id' => $user->id,
             'question_id' => $request-> formId,
+            'cantModify' =>$cantModify,
         ];
 
         return Inertia::render('Frontend/reply_final', ['response' => rtFormat($response)]);

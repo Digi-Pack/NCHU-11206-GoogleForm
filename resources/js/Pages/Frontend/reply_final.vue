@@ -14,6 +14,7 @@ export default {
       edit,
       title: 'Hello World !',
       formData: this.response,
+      cantModify: this.response.rt_data.cantModify,
     };
   },
   methods: {
@@ -43,7 +44,7 @@ export default {
             <p>如果你認為這項限制有誤，請與表單擁有者聯絡。</p>
           </div>
         </div>
-        <div>
+        <div v-if="cantModify === false">
           <button type="button" class="btn-base mt-5" @click="submitData()">修改回覆內容</button>
         </div>
       </div>
