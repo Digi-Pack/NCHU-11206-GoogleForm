@@ -93,6 +93,7 @@ class ReplyController extends Controller
         // 如果使用者是主編者，不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
         $cantModify = false;
         $updatedForm = Question::where('id',$request-> formId)->first();
+        $formTitle = $updatedForm['qu_naires_title'];
         $author = $updatedForm['lead_author_id'];
         if($author === $user->id){
             $cantModify = true;
@@ -113,6 +114,7 @@ class ReplyController extends Controller
         $response = [
             'user_id' => $user->id,
             'question_id' => $request-> formId,
+            'formTitle' => $formTitle,
             'cantModify' =>$cantModify,
         ];
 
@@ -185,6 +187,7 @@ class ReplyController extends Controller
         $user = $request->user();
         $cantModify = false;
         $updatedForm = Question::where('id',$request-> formId)->first();
+        $formTitle = $updatedForm['qu_naires_title'];
         $author = $updatedForm['lead_author_id'];
         if($author === $user->id){
             $cantModify = true;
@@ -204,6 +207,7 @@ class ReplyController extends Controller
         $response = [
             'user_id' => $user->id,
             'question_id' => $request-> formId,
+            'formTitle' => $formTitle,
             'cantModify' =>$cantModify,
         ];
         return Inertia::render('Frontend/reply_final', ['response' => rtFormat($response)]);

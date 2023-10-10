@@ -15,6 +15,7 @@ export default {
       title: 'Hello World !',
       formData: this.response,
       cantModify: this.response.rt_data.cantModify,
+      formTitle: this.response.rt_data.formTitle,
     };
   },
   methods: {
@@ -33,15 +34,16 @@ export default {
 
 <template>
   <section id="frontend-index">
-    <div class="content">
+    <div class="content p-4">
       <div class="w-full h-[15px] bg-purple rounded-t-lg"></div>
       <div class="px-7">
         <div>
-          <h1 class="title my-5">未命名表單</h1>
-          <div class="flex flex-col gap-3">
+          <h1 class="title my-5">{{ formTitle }}</h1>
+          <div class="flex flex-col gap-3 ">
             <p>我們已經收到您回覆的表單～</p>
-            <p>這份表單僅限填寫一次。</p>
-            <p>如果你認為這項限制有誤，請與表單擁有者聯絡。</p>
+            <p>這個平台上，除了問卷的主編輯者和共同編輯者之外，一般填寫者只能填寫一份問卷。</p>
+            <p v-if="cantModify === false">如果您需要修改答案，可按下方「修改回覆內容」按鈕；</p>
+            <p v-if="cantModify === false">或借由重新輸入一次問卷網址，您會被導向之前填寫過的該份問卷頁面，您同樣也可以在此修改回覆內容。</p>
           </div>
         </div>
         <div v-if="cantModify === false">
