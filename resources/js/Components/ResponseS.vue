@@ -1,10 +1,12 @@
 <template>
-  <!-- {{ chartdata }} -->
-  {{ arrayA }}<hr>{{ arrayB }}
+  <!-- {{ chartdata }}123 -->
+  <!-- {{ arrayA }}<hr>{{ arrayB }} -->
+  <!-- {{ chartOptions }} -->
+  <!-- {{ arrayC }} -->
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
-    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11" class="chart" :option="option" />
+    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11 && option.type !== 12" class="chart" :option="option" />
     <!-- 簡答 -->
     <div v-if="option.type === 1 || option.type === 2" class="text-area">
       <div class="que-top">
@@ -214,6 +216,8 @@ export default {
         return { type: 1, item };
       } else if (item.type === 2) {
         return { type: 2, item };
+      } else if (item.type === 12) {
+        return { type: 12 };
       }
       return {};
     });
@@ -503,8 +507,9 @@ export default {
           return this.timeTotal(question);
         } else if (question.type === 1 || question.type === 2) {
           return this.shortLongAnswer(question);
+        } else if (question.type === 12) {
+          return { type: 12 };
         }
-        console.log('陣列結束了');
       });
     },
   },
