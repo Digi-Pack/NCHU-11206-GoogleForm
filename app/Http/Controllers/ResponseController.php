@@ -13,12 +13,12 @@ class ResponseController extends Controller
     public function response_sum()
     {
         // 找到對應的問券
-        $responseForm = Question::where('id', 81)->first();
+        $responseForm = Question::where('id', 20)->first();
         // $questionNaires是問卷的題目內容
         $questionNaires = json_decode($responseForm['questionnaires'], true);
 
         // 找到對應該份問卷的所有回覆
-        $datas = Response::where('question_id', 81)->get();
+        $datas = Response::where('question_id', 20)->get();
         //$results會裝取出來的回覆資料
         $results = [];
         foreach ($datas as $data) {

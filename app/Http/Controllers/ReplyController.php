@@ -6,16 +6,36 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Question;
 use App\Models\Response;
+use App\Models\Coworker;
 
 class ReplyController extends Controller
 {
     public function reply_index(Request $request, $id)
     {
-        // dd($id);
+
+        // 如果是用複製網址的方式($id是亂碼)，就(應該機率很小)抓不到id是這個亂碼的問卷
         $responseForm = Question::where('id', $id)->get();
-        // 當自己是主編者時，可以訪問填寫問卷頁
+        // 當有抓到問卷，且自己是 主編者 或 共同編輯者 時，可以訪問填寫問卷頁
         if (!$responseForm->isEmpty()) {
+            // 當自己是主編者時
             if ($request->user()->id == $responseForm[0]['lead_author_id']) {
+                $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
+                $response = [
+                'responseForm' => $responseForm,
+                'questionNaires' => $questionNaires,
+                ];
+                return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
+            }
+            // 查找這份問卷的共同編輯者
+            $coworkers = Coworker::where('question_id', $id)->get();
+            // 將共同編輯者的id成一個陣列$coworkerArray
+            $coworkerArray = [];
+            foreach ( $coworkers as $item) {
+                $who = $item['coworker_id'];
+                $coworkerArray[] = $who;
+            }
+            // 如果使用者是共同編輯者，也可以預覽問卷
+            if(in_array($request->user()->id, $coworkerArray)){
                 $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
                 $response = [
                 'responseForm' => $responseForm,
