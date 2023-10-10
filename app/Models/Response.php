@@ -41,4 +41,8 @@ class Response extends Model
     {
         return $this->belongsTo(Question::class, 'id', 'question_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'user_id');
+    }
 }

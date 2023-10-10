@@ -28,6 +28,7 @@ export default {
       data: this.response.rt_data,
       chartdata: this.response.rt_data,
       answer: this.response.rt_data.results,
+      whoAll: this.response.rt_data.whoAll,
       noAnswer: false,
       coFormId: route()?.params?.id ?? '0',
     };
@@ -75,10 +76,9 @@ export default {
           <div class="title">哪些人已回應?</div>
           <div class="email">
             <span>電子郵件</span>
-            <div class="email-address">user@gmail.com</div>
-            <div class="email-address">user@gmail.com</div>
-            <div class="email-address">user@gmail.com</div>
-            <div class="email-address">user@gmail.com</div>
+            <div v-for="item in whoAll" :key="item.id">
+              <div class="email-address"> {{ item }} </div>
+            </div>
           </div>
         </div>
         <div v-if="noAnswer === false">

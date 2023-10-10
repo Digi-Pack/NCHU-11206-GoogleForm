@@ -49,8 +49,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Question::class, 'lead_author_id');
     }
+    // 這關聯寫錯了八
     public function coworker()
     {
         return $this->belongsTo(Coworker::class, 'coworker_id');
     }
+    public function response()
+    {
+        return $this->hasMany(Response::class, 'user_id');
+    }
+
 }
