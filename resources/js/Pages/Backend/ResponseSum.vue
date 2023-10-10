@@ -27,8 +27,16 @@ export default {
       linkoff: linkoff,
       data: this.response.rt_data,
       chartdata: this.response.rt_data,
+      answer: this.response.rt_data.results,
+      noAnswer: false,
       coFormId: route()?.params?.id ?? '0',
     };
+  },
+  mounted() {
+    this.noAnswer = JSON.stringify(this.answer) === JSON.stringify([]);
+    console.log(JSON.stringify(this.answer) === JSON.stringify([]));
+    console.log(this.noAnswer);
+
   },
   methods: {
     currentUrl(urlName = '') {
@@ -60,7 +68,7 @@ export default {
         </div>
       </div>
       <div class="response-body">
-        <div class="noreply">
+        <div v-if="noAnswer === true" class="noreply">
           <span>待回應</span>
         </div>
         <div class="responser">
@@ -73,7 +81,9 @@ export default {
             <div class="email-address">user@gmail.com</div>
           </div>
         </div>
-        <ResponseS :chartdata="chartdata" />
+        <div v-if="noAnswer === false">
+          <ResponseS :chartdata="chartdata" />
+        </div>
       </div>
     </div>
   </section>
