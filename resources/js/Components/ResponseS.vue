@@ -6,7 +6,7 @@
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
-    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11 && option.type !== 12" class="chart" :option="option" />
+    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11 && option.type !== 12 && option.type !== 13" class="chart" :option="option" />
     <!-- 簡答 -->
     <div v-if="option.type === 1 || option.type === 2" class="text-area">
       <div class="que-top">
@@ -218,6 +218,8 @@ export default {
         return { type: 2, item };
       } else if (item.type === 12) {
         return { type: 12 };
+      } else if (item.type === 13) {
+        return { type: 13 };
       }
       return {};
     });
@@ -509,6 +511,8 @@ export default {
           return this.shortLongAnswer(question);
         } else if (question.type === 12) {
           return { type: 12 };
+        } else if (question.type === 13) {
+          return { type: 13 };
         }
       });
     },
