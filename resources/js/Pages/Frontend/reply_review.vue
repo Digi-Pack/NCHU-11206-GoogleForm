@@ -78,15 +78,14 @@ export default {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
               title: '已完成修改',
-              showDenyButton: true,
-              confirmButtonText: '回列表',
-              denyButtonText: '再次修改',
+              showDenyButton: false,
+              confirmButtonText: '確認',
+              denyButtonText: '',
             }).then((result) => {
               if (result.isConfirmed) {
-                router.get(route('guide.index'));
-              } else if (result.isDenied) {
-                router.visit(route('reply.update'), {
-                  method: 'post', data: { formData, formId }, preserveState: true });
+                router.visit(route('reply.final'), {
+                  method: 'post', data: { formData, formId },
+                });
               }
             });
           }

@@ -14,7 +14,7 @@ Route::prefix('reply')->middleware(['auth', 'verified'])->group(function () {
     // 表單
     Route::get('/index/{id}', [ReplyController::class,'reply_index'])->name('reply.index');
     Route::post('/store', [ReplyController::class,'reply_store'])->name('reply.store');
-    Route::get('/final', [ReplyController::class,'reply_final'])->name('reply.final');
+    Route::post('/final', [ReplyController::class,'reply_final'])->name('reply.final');
     // 查看填寫過表單
     Route::get('/review', [ReplyController::class,'reply_review'])->name('reply.review');
     Route::post('/update', [ReplyController::class,'reply_update'])->name('reply.update');

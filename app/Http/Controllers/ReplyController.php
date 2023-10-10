@@ -179,4 +179,33 @@ class ReplyController extends Controller
         ]);
         return back()->with(['message' => rtFormat($updateForm)]);
     }
+    public function reply_final(Request $request)
+    {
+        // dd($request);
+        $user = $request->user();
+        $cantModify = false;
+        $updatedForm = Question::where('id',$request-> formId)->first();
+        $author = $updatedForm['lead_author_id'];
+        if($author === $user->id){
+            $cantModify = true;
+        };
+        // -------------------------------------
+        $coworkers = Coworker::where('question_id', $request-> formId)->get();
+        // 將共同編輯者的id成一個陣列$coworkerArray
+        $coworkerArray = [];
+        foreach ( $coworkers as $item) {
+            $who = $item['coworker_id'];
+            $coworkerArray[] = $who;
+        }
+        // 如果使用者是共同編輯者，也不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
+        if(in_array($request->user()->id, $coworkerArray)){
+            $cantModify = true;
+        }
+        $response = [
+            'user_id' => $user->id,
+            'question_id' => $request-> formId,
+            'cantModify' =>$cantModify,
+        ];
+        return Inertia::render('Frontend/reply_final', ['response' => rtFormat($response)]);
+    }
 }
