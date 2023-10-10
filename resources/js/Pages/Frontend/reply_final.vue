@@ -51,7 +51,7 @@ export default {
         </div>
       </div>
     </div>
-    <button type="button" class="btn"><img :src="edit" alt="">
+    <button v-if="cantModify === true" type="button" class="btn"><img :src="edit" alt="">
       <span>編輯這個表單</span>
     </button>
   </section>
