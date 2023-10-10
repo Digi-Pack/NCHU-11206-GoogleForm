@@ -15,7 +15,7 @@ class ReplyController extends Controller
 
         // 如果是用複製網址的方式($id是亂碼)，就(應該機率很小)抓不到id是這個亂碼的問卷
         $responseForm = Question::where('id', $id)->get();
-        // 當有抓到問卷，且自己是 主編者 或 共同編輯者 時，可以訪問填寫問卷頁
+        // 當有抓到問卷，且自己是 主編者 或 共同編輯者 時，可以透過 預覽 ，訪問填寫問卷頁
         if (!$responseForm->isEmpty()) {
             // 當自己是主編者時
             if ($request->user()->id == $responseForm[0]['lead_author_id']) {
@@ -44,22 +44,23 @@ class ReplyController extends Controller
                 return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
             }
         }
-
+        // 查詢資料庫中是否有該亂數(網址)的問卷
         $responseForm = Question::where('random', $id)->get();
-         // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷(暫時設定為第x份問卷)
+        // 如果有該問卷
         if (!$responseForm->isEmpty()) {
+            // 查詢回覆資料庫中，是否有該使用者填寫過的該份問卷
             $hasBeen = Response::where('user_id', $request->user()->id)->where('question_id', $responseForm[0]['id'])->get();
+            // 如果有，則前往修改答案的頁面
             if (!$hasBeen->isEmpty()) {
-                        // 如果有，則前往修改答案的頁面
-                        //   dd($hasBeen);
-                        $redirectValue = [
-                            'user_id' => $request->user()->id,
-                            'question_id' => $responseForm[0]['id'],
-                        ];
-                        // dd( $redirectValue );
-                        session()->forget('redirectValue');
-                        $request->session()->put('redirectValue', $redirectValue);
-                        return redirect()->route('reply.review'); // 这里进vend行重定向
+
+                $redirectValue = [
+                    'user_id' => $request->user()->id,
+                    'question_id' => $responseForm[0]['id'],
+                ];
+                // 將使用者的資料帶到下一支function，為避免帶錯資料，先FORGET再PUT
+                session()->forget('redirectValue');
+                $request->session()->put('redirectValue', $redirectValue);
+                return redirect()->route('reply.review');
             }
         }
         // 忘掉帶到另一支function的section
@@ -89,13 +90,25 @@ class ReplyController extends Controller
             'question_id' => $request-> formId,
             'answer' => $jsonText ,
         ]);
-
+        // 如果使用者是主編者，不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
         $cantModify = false;
         $updatedForm = Question::where('id',$request-> formId)->first();
         $author = $updatedForm['lead_author_id'];
         if($author === $user->id){
             $cantModify = true;
         };
+        // -------------------------------------
+        $coworkers = Coworker::where('question_id', $request-> formId)->get();
+        // 將共同編輯者的id成一個陣列$coworkerArray
+        $coworkerArray = [];
+        foreach ( $coworkers as $item) {
+            $who = $item['coworker_id'];
+            $coworkerArray[] = $who;
+        }
+        // 如果使用者是共同編輯者，也不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
+        if(in_array($request->user()->id, $coworkerArray)){
+            $cantModify = true;
+        }
 
         $response = [
             'user_id' => $user->id,
@@ -115,10 +128,6 @@ class ReplyController extends Controller
              // 先找到指定id的表單
             $responseForm = Question::where('id', $redirectValue['question_id'])->get();
             $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
-            $response = [
-              'responseForm' => $responseForm,
-              'questionNaires' => $questionNaires,
-            ];
 
          // 找到該使用者的回覆
             $lastStore = Response::where('user_id', $redirectValue['user_id'])->where('question_id', $redirectValue['question_id'])->get();
