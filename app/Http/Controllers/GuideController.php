@@ -60,6 +60,6 @@ class GuideController extends Controller
             'guide' => $guide,
             'user' => $request->user(),
         ];
-        return Inertia::render('Frontend/guide_index', ['response' => rtFormat($response)]);
+        return Inertia::render('Frontend/GuideIndex', ['response' => rtFormat($response)]);
     }
 }

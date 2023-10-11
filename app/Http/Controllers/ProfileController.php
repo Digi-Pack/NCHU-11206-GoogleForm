@@ -93,6 +93,6 @@ class ProfileController extends Controller
     //         'answer' => $jsonText ,
     //     ]);
 
-    //     return Inertia::render('Frontend/reply_final');
+    //     return Inertia::render('Frontend/ReplyFinal');
     // }
 }

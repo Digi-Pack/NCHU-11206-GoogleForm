@@ -24,7 +24,7 @@ class ReplyController extends Controller
                 'responseForm' => $responseForm,
                 'questionNaires' => $questionNaires,
                 ];
-                return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
+                return Inertia::render('Frontend/ReplyIndex', ['response' => rtFormat($response)]);
             }
             // 查找這份問卷的共同編輯者
             $coworkers = Coworker::where('question_id', $id)->get();
@@ -41,7 +41,7 @@ class ReplyController extends Controller
                 'responseForm' => $responseForm,
                 'questionNaires' => $questionNaires,
                 ];
-                return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
+                return Inertia::render('Frontend/ReplyIndex', ['response' => rtFormat($response)]);
             }
         }
         // 查詢資料庫中是否有該亂數(網址)的問卷
@@ -77,7 +77,7 @@ class ReplyController extends Controller
             'questionNaires' => $questionNaires,
         ];
 
-        return Inertia::render('Frontend/reply_index', ['response' => rtFormat($response)]);
+        return Inertia::render('Frontend/ReplyIndex', ['response' => rtFormat($response)]);
     }
     public function reply_store(Request $request)
     {
@@ -118,7 +118,7 @@ class ReplyController extends Controller
             'cantModify' =>$cantModify,
         ];
 
-        return Inertia::render('Frontend/reply_final', ['response' => rtFormat($response)]);
+        return Inertia::render('Frontend/ReplyFinal', ['response' => rtFormat($response)]);
     }
     public function reply_review(Request $request)
     {
@@ -141,7 +141,7 @@ class ReplyController extends Controller
              'lastAnswer' => $lastAnswer,
             ];
 
-            return Inertia::render('Frontend/reply_review', ['response' => rtFormat($response)]);
+            return Inertia::render('Frontend/ReplyReview', ['response' => rtFormat($response)]);
         }
 
         // ------------第二種情況---填寫者第一次填完問卷後按「查看結果」回看問卷------------------
@@ -164,7 +164,7 @@ class ReplyController extends Controller
             'lastAnswer' => $lastAnswer,
          ];
 
-         return Inertia::render('Frontend/reply_review', ['response' => rtFormat($response)]);
+         return Inertia::render('Frontend/ReplyReview', ['response' => rtFormat($response)]);
     }
 
     public function reply_update(Request $request)
@@ -210,6 +210,6 @@ class ReplyController extends Controller
             'formTitle' => $formTitle,
             'cantModify' =>$cantModify,
         ];
-        return Inertia::render('Frontend/reply_final', ['response' => rtFormat($response)]);
+        return Inertia::render('Frontend/ReplyFinal', ['response' => rtFormat($response)]);
     }
 }

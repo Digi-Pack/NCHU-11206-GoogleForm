@@ -26,7 +26,7 @@ class EditorController extends Controller
     public function edit_index(Request $request)
     {
         $response = $request->user();
-        return Inertia::render('Backend/Editorindex', ['response' => rtFormat($response)]);
+        return Inertia::render('Backend/EditorIndex', ['response' => rtFormat($response)]);
     }
     public function edit_store(Request $request)
     {
@@ -89,7 +89,7 @@ class EditorController extends Controller
             'questionNaires' => $questionNaires,
         ];
 
-        return Inertia::render('Backend/Editorold', ['response' => rtFormat($response)]);
+        return Inertia::render('Backend/EditorOld', ['response' => rtFormat($response)]);
     }
     public function edit_update(Request $request)
     {

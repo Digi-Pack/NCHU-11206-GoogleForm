@@ -34,12 +34,12 @@ export default {
 
 <template>
   <section id="frontend-index">
-    <div class="content p-4">
+    <div class="content">
       <div class="w-full h-[15px] bg-purple rounded-t-lg"></div>
-      <div class="px-7">
+      <div class="px-7 pb-5">
         <div>
           <h1 class="title my-5">{{ formTitle }}</h1>
-          <div class="flex flex-col gap-3 ">
+          <div class="flex flex-col gap-3">
             <p>我們已經收到您回覆的表單～</p>
             <p>這個平台上，除了問卷的主編輯者和共同編輯者之外，一般填寫者只能填寫一份問卷。</p>
             <p v-if="cantModify === false">如果您需要修改答案，可按下方「修改回覆內容」按鈕；</p>
@@ -61,7 +61,7 @@ export default {
 #frontend-index {
     @apply w-full h-screen overflow-y-auto flex flex-col items-center bg-purple-light;
       .content {
-        @apply w-[60%] max-w-2xl h-[300px] bg-white flex flex-col rounded-lg mt-[10px] border;
+        @apply w-[60%] max-w-2xl h-auto bg-white flex flex-col rounded-lg mt-[10px] border;
         .title {
           @apply text-[40px];
         }
