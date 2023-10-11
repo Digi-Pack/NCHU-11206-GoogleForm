@@ -168,16 +168,16 @@ class EditorController extends Controller
         if ($request->user()->email === $request->co_email) {
             return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
         }
+        // 找不到email跳出
+        if (!$user) {
+            return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '查無資料')]);
+        }
         $repeatid = Coworker::where('coworker_id', $user->id)->get();
         // 找到此表單有一樣email就跳出
         foreach ($repeatid as $index) {
             if ($index->question_id === $request->coFormIdNumber) {
                 return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '已擁有編輯使用者')]);
             }
-        }
-        // 找不到email跳出
-        if (!$user) {
-            return redirect()->route('edit.old', ['id' => $request->coFormIdNumber])->with(['message' => rtFormat($user, 0, '查無資料')]);
         }
         $formId = Coworker::create([
             'question_id' => $request->coFormIdNumber,

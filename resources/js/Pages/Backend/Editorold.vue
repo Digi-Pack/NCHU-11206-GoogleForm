@@ -103,7 +103,7 @@ export default {
       selectedMin: '0',
       selectedMax: '2',
       imageSize: 0,
-      formUrl: '',
+      formUrl: this.response.rt_data.responseForm.random,
       show: false,
       scrollHeight: 0,
       interval: null,
@@ -400,8 +400,6 @@ export default {
 </script>
 
 <template>
-  <!-- {{ formData.length }} -->
-  <!-- {{ formData }} -->
   <section id="question" class="pt-[10px] z-2">
     <div class="container">
       <form class="min-w-[840px] flex justify-between" @submit.prevent="submitData()">

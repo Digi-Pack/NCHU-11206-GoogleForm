@@ -261,6 +261,7 @@ export default {
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             this.formUrl = props.flash.message.rt_data;
+            console.log(this.formUrl);
             sessionStorage.removeItem('formData');
             sessionStorage.removeItem('formText');
             Swal.fire({

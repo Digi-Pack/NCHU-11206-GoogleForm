@@ -57,6 +57,12 @@ export default {
                 router.get(route('guide.index'));
               }
             });
+          } else {
+            Swal.fire({
+              title: '新增失败',
+              text: props.flash.message.rt_message, // 这里使用消息的文本作为错误信息
+              icon: 'error',
+            });
           }
         },
       });
@@ -92,8 +98,8 @@ export default {
                 </div>
                 <span class="w-[60%] text-[14px] text-grey flex justify-end">擁有者</span>
               </div>
-              <!-- {{ props.flash.message.rt_dataquestion }} -->
-              <div v-for="item in coformemail" :key="item.id" class="flex items-center gap-3 hover:bg-grey-light px-8 w-full">
+              <div v-for="item in coformemail" :key="item.id"
+                class="flex items-center gap-3 hover:bg-grey-light px-8 w-full">
                 <div class="rounded-full bg-purple w-[22px] h-[22px]"></div>
                 <div class="flex flex-col">
                   <span class="text-[12px]">{{ item.user.name }}</span>
