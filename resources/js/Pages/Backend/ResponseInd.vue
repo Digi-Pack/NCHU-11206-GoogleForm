@@ -142,7 +142,7 @@ export default {
               <div class="questype-3">
                 <div v-for="choose in item.options" :key="choose.id" class="option my-3">
                   <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3" :value="choose.id" disabled>
-                  <label for="choice-1">{{ choose.value }}</label>
+                  <label for="choice-1 w-full truncate">{{ choose.value }}</label>
                 </div>
               </div>
             </div>
@@ -150,10 +150,10 @@ export default {
             <div v-if="item.type === 4" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-4">
-                <div v-for="choose in item.options" :key="choose.id" class="option">
-                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus" :value="choose.id"
+                <div v-for="choose in item.options" :key="choose.id" class="option my-3">
+                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3" :value="choose.id"
                     disabled>
-                  <label for="focus">{{ choose.value }}</label>
+                  <label for="focus w-full truncate">{{ choose.value }}</label>
                 </div>
               </div>
             </div>
@@ -191,21 +191,20 @@ export default {
               </div>
             </div>
             <!-- 單選方格 -->
-
             <div v-if="item.type === 8" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-8">
-                <table>
+                <table class="w-full table-fixed border-separate border-spacing-y-2">
                   <thead>
                     <tr>
                       <th></th>
-                      <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                      <th v-for="choose in item.square.column" :key="choose.id" class="truncate">{{ choose.text }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
-                      <th>{{ choose.text }}</th>
-                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id">
+                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
+                      <th class="truncate">{{ choose.text }}</th>
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id" class="text-center py-4">
                         <input v-model="ansStringJson[key].manyOptions[innerkey]" type="radio"
                           :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
                           disabled>
@@ -218,18 +217,18 @@ export default {
             <!-- 核取方塊格 -->
             <div v-if="item.type === 9" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-9">
-                <table>
+              <div class="questype-9 w-full">
+                <table class="w-full table-fixed border-separate border-spacing-y-2">
                   <thead>
                     <tr>
                       <th></th>
-                      <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                      <th v-for="choose in item.square.column" :key="choose.id" class="truncate">{{ choose.text }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
-                      <th>{{ choose.text }}</th>
-                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id">
+                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
+                      <th class="truncate">{{ choose.text }}</th>
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id" class="text-center py-4">
                         <input v-model="ansStringJson[key].manyOptions" type="checkbox"
                           :name="'many-' + innerkey + '-' + innerinnerkey"
                           :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" disabled>

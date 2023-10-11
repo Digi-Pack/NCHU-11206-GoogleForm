@@ -386,13 +386,22 @@ export default {
         @apply w-full;
 
         table {
-          @apply w-full;
+          @apply w-full table-fixed border-separate border-spacing-y-2;
+          th {
+              @apply truncate;
+            }
 
           tbody {
             @apply py-10;
+            tr {
+              @apply bg-grey-light;
+              th {
+                @apply truncate;
+              }
 
             td {
-              @apply text-center;
+                @apply text-center py-4;
+              }
             }
           }
         }
