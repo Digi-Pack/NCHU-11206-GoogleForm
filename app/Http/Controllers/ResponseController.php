@@ -10,15 +10,15 @@ use App\Models\User;
 
 class ResponseController extends Controller
 {
-    public function response_sum()
+    public function response_sum(Request $request)
     {
-        // 找到對應的問券
-        $responseForm = Question::where('id', 1)->first();
+          // 找到對應的問券
+        $responseForm = Question::where('id', $request->id)->first();
         // $questionNaires是問卷的題目內容
         $questionNaires = json_decode($responseForm['questionnaires'], true);
         // 找到對應該份問卷的所有回覆
         //$results會裝取出來的回覆資料
-        $datas = Response::where('question_id', 1)->get();
+        $datas = Response::where('question_id', $request->id)->get();
         $results = [];
         foreach ($datas as $data) {
             $answer = json_decode($data['answer'], true);
