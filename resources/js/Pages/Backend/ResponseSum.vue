@@ -31,6 +31,7 @@ export default {
       whoAll: this.response.rt_data.whoAll,
       noAnswer: false,
       coFormId: route()?.params?.id ?? '0',
+      isActive: false,
     };
   },
   mounted() {
@@ -40,6 +41,9 @@ export default {
     currentUrl(urlName = '') {
       if (urlName === '') return;
       return route().current(urlName);
+    },
+    accordion() {
+      this.isActive = !this.isActive;
     },
   },
 };
@@ -72,9 +76,12 @@ export default {
         <div class="responser">
           <div class="title">哪些人已回應?</div>
           <div class="email">
-            <span>電子郵件</span>
-            <div v-for="item in whoAll" :key="item.id">
-              <div class="email-address"> {{ item }} </div>
+            <!-- <span>電子郵件</span> -->
+            <button type="button" @click="accordion()" class="accordion" :class="{ 'active': isActive }">電子郵件</button>
+            <div v-if="isActive" class="content">
+              <div v-for="item in whoAll" :key="item.id">
+                <div class="email-address"> {{ item }} </div>
+              </div>
             </div>
           </div>
         </div>
@@ -121,6 +128,24 @@ export default {
                 }
                 .email {
                     @apply p-5;
+                    .accordion {
+                      @apply cursor-pointer bg-purple-middle p-[10px] rounded-t duration-300 rounded-b w-[300px];
+                    }
+                    .content {
+                      @apply px-[10px] pt-[10px] w-[300px] max-h-[300px] rounded-b bg-purple-light overflow-y-scroll;
+                      &::-webkit-scrollbar{
+                        @apply w-[4px];
+                      }
+                      &::-webkit-scrollbar-track {
+                        @apply bg-purple-dark rounded-[10px];
+                      }
+                      &::-webkit-scrollbar-thumb{
+                        @apply bg-purple rounded-[10px];
+                      }
+                    }
+                    .active {
+                      @apply bg-purple-dark rounded-none rounded-t text-gray-800;
+                    }
                     span {
                         @apply text-lg font-semibold p-3;
                     }
