@@ -20,15 +20,16 @@ export default {
 
 <template>
   <section id="findans">
+    <!-- <div class="title">{{ value.ans.title }}</div> -->
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1">
-      <div>
+      <div class="text-black text-[22px] px-5">
         {{ value.ans.answer }}
       </div>
     </div>
     <!-- 詳答 -->
     <div v-if="value.qus.type === 2">
-      <div>
+      <div class="text-black text-[22px] px-5">
         {{ value.ans.answer }}
       </div>
     </div>
@@ -36,9 +37,9 @@ export default {
     <div v-if="value.qus.type === 3">
       <div class="questype-3">
         <div v-for="(choose) in value.qus.options" :key="choose.id" class="option">
-          <input type="radio" id="choice-1" disabled v-if="choose.id === value.ans.answer" checked>
-          <input type="radio" id="choice-1" disabled v-else>
-          <label for="choice-1">{{ choose.value }}</label>
+          <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-if="choose.id === value.ans.answer" checked>
+          <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-else>
+          <label for="choice-1" class="text-[16px] px-5">{{ choose.value }}</label>
         </div>
       </div>
     </div>
@@ -54,7 +55,7 @@ export default {
     </div>
     <!-- 下拉式選單 -->
     <div v-if="value.qus.type === 5">
-      <div class="questype-5">
+      <div class="questype-5 text-black text-[16px] px-5">
         {{ value.ans.answer }}
       </div>
     </div>
@@ -80,7 +81,6 @@ export default {
       </div>
     </div>
     <!-- 單選方格 -->
-
     <div v-if="value.qus.type === 8">
       <div class="questype-8">
         <table>
@@ -128,22 +128,29 @@ export default {
     </div>
     <!-- 日期 -->
     <div v-if="value.qus.type === 10" class="!block">
-      <div class="questype-10">
-        <input type="date" :value="value.ans.answer">
+      <div class="questype-10 responser">
+        <div class="flex justify-start gap-3 w-full px-3 pt-8">
+          <div class="date">MM </div>
+          <div class="date">DD </div>
+          <div class="date">YYYY </div>
+        </div>
+        <input type="date" disabled :value="value.ans.answer" class="border-0">
+        <div class="px-3 py-2 my-3 ml-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
       </div>
-
     </div>
     <!-- 時間 -->
     <div v-if="value.qus.type === 11" class="!block">
-      <div class="questype-11">
-        <input type="text" :value="value.ans.time.hour" readonly>
-        <span>:</span>
-        <input type="text" :value="value.ans.time.minute" readonly>
-        <select name="" id="" disabled>
-          <option value="a.m." v-if="value.ans.time.section === 'a.m.'" selected>上午</option>
-          <option value="p.m." v-if="value.ans.time.section === 'p.m.'" selected>下午</option>
-        </select>
-
+      <div class="questype-11 responser">
+        <div class="flex flex-col items-start gap-3 w-full px-3 pt-8">
+          <div class="date">時間</div>
+          <div>
+            <span class="border-b">{{ value.ans.time.hour }}</span> :
+            <span class="border-b">{{ value.ans.time.minute }}</span>
+            <span v-if="value.ans.time.section === 'a.m.'" class="ml-3 text-grey font-bold">上午</span>
+            <span v-if="value.ans.time.section === 'p.m.'" class="ml-3 text-grey font-bold">下午</span>
+          </div>
+        </div>
+        <div class="px-3 py-2 my-3 ml-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
       </div>
     </div>
     <!-- 影片 -->
@@ -157,5 +164,24 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-#findans {}
+#findans {
+    .title {
+        @apply font-bold;
+    }
+    .response-body {
+        @apply flex flex-col mt-[15px];
+        .noreply {
+            @apply flex justify-start items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
+        }
+        .responser {
+            @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white;
+            .date {
+                @apply text-grey flex flex-col gap-3 items-end;
+                span {
+                    @apply text-black border-b;
+                }
+            }
+        }
+    }
+}
 </style>

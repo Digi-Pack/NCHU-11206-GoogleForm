@@ -112,6 +112,7 @@ export default {
         </div>
       </div>
       <div class="response-body">
+        <!-- <div v-if="response.rt_data.responseForm">{{ response.rt_data.responseForm[0] }}</div> -->
         <div v-for="item in findAns" :key="item.id" class="noreply">
           <FindAns :value="item" />
         </div>
@@ -154,7 +155,7 @@ export default {
     .response-body {
         @apply flex flex-col mt-[15px];
         .noreply {
-            @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
+            @apply flex justify-start items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
         }
         .responser {
             @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white;

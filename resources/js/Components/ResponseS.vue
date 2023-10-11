@@ -196,7 +196,9 @@ export default {
             subtext: `${item.subtext}則回覆`,
             left: 'center',
           },
-          legend: {},
+          legend: {
+            left: 'left',
+          },
           tooltip: {},
           dataset: {
             source: item.data,
@@ -519,7 +521,7 @@ export default {
             @apply w-full text-lg font-semibold mb-1 px-3;
         }
         .subtitle{
-            @apply text-sm;
+            @apply text-sm px-3;
         }
     }
     .text-answer {
