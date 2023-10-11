@@ -16,6 +16,7 @@ export default {
       formData: this.response,
       cantModify: this.response.rt_data.cantModify,
       formTitle: this.response.rt_data.formTitle,
+      question_id: this.response.rt_data.question_id,
     };
   },
   methods: {
@@ -51,9 +52,11 @@ export default {
         </div>
       </div>
     </div>
-    <button v-if="cantModify === true" type="button" class="btn"><img :src="edit" alt="">
-      <span>編輯這個表單</span>
-    </button>
+    <Link :href="route('edit.old', { id: question_id })">
+      <button v-if="cantModify === true" type="button" class="btn"><img :src="edit" alt="">
+        <span>編輯這個表單</span>
+      </button>
+    </Link>
   </section>
 </template>
 

@@ -92,7 +92,7 @@ class EditorController extends Controller
     }
     public function edit_update(Request $request)
     {
-
+        // dd(132456798);
         $request->validate([
             'formData.*.title' => 'required|string',
             'formData.*.type' => 'required|numeric',
@@ -106,8 +106,13 @@ class EditorController extends Controller
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         // 找到表單id
-        $updateForm = Question::where('lead_author_id', $request->user()->id) ->orWhereHas('coworker', function ($query) use ($request) {
-            return $query->where('coworker_id', $request->user()->id);
+        // $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
+
+        $updateForm = Question::where(function ($query) use ($request) {
+            return $query->where('lead_author_id', $request->user()->id)
+                ->orWhereHas('coworker', function ($coQuery) use ($request) {
+                    return $coQuery->where('coworker_id', $request->user()->id);
+                });
         })->find($request->formText['id']);
 
         // 處理圖片
