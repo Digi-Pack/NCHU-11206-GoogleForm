@@ -54,7 +54,7 @@ export default {
           <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
         </div>
         <div class="head-fotter">
-          <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
+          <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
             摘要
           </NavLink>
           <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
