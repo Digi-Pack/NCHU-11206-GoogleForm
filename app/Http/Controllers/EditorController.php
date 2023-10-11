@@ -106,7 +106,10 @@ class EditorController extends Controller
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         // 找到表單id
-        $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
+        $updateForm = Question::where('lead_author_id', $request->user()->id) ->orWhereHas('coworker', function ($query) use ($request) {
+            return $query->where('coworker_id', $request->user()->id);
+        })->find($request->formText['id']);
+
         // 處理圖片
         foreach ($request->formData as $item) {
             $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
