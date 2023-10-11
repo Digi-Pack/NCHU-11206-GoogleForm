@@ -113,7 +113,7 @@ export default {
       </div>
       <div class="response-body">
         <!-- <div v-if="response.rt_data.responseForm">{{ response.rt_data.responseForm[0] }}</div> -->
-        <div v-for="item in findAns" :key="item.id" class="noreply">
+        <div v-for="item in findAns" :key="item.id">
           <FindAns :value="item" />
         </div>
       </div>
