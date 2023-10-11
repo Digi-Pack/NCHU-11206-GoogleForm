@@ -3,7 +3,6 @@ import close from '/images/close.svg';
 
 export default {
   props: {
-    // show: Boolean, // 父组件传递的控制显示的属性
     modalData: Object,
   },
   data() {

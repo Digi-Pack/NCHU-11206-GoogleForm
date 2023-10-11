@@ -46,7 +46,6 @@ export default {
       router.visit(route('coformid.store'), {
         method: 'post', data: { co_email, coFormIdNumber }, preserveState: true,
         onSuccess: ({ props }) => {
-          console.log(props);
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
               title: '新增成功',
@@ -57,7 +56,6 @@ export default {
               if (result.isConfirmed) {
                 router.get(route('guide.index'));
               }
-              console.log(result);
             });
           }
         },

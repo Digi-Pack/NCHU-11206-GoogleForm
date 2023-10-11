@@ -127,17 +127,13 @@ export default {
   mounted() {
     if (!sessionStorage.getItem('formText')) {
       sessionStorage.setItem('formText', JSON.stringify(this.formText));
-    //   console.log(sessionStorage);
     } else {
       this.formText = JSON.parse(sessionStorage.getItem('formText'));
-    //   console.log(sessionStorage.getItem('formText'));
     }
     if (!sessionStorage.getItem('formData')) {
       sessionStorage.setItem('formData', JSON.stringify(this.formData));
-    //   console.log(sessionStorage);
     } else {
       this.formData = JSON.parse(sessionStorage.getItem('formData'));
-    //   console.log(sessionStorage.getItem('formData'));
     }
     this.$parent.formTitle = this.formText.qu_naires_title;
     window.addEventListener('scroll', this.handleScroll);

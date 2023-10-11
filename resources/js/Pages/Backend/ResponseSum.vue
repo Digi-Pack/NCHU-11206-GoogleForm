@@ -35,9 +35,6 @@ export default {
   },
   mounted() {
     this.noAnswer = JSON.stringify(this.answer) === JSON.stringify([]);
-    console.log(JSON.stringify(this.answer) === JSON.stringify([]));
-    console.log(this.noAnswer);
-
   },
   methods: {
     currentUrl(urlName = '') {

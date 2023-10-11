@@ -22,7 +22,6 @@ import user from '/images/user.svg';
 import description from '/images/description.svg';
 import account from '/images/account-circle.svg';
 import open_in_new from '/images/open_in_new.png';
-// import RenameModal from '@/Components/Modal/RenameModal.vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 export default {
@@ -160,9 +159,7 @@ export default {
         <div class="content">
           <div class="flex justify-between items-center">
             <h1 class="text-[24px] text-black">重新命名</h1>
-            <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
-              <img :src="close" alt="">
-            </button>
+            <button type="button" class="text-[28px] font-bold text-black" @click="closing()"></button>
           </div>
           <div class="pt-[15px]">
             <div>

@@ -125,26 +125,20 @@ export default {
     },
   },
   mounted() {
-    // console.log(props.qu_naires_title);
     if (!sessionStorage.getItem('formText')) {
       sessionStorage.setItem('formText', JSON.stringify(this.formText));
-      //   console.log(sessionStorage);
     }
     else {
       this.formText = JSON.parse(sessionStorage.getItem('formText'));
-      //   console.log(sessionStorage.getItem('formText'));
     }
     if (!sessionStorage.getItem('formData')) {
       sessionStorage.setItem('formData', JSON.stringify(this.formData));
-      //   console.log(sessionStorage);
     }
     else {
       this.formData = JSON.parse(sessionStorage.getItem('formData'));
-      //   console.log(sessionStorage.getItem('formData'));
     }
     window.addEventListener('scroll', this.handleScroll);
     this.$parent.formTitle = this.formText.qu_naires_title;
-    console.log(4585);
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -288,18 +282,14 @@ export default {
     },
     open() {
       this.show = !this.show;
-      // console.log(this.formUrl);
     },
     testStyle(index, err = {}) {
-      // console.log(Object.hasOwn(err, `formData.${index}.title`));
-      console.log(err[`formData.${index}.title`] ?? '');
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
     },
     uploadImage(event, item) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
-        console.log(item);
         item.image = reader.result;
         this.imageSize += event.target.files[0].size;
       };

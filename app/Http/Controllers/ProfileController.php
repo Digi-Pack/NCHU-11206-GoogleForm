@@ -61,38 +61,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-    // public function reply_index_tzuchi(Request $request)
-    // {
-    //     // 先找到指定id的表單
-    //     $responseForm = Question::where('id', 8)->get();
-    //     //獲取亂數表單
-    //     //$question = Question::where('random', $random)->first();
-    //     // dd($responseForm[0]['questionnaires']);
-    //     // 將找到的問卷裡面，題目那一欄(當時存成json)，解開
-    //     //    dd($responseForm );
-    //     $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
-    //     // dd( $questionnaires);
-    //     $response = [
-    //         'responseForm' => $responseForm,
-    //         'questionNaires' => $questionNaires,
-    //     ];
-
-    //     return Inertia::render('Frontend/reply_index_tzuchi', ['response' => rtFormat($response)]);
-    //     //   return Inertia::render('Frontend/reply_index');
-    //     // return Inertia::render('Backend/Guideindex', ['response' => rtFormat($Guide)]);
-    // }
-    // public function reply_index_tzuchi_store(Request $request)
-    // {
-
-    //     $user = $request->user();
-    //     $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
-
-    //     Response::create([
-    //        'user_id' => $user->id,
-    //         'question_id' => $request-> formId,
-    //         'answer' => $jsonText ,
-    //     ]);
-
-    //     return Inertia::render('Frontend/ReplyFinal');
-    // }
 }

@@ -204,7 +204,6 @@ export default {
     this.chartOptions = this.arrayC.map(item => {
       if (item.type === 5 || item.type === 3) {
         // 生成圆饼图的配置项
-        console.log('我是type3或5');
         return {
           type: item.type,
           title: {
@@ -228,7 +227,6 @@ export default {
         };
       } else if (item.type === 7) {
         // 生成縱向长条图的配置项
-        console.log('我是type7');
         return {
           type: item.type,
           title: {
@@ -257,7 +255,6 @@ export default {
         };
       } else if (item.type === 4) {
         // 生成橫向长条图的配置项
-        console.log('我是type4');
         return {
           type: item.type,
           title: {
@@ -315,11 +312,9 @@ export default {
         data: question.options.map((option) => {
           this.count = 0; // 在這裡定義並初始化 count
           this.arrayB.forEach((answerSet) => {
-            // console.log(answerSet);
             const answer = answerSet.find((answer) => answer.id === question.id);
-            // console.log(answer);
-            // console.log(13);
-            if (answer && answer.answer === option.id) { // 比較 answer.answer 和 option.id
+            if (answer && answer.answer === option.id) {
+              // 比較 answer.answer 和 option.id
               this.count++;
             }
           });
@@ -355,7 +350,6 @@ export default {
       return count;
     },
     linearData(question) {
-      console.log('我是線性刻度function的頭');
       const xAxis = [];
       const data = [];
 
@@ -552,14 +546,10 @@ export default {
     generateArrayC() {
       this.arrayC = this.arrayA.map((question) => {
         if (question.type === 3 || question.type === 5) {
-        //   this.count = 0;
-          console.log(123);
           return this.pieSum(question);
         } else if (question.type === 4) {
-          console.log(456);
           return this.checkboxSum(question);
         } else if (question.type === 7) {
-          console.log(789);
           return this.linearData(question);
         } else if (question.type === 8 || question.type === 9) {
           return this.choiceSquare(question);
@@ -568,7 +558,6 @@ export default {
         } else if (question.type === 11) {
           return this.timeTotal(question);
         }
-        console.log('陣列結束了');
       });
     },
   },

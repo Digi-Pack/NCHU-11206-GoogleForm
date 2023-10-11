@@ -64,7 +64,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.ansStringJson);
+    // console.log(this.ansStringJson);
   },
   methods: {
     currentUrl(urlName = '') {

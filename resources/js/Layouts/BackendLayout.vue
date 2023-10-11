@@ -67,7 +67,6 @@ export default {
       return route().current(urlName);
     },
     changeColor(newColor) {
-      console.log(this.bgColor);
       let myNewColor = `${newColor}`;
       this.bgColor = myNewColor;
     },

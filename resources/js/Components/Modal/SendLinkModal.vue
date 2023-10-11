@@ -18,7 +18,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.formUrl);
+    // console.log(this.formUrl);
   },
   methods: {
     closing() {
