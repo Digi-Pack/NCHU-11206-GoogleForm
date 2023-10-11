@@ -183,13 +183,13 @@ export default {
             </div>
           </div>
           <div class="down">
-            <NavLink class="btn" :href="route('edit.index')" :active="currentUrl('edit.index')">
+            <NavLink class="btn" :href="route('edit.old', { id: coFormId })" :active="currentUrl('edit.index')">
               問題
             </NavLink>
             <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
               回覆
             </NavLink>
-            <NavLink class="btn" :href="route('profile.edit')" :active="currentUrl('profile.edit')">
+            <NavLink class="btn" :href="route('profile.edit', { id: coFormId })" :active="currentUrl('profile.edit')">
               帳戶
             </NavLink>
           </div>
