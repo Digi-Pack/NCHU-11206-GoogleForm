@@ -12,7 +12,7 @@ class ResponseController extends Controller
 {
     public function response_sum()
     {
-          // 找到對應的問券
+        // 找到對應的問券
         $responseForm = Question::where('id', 1)->first();
         // $questionNaires是問卷的題目內容
         $questionNaires = json_decode($responseForm['questionnaires'], true);
@@ -30,11 +30,11 @@ class ResponseController extends Controller
             $whoRe = $data['user_id'];
             $whoRespond[] = $whoRe;
         }
-          // 根據回覆問卷的使用者id，在USER表找註冊時的信箱，此寫法缺點是預設使用者都同意蒐集信箱，所以response表沒開存信箱的欄位，直接從user表找。
+        // 根據回覆問卷的使用者id，在USER表找註冊時的信箱，此寫法缺點是預設使用者都同意蒐集信箱，所以response表沒開存信箱的欄位，直接從user表找。
         $whoAll = [];
         foreach ($whoRespond as $item) {
-            $whoIn =User::where('id',$item)->get();
-            $whoAll[] =$whoIn[0]['email'];
+            $whoIn = User::where('id', $item)->get();
+            $whoAll[] = $whoIn[0]['email'];
         }
 
 
@@ -42,7 +42,7 @@ class ResponseController extends Controller
         $response = [
             'results' => $results,
             'questionNaires' => $questionNaires,
-            'whoAll'=>$whoAll,
+            'whoAll' => $whoAll,
         ];
 
         return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($response)]);
@@ -56,5 +56,22 @@ class ResponseController extends Controller
             'responseForm' => $questionNaires,
         ];
         return Inertia::render('Backend/ResponseQue', ['response' => rtFormat($response)]);
+    }
+    public function responseInd(Request $request, $id)
+    {
+        $request->validate([
+            'num' => 'numeric',
+        ]);
+        $responseForm = Question::withCount('response')->find($id);
+        if ($request->filled('num') <= $responseForm->response_count) {
+            $fillForm = Response::where('question_id', $id)->skip(intval($request->num) - 1)->take(1)->first();
+        } else {
+            $fillForm = Response::where('question_id', $id)->first();
+        }
+        $response = [
+            'results' => $responseForm,
+            'fillform' => $fillForm,
+        ];
+        return Inertia::render('Backend/ResponseInd', ['response' => rtFormat($response)]);
     }
 }

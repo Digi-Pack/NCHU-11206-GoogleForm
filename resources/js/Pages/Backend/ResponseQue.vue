@@ -35,19 +35,15 @@ export default {
       num: 1,
       coFormId: route()?.params?.id ?? '0',
       titles: 1,
-      type: this.response.rt_data,
     };
   },
   computed: {
     formStringJson() {
       const { response: { rt_data } } = this;
-      // const formString = this.response.rt_data.results.questionnaires;
       return JSON.parse(rt_data?.results?.questionnaires ?? '[]');
     },
     ansStringJson() {
       const { response: { rt_data } } = this;
-      // const formString = this.response.rt_data.results.questionnaires;
-      // return JSON.parse(rt_data.results);
       return rt_data.results.response.map(item => {
         return JSON.parse(item?.answer ?? '[]');
       });
@@ -78,9 +74,6 @@ export default {
     plus() {
       this.num++;
     },
-    chooseTitle(e) {
-      this.type = this.response.rt_data.responseForm[e.target.value];
-    },
   },
 };
 </script>
@@ -99,12 +92,12 @@ export default {
           <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
+          <NavLink class="btn" :href="route('response.ind', { id: coFormId })" :active="currentUrl('response.ind')">
             個別
           </NavLink>
         </div>
         <div class="head-fotter">
-          <select v-model="titles" name="" id="" @change="chooseTitle">
+          <select v-model="titles" name="" id="">
             <option v-for="item in response.rt_data.responseForm" :key="item.id" :value="item.id">
               {{ item.title }}
             </option>
@@ -119,31 +112,9 @@ export default {
         </div>
       </div>
       <div class="response-body">
-        <!-- {{ response.rt_data.results.response }} -->
         <div v-for="item in findAns" :key="item.id" class="noreply">
-          <!-- {{ item }} -->
-          <!-- {{ item.qus.type }} -->
           <FindAns :value="item" />
         </div>
-        <!-- <div class="responser">
-          <div class="flex justify-start gap-3 w-full px-3 py-8 border-b">
-            <div class="date">MM <span>10 /</span></div>
-            <div class="date">DD <span>03 /</span></div>
-            <div class="date">YYYY <span>2023</span></div>
-          </div>
-          <div class="px-3 py-2 my-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
-        </div>
-        <div class="responser">
-          <div class="flex flex-col items-start gap-3 w-full px-3 py-8 border-b">
-            <div class="date">時間</div>
-            <div>
-              <span class="border-b">12</span> :
-              <span class="border-b">00</span>
-              <span class="ml-3 text-grey font-bold">上午</span>
-            </div>
-          </div>
-          <div class="px-3 py-2 my-3 text-blue hover:bg-blue-light w-[85px]"><a href="#">1 則回應</a></div>
-        </div> -->
       </div>
     </div>
   </section>

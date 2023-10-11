@@ -5,8 +5,6 @@ export default {
     value: Object,
   },
   data() {
-    return {
-    };
   },
   methods: {
     arrayData(min, max) {
@@ -36,7 +34,6 @@ export default {
     </div>
     <!-- 選擇題 -->
     <div v-if="value.qus.type === 3">
-      {{ value.qus.options }}
       <div class="questype-3">
         <div v-for="(choose) in value.qus.options" :key="choose.id" class="option">
           <input type="radio" id="choice-1" disabled v-if="choose.id === value.ans.answer" checked>

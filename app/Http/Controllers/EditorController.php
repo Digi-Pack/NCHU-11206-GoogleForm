@@ -88,7 +88,6 @@ class EditorController extends Controller
             'responseForm' => $responseForm,
             'questionNaires' => $questionNaires,
         ];
-
         return Inertia::render('Backend/EditorOld', ['response' => rtFormat($response)]);
     }
     public function edit_update(Request $request)

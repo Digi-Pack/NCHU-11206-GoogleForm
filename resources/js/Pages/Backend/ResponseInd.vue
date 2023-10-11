@@ -8,8 +8,16 @@ import check from '/resources/images/check.png';
 import linkoff from '/resources/images/link_off.png';
 import chevron_left from '/resources/images/chevron_left.svg';
 import chevron_right from '/resources/images/chevron_right.svg';
+import { router } from '@inertiajs/vue3';
 
 export default {
+  props: {
+    response: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
       excel: excel,
@@ -23,7 +31,23 @@ export default {
       chevron_right: chevron_right,
       num: 1,
       coFormId: route()?.params?.id ?? '0',
+      queform: {
+        que: this.response.rt_data.results,
+      },
     };
+  },
+  computed: {
+    formStringJson() {
+      const { queform: { que } } = this;
+      return JSON.parse(que?.questionnaires ?? '[]');
+    },
+    ansStringJson() {
+      const { response: { rt_data } } = this;
+      return JSON.parse(rt_data?.fillform?.answer ?? '[]');
+    },
+  },
+  mounted() {
+    console.log(this.formStringJson);
   },
   methods: {
     currentUrl(urlName = '') {
@@ -33,9 +57,27 @@ export default {
     minus() {
       if (this.num === 1) return;
       this.num--;
+      const { num, coFormId } = this;
+      router.visit(route('response.ind', { id: coFormId }), {
+        method: 'get', data: { num }, preserveState: true,
+      });
     },
     plus() {
-      this.num++;
+      const { response } = this;
+      if (response.rt_data.results.response_count > this.num) {
+        this.num++;
+        const { num, coFormId } = this;
+        router.visit(route('response.ind', { id: coFormId }), {
+          method: 'get', data: { num }, preserveState: true,
+        });
+      }
+    },
+    arrayData(min, max) {
+      let loopResult = [];
+      for (let i = min; i <= max; i++) {
+        loopResult.push(i);
+      }
+      return loopResult;
     },
   },
 };
@@ -46,7 +88,7 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
+          <h2 class="text-[28px] pb-10 font-bold">{{ response.rt_data.results.response_count }} 則回應</h2>
         </div>
         <div class="head-middle">
           <NavLink class="btn" :href="route('response.sum')" :active="currentUrl('response.sum')">
@@ -55,7 +97,7 @@ export default {
           <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
+          <NavLink class="btn" :href="route('response.ind', { id: coFormId })" :active="currentUrl('response.ind')">
             個別
           </NavLink>
         </div>
@@ -63,7 +105,9 @@ export default {
           <div class="flex ml-3">
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
             <div>第
-              <input type="number" :value="num" class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共 4 項
+              <input type="number" :value="num"
+                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
+              4 項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>
           </div>
@@ -75,7 +119,157 @@ export default {
         </div>
       </div>
       <div class="response-body bg-white">
-        <span>待回應</span>
+        <div class="container">
+          {{ response.rt_data.results.response_count }}
+          <div v-for="(item, key) in formStringJson" :key="item.id" class="question">
+            <!-- 簡答 -->
+            <div v-if="item.type === 1" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-1">
+                {{ ansStringJson[key].answer }}
+              </div>
+            </div>
+            <!-- 詳答 -->
+            <div v-if="item.type === 2" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-2">
+                {{ ansStringJson[key].answer }}
+              </div>
+            </div>
+            <!-- 選擇題 -->
+            <div v-if="item.type === 3">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-3">
+                <div v-for="choose in item.options" :key="choose.id" class="option">
+                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1" :value="choose.id" disabled>
+                  <label for="choice-1">{{ choose.value }}</label>
+                </div>
+              </div>
+            </div>
+            <!-- 核取方塊 -->
+            <div v-if="item.type === 4" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-4">
+                <div v-for="choose in item.options" :key="choose.id" class="option">
+                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus" :value="choose.id"
+                    disabled>
+                  <label for="focus">{{ choose.value }}</label>
+                </div>
+              </div>
+            </div>
+            <!-- 下拉式選單 -->
+            <div v-if="item.type === 5" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-5">
+                <label for="select"></label>
+                <select v-model="ansStringJson[key].answer" name="select" id="select">
+                  <option v-for="choose in item.options" :key="choose.id" :value="choose.value" disabled>{{ choose.value
+                  }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <!-- 檔案上傳 -->
+            <div v-if="item.type === 6" class="!block">
+              <span class="text-[18px]">檔案上傳</span>
+              <div class="questype-6">
+                <label for=""></label>
+                <input type="file" name="" id="">
+              </div>
+            </div>
+            <!-- 線性刻度 -->
+            <div v-if="item.type === 7" class="!block">
+              <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
+              <div class="questype-7">
+                <span>{{ item.linear.minText }}</span>
+                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
+                  <label> {{ i }}
+                  </label>
+                  <input v-model="ansStringJson[key].manyOptions" type="radio" :value="i" disabled>
+                </div>
+                <span class="w-[120px] truncate">{{ item.linear.maxText }}</span>
+              </div>
+            </div>
+            <!-- 單選方格 -->
+
+            <div v-if="item.type === 8" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-8">
+                <table>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
+                      <th>{{ choose.text }}</th>
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id">
+                        <input v-model="ansStringJson[key].manyOptions[innerkey]" type="radio"
+                          :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
+                          disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- 核取方塊格 -->
+            <div v-if="item.type === 9" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-9">
+                <table>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th v-for="choose in item.square.column" :key="choose.id">{{ choose.text }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
+                      <th>{{ choose.text }}</th>
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id">
+                        <input v-model="ansStringJson[key].manyOptions" type="checkbox"
+                          :name="'many-' + innerkey + '-' + innerinnerkey"
+                          :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- 日期 -->
+            <div v-if="item.type === 10" class="!block">
+
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-10">
+                <input v-model="ansStringJson[key].answer" type="date" disabled>
+              </div>
+
+            </div>
+            <!-- 時間 -->
+            <div v-if="item.type === 11" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div class="questype-11">
+                <input type="text" v-model="ansStringJson[key].time.hour" disabled>
+                <span>:</span>
+                <input type="text" v-model="ansStringJson[key].time.minute" disabled>
+                <select name="" id="" v-model="ansStringJson[key].time.section">
+                  <option value="a.m." disabled>上午</option>
+                  <option value="p.m." disabled>下午</option>
+                </select>
+              </div>
+            </div>
+            <!-- 影片 -->
+            <div v-if="item.type === 13" class="!block">
+              <div class="p-5 flex justify-center">
+                <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player"
+                  frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -83,40 +277,43 @@ export default {
 
 <style lang="scss" scoped>
 #response {
-    @apply min-h-[100vh] mt-[20px] pb-[20px];
-.all {
-    @apply m-auto max-w-[770px] relative z-[2];
-    .response-head {
-        @apply my-[15px] rounded-[10px] border border-gray-200;
+  @apply min-h-[100vh] mt-[20px] pb-[20px];
 
-        .head-top {
-            @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
+  .all {
+    @apply m-auto max-w-[770px] relative z-[2];
+
+    .response-head {
+      @apply my-[15px] rounded-[10px] border border-gray-200;
+
+      .head-top {
+        @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
+      }
+
+      .head-middle {
+        @apply flex justify-around h-[50px] border-b;
+
+        .btn {
+          @apply p-[10px] text-[16px] focus:bg-purple-light;
         }
-        .head-middle {
-            @apply flex justify-around h-[50px] border-b;
-            .btn {
-              @apply p-[10px] text-[16px] focus:bg-purple-light;
-            }
+      }
+
+      .head-fotter {
+        @apply h-[150px] p-5 flex items-center justify-between;
+
+        .select-btn {
+          @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
         }
-        .head-fotter {
-            @apply h-[150px] p-5 flex items-center justify-between;
-            .select-btn {
-                @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
-            }
-        }
+      }
     }
 
     .response-body {
-        @apply flex min-h-[80px] justify-center items-center border rounded-[10px] border-gray-200;
-            span {
-                @apply text-[#686868];
-            }
-        }
-                // @media (max-width:480px) {
-                //     .to-excel {
-                //         display: none;
-            }
-}
+      @apply flex min-h-[80px] justify-center items-center border rounded-[10px] border-gray-200;
 
+      span {
+        @apply text-[#686868];
+      }
+    }
+  }
+}
 </style>
 

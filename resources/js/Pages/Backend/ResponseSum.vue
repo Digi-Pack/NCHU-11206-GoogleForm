@@ -60,7 +60,7 @@ export default {
           <NavLink class="btn" :href="route('response.que', { id: coFormId })" :active="currentUrl('response.que')">
             問題
           </NavLink>
-          <NavLink class="btn" :href="route('response.ind')" :active="currentUrl('response.ind')">
+          <NavLink class="btn" :href="route('response.ind', { id: coFormId })" :active="currentUrl('response.ind')">
             個別
           </NavLink>
         </div>
