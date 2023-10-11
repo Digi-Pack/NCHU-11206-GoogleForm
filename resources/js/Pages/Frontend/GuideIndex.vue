@@ -323,7 +323,7 @@ export default {
                   @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
-                  @apply w-[230px] my-[12.5px] ps-[10px] leading-[30px] text-[#505050] flex font-bold items-center;
+                  @apply w-[230px] my-[12.5px] leading-[30px] text-[#505050] flex font-bold items-center justify-center;
                     span {
                         @apply ms-[10px];
                     }
@@ -373,7 +373,8 @@ export default {
     .card-group {
       @apply flex flex-wrap gap-5;
       .card {
-        @apply w-[208px] h-[244px] border border-grey-middle hover:border-purple;
+        @apply w-[208px] h-[244px] border border-grey-middle cursor-pointer hover:border-purple;
+
         .card-top {
           @apply h-[70%] bg-grey-light flex justify-center items-center;
         }
@@ -389,6 +390,9 @@ export default {
             }
           }
         }
+      }
+      .card:hover .card-top img {
+        @apply scale-110 opacity-60;
       }
     }
     .list-group {

@@ -832,7 +832,6 @@ export default {
                     }
                 }
             }
-
             .questype-4 {
               @apply w-full py-[30px] border-b border-grey hidden;
                 .choose {
@@ -851,7 +850,6 @@ export default {
                     }
                 }
             }
-
             .questype-5 {
               @apply hidden w-full py-[30px] border-b border-grey;
 
@@ -871,7 +869,6 @@ export default {
                     }
                 }
             }
-
             .questype-6 {
               @apply w-full hidden py-[10px];
 
@@ -883,7 +880,6 @@ export default {
                     }
                 }
             }
-
             .questype-7 {
                 @apply w-full border-x-0 border-t-0 border-b border-b-grey pb-[30px] hidden;
                 select {
@@ -896,7 +892,6 @@ export default {
                     @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple ring-0;
                 }
             }
-
             .questype-8, .questype-9 {
                 @apply w-full hidden;
                 .left_right {
@@ -928,7 +923,6 @@ export default {
                     }
                 }
             }
-
             .questype-10 {
                 @apply pt-[20px] pb-[35px] hidden border-x-0 border-t-0 border-b border-b-grey;
                 .calender {
@@ -938,7 +932,6 @@ export default {
                     }
                 }
             }
-
             .questype-11 {
                 @apply pt-[20px] pb-[35px] hidden border-x-0 border-t-0 border-b border-b-grey;
                 .clock {

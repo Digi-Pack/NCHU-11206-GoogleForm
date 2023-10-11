@@ -118,21 +118,21 @@ export default {
           </button>
         </div>
       </div>
-      <div class="response-body bg-white">
+      <div class="response-body">
         <div class="container">
           {{ response.rt_data.results.response_count }}
           <div v-for="(item, key) in formStringJson" :key="item.id" class="question">
             <!-- 簡答 -->
             <div v-if="item.type === 1" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-1">
+              <div class="questype-1 w-1/2 border-b-black border-b border-dotted">
                 {{ ansStringJson[key].answer }}
               </div>
             </div>
             <!-- 詳答 -->
             <div v-if="item.type === 2" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-2">
+              <div class="questype-2 border-b-black border-b border-dotted">
                 {{ ansStringJson[key].answer }}
               </div>
             </div>
@@ -140,8 +140,8 @@ export default {
             <div v-if="item.type === 3">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-3">
-                <div v-for="choose in item.options" :key="choose.id" class="option">
-                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1" :value="choose.id" disabled>
+                <div v-for="choose in item.options" :key="choose.id" class="option my-3">
+                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3" :value="choose.id" disabled>
                   <label for="choice-1">{{ choose.value }}</label>
                 </div>
               </div>
@@ -160,9 +160,9 @@ export default {
             <!-- 下拉式選單 -->
             <div v-if="item.type === 5" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-5">
+              <div class="questype-5 mt-5">
                 <label for="select"></label>
-                <select v-model="ansStringJson[key].answer" name="select" id="select">
+                <select v-model="ansStringJson[key].answer" name="select" id="select" class="border-grey-dark rounded-md w-[200px] py-3">
                   <option v-for="choose in item.options" :key="choose.id" :value="choose.value" disabled>{{ choose.value
                   }}
                   </option>
@@ -180,14 +180,14 @@ export default {
             <!-- 線性刻度 -->
             <div v-if="item.type === 7" class="!block">
               <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
-              <div class="questype-7">
-                <span>{{ item.linear.minText }}</span>
-                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
+              <div class="questype-7 flex justify-center items-center gap-6 my-10">
+                <span class="w-[120px] flex justify-end mt-6 truncate">{{ item.linear.minText }}</span>
+                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index class="flex flex-col items-center">
                   <label> {{ i }}
                   </label>
                   <input v-model="ansStringJson[key].manyOptions" type="radio" :value="i" disabled>
                 </div>
-                <span class="w-[120px] truncate">{{ item.linear.maxText }}</span>
+                <span class="w-[120px] truncate mt-6">{{ item.linear.maxText }}</span>
               </div>
             </div>
             <!-- 單選方格 -->
@@ -241,21 +241,21 @@ export default {
             </div>
             <!-- 日期 -->
             <div v-if="item.type === 10" class="!block">
-
-              <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-10">
-                <input v-model="ansStringJson[key].answer" type="date" disabled>
+              <!-- <span class="text-[18px]">{{ item.title }}</span> -->
+              <div class="questype-10 flex flex-col">
+                <div class="text-grey text-sm tracking-widest">YYYY MM DD</div>
+                <input v-model="ansStringJson[key].answer" type="date" class="border-0 pl-0 tracking-wider" disabled>
               </div>
 
             </div>
             <!-- 時間 -->
             <div v-if="item.type === 11" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-11">
-                <input type="text" v-model="ansStringJson[key].time.hour" disabled>
+              <div class="questype-11 flex justify-start items-center">
+                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2" v-model="ansStringJson[key].time.hour" disabled>
                 <span>:</span>
-                <input type="text" v-model="ansStringJson[key].time.minute" disabled>
-                <select name="" id="" v-model="ansStringJson[key].time.section">
+                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2" v-model="ansStringJson[key].time.minute" disabled>
+                <select name="" id="" class="border-0" v-model="ansStringJson[key].time.section">
                   <option value="a.m." disabled>上午</option>
                   <option value="p.m." disabled>下午</option>
                 </select>
@@ -307,7 +307,20 @@ export default {
     }
 
     .response-body {
-      @apply flex min-h-[80px] justify-center items-center border rounded-[10px] border-gray-200;
+      @apply flex min-h-[80px] justify-center items-center rounded-[10px];
+      .question {
+        @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white;
+        .questype-7 {
+          @media (max-width: 690px) {
+            @apply flex-col items-start pl-5;
+          }
+          span {
+            @media (max-width: 690px) {
+            @apply justify-start;
+          }
+          }
+        }
+      }
 
       span {
         @apply text-[#686868];
