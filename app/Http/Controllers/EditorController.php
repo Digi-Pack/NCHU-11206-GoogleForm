@@ -14,6 +14,8 @@ use App\Services\FileService;
 use Illuminate\Support\Facades\Validator;
 use Nette\Utils\Json;
 
+use function PHPSTORM_META\type;
+
 class EditorController extends Controller
 {
     public function __construct(protected FileService $fileService)
@@ -30,6 +32,50 @@ class EditorController extends Controller
     }
     public function edit_store(Request $request)
     {
+        // dd($request->preview);
+        if($request->preview){
+            $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
+            // 產生再轉成16進位亂瑪(15字元)
+            $randomString = bin2hex(random_bytes(15));
+            $combinedString = $data . $randomString;
+            $user = $request->user();
+
+            $request->validate([
+                'formDataobj.*.title' => 'required|min:0',
+                'formDataobj.*.type' => 'required|numeric',
+                'formTextobj.qu_naires_title' => 'required|string',
+                // dd(13),
+            ], [
+                'formDataobj.*.title.required' => '問題:position必填 ',
+                'formTextobj.qu_naires_title.required' => '表單標題必填',
+            ]);
+
+            // :position 第幾個意思
+            // 處理圖片
+            foreach ($request->formDataobj as $item) {
+                $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
+            }
+            $jsonText = json_encode($request->formDataobj, JSON_UNESCAPED_UNICODE);
+            $this->fileService->base64Upload($request->image, 'editor');
+            $textData = Question::create([
+                'qu_naires_title' => $request->formTextobj['qu_naires_title'],
+                'qu_naires_desc' => $request->formTextobj['qu_naires_desc'],
+                'questionnaires' => $jsonText,
+                'lead_author_id' => $user->id,
+                'random' => $combinedString,
+            ]);
+
+            $newForm = Question::where('lead_author_id', $request->user()->id) ->orderBy('created_at', 'desc')
+            ->first();
+            $newFormId = $newForm['id'];
+            $response=[
+                'combinedString'=>$combinedString,
+                'id'=>$newFormId,
+
+            ];
+
+            return redirect()->route('reply.index', ['id' => $newFormId]);
+        }
         // 與當下時間
         $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
         // 產生再轉成16進位亂瑪(15字元)

@@ -17,6 +17,7 @@ import logo from '/images/logo.png';
 import user from '/images/user.svg';
 import account from '/images/account-circle.svg';
 import { colorType } from '@/Composables/useBgColor';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: {
@@ -49,6 +50,9 @@ export default {
       formTitle: '',
       colorType,
       coFormId: route()?.params?.id ?? '0',
+      formText: null,
+      formData: null,
+      preview: true,
     };
   },
   watch: {
@@ -56,6 +60,12 @@ export default {
       this.coFormId = route()?.params?.id ?? '0';
     },
   },
+  mounted() {
+    // 在组件挂载后，获取sessionStorage中的数据
+    this.formText = window.sessionStorage.getItem('formText');
+    this.formData = window.sessionStorage.getItem('formData');
+  },
+
   //   computed: {
   //     coFormId() {
   //       console.log(this.$page.url);
@@ -91,6 +101,20 @@ export default {
       this.qu_naires_title = val;
     // 這樣就可以接收到來自子組件的值
     },
+    submitData() {
+      const { formData, formText } = this;
+      //   if (this.imageSize > 3145728)
+      //     return Swal.fire('圖片檔案過大');
+      // 驗證
+
+      // 将字符串轉换为對象
+      const formDataobj = JSON.parse(formData);
+      const formTextobj = JSON.parse(formText);
+      router.visit(route('edit.store'), {
+        method: 'post', data: { formDataobj, formTextobj, preview: true }, preserveState: true,
+      });
+
+    },
   },
 };
 </script>
@@ -108,7 +132,7 @@ export default {
                 </div>
               </Link>
               <span class="title truncate">
-                {{ formTitle }}
+                {{ formTitle }}{{ formData }}
               </span>
             </div>
             <div class="topR">
@@ -144,11 +168,14 @@ export default {
                   </div>
                 </div>
               </div>
-              <Link :href="route('reply.index', { id: coFormId })">
+              <!-- <Link :href="route('reply.index', { id: coFormId })">
                 <button type="button" class="eye">
                   <img :src="images.visibility" width="25" height="25" alt="">
                 </button>
-              </Link>
+              </Link> -->
+              <button type="button" class="eye" @click="submitData()">
+                <img :src="images.visibility" width="25" height="25" alt="">
+              </button>
               <input type="checkbox" id="ham-menu-switch" class="hidden">
               <label for="ham-menu-switch" class="ham-menu">
                 <div class="downMenu">
