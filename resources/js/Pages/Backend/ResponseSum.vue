@@ -127,24 +127,24 @@ export default {
                     @apply w-full text-[24px] font-semibold p-5 border-b;
                 }
                 .email {
-                    @apply p-5;
+                    @apply p-5 w-full;
                     .accordion {
-                      @apply cursor-pointer bg-purple-middle p-[10px] rounded-t duration-300 rounded-b w-[300px];
+                      @apply cursor-pointer bg-grey-middle p-[10px] rounded-t duration-300 rounded-b w-full;
                     }
                     .content {
-                      @apply px-[10px] pt-[10px] w-[300px] max-h-[300px] rounded-b bg-purple-light overflow-y-scroll;
+                      @apply px-[10px] pt-[10px] w-full max-h-[300px] rounded-b bg-grey-light overflow-y-scroll;
                       &::-webkit-scrollbar{
-                        @apply w-[4px];
+                        @apply w-[1px];
                       }
                       &::-webkit-scrollbar-track {
-                        @apply bg-purple-dark rounded-[10px];
+                        @apply bg-grey-dark rounded-[10px];
                       }
                       &::-webkit-scrollbar-thumb{
-                        @apply bg-purple rounded-[10px];
+                        @apply bg-grey rounded-[10px];
                       }
                     }
                     .active {
-                      @apply bg-purple-dark rounded-none rounded-t text-gray-800;
+                      @apply bg-grey-dark rounded-none rounded-t text-gray-800;
                     }
                     span {
                         @apply text-lg font-semibold p-3;

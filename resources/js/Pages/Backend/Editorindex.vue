@@ -144,6 +144,7 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    // 新增問題
     addQuestion() {
       const { formData } = this;
       this.serial++;
@@ -183,11 +184,13 @@ export default {
       };
       formData.push(newQuestion);
     },
+    // 刪除問題
     delQuestion(id) {
       const { formData } = this;
       const newFormData = formData.filter((item) => item.id !== id);
       this.formData = newFormData;
     },
+    // 新增選擇項目
     addSelect(item) {
       const newQuestion = {
         id: Math.max(0, ...item.options.map(item => item.id)) + 1,
@@ -195,10 +198,12 @@ export default {
       };
       item.options.push(newQuestion);
     },
+    // 刪除選擇項目
     delOption(item, id) {
       const newFormData = item.options.filter((item) => item.id !== id);
       item.options = newFormData;
     },
+    // 新增行
     addrow(item, id) {
       const { formData } = this;
       const squareRow = {
@@ -207,10 +212,12 @@ export default {
       };
       formData.find((item) => item.id === id).square.row.push(squareRow);
     },
+    // 刪除行
     delrow(item, id) {
       const newFormData = item.square.row.filter((item) => item.id !== id);
       item.square.row = newFormData;
     },
+    // 新增列
     addcolumn(item, id) {
       const { formData } = this;
       const squareColumn = {
@@ -219,10 +226,12 @@ export default {
       };
       formData.find((item) => item.id === id).square.column.push(squareColumn);
     },
+    // 刪除列
     delcolumn(item, id) {
       const newFormData = item.square.column.filter((item) => item.id !== id);
       item.square.column = newFormData;
     },
+    // 切換問題類型時清空資料
     clearOptions(item) {
       let optionsLength = item.options.length;
       let squarerow = item.square.row.length;
@@ -281,12 +290,14 @@ export default {
         },
       });
     },
+    // 打開傳送彈跳視窗
     open() {
       this.show = !this.show;
     },
     testStyle(index, err = {}) {
       return Object.hasOwn(err, `formData.${index}.title`) ? '!border-[red]' : '';
     },
+    // 上傳圖片
     uploadImage(event, item) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -295,6 +306,7 @@ export default {
         this.imageSize += event.target.files[0].size;
       };
     },
+    // 側欄滾動
     handleScroll() {
       this.$refs.side.style.top = window.scrollY + this.interval + 'px';
     },
@@ -350,6 +362,7 @@ export default {
         this.imageSize += e.target.files[0].size;
       };
     },
+    // 關閉彈跳視窗
     handleClose() {
       this.model = '';
     },

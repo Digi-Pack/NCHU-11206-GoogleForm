@@ -32,8 +32,9 @@ export default {
           <Link :href="route('login')" class="btn-base">登入</Link>
         </div>
       </div>
-      <div class="board w-full h-[200px]"></div>
-      <h1 class="title">{{ title }}</h1>
+      <div class="board w-full h-[calc(100vh-120px)] flex justify-center items-center">
+        <h1 class="title">{{ title }}</h1>
+      </div>
     </div>
   </section>
 </template>
