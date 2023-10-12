@@ -50,31 +50,16 @@ export default {
       formTitle: '',
       colorType,
       coFormId: route()?.params?.id ?? '0',
-      formText: null,
-      formData: null,
       preview: true,
     };
   },
+
   watch: {
     '$page.url': function () {
       this.coFormId = route()?.params?.id ?? '0';
     },
   },
-  mounted() {
-    // 在组件挂载后，获取sessionStorage中的数据
-    this.formText = window.sessionStorage.getItem('formText');
-    this.formData = window.sessionStorage.getItem('formData');
-  },
 
-  //   computed: {
-  //     coFormId() {
-  //       console.log(this.$page.url);
-  //       return route()?.params?.id ?? '0';
-  //     },
-  //   },
-  //   mounted() {
-  //     console.log(this.$page.url);
-  //   },
   methods: {
     /**
      * 判斷現在是否在urlName的路由
@@ -102,14 +87,14 @@ export default {
     // 這樣就可以接收到來自子組件的值
     },
     submitData() {
-      const { formData, formText, coFormId } = this;
-      //   if (this.imageSize > 3145728)
-      //     return Swal.fire('圖片檔案過大');
-      // 驗證
+      console.log(123);
+      console.log(sessionStorage.getItem('formText'));
 
-      // 将字符串轉换为對象
-      const formDataobj = JSON.parse(formData);
-      const formTextobj = JSON.parse(formText);
+      //   将字符串轉换为對象;
+      const { coFormId } = this;
+      const formDataobj = JSON.parse(sessionStorage.getItem('formData'));
+      const formTextobj = JSON.parse(sessionStorage.getItem('formText'));
+
       router.visit(route('edit.store'), {
         method: 'post', data: { formDataobj, formTextobj, preview: true, coFormId: coFormId }, preserveState: true,
       });

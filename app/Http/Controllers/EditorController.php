@@ -32,53 +32,78 @@ class EditorController extends Controller
     }
     public function edit_store(Request $request)
     {
-        // 新表單頁面點預覽的情況
-        if($request->preview){
-            // 如果點預覽之前沒按儲存鈕，先儲存問卷資料，再導向填寫表單頁
-            if($request->coFormId === '0'){
-                $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
-            // 產生再轉成16進位亂瑪(15字元)
-            $randomString = bin2hex(random_bytes(15));
-            $combinedString = $data . $randomString;
-            $user = $request->user();
+        // dd($request->formDataobj);
+        // dd($request->formTextobj);
 
+        // 新表單頁面，點預覽，的情況
+        if($request->preview){
+            // 先做資料驗證，確認表單標題、問題標題、問題類型正確
             $request->validate([
                 'formDataobj.*.title' => 'required|min:0',
                 'formDataobj.*.type' => 'required|numeric',
                 'formTextobj.qu_naires_title' => 'required|string',
-                // dd(13),
             ], [
                 'formDataobj.*.title.required' => '問題:position必填 ',
                 'formTextobj.qu_naires_title.required' => '表單標題必填',
             ]);
+            // 抓取使用者資料方便等下使用(因為以下情況1和2都會用到，所以寫這裡共用)
+            $user = $request->user();
 
-            // :position 第幾個意思
-            // 處理圖片
+            // ******如果點預覽之前沒按儲存鈕，先儲存問卷資料，再導向填寫表單頁
+            if($request->coFormId === '0'){
+
+                $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
+                // 產生再轉成16進位亂瑪(15字元)
+                $randomString = bin2hex(random_bytes(15));
+                $combinedString = $data . $randomString;
+
+                // 處理圖片
+                foreach ( $request->formDataobj as $item) {
+                    if($item['image']) $this->fileService->base64Upload($request->image, 'editor');
+                }
+
+                // 將問卷資料壓成json
+                $jsonText = json_encode($request->formDataobj, JSON_UNESCAPED_UNICODE);
+                $this->fileService->base64Upload($request->image, 'editor');
+                // 在資料表中新增一筆問卷資料
+                $textData = Question::create([
+                    'qu_naires_title' => $request->formTextobj['qu_naires_title'],
+                    'qu_naires_desc' => $request->formTextobj['qu_naires_desc'],
+                    'questionnaires' => $jsonText,
+                    'lead_author_id' => $user->id,
+                    'random' => $combinedString,
+                ]);
+                // 將新增的問卷資料id取出
+                $newForm = Question::where('lead_author_id', $request->user()->id) ->orderBy('created_at', 'desc')
+                ->first();
+                $newFormId = $newForm['id'];
+
+                $response=[
+                    'combinedString'=>$combinedString,
+                    'id'=>$newFormId,
+                ];
+                // 前往空白問卷填寫頁，帶問卷id，才能前往正確的頁面
+                return redirect()->route('reply.index', ['id' => $newFormId]);
+            }
+
+            // ******如果導向預覽前已按儲存鈕，則做完資料更新後，直接前往預覽頁，不用再儲存一筆問卷資料
             foreach ($request->formDataobj as $item) {
                 $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
             }
+
             $jsonText = json_encode($request->formDataobj, JSON_UNESCAPED_UNICODE);
             $this->fileService->base64Upload($request->image, 'editor');
-            $textData = Question::create([
+            // 用layout傳過來的問卷Id找到要更新資料的問卷
+            $upDatedForm = Question::find($request->coFormId);
+
+            // 將問卷資料做更新
+            $upDatedForm -> update([
                 'qu_naires_title' => $request->formTextobj['qu_naires_title'],
                 'qu_naires_desc' => $request->formTextobj['qu_naires_desc'],
                 'questionnaires' => $jsonText,
                 'lead_author_id' => $user->id,
-                'random' => $combinedString,
             ]);
-
-            $newForm = Question::where('lead_author_id', $request->user()->id) ->orderBy('created_at', 'desc')
-            ->first();
-            $newFormId = $newForm['id'];
-            $response=[
-                'combinedString'=>$combinedString,
-                'id'=>$newFormId,
-
-            ];
-
-            return redirect()->route('reply.index', ['id' => $newFormId]);
-            }
-            // 如果導向預覽前已按儲存鈕，直接前往預覽頁，不用再儲存一筆問卷資料
+            // 前往空白問卷填寫頁，帶問卷id，才能前往正確的頁面
             return redirect()->route('reply.index', ['id' => $request->coFormId]);
 
         }
