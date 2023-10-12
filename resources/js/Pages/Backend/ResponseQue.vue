@@ -60,9 +60,6 @@ export default {
       });
     },
   },
-  mounted() {
-    console.log(this.forMode);
-  },
   methods: {
     currentUrl(urlName = '') {
       if (urlName === '') return;
@@ -71,9 +68,13 @@ export default {
     minus() {
       if (this.num === 1) return;
       this.num--;
+      this.titles = this.num;
     },
     plus() {
-      this.num++;
+      if (this.formStringJson.length > this.num) {
+        this.num++;
+        this.titles = this.num;
+      }
     },
   },
 };
@@ -84,7 +85,7 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
+          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }}則回應</h2>
         </div>
         <div class="head-middle">
           <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
@@ -189,5 +190,6 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
 
