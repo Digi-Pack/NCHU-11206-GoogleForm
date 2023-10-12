@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Coworker;
 use App\Models\Question;
 use App\Models\Response;
-use App\Models\Coworker;
+use Illuminate\Http\Request;
+use App\Services\FileService;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ReplyController extends Controller
 {
+    public function __construct(protected FileService $fileService)
+    {
+    }
     public function reply_index(Request $request, $id)
     {
         // dd(123);
@@ -93,10 +98,16 @@ class ReplyController extends Controller
     }
     public function reply_store(Request $request)
     {
-
         $user = $request->user();
-        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
+        $formData = $request->formData;
+        foreach ($formData as $key => $item) {
+            if ($item['file']['name']) {
+                $file = $this->fileService->fileUpload($item['file']['name'], 'FillerName');
+                $formData[$key]['file'] = $file;
+            }
+        }
 
+        $jsonText = json_encode($formData, JSON_UNESCAPED_UNICODE);
         Response::create([
             'user_id' => $user->id,
             'question_id' => $request->formId,
@@ -181,11 +192,20 @@ class ReplyController extends Controller
 
     public function reply_update(Request $request)
     {
-        // dd($request);
-        $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
+        $updateForm = Response::where('user_id', $request->user()->id)->where('question_id', $request->formId)->get();
+        $answer = json_decode($updateForm[0]['answer'], true);
+        $formData = $request->formData;
+        // 判斷有沒有修改上傳檔案(Object)是的話進行修改
+        foreach ($formData as $key => $item) {
+            if (is_object($item['file']['name'])) {
+                $this->fileService->deleteUpload($answer[$key]['file']['path']);
+                $file = $this->fileService->fileUpload($item['file']['name'], 'FillerName');
+                $formData[$key]['file'] = $file;
+            }
+        }
+        $jsonText = json_encode($formData, JSON_UNESCAPED_UNICODE);
 
         // 找到表單id
-        $updateForm = Response::where('user_id', $request->user()->id)->where('question_id', $request->formId)->get();
         $updateForm[0]->update([
             'user_id' => $request->user()->id,
             'question_id' => $request->formId,
@@ -195,7 +215,6 @@ class ReplyController extends Controller
     }
     public function reply_final(Request $request)
     {
-        // dd($request);
         $user = $request->user();
         $cantModify = false;
         $updatedForm = Question::where('id', $request->formId)->first();

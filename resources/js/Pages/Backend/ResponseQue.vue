@@ -54,11 +54,13 @@ export default {
       return ansStringJson.map((item, index) => {
         return {
           id: index + 1,
-          ans: item.find(ans => ans.id === titles),
+          ans: item.find(ans => parseInt(ans.id) === parseInt(titles)),
           qus: formStringJson.find(qus => qus.id === titles),
         };
       });
     },
+  },
+  mounted() {
   },
   methods: {
     currentUrl(urlName = '') {
@@ -85,7 +87,8 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }} 則回應</h2>
+          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }} 則回應
+          </h2>
         </div>
         <div class="head-middle">
           <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
@@ -117,7 +120,6 @@ export default {
       </div>
       <div class="response-body">
         <div v-for="que in response.rt_data.responseForm" :key="que.id">
-          {{ que }}
           <div>
             <div v-if="que.id === titles" class="responser">
               {{ que.title }}
@@ -182,7 +184,7 @@ export default {
       }
 
       .responser {
-        @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white text-[20px] flex items-start gap-5 flex-col ;
+        @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white text-[20px] flex items-start gap-5 flex-col;
 
         .date {
           @apply text-grey flex flex-col gap-3 items-end;

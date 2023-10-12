@@ -60,9 +60,13 @@ export default {
             minute: '',
             section: 'a.m.',
           },
-        //   groupedData: {},
+          file: {
+            name: '',
+            path: '',
+          },
         };
       }) ?? [],
+      fileSize: 0,
     };
   },
   methods: {
@@ -76,9 +80,14 @@ export default {
     submitData() {
       const { formData, response } = this;
       const formId = response.rt_data.responseForm[0].id;
+      if (this.fileSize > 3145728) return Swal.fire('圖片檔案過大');
       router.visit(route('reply.store'), {
         method: 'post', data: { formData, formId }, preserveState: true,
       });
+    },
+    handleFileUpload(e, key) {
+      this.formData[key].file.name = e.target.files[0];
+      console.log(this.formData[key].file.name);
     },
   },
 
@@ -152,8 +161,16 @@ export default {
           <div v-if="item.type === 6" class="!block">
             <span class="text-[18px]">檔案上傳</span>
             <div class="questype-6">
-              <label for=""></label>
-              <input type="file" name="" id="">
+              <label
+                class="border border-[gray] w-[30px] aspect-[4/3] flex justify-center items-center text-[30px] cursor-pointer">
+                +
+                <input type="file" class="hidden" accept=".csv,.xls,.docx,image/*"
+                  @change="(e) => handleFileUpload(e, key)">
+              </label>
+              <div>
+                <div v-if="typeof formData[key].file.name === 'string'">{{ formData[key].file.name }}</div>
+                <span v-else>{{ formData[key].file.name.name }}</span>
+              </div>
             </div>
           </div>
           <!-- 線性刻度 -->

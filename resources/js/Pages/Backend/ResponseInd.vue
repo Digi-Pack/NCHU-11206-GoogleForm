@@ -47,7 +47,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.formStringJson);
+    console.log(this.ansStringJson);
   },
   methods: {
     currentUrl(urlName = '') {
@@ -177,10 +177,10 @@ export default {
             </div>
             <!-- 檔案上傳 -->
             <div v-if="item.type === 6" class="!block">
-              <span class="text-[18px]">檔案上傳</span>
+              <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-6">
-                <label for=""></label>
-                <input type="file" name="" id="">
+                {{ ansStringJson[key].file.name }}
+                <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name">下載</a>
               </div>
             </div>
             <!-- 線性刻度 -->

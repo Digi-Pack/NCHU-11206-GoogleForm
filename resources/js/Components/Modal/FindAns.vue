@@ -5,6 +5,7 @@ export default {
     value: Object,
   },
   data() {
+    return {};
   },
   methods: {
     arrayData(min, max) {
@@ -23,14 +24,14 @@ export default {
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1" class="responser">
       <div class="text">
-        {{ value.ans.answer }}
+        {{ value.ans.answer ?? '' }}
       </div>
       <div class="reply"><a href="#">1 則回應</a></div>
     </div>
     <!-- 詳答 -->
     <div v-if="value.qus.type === 2" class="responser">
       <div class="text">
-        {{ value.ans.answer }}
+        {{ value.ans.answer ?? '' }}
       </div>
       <div class="reply"><a href="#">1 則回應</a></div>
     </div>
@@ -38,7 +39,8 @@ export default {
     <div v-if="value.qus.type === 3">
       <div class="responser">
         <div v-for="(choose) in value.qus.options" :key="choose.id" class="option">
-          <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-if="choose.id === value.ans.answer" checked>
+          <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-if="choose.id === value.ans.answer ?? ''"
+            checked>
           <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-else>
           <label for="choice-1" class="text-[16px] px-5">{{ choose.value }}</label>
         </div>
@@ -61,17 +63,16 @@ export default {
     <div v-if="value.qus.type === 5">
       <div class="responser">
         <div class=" text-black text-[16px] px-5 py-2 my-3">
-          {{ value.ans.answer }}
+          {{ value.ans.answer ?? '' }}
         </div>
         <div class="reply"><a href="#">1 則回應</a></div>
       </div>
     </div>
     <!-- 檔案上傳 -->
     <div v-if="value.qus.type === 6">
-      <span class="text-[18px]">檔案上傳</span>
-      <div class="responser">
-        <label for=""></label>
-        <input type="file" name="" id="">
+      <div class="responser flex items-center">
+        {{ value.ans.file.name }}
+        <a :href="value.ans.file.path" :download="value.ans.file.name">下載</a>
       </div>
       <div class="reply"><a href="#">1 則回應</a></div>
     </div>
@@ -146,7 +147,7 @@ export default {
           <div class="date">DD</div>
           <div class="date">YYYY</div>
         </div>
-        <input type="date" disabled :value="value.ans.answer" class="border-0 ml-4">
+        <input type="date" disabled :value="value.ans.answer ?? ''" class="border-0 ml-4">
         <div class="reply"><a href="#">1 則回應</a></div>
       </div>
     </div>
@@ -173,6 +174,7 @@ export default {
   .text {
     @apply text-black text-[22px] px-5 pt-5;
   }
+
   .reply {
     @apply px-3 py-2 my-3 ml-3 text-blue hover:bg-blue-light w-[85px];
   }
@@ -183,6 +185,7 @@ export default {
 
   .responser {
     @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
+
     .option {
       @apply px-3 py-2 my-3;
     }
@@ -195,4 +198,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
