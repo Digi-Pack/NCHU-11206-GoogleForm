@@ -58,14 +58,30 @@ class EditorController extends Controller
             'lead_author_id' => $user->id,
             'random' => $combinedString,
         ]);
-        return back()->with(['message' => rtFormat($combinedString)]);
+
+        $newForm = Question::where('lead_author_id', $request->user()->id) ->orderBy('created_at', 'desc')
+        ->first();
+        $newFormId = $newForm['id'];
+        $response=[
+            'combinedString'=>$combinedString,
+            'id'=>$newFormId,
+
+        ];
+        return back()->with(['message' => rtFormat($response)]);
     }
     public function edit_old(Request $request)
     {
-        if($request->id === '0'){
+
+        // dd($request->id,123);
+        if($request->id === null){
             $response = $request->user();
+            // dd(123);
+            // dd($request->continueEdit);
         return Inertia::render('Backend/EditorIndex', ['response' => rtFormat($response)]);
         }
+
+
+
         $responseForm = Question::where(function ($query) use ($request) {
             return $query->where('lead_author_id', $request->user()->id)
                 ->orWhereHas('coworker', function ($coQuery) use ($request) {

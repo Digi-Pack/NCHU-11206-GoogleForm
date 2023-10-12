@@ -283,7 +283,9 @@ export default {
                 router.get(route('guide.index'));
               }
               if (result.isDenied) {
-                // router.visit(route('edit.old'));
+                router.visit(route('edit.old'), {
+                  method: 'get', data: { id: props.flash.message.rt_data.id },
+                });
               }
             });
           }
