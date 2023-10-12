@@ -27,15 +27,14 @@ class ReplyController extends Controller
 
 
 
-
         // ***第一種情況之二：當有抓到問卷，且自己是 主編者 或 共同編輯者 時，可以透過 預覽 ，訪問填寫問卷頁
         if (!$responseForm->isEmpty()) {
             // 當自己是主編者時
             if ($request->user()->id == $responseForm[0]['lead_author_id']) {
                 $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
                 $response = [
-                'responseForm' => $responseForm,
-                'questionNaires' => $questionNaires,
+                    'responseForm' => $responseForm,
+                    'questionNaires' => $questionNaires,
                 ];
                 return Inertia::render('Frontend/ReplyIndex', ['response' => rtFormat($response)]);
             }
@@ -43,16 +42,16 @@ class ReplyController extends Controller
             $coworkers = Coworker::where('question_id', $id)->get();
             // 將共同編輯者的id成一個陣列$coworkerArray
             $coworkerArray = [];
-            foreach ( $coworkers as $item) {
+            foreach ($coworkers as $item) {
                 $who = $item['coworker_id'];
                 $coworkerArray[] = $who;
             }
             // 如果使用者是共同編輯者，也可以預覽問卷
-            if(in_array($request->user()->id, $coworkerArray)){
+            if (in_array($request->user()->id, $coworkerArray)) {
                 $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
                 $response = [
-                'responseForm' => $responseForm,
-                'questionNaires' => $questionNaires,
+                    'responseForm' => $responseForm,
+                    'questionNaires' => $questionNaires,
                 ];
                 return Inertia::render('Frontend/ReplyIndex', ['response' => rtFormat($response)]);
             }
@@ -100,36 +99,36 @@ class ReplyController extends Controller
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         Response::create([
-           'user_id' => $user->id,
-            'question_id' => $request-> formId,
-            'answer' => $jsonText ,
+            'user_id' => $user->id,
+            'question_id' => $request->formId,
+            'answer' => $jsonText,
         ]);
         // 如果使用者是主編者，不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
         $cantModify = false;
-        $updatedForm = Question::where('id',$request-> formId)->first();
+        $updatedForm = Question::where('id', $request->formId)->first();
         $formTitle = $updatedForm['qu_naires_title'];
         $author = $updatedForm['lead_author_id'];
-        if($author === $user->id){
+        if ($author === $user->id) {
             $cantModify = true;
         };
         // -------------------------------------
-        $coworkers = Coworker::where('question_id', $request-> formId)->get();
+        $coworkers = Coworker::where('question_id', $request->formId)->get();
         // 將共同編輯者的id成一個陣列$coworkerArray
         $coworkerArray = [];
-        foreach ( $coworkers as $item) {
+        foreach ($coworkers as $item) {
             $who = $item['coworker_id'];
             $coworkerArray[] = $who;
         }
         // 如果使用者是共同編輯者，也不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
-        if(in_array($request->user()->id, $coworkerArray)){
+        if (in_array($request->user()->id, $coworkerArray)) {
             $cantModify = true;
         }
 
         $response = [
             'user_id' => $user->id,
-            'question_id' => $request-> formId,
+            'question_id' => $request->formId,
             'formTitle' => $formTitle,
-            'cantModify' =>$cantModify,
+            'cantModify' => $cantModify,
         ];
 
         return Inertia::render('Frontend/ReplyFinal', ['response' => rtFormat($response)]);
@@ -141,18 +140,18 @@ class ReplyController extends Controller
         $redirectValue = $request->session()->get('redirectValue', '');
 
         if ($redirectValue) {
-             // 先找到指定id的表單
+            // 先找到指定id的表單
             $responseForm = Question::where('id', $redirectValue['question_id'])->get();
             $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
 
-         // 找到該使用者的回覆
+            // 找到該使用者的回覆
             $lastStore = Response::where('user_id', $redirectValue['user_id'])->where('question_id', $redirectValue['question_id'])->get();
-         // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
+            // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
             $lastAnswer = json_decode($lastStore[0]['answer'], true);
             $response = [
-             'responseForm' => $responseForm,
-             'questionNaires' => $questionNaires,
-             'lastAnswer' => $lastAnswer,
+                'responseForm' => $responseForm,
+                'questionNaires' => $questionNaires,
+                'lastAnswer' => $lastAnswer,
             ];
 
             return Inertia::render('Frontend/ReplyReview', ['response' => rtFormat($response)]);
@@ -160,25 +159,25 @@ class ReplyController extends Controller
 
         // ------------第二種情況---填寫者第一次填完問卷後按「查看結果」回看問卷------------------
 
-         // 先找到指定id的表單
-         $responseForm = Question::where('id', $request->getOldResponse['question_id'])->get();
-         $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
-         $response = [
-             'responseForm' => $responseForm,
-             'questionNaires' => $questionNaires,
-         ];
+        // 先找到指定id的表單
+        $responseForm = Question::where('id', $request->getOldResponse['question_id'])->get();
+        $questionNaires = json_decode($responseForm[0]['questionnaires'], true);
+        $response = [
+            'responseForm' => $responseForm,
+            'questionNaires' => $questionNaires,
+        ];
 
         // 找到該使用者的回覆
-         $lastStore = Response::where('user_id', $request->user()->id)->where('question_id', $request->getOldResponse['question_id'])->get();
+        $lastStore = Response::where('user_id', $request->user()->id)->where('question_id', $request->getOldResponse['question_id'])->get();
         // 將找到的回覆裡面，答案那一欄(當時存成json)，解開
-         $lastAnswer = json_decode($lastStore[0]['answer'], true);
-         $response = [
+        $lastAnswer = json_decode($lastStore[0]['answer'], true);
+        $response = [
             'responseForm' => $responseForm,
             'questionNaires' => $questionNaires,
             'lastAnswer' => $lastAnswer,
-         ];
+        ];
 
-         return Inertia::render('Frontend/ReplyReview', ['response' => rtFormat($response)]);
+        return Inertia::render('Frontend/ReplyReview', ['response' => rtFormat($response)]);
     }
 
     public function reply_update(Request $request)
@@ -200,29 +199,29 @@ class ReplyController extends Controller
         // dd($request);
         $user = $request->user();
         $cantModify = false;
-        $updatedForm = Question::where('id',$request-> formId)->first();
+        $updatedForm = Question::where('id', $request->formId)->first();
         $formTitle = $updatedForm['qu_naires_title'];
         $author = $updatedForm['lead_author_id'];
-        if($author === $user->id){
+        if ($author === $user->id) {
             $cantModify = true;
         };
         // -------------------------------------
-        $coworkers = Coworker::where('question_id', $request-> formId)->get();
+        $coworkers = Coworker::where('question_id', $request->formId)->get();
         // 將共同編輯者的id成一個陣列$coworkerArray
         $coworkerArray = [];
-        foreach ( $coworkers as $item) {
+        foreach ($coworkers as $item) {
             $who = $item['coworker_id'];
             $coworkerArray[] = $who;
         }
         // 如果使用者是共同編輯者，也不能重新修改問卷(避免抓到不同筆回覆的資料，帶到修改頁面的報錯情況)
-        if(in_array($request->user()->id, $coworkerArray)){
+        if (in_array($request->user()->id, $coworkerArray)) {
             $cantModify = true;
         }
         $response = [
             'user_id' => $user->id,
-            'question_id' => $request-> formId,
+            'question_id' => $request->formId,
             'formTitle' => $formTitle,
-            'cantModify' =>$cantModify,
+            'cantModify' => $cantModify,
         ];
         return Inertia::render('Frontend/ReplyFinal', ['response' => rtFormat($response)]);
     }
