@@ -36,7 +36,7 @@ class EditorController extends Controller
         // dd($request->formTextobj);
 
         // 新表單頁面，點預覽，的情況
-        if($request->preview){
+        if ($request->preview) {
             // 先做資料驗證，確認表單標題、問題標題、問題類型正確
             $request->validate([
                 'formDataobj.*.title' => 'required|min:0',
@@ -50,7 +50,7 @@ class EditorController extends Controller
             $user = $request->user();
 
             // ******如果點預覽之前沒按儲存鈕，先儲存問卷資料，再導向填寫表單頁
-            if($request->coFormId === '0'){
+            if ($request->coFormId === '0') {
 
                 $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
                 // 產生再轉成16進位亂瑪(15字元)
@@ -58,8 +58,8 @@ class EditorController extends Controller
                 $combinedString = $data . $randomString;
 
                 // 處理圖片
-                foreach ( $request->formDataobj as $item) {
-                    if($item['image']) $this->fileService->base64Upload($request->image, 'editor');
+                foreach ($request->formDataobj as $item) {
+                    if ($item['image']) $this->fileService->base64Upload($request->image, 'editor');
                 }
 
                 // 將問卷資料壓成json
@@ -74,13 +74,13 @@ class EditorController extends Controller
                     'random' => $combinedString,
                 ]);
                 // 將新增的問卷資料id取出
-                $newForm = Question::where('lead_author_id', $request->user()->id) ->orderBy('created_at', 'desc')
-                ->first();
+                $newForm = Question::where('lead_author_id', $request->user()->id)->orderBy('created_at', 'desc')
+                    ->first();
                 $newFormId = $newForm['id'];
 
-                $response=[
-                    'combinedString'=>$combinedString,
-                    'id'=>$newFormId,
+                $response = [
+                    'combinedString' => $combinedString,
+                    'id' => $newFormId,
                 ];
                 // 前往空白問卷填寫頁，帶問卷id，才能前往正確的頁面
                 return redirect()->route('reply.index', ['id' => $newFormId]);
@@ -97,7 +97,7 @@ class EditorController extends Controller
             $upDatedForm = Question::find($request->coFormId);
 
             // 將問卷資料做更新
-            $upDatedForm -> update([
+            $upDatedForm->update([
                 'qu_naires_title' => $request->formTextobj['qu_naires_title'],
                 'qu_naires_desc' => $request->formTextobj['qu_naires_desc'],
                 'questionnaires' => $jsonText,
@@ -105,7 +105,6 @@ class EditorController extends Controller
             ]);
             // 前往空白問卷填寫頁，帶問卷id，才能前往正確的頁面
             return redirect()->route('reply.index', ['id' => $request->coFormId]);
-
         }
         // 與當下時間
         $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
@@ -136,12 +135,12 @@ class EditorController extends Controller
             'random' => $combinedString,
         ]);
 
-        $newForm = Question::where('lead_author_id', $request->user()->id) ->orderBy('created_at', 'desc')
-        ->first();
+        $newForm = Question::where('lead_author_id', $request->user()->id)->orderBy('created_at', 'desc')
+            ->first();
         $newFormId = $newForm['id'];
-        $response=[
-            'combinedString'=>$combinedString,
-            'id'=>$newFormId,
+        $response = [
+            'combinedString' => $combinedString,
+            'id' => $newFormId,
 
         ];
         return back()->with(['message' => rtFormat($response)]);
@@ -150,9 +149,9 @@ class EditorController extends Controller
     {
 
         // dd($request->id,123);
-        if($request->id === '0'){
+        if ($request->id === '0') {
             $response = $request->user();
-        return Inertia::render('Backend/EditorIndex', ['response' => rtFormat($response)]);
+            return Inertia::render('Backend/EditorIndex', ['response' => rtFormat($response)]);
         }
 
         $responseForm = Question::where(function ($query) use ($request) {
@@ -219,9 +218,15 @@ class EditorController extends Controller
     }
     public function edit_delete(Request $request)
     {
-        // dd($request->id);
         $formDel = Question::find($request->id);
-        // dd( $formDel );
+        $ansdel = Response::where('question_id', $request->id)->get();
+        foreach ($ansdel as $key => $value) {
+            $answer = json_decode($value['answer'], true);
+            if ($answer[$key]['file']['name']) {
+                $this->fileService->deleteUpload($answer[$key]['file']['path']);
+            }
+            $value->delete();
+        }
         $formDel->delete();
         return back()->with(['message' => rtFormat($formDel)]);
     }
