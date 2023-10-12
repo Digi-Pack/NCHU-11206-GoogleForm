@@ -85,7 +85,7 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }}則回應</h2>
+          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }} 則回應</h2>
         </div>
         <div class="head-middle">
           <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
@@ -109,7 +109,7 @@ export default {
             <div>
               <input type="number" :value="num"
                 class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
-              {{ formStringJson.length }} 項
+              {{ formStringJson?.length ?? '' }} 項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>
           </div>

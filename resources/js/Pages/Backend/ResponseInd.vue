@@ -121,7 +121,6 @@ export default {
       <div class="response-body">
         <div class="container">
           <div class="form-title">
-            {{ response.rt_data.responseForm }}
             <!-- 表單名稱 -->
             <input v-model="queform.que.qu_naires_title" type="text" class="form-input form-title-input truncate" disabled>
             <!-- 表單說明 -->

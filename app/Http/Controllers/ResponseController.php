@@ -12,10 +12,12 @@ class ResponseController extends Controller
 {
     public function response_sum(Request $request)
     {
-          // 找到對應的問券
+        // 找到對應的問券
         $responseForm = Question::find($request->id);
+        // 找幾筆填答者
+        $responseFormReply = Question::withCount('response')->find($request->id);
         // $questionNaires是問卷的題目內容
-        if(!$responseForm){
+        if (!$responseForm) {
             return Inertia::render('Backend/ResponseSum');
         }
         $questionNaires = json_decode($responseForm['questionnaires'], true);
@@ -46,6 +48,7 @@ class ResponseController extends Controller
             'results' => $results,
             'questionNaires' => $questionNaires,
             'whoAll' => $whoAll,
+            'responseFormReply' => $responseFormReply,
         ];
 
         return Inertia::render('Backend/ResponseSum', ['response' => rtFormat($response)]);
@@ -53,6 +56,7 @@ class ResponseController extends Controller
     public function responseQue($id)
     {
         $responseForm = Question::with('response')->find($id);
+        // 找種共有幾筆填答者
         $responseFormReply = Question::withCount('response')->find($id);
         $questionNaires = json_decode($responseForm['questionnaires'], true);
         $response = [

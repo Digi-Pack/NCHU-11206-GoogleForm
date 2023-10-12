@@ -55,7 +55,7 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
+          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }} 則回應</h2>
         </div>
         <div class="head-fotter">
           <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
