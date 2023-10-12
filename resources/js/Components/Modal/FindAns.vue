@@ -20,7 +20,6 @@ export default {
 
 <template>
   <section id="findans">
-    <!-- <div class="title">{{ value.ans.title }}</div> -->
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1">
       <div class="text-black text-[22px] px-5">
@@ -30,6 +29,9 @@ export default {
     </div>
     <!-- 詳答 -->
     <div v-if="value.qus.type === 2">
+      <div class="text-black text-[22px] px-5">
+        <!-- {{ formStringJson.title }} -->
+      </div>
       <div class="text-black text-[22px] px-5">
         {{ value.ans.answer }}
       </div>
