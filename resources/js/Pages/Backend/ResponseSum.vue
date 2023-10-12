@@ -155,9 +155,6 @@ export default {
                 }
             }
         }
-                // @media (max-width:480px) {
-                //     .to-excel {
-                //         display: none;
     }
 }
 

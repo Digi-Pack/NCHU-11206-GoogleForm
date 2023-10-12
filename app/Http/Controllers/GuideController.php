@@ -55,7 +55,6 @@ class GuideController extends Controller
                 return $query->where('coworker_id', $request->user()->id);
             })->orderBy('opened_date', 'desc')->get();
         }
-        // dd($request->user()->name);
         $response = [
             'guide' => $guide,
             'user' => $request->user(),
