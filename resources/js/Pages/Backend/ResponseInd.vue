@@ -314,7 +314,7 @@ export default {
     .response-body {
       @apply flex min-h-[80px] justify-center items-center rounded-[10px];
       .form-title {
-            @apply max-w-[770px] rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+            @apply max-w-[770px] rounded-[10px] border-t-[10px] border-t-purple pt-[22px] pb-[24px] bg-white;
 
             .form-input {
                 @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;

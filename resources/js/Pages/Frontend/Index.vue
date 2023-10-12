@@ -33,7 +33,15 @@ export default {
         </div>
       </div>
       <div class="board w-full h-[calc(100vh-120px)] flex justify-center items-center">
-        <h1 class="title">{{ title }}</h1>
+        <h1 class="title">
+          <span class="wave">W</span>
+          <span class="wave">E</span>
+          <span class="wave">L</span>
+          <span class="wave">C</span>
+          <span class="wave">O</span>
+          <span class="wave">M</span>
+          <span class="wave">E</span>
+        </h1>
       </div>
     </div>
   </section>
@@ -45,8 +53,26 @@ export default {
   background-image: url('../../../images/Mountain.jpg');
   .title {
     @apply text-[6.25rem] text-center text-grey-light justify-self-center items-center;
+    .wave {
+      @apply inline-block;
+      animation: wave 5s infinite; /* 應用波浪動畫，交替反向播放 */
+      @for $i from 1 through 7 { /* 使用Sass的迴圈來設置不同的延遲 */
+        &:nth-child(#{$i}) {
+          animation-delay: $i * 0.25s; /* 每個<span>元素都有0.1秒的延遲 */
+        }
+      }
+    }
   }
-
+  @keyframes wave {
+    0%, 100% {
+      transform: translateY(0);
+      @apply text-white;
+    }
+    50% {
+      transform: translateY(-25px);
+      @apply text-black text-xs;
+    }
+  }
   .btn-base {
     @apply p-1.5 text-xl rounded-md text-white cursor-pointer hover:text-gray-400 hover:scale-110;
   }
