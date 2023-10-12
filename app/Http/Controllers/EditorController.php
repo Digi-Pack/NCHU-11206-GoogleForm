@@ -73,14 +73,10 @@ class EditorController extends Controller
     {
 
         // dd($request->id,123);
-        if($request->id === null){
+        if($request->id === '0'){
             $response = $request->user();
-            // dd(123);
-            // dd($request->continueEdit);
         return Inertia::render('Backend/EditorIndex', ['response' => rtFormat($response)]);
         }
-
-
 
         $responseForm = Question::where(function ($query) use ($request) {
             return $query->where('lead_author_id', $request->user()->id)
