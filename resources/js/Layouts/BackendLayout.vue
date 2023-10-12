@@ -102,7 +102,7 @@ export default {
     // 這樣就可以接收到來自子組件的值
     },
     submitData() {
-      const { formData, formText } = this;
+      const { formData, formText, coFormId } = this;
       //   if (this.imageSize > 3145728)
       //     return Swal.fire('圖片檔案過大');
       // 驗證
@@ -111,7 +111,7 @@ export default {
       const formDataobj = JSON.parse(formData);
       const formTextobj = JSON.parse(formText);
       router.visit(route('edit.store'), {
-        method: 'post', data: { formDataobj, formTextobj, preview: true }, preserveState: true,
+        method: 'post', data: { formDataobj, formTextobj, preview: true, coFormId: coFormId }, preserveState: true,
       });
 
     },
@@ -132,7 +132,7 @@ export default {
                 </div>
               </Link>
               <span class="title truncate">
-                {{ formTitle }}{{ formData }}
+                {{ formTitle }}
               </span>
             </div>
             <div class="topR">
@@ -218,7 +218,6 @@ export default {
             </div>
           </div>
           <div class="down">
-            {{ coFormId }}
             <NavLink class="btn" :href="route('edit.old', { id: coFormId })" :active="currentUrl('edit.index')">
               問題
             </NavLink>

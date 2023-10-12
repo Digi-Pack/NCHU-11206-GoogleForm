@@ -32,9 +32,11 @@ class EditorController extends Controller
     }
     public function edit_store(Request $request)
     {
-        // dd($request->preview);
+        // 新表單頁面點預覽的情況
         if($request->preview){
-            $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
+            // 如果點預覽之前沒按儲存鈕，先儲存問卷資料，再導向填寫表單頁
+            if($request->coFormId === '0'){
+                $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
             // 產生再轉成16進位亂瑪(15字元)
             $randomString = bin2hex(random_bytes(15));
             $combinedString = $data . $randomString;
@@ -75,6 +77,10 @@ class EditorController extends Controller
             ];
 
             return redirect()->route('reply.index', ['id' => $newFormId]);
+            }
+            // 如果導向預覽前已按儲存鈕，直接前往預覽頁，不用再儲存一筆問卷資料
+            return redirect()->route('reply.index', ['id' => $request->coFormId]);
+
         }
         // 與當下時間
         $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
