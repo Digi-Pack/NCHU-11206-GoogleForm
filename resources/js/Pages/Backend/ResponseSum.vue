@@ -31,6 +31,7 @@ export default {
       whoAll: this.response?.rt_data?.whoAll ?? '0',
       noAnswer: false,
       coFormId: route()?.params?.id ?? '0',
+      isActive: false,
     };
   },
   mounted() {
@@ -40,6 +41,9 @@ export default {
     currentUrl(urlName = '') {
       if (urlName === '') return;
       return route().current(urlName);
+    },
+    accordion() {
+      this.isActive = !this.isActive;
     },
   },
 };
@@ -72,9 +76,12 @@ export default {
         <div class="responser">
           <div class="title">哪些人已回應?</div>
           <div class="email">
-            <span>電子郵件</span>
-            <div v-for="item in whoAll" :key="item.id">
-              <div class="email-address"> {{ item }} </div>
+            <!-- <span>電子郵件</span> -->
+            <button type="button" @click="accordion()" class="accordion" :class="{ 'active': isActive }">電子郵件</button>
+            <div v-if="isActive" class="content">
+              <div v-for="item in whoAll" :key="item.id">
+                <div class="email-address"> {{ item }} </div>
+              </div>
             </div>
           </div>
         </div>
@@ -120,7 +127,25 @@ export default {
                     @apply w-full text-[24px] font-semibold p-5 border-b;
                 }
                 .email {
-                    @apply p-5;
+                    @apply p-5 w-full;
+                    .accordion {
+                      @apply cursor-pointer bg-grey-middle p-[10px] rounded-t duration-300 rounded-b w-full;
+                    }
+                    .content {
+                      @apply px-[10px] pt-[10px] w-full max-h-[300px] rounded-b bg-grey-light overflow-y-scroll;
+                      &::-webkit-scrollbar{
+                        @apply w-[1px];
+                      }
+                      &::-webkit-scrollbar-track {
+                        @apply bg-grey-dark rounded-[10px];
+                      }
+                      &::-webkit-scrollbar-thumb{
+                        @apply bg-grey rounded-[10px];
+                      }
+                    }
+                    .active {
+                      @apply bg-grey-dark rounded-none rounded-t text-gray-800;
+                    }
                     span {
                         @apply text-lg font-semibold p-3;
                     }

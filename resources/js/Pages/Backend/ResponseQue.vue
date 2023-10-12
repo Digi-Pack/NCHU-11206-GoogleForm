@@ -50,6 +50,7 @@ export default {
     },
     findAns() {
       const { ansStringJson, formStringJson, titles } = this;
+      console.log(titles);
       return ansStringJson.map((item, index) => {
         return {
           id: index + 1,
@@ -59,9 +60,6 @@ export default {
       });
     },
   },
-  mounted() {
-    // console.log(this.ansStringJson);
-  },
   methods: {
     currentUrl(urlName = '') {
       if (urlName === '') return;
@@ -70,9 +68,13 @@ export default {
     minus() {
       if (this.num === 1) return;
       this.num--;
+      this.titles = this.num;
     },
     plus() {
-      this.num++;
+      if (this.formStringJson.length > this.num) {
+        this.num++;
+        this.titles = this.num;
+      }
     },
   },
 };
@@ -83,7 +85,7 @@ export default {
     <div class="all">
       <div class="response-head bg-white">
         <div class="head-top">
-          <h2 class="text-[28px] pb-10 font-bold">0 則回應</h2>
+          <h2 class="text-[28px] pb-10 font-bold">{{ response?.rt_data?.responseFormReply?.response_count ?? '' }}則回應</h2>
         </div>
         <div class="head-middle">
           <NavLink class="btn" :href="route('response.sum', { id: coFormId })" :active="currentUrl('response.sum')">
@@ -105,15 +107,23 @@ export default {
           <div class="flex ml-3">
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
             <div>
-              <input type="number" :value="num" class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共 4 項
+              <input type="number" :value="num"
+                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
+              4 項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>
           </div>
         </div>
       </div>
       <div class="response-body">
-        <!-- <div v-if="response.rt_data.responseForm">{{ response.rt_data.responseForm[0] }}</div> -->
-        <div v-for="item in findAns" :key="item.id" class="noreply">
+        <div v-for="item in findAns" :key="item.id">
+          <div v-for="item in response.rt_data.responseForm" :key="item.id">
+            <div>
+              <span v-if="item.id === titles">
+                {{ item.title }}
+              </span>
+            </div>
+          </div>
           <FindAns :value="item" />
         </div>
       </div>
@@ -123,52 +133,63 @@ export default {
 
 <style lang="scss" scoped>
 #response {
-    @apply min-h-[100vh] mt-[20px] pb-[20px];
-.all {
-    @apply m-auto max-w-[770px] relative z-[2];
-    .response-head {
-        @apply my-[15px] rounded-[10px] border border-gray-200;
+  @apply min-h-[100vh] mt-[20px] pb-[20px];
 
-        .head-top {
-            @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
+  .all {
+    @apply m-auto max-w-[770px] relative z-[2];
+
+    .response-head {
+      @apply my-[15px] rounded-[10px] border border-gray-200;
+
+      .head-top {
+        @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
+      }
+
+      .head-middle {
+        @apply flex justify-around h-[50px] border-b;
+
+        .btn {
+          @apply p-[10px] text-[16px] focus:bg-purple-light;
         }
-        .head-middle {
-            @apply flex justify-around h-[50px] border-b;
-            .btn {
-              @apply p-[10px] text-[16px] focus:bg-purple-light;
-            }
+      }
+
+      .head-fotter {
+        @apply h-[150px] p-5 flex items-center;
+
+        select {
+          @apply rounded border-gray-200 w-[200px] h-[50px];
         }
-        .head-fotter {
-            @apply h-[150px] p-5 flex items-center;
-            select {
-                @apply rounded border-gray-200 w-[200px] h-[50px];
-            }
-            .select-btn {
-                @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
-            }
+
+        .select-btn {
+          @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
         }
-        #dot-box-switch {
-            @apply hidden;
-        }
+      }
+
+      #dot-box-switch {
+        @apply hidden;
+      }
     }
 
     .response-body {
-        @apply flex flex-col mt-[15px];
-        .noreply {
-            @apply flex justify-start items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
-        }
-        .responser {
-            @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white;
-            .date {
-                @apply text-grey flex flex-col gap-3 items-end;
-                span {
-                    @apply text-black border-b;
-                }
-            }
-        }
-    }
-}
-}
+      @apply flex flex-col mt-[15px];
 
+      .noreply {
+        @apply flex justify-start items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
+      }
+
+      .responser {
+        @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white;
+
+        .date {
+          @apply text-grey flex flex-col gap-3 items-end;
+
+          span {
+            @apply text-black border-b;
+          }
+        }
+      }
+    }
+  }
+}
 </style>
 

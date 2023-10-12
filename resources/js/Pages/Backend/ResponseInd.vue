@@ -120,7 +120,13 @@ export default {
       </div>
       <div class="response-body">
         <div class="container">
-          {{ response.rt_data.results.response_count }}
+          <div class="form-title">
+            <!-- 表單名稱 -->
+            <input v-model="queform.que.qu_naires_title" type="text" class="form-input form-title-input truncate" disabled>
+            <!-- 表單說明 -->
+            <input v-model="queform.que.qu_naires_desc" type="text" class="form-input form-explain-input-2 truncate"
+              disabled>
+          </div>
           <div v-for="(item, key) in formStringJson" :key="item.id" class="question">
             <!-- 簡答 -->
             <div v-if="item.type === 1" class="!block">
@@ -141,7 +147,7 @@ export default {
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-3">
                 <div v-for="choose in item.options" :key="choose.id" class="option my-3">
-                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3" :value="choose.id" disabled>
+                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3 text-grey" :value="choose.id" disabled>
                   <label for="choice-1 w-full truncate">{{ choose.value }}</label>
                 </div>
               </div>
@@ -151,7 +157,7 @@ export default {
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-4">
                 <div v-for="choose in item.options" :key="choose.id" class="option my-3">
-                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3" :value="choose.id"
+                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3 text-grey" :value="choose.id"
                     disabled>
                   <label for="focus w-full truncate">{{ choose.value }}</label>
                 </div>
@@ -181,13 +187,13 @@ export default {
             <div v-if="item.type === 7" class="!block">
               <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
               <div class="questype-7 flex justify-center items-center gap-6 my-10">
-                <span class="w-[120px] flex justify-end mt-6 truncate">{{ item.linear.minText }}</span>
-                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index class="flex flex-col items-center">
+                <span class="w-[120px] flex justify-end pt-12 truncate">{{ item.linear.minText }}</span>
+                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index class="flex flex-col items-center gap-5">
                   <label> {{ i }}
                   </label>
-                  <input v-model="ansStringJson[key].manyOptions" type="radio" :value="i" disabled>
+                  <input v-model="ansStringJson[key].manyOptions" type="radio" class="text-grey p-3" :value="i" disabled>
                 </div>
-                <span class="w-[120px] truncate mt-6">{{ item.linear.maxText }}</span>
+                <span class="w-[120px] truncate pt-12">{{ item.linear.maxText }}</span>
               </div>
             </div>
             <!-- 單選方格 -->
@@ -205,7 +211,7 @@ export default {
                     <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
                       <th class="truncate">{{ choose.text }}</th>
                       <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id" class="text-center py-4">
-                        <input v-model="ansStringJson[key].manyOptions[innerkey]" type="radio"
+                        <input v-model="ansStringJson[key].manyOptions[innerkey]" class="text-grey" type="radio"
                           :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
                           disabled>
                       </td>
@@ -229,7 +235,7 @@ export default {
                     <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
                       <th class="truncate">{{ choose.text }}</th>
                       <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id" class="text-center py-4">
-                        <input v-model="ansStringJson[key].manyOptions" type="checkbox"
+                        <input v-model="ansStringJson[key].manyOptions" class="text-grey" type="checkbox"
                           :name="'many-' + innerkey + '-' + innerinnerkey"
                           :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" disabled>
                       </td>
@@ -307,8 +313,23 @@ export default {
 
     .response-body {
       @apply flex min-h-[80px] justify-center items-center rounded-[10px];
+      .form-title {
+            @apply max-w-[770px] rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+
+            .form-input {
+                @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
+            }
+
+            .form-title-input {
+                @apply h-[45px] text-[32px];
+            }
+
+            .form-explain-input-2 {
+                @apply h-[21px] text-[18px] text-grey;
+            }
+        }
       .question {
-        @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white;
+        @apply rounded-[10px] p-[24px] my-[12px] bg-white;
         .questype-7 {
           @media (max-width: 690px) {
             @apply flex-col items-start pl-5;

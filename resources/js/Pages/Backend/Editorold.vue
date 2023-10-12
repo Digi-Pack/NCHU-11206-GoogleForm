@@ -351,6 +351,7 @@ export default {
         this.imageSize += e.target.files[0].size;
       };
     },
+    // 關閉彈跳視窗
     handleClose() {
       this.model = '';
     },

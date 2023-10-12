@@ -53,10 +53,12 @@ class ResponseController extends Controller
     public function responseQue($id)
     {
         $responseForm = Question::with('response')->find($id);
+        $responseFormReply = Question::withCount('response')->find($id);
         $questionNaires = json_decode($responseForm['questionnaires'], true);
         $response = [
             'results' => $responseForm,
             'responseForm' => $questionNaires,
+            'responseFormReply' => $responseFormReply,
         ];
         return Inertia::render('Backend/ResponseQue', ['response' => rtFormat($response)]);
     }

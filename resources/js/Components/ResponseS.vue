@@ -197,14 +197,20 @@ export default {
             left: 'center',
           },
           legend: {
-            left: 'left',
+            orient: 'vertical',
+            left: 'right',
           },
           tooltip: {},
           dataset: {
             source: item.data,
           },
           xAxis: { type: 'category' },
-          yAxis: {},
+          yAxis: {
+            axisLabel: {
+              formatter: '{value}',
+              align: 'center',
+            },
+          },
           series: item.series,
         };
       } else if (item.type === 10) {
