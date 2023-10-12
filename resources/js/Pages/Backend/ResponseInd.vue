@@ -106,8 +106,8 @@ export default {
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
             <div>第
               <input type="number" :value="num"
-                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
-              4 項
+                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共 {{ response.rt_data.results.response_count }}
+              項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>
           </div>
@@ -121,6 +121,7 @@ export default {
       <div class="response-body">
         <div class="container">
           <div class="form-title">
+            {{ response.rt_data.responseForm }}
             <!-- 表單名稱 -->
             <input v-model="queform.que.qu_naires_title" type="text" class="form-input form-title-input truncate" disabled>
             <!-- 表單說明 -->
