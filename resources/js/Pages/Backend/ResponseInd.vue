@@ -120,12 +120,12 @@ export default {
       </div>
       <div class="response-body">
         <div class="container">
-          {{ response.rt_data.results.response_count }}
           <div class="form-title">
             <!-- 表單名稱 -->
-            <!-- <input v-model="" type="text" placeholder="未命名的表單" class="form-input form-title-input truncate" required @input="updateFormTitle"> -->
+            <input v-model="queform.que.qu_naires_title" type="text" class="form-input form-title-input truncate" disabled>
             <!-- 表單說明 -->
-            <!-- <input v-model="" type="text" placeholder="表單說明" class="form-input form-explain-input-2 truncate"> -->
+            <input v-model="queform.que.qu_naires_desc" type="text" class="form-input form-explain-input-2 truncate"
+              disabled>
           </div>
           <div v-for="(item, key) in formStringJson" :key="item.id" class="question">
             <!-- 簡答 -->
