@@ -81,7 +81,7 @@ export default {
         <div v-for="(i, index) in arrayData(parseInt(value.qus.linear.min), parseInt(value.qus.linear.max))" :key=index>
           <div class="flex flex-col justify-center items-center py-4">
             <div class="p-5"> {{ i }}</div>
-            <input type="radio" disabled v-if=" index === value.ans.manyOptions" class="p-3" checked>
+            <input type="radio" disabled v-if=" index === value.ans.manyOptions" class="p-3 text-grey" checked>
             <input type="radio" disabled v-else class="p-3">
           </div>
         </div>
@@ -91,21 +91,20 @@ export default {
     </div>
     <!-- 單選方格 -->
     <div v-if="value.qus.type === 8">
-      <div class="questype-8 responser bg-white border rounded-[10px] mb-[15px] border-gray-200">
-        <table>
+      <div class="questype-8 responser bg-white border rounded-[10px] mb-[15px] border-gray-200 px-5">
+        <table class="w-full table-fixed border-separate border-spacing-y-2 pt-5">
           <thead>
             <tr>
               <th></th>
-              <th v-for="choose in value.qus.square.column" :key="choose.id">{{ choose.text }}</th>
+              <th v-for="choose in value.qus.square.column" :key="choose.id" class="truncate">{{ choose.text }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="choose in value.qus.square.row" :key="choose.id">
-              <th>{{ choose.text }}</th>
-              <td v-for="choosecol in value.qus.square.column" :key="choosecol.id">
-                <th>{{ choosecol.text }}</th>
-                <input v-if="value.ans.manyOptions.includes(`row${choose.id}col${choosecol.id}`)" type="radio" disabled checked>
-                <input type="radio" disabled v-else>
+            <tr v-for="choose in value.qus.square.row" :key="choose.id" class="bg-purple-light">
+              <th class="truncate">{{ choose.text }}</th>
+              <td v-for="choosecol in value.qus.square.column" :key="choosecol.id" class="text-center py-4">
+                <input v-if="value.ans.manyOptions.includes(`row${choose.id}col${choosecol.id}`)" type="radio" class="text-grey p-2" disabled checked>
+                <input type="radio" class="text-grey p-2" disabled v-else>
               </td>
             </tr>
           </tbody>
@@ -115,21 +114,20 @@ export default {
     </div>
     <!-- 核取方塊格 -->
     <div v-if="value.qus.type === 9" class="!block">
-      <div class="questype-9 responser bg-white border rounded-[10px] mb-[15px] border-gray-200">
-        <table>
+      <div class="questype-9 responser bg-white border rounded-[10px] mb-[15px] border-gray-200 px-5">
+        <table class="w-full table-fixed border-separate border-spacing-y-2 pt-5">
           <thead>
             <tr>
               <th></th>
-              <th v-for="choose in value.qus.square.column" :key="choose.id">{{ choose.text }}</th>
+              <th v-for="choose in value.qus.square.column" :key="choose.id" class="truncate">{{ choose.text }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="choose in value.qus.square.row" :key="choose.id">
-              <th>{{ choose.text }}</th>
-              <td v-for="choosecol in value.qus.square.column" :key="choosecol.id">
-                <th>{{ choosecol.text }}</th>
-                <input v-if="value.ans.manyOptions.includes(`row${choose.id}col${choosecol.id}`)" type="checkbox" disabled checked>
-                <input type="checkbox" disabled v-else>
+            <tr v-for="choose in value.qus.square.row" :key="choose.id" class="bg-purple-light">
+              <th class="truncate">{{ choose.text }}</th>
+              <td v-for="choosecol in value.qus.square.column" :key="choosecol.id" class="text-center py-4">
+                <input v-if="value.ans.manyOptions.includes(`row${choose.id}col${choosecol.id}`)" type="checkbox" class="text-grey p-2" disabled checked>
+                <input type="checkbox" class="text-grey p-2" disabled v-else>
               </td>
             </tr>
           </tbody>
