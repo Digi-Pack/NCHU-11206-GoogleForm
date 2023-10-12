@@ -62,11 +62,10 @@ class EditorController extends Controller
     }
     public function edit_old(Request $request)
     {
-
-        // 先找到該用戶自己的表單，再找到指定id的表單，避免猜網址
-        // $responseForm = Question::where('lead_author_id', $request->user()->id)
-        //     ->orWhereHas('coworker', fn ($coQuery) => $coQuery->where('coworker_id', $request->user()->id))
-        //     ->find($request->id);
+        if($request->id === '0'){
+            $response = $request->user();
+        return Inertia::render('Backend/EditorIndex', ['response' => rtFormat($response)]);
+        }
         $responseForm = Question::where(function ($query) use ($request) {
             return $query->where('lead_author_id', $request->user()->id)
                 ->orWhereHas('coworker', function ($coQuery) use ($request) {

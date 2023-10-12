@@ -102,8 +102,8 @@ export default {
   },
   data() {
     return {
-      arrayA: this.chartdata.questionNaires,
-      arrayB: this.chartdata.results,
+      arrayA: this.chartdata?.questionNaires ?? [],
+      arrayB: this.chartdata?.results ?? [],
       arrayC: [],
       chartOptions: [],
     };
