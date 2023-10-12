@@ -24,9 +24,6 @@ export default {
     TrashCanModal,
     AddCollaborator,
   },
-  props: {
-    user: Object,
-  },
   data() {
     return {
       images: {
@@ -48,15 +45,26 @@ export default {
       model: '123',
       showTopic: false,
       bgColor: 'bg-purple',
-      coFormId: route()?.params?.id ?? '0',
       qu_naires_title: '',
       formTitle: '',
       colorType,
+      coFormId: route()?.params?.id ?? '0',
     };
   },
-  mounted() {
-    // console.log(this.testId);
+  watch: {
+    '$page.url': function () {
+      this.coFormId = route()?.params?.id ?? '0';
+    },
   },
+  //   computed: {
+  //     coFormId() {
+  //       console.log(this.$page.url);
+  //       return route()?.params?.id ?? '0';
+  //     },
+  //   },
+  //   mounted() {
+  //     console.log(this.$page.url);
+  //   },
   methods: {
     /**
      * 判斷現在是否在urlName的路由
@@ -183,6 +191,7 @@ export default {
             </div>
           </div>
           <div class="down">
+            {{ coFormId }}
             <NavLink class="btn" :href="route('edit.old', { id: coFormId })" :active="currentUrl('edit.index')">
               問題
             </NavLink>
