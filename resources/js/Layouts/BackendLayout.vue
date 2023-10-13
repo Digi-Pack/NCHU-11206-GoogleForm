@@ -51,6 +51,7 @@ export default {
       colorType,
       coFormId: route()?.params?.id ?? '0',
       preview: true,
+      menuShow: false,
     };
   },
 
@@ -99,8 +100,16 @@ export default {
         method: 'post', data: { formDataobj, formTextobj, preview: true, coFormId: coFormId }, preserveState: true,
       });
     },
+    // 開關功能選單
+    openMenu() {
+      this.menuShow = !this.menuShow;
+    },
+    // 列印
     print() {
+      const element = this.$refs.menu; // 替換 'yourElement' 為你想要隱藏的DOM元素的參考名稱
+      element.style.display = 'none';
       window.print();
+      element.style.display = 'block';
     },
   },
 };
@@ -164,12 +173,12 @@ export default {
                 <img :src="images.visibility" width="25" height="25" alt="">
               </button>
               <input type="checkbox" id="ham-menu-switch" class="hidden">
-              <label for="ham-menu-switch" class="ham-menu">
-                <div v-if="coFormId !== '0'" class="downMenu">
+              <div v-if="coFormId !== '0'" class="downMenu">
+                <button type="button" class="ham-menu" @click="openMenu()">
                   <img :src="images.more_vert" width="25" height="25" alt="">
-                </div>
-              </label>
-              <div id="menu">
+                </button>
+              </div>
+              <div id="menu" v-if="menuShow" ref="menu">
                 <CopyDocument v-if="model === 'CopyDocument'" @close-model="handleClose"></CopyDocument>
                 <TrashCanModal v-if="model === 'TrashCanModal'" @close-model="handleClose"></TrashCanModal>
                 <AddCollaborator v-if="model === 'AddCollaborator'" :co-form-id="coFormId" @close-model="handleClose"></AddCollaborator>
@@ -321,16 +330,13 @@ nav {
                   @apply w-[45px] h-[45px] flex justify-center items-center hover:bg-[#ededed] rounded-[50%];
                 }
                 #menu {
-                  @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
+                  @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] shadow-lg absolute top-[50px] right-[50px];
                 }
                 .option {
                   @apply w-full mx-0 px-4 leading-[30px] text-[#505050] flex font-bold items-center justify-start;
                     span {
                         @apply ms-[10px];
                     }
-                }
-                #ham-menu-switch:checked~#menu {
-                    @apply block;
                 }
                 .downMenu {
                   @apply w-[45px] h-[45px] cursor-pointer flex justify-center items-center me-[5px] hover:bg-[#ededed] rounded-[50%];
