@@ -452,7 +452,7 @@ export default {
               <div class="question-top">
                 <div class="text-box">
                   <!-- {{ $page.props?.errors[`formData.${index}.title`] ?? '' }} -->
-                  <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input truncate" required>
+                  <input v-model="item.title" type="text" :class="{ '!border-[red]': Object.hasOwn($page.props?.errors ?? {}, `formData.${index}.title`) }" placeholder="問題" class="form-input form-title-input truncate focus:ring-0" required>
                   <div class="text-[red]">{{ $page.props?.errors[`formData.${index}.title`] ?? '' }}</div>
                 </div>
                 <label>
@@ -484,7 +484,7 @@ export default {
                 <div v-for="(option, index) in item.options" :key="option.id" class="choose">
                   <input type="checkbox" id="checkbox">
                   <label for="checkbox" class="checkbox"></label>
-                  <input type="text" class="choose_line" :placeholder="'選項' + (index + 1)" v-model="option.value">
+                  <input type="text" class="choose_line focus:ring-0 focus:border-b-[3px] focus:border-b-purple" :placeholder="'選項' + (index + 1)" v-model="option.value">
                   <button type="button" class="w-[22px]" @click="delOption(item, option.id)"><img :src="close" class="hover:bg-[#dddddd] hover:scale-110 rounded-full" alt=""></button>
                 </div>
                 <div class="choose">
@@ -527,7 +527,7 @@ export default {
                   <option value="0">0</option>
                   <option value="1">1</option>
                 </select>
-                <span>到</span>
+                <span class="mx-1">到</span>
                 <select v-model="item.linear.max" name="max">
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -714,7 +714,7 @@ export default {
             @apply w-[770px] rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
 
             .form-input {
-                @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
+                @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
             }
 
             .form-title-input {
@@ -807,7 +807,7 @@ export default {
                       @apply w-[24px] h-[24px] inline-block rounded-full border-[2px] border-grey mr-[5px];
                     }
                     .choose_line {
-                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:ring-0;
                     }
 
                     .choose_line2 {
@@ -830,7 +830,7 @@ export default {
                       @apply w-[24px] h-[24px] mr-[5px] pointer-events-none;
                     }
                     .choose_line {
-                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:ring-0;
                     }
 
                     .choose_line2 {
@@ -854,7 +854,7 @@ export default {
                     }
 
                     .choose_line {
-                      @apply w-[80%] border-none h-[30px] text-[16px] font-medium hover:border hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:outline-none;
+                      @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:ring-0;
                     }
 
                     .choose_line2 {
@@ -878,13 +878,13 @@ export default {
             .questype-7 {
                 @apply w-full border-x-0 border-t-0 border-b border-b-grey pb-[30px] hidden;
                 select {
-                    @apply border-0;
+                    @apply border-0 rounded-md focus:ring-0 cursor-pointer hover:bg-grey-light;
                 }
                 .num-mean {
                     @apply text-grey text-base font-semibold;
                 }
                 .num-mean-input {
-                    @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple outline-none;
+                    @apply border-x-0 border-t-0 border-b border-b-grey w-[200px] h-[40px] text-base text-grey font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
                 }
             }
 
@@ -901,7 +901,7 @@ export default {
                               @apply pt-3;
                             }
                             .choose_line {
-                              @apply w-4/5 border-0 h-[40px] text-base font-medium hover:border-b hover:border-b-grey focus:border-x-0 focus:border-t-0 focus:border-b-[3px] focus:border-b-purple focus:outline-none;
+                              @apply w-4/5 border-0 h-[40px] text-base font-medium hover:border-b hover:border-b-grey focus:border-b-[3px] focus:border-b-purple focus:ring-0;
                             }
                             .choose_line2 {
                               @apply w-[70px] text-grey;
