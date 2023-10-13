@@ -59,26 +59,17 @@
     </div>
   </div>
   <!-- 檔案上傳 -->
-  <!-- <div class="text-area">
-    <div class="que-top">
-      <div class="title">{{ option.item.text }}</div>
-      <div class="subtitle">{{ option.item.subtext }}則回應</div>
-    </div>
-    <div v-for="(optionIn, index) in option.item.answer"
-      :key="index" class="px-5 py-3">
-      <div>這裡要放檔案img圖示</div>
-      <div class="text-answer">{{ optionIn }}</div>
-    </div>
-  </div> -->
-  <!-- 檔案上傳 -->
-  <div class="text-area">
-    <div class="que-top">
-      <div class="title">問題文本</div>
-      <div class="subtitle">x則回應</div>
-    </div>
-    <div class="px-5 py-3">
-      <div>這裡要放檔案img圖示</div>
-      <div class="text-answer">這裡放檔名</div>
+  <div>
+    <div v-for="(option, index) in arrayD"
+      :key="index" class="text-area">
+      <div class="que-top">
+        <div class="title">{{ option.text }}</div>
+        <div class="subtitle">{{ option.subtext }}則回應</div>
+      </div>
+      <div v-for="(optionIn, index) in option.files " class="px-5 py-3"
+        :key="index">
+        <a :href=" optionIn.path " :download=" optionIn.name " class="text-answer">{{ optionIn.name }}下載</a>
+      </div>
     </div>
   </div>
 </template>
@@ -129,7 +120,9 @@ export default {
       arrayB: this.chartdata?.results ?? [],
       arrayC: [],
       chartOptions: [],
-      arrayD: [],
+      arrayD: [
+        { type: 6, text: 'id-188未命名表單', subtext: 3, files: [{ name: '資料處理與分析.docx', path: '/upload/FillerName/1697162832-資料處理與分析.docx' }, { name: '研究工具-症狀困擾.docx', path: '/upload/FillerName/1697164532-研究工具-症狀困擾.docx' }] }, { type: 6, text: 'id-189未命名表單', subtext: 3, files: [{ name: '資料處理與分析.docx', path: '/upload/FillerName/1697162832-資料處理與分析.docx' }, { name: '研究工具-症狀困擾.docx', path: '/upload/FillerName/1697164532-研究工具-症狀困擾.docx' }] },
+      ],
     };
   },
   mounted() {
