@@ -39,6 +39,7 @@ Route::prefix('response')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/sum', [ResponseController::class,'response_sum'])->name('response.sum');
     Route::get('/que/{id}',[ResponseController::class,'responseQue'])->name('response.que');
     Route::get('/ind/{id}',[ResponseController::class,'responseInd'])->name('response.ind');
+    Route::delete('/del',[ResponseController::class,'responseDelete'])->name('response.delete');
 });
 
 Route::prefix('response')->group(function () {

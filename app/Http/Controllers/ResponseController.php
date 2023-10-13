@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use App\Models\Response;
-use App\Models\Question;
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Question;
+use App\Models\Response;
+use Illuminate\Http\Request;
+use App\Services\FileService;
 
 class ResponseController extends Controller
 {
+    public function __construct(protected FileService $fileService)
+    {
+    }
     public function response_sum(Request $request)
     {
         // 找到對應的問券
@@ -56,6 +60,9 @@ class ResponseController extends Controller
     public function responseQue($id)
     {
         $responseForm = Question::with('response')->find($id);
+        if (!$responseForm) {
+            return Inertia::render('Backend/ResponseQue');
+        }
         // 找種共有幾筆填答者
         $responseFormReply = Question::withCount('response')->find($id);
         $questionNaires = json_decode($responseForm['questionnaires'], true);
@@ -72,6 +79,7 @@ class ResponseController extends Controller
             'num' => 'numeric',
         ]);
         $responseForm = Question::withCount('response')->find($id);
+        // 判斷回答數跟傳入的數是否有大於回答數
         if ($request->filled('num') <= $responseForm->response_count) {
             $fillForm = Response::where('question_id', $id)->skip(intval($request->num) - 1)->take(1)->first();
         } else {
@@ -82,5 +90,21 @@ class ResponseController extends Controller
             'fillform' => $fillForm,
         ];
         return Inertia::render('Backend/ResponseInd', ['response' => rtFormat($response)]);
+    }
+    public function responseDelete(Request $request)
+    {
+        $request->validate([
+            'num' => 'numeric',
+        ]);
+
+        $fillForm = Response::where('question_id', $request->coFormId)->skip(intval($request->num) - 1)->take(1)->first();
+        $answer = json_decode($fillForm['answer'], true);
+        foreach ($answer as $key => $value) {
+            if ($value['file']['name']) {
+                $this->fileService->deleteUpload($answer[$key]['file']['path']);
+            }
+        }
+        $fillForm->delete();
+        return redirect()->route('response.ind', ['id' => $request->coFormId])->with(['message' => rtFormat($fillForm)]);
     }
 }
