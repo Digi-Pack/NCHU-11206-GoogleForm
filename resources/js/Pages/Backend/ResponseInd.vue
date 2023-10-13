@@ -1,6 +1,7 @@
 <script>
 import excel from '/resources/images/excel.png';
 import dot from '/resources/images/dot.png';
+import image from '/resources/images/image.png';
 import download from '/resources/images/download.png';
 import print from '/resources/images/print.png';
 import del from '/resources/images/del.png';
@@ -23,6 +24,7 @@ export default {
     return {
       excel: excel,
       dot: dot,
+      image: image,
       download: download,
       print: print,
       del: del,
@@ -217,9 +219,11 @@ export default {
             <!-- 檔案上傳 -->
             <div v-if="item.type === 6" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-6">
-                {{ ansStringJson[key].file.name }}
-                <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name">下載</a>
+              <div class="questype-6 border-[2px] mt-2 border-grey rounded-md w-1/2 hover:border-gray-600 active:hover:border-white active:bg-grey-dark">
+                <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name" class="flex items-center gap-2 px-2 py-1">
+                  <img :src="image" alt="">
+                  <span class="truncate !text-gray-800">{{ ansStringJson[key].file.name }}</span>
+                </a>
               </div>
             </div>
             <!-- 線性刻度 -->
