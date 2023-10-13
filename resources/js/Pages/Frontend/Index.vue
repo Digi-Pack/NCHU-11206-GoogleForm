@@ -1,5 +1,5 @@
 <script>
-import mountain from '/images/Mountain.jpg';
+import mountain from '/images/mountain.jpg';
 
 export default {
   props: {
@@ -50,7 +50,7 @@ export default {
 <style lang="scss" scoped>
 #frontend-index {
   @apply w-full min-h-screen overflow-y-auto bg-gradient-to-tr p-5 from-black to-gray-600 bg-cover;
-  background-image: url('../../../images/Mountain.jpg');
+  background-image: url('../../../images/mountain.jpg');
   .title {
     @apply text-[6.25rem] text-center text-grey-light justify-self-center items-center;
     .wave {

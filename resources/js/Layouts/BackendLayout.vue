@@ -15,7 +15,7 @@ import print from '/images/print.svg';
 import group_add from '/images/group_add.svg';
 import logo from '/images/logo.png';
 import user from '/images/user.svg';
-import account from '/images/account-circle.svg';
+import account from '/images/account_circle.svg';
 import { colorType } from '@/Composables/useBgColor';
 import { router } from '@inertiajs/vue3';
 

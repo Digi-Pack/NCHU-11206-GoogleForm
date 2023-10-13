@@ -20,7 +20,7 @@ import dot from '/images/dot.png';
 import text from '/images/text.png';
 import user from '/images/user.svg';
 import description from '/images/description.svg';
-import account from '/images/account-circle.svg';
+import account from '/images/account_circle.svg';
 import open_in_new from '/images/open_in_new.png';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
@@ -242,6 +242,9 @@ export default {
       <div v-if="!blockShow" class="card-group">
         <!-- 表單方格 -->
         <div class="card" v-for="item in response.rt_data.guide " :key="item.id">
+          <!-- {{ item.created_at }} -->
+          <!-- {{ item.updated_at }} -->
+          <!-- {{ item.opened_date }} -->
           <Link :href="route('edit.old', { id: item.id })">
             <div class="card-top">
               <!-- 預覽頁面 -->
