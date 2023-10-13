@@ -73,10 +73,9 @@ export default {
         <div v-if="noAnswer === true" class="noreply">
           <span>待回應</span>
         </div>
-        <div class="responser">
+        <div v-if="noAnswer === false" class="responser">
           <div class="title">哪些人已回應?</div>
           <div class="email">
-            <!-- <span>電子郵件</span> -->
             <button type="button" @click="accordion()" class="accordion" :class="{ 'active': isActive }">電子郵件</button>
             <div v-if="isActive" class="content">
               <div v-for="item in whoAll" :key="item.id">
