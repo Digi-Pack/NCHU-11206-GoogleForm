@@ -26,6 +26,7 @@ Route::prefix('edit')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/rename', [EditorController::class, 'edit_rename'])->name('edit.rename');
     Route::get('/coformid', [EditorController::class,'coformid_index'])->name('coformid.index');
     Route::post('/coformid/store', [EditorController::class,'coformid_store'])->name('coformid.store');
+    Route::delete('cofomid/delete',[EditorController::class,'coformidDelete'])->name('coformid.delete');
 });
 
 Route::prefix('guide')->middleware(['auth', 'verified'])->group(function () {

@@ -1,6 +1,7 @@
 <script>
 import close from '/images/close.svg';
 import link from '/images/link.svg';
+import del from '/resources/images/del.png';
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 
@@ -13,6 +14,7 @@ export default {
   ],
   data() {
     return {
+      del: del,
       images: {
         close,
         link,
@@ -31,8 +33,12 @@ export default {
       router.visit(route('coformid.index'), {
         method: 'get', data: { coFormId }, preserveState: true,
         onSuccess: ({ props }) => {
-          this.formOwner = props.flash.message.rt_data[1];
-          this.coformemail = props.flash.message.rt_data[0];
+          if (props.flash.message.rt_data.length === 1) {
+            this.formOwner = props.flash.message.rt_data[0];
+          } else {
+            this.formOwner = props.flash.message.rt_data[1];
+            this.coformemail = props.flash.message.rt_data[0];
+          }
         },
       });
     },
@@ -65,6 +71,32 @@ export default {
             });
           }
         },
+      });
+    },
+
+    delQuestion(id) {
+      Swal.fire({
+        title: '確定刪除嗎?',
+        text: '此筆刪除將會無法回復!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '刪除',
+        cancelButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('coformid.delete'), {
+            method: 'delete', data: { id }, preserveState: true,
+            onSuccess: ({ props }) => {
+              if (props.flash.message.rt_code === 1) {
+                Swal.fire(
+                  '刪除成功',
+                );
+              }
+            },
+          });
+        }
       });
     },
 
@@ -106,6 +138,11 @@ export default {
                   <span class="text-[12px] text-[#6e6e6e]">{{ item.user.email }}</span>
                 </div>
                 <span class="w-[60%] text-[14px] text-grey flex justify-end">編輯者</span>
+                <button type="button" @click="delQuestion(item.id)">
+                  <label>
+                    <img :src="del" alt="">
+                  </label>
+                </button>
               </div>
             </div>
             <div class="flex justify-end mt-7 px-8">

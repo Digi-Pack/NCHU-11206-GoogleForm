@@ -410,12 +410,7 @@ export default {
     },
   },
 };
-
 </script>
-
-<!-- <template v-slot:header>
-  {{ formText.qu_naires_title }}
-</template> -->
 
 <template>
   <input hidden type="text" v-model="userInformation">

@@ -287,4 +287,11 @@ class EditorController extends Controller
         ]);
         return back()->with(['message' => rtFormat($formId)]);
     }
+
+    public function coformidDelete(Request $request)
+    {
+        $codelete = Coworker::find($request->id);
+        $codelete->delete();
+        return back()->with(['message' => rtFormat($codelete)]);
+    }
 }
