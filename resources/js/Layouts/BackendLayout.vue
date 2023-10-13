@@ -163,7 +163,7 @@ export default {
               </button>
               <input type="checkbox" id="ham-menu-switch" class="hidden">
               <label for="ham-menu-switch" class="ham-menu">
-                <div class="downMenu">
+                <div v-if="coFormId !== '0'" class="downMenu">
                   <img :src="images.more_vert" width="25" height="25" alt="">
                 </div>
               </label>
@@ -171,12 +171,12 @@ export default {
                 <CopyDocument v-if="model === 'CopyDocument'" @close-model="handleClose"></CopyDocument>
                 <TrashCanModal v-if="model === 'TrashCanModal'" @close-model="handleClose"></TrashCanModal>
                 <AddCollaborator v-if="model === 'AddCollaborator'" :co-form-id="coFormId" @close-model="handleClose"></AddCollaborator>
-                <div class="">
-                  <button type="button" class="option" @click="model = 'CopyDocument'"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
-                  <button type="button" class="option" @click="model = 'TrashCanModal'"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
+                <div v-if="coFormId !== '0'" class="">
+                  <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'CopyDocument'"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
+                  <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'TrashCanModal'"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
                   <!-- <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button> -->
-                  <button type="button" class="option"><img :src="images.print" alt=""><span>列印</span></button>
-                  <button type="button" class="option" @click="model = 'AddCollaborator'"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
+                  <button v-if="coFormId !== '0'" type="button" class="option"><img :src="images.print" alt=""><span>列印</span></button>
+                  <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'AddCollaborator'"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
                 </div>
               </div>
               <input type="checkbox" id="ham-menu-switch-2" class="hidden">
@@ -192,7 +192,7 @@ export default {
                   <div class="hello"><span>{{ $page.props.auth.user.name }}</span>，你好!</div>
                   <div class="acc mb-3">
                     <Link class="manage" :href="route('profile.edit')">
-                      <div>管理你的帳戶</div>
+                      <div>管理你的帳戶{{ coFormId }}</div>
                     </Link>
                     <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
                       登出
