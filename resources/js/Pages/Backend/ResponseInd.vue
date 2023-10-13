@@ -134,14 +134,17 @@ export default {
           <div class="flex ml-3">
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
             <div>第
-              <input type="number" :value="num"
-                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
+              <input v-if="response.rt_data.results.response_count === 0" type="number" :value="num - 1"
+                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">
+              <input v-else type="number" :value="num"
+                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">
+              項, 共
               {{ response.rt_data.results.response_count }}
               項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>
           </div>
-          <button type="button" @click="ansDelete()">
+          <button v-if="response.rt_data.results.response_count !== 0" type="button" @click="ansDelete()">
             <label>
               <img :src="del" alt="" class="select-btn">
             </label>
