@@ -1,8 +1,8 @@
 <template>
   <!-- {{ chartdata }}123 -->
   <!-- {{ arrayA }}<hr>{{ arrayB }} -->
-  <!-- {{ chartOptions }} -->
-  <!-- {{ arrayC }} -->
+  <!-- {{ chartOptions }}<br>
+  {{ arrayC }} -->
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
@@ -57,16 +57,13 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- 檔案上傳 -->
-  <div>
-    <div v-for="(option, index) in arrayD"
-      :key="index" class="text-area">
+    <!-- 檔案上傳 -->
+    <div v-if="option.type === 6" class="text-area">
       <div class="que-top">
-        <div class="title">{{ option.text }}</div>
-        <div class="subtitle">{{ option.subtext }}則回應</div>
+        <div class="title">{{ option.item.text }}</div>
+        <div class="subtitle">{{ option.item.subtext }}則回應</div>
       </div>
-      <div v-for="(optionIn, index) in option.files " class="px-5 py-3"
+      <div v-for="(optionIn, index) in option.item.files " class="px-5 py-3"
         :key="index">
         <a :href=" optionIn.path " :download=" optionIn.name " class="text-answer">{{ optionIn.name }}下載</a>
       </div>
@@ -243,7 +240,7 @@ export default {
       } else if (item.type === 13) {
         return { type: 13 };
       } else if (item.type === 6) {
-        return { type: 6 };
+        return { type: 6, item };
       }
       return {};
     });
@@ -506,6 +503,30 @@ export default {
         answer: answerArray,
       };
     },
+    fileUpload(question) {
+      let subtextCount = 0;
+      let files = [];
+
+      // 遍历arrayB的各个数组
+      for (let j = 0; j < this.arrayB.length; j++) {
+        let answerSet = this.arrayB[j];
+        let answer = answerSet[question.id - 1]; // 获取对应问题的答案
+
+        // 检查答案是否不为 null 或空字符串
+        if (answer && answer.file && answer.file.path && answer.file.path.trim() !== '') {
+          subtextCount++;
+          files.push({ name: answer.file.name, path: answer.file.path });
+        }
+      }
+
+      // 返回生成的对象
+      return {
+        type: question.type,
+        text: question.title,
+        subtext: subtextCount,
+        files: files,
+      };
+    },
     generateArrayC() {
       this.arrayC = this.arrayA.map((question) => {
         if (question.type === 3 || question.type === 5) {
@@ -527,7 +548,7 @@ export default {
         } else if (question.type === 13) {
           return { type: 13 };
         } else if (question.type === 6) {
-          return { type: 6 };
+          return this.fileUpload(question);
         }
       });
     },
