@@ -228,7 +228,7 @@ export default {
       </nav>
     </header>
     <main id="main" :class="myStyle()">
-      <div class="fixed top-0 w-full h-screen bg-white opacity-90"></div>
+      <div class="fixed top-0 w-full h-full bg-white opacity-90"></div>
       <slot />
     </main>
   </section>
@@ -240,7 +240,7 @@ export default {
 }
 
 #main {
-  @apply h-auto w-full relative;
+  @apply h-full w-full relative;
 }
 
 #header {

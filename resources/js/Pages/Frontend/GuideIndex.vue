@@ -290,8 +290,8 @@ export default {
       </div>
     </div>
     <Link :href="route('edit.index')">
-      <button type="button" class="w-[60px] rounded-full drop-shadow-md border-grey shadow-lg bg-white p-3 fixed bottom-10 right-10">
-        <img :src="images.addnewform" alt="">
+      <button type="button" class="newformbtn w-[60px] rounded-full drop-shadow-md border border-grey-light bg-white p-3 duration-500 fixed bottom-10 right-10 hover:scale-110 hover:drop-shadow-xl">
+        <img :src="images.addnewform" class="addnewform" alt="">
       </button>
     </Link>
   </section>
@@ -395,7 +395,7 @@ export default {
         }
       }
       .card:hover .card-top img {
-        @apply scale-110 opacity-60;
+        @apply scale-110 opacity-60 duration-200;
       }
     }
     .list-group {
@@ -413,6 +413,9 @@ export default {
         }
       }
     }
+  }
+  .newformbtn:hover .addnewform {
+      @apply rotate-[360deg] scale-125 duration-1000;
   }
 }
 #RenameModal {
