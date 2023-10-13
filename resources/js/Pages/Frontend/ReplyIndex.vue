@@ -98,7 +98,7 @@ export default {
   <!-- {{ response }} -->
   <!-- {{ response.rt_data.responseForm[0] }} -->
   <!-- {{ response.rt_data.questionNaires }} -->
-  {{ formData }}
+  <!-- {{ formData }} -->
   <!-- {{ formData[3].answer }} -->
   <section id="question">
     <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] min-h-screen relative">
@@ -111,7 +111,7 @@ export default {
           <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
-          {{ item }}
+          <!-- {{ item }} -->
           <!-- 簡答 -->
           <div v-if="item.type === 1" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
