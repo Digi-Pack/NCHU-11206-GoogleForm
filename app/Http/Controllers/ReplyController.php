@@ -17,19 +17,10 @@ class ReplyController extends Controller
     }
     public function reply_index(Request $request, $id)
     {
-        // dd(123);
         // ********第一種狀況：從預覽連接到填寫問卷頁--------------------------------------------
         // 如果是用複製網址的方式($id是亂碼)，就(應該機率很小)抓不到id是這個亂碼的問卷
         $responseForm = Question::where('id', $id)->get();
         // ***第一種情況之一：當沒有抓到問卷時，且自己是 主編者 或 共同編輯者 時，先存問卷再提供填寫頁面
-
-        // if ($responseForm->isEmpty()) {
-        //     dd($id);
-
-
-
-        // }
-
 
         // ***第一種情況之二：當有抓到問卷，且自己是 主編者 或 共同編輯者 時，可以透過 預覽 ，訪問填寫問卷頁
         if (!$responseForm->isEmpty()) {

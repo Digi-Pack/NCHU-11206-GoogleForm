@@ -6,7 +6,7 @@
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
-    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11 && option.type !== 12 && option.type !== 13" class="chart" :option="option" />
+    <VChart v-if="option.type !== 1 && option.type !== 2 && option.type !== 10 && option.type !== 11 && option.type !== 12 && option.type !== 13 && option.type !== 6" class="chart" :option="option" />
     <!-- 簡答 -->
     <div v-if="option.type === 1 || option.type === 2" class="text-area">
       <div class="que-top">
@@ -58,6 +58,29 @@
       </div>
     </div>
   </div>
+  <!-- 檔案上傳 -->
+  <!-- <div class="text-area">
+    <div class="que-top">
+      <div class="title">{{ option.item.text }}</div>
+      <div class="subtitle">{{ option.item.subtext }}則回應</div>
+    </div>
+    <div v-for="(optionIn, index) in option.item.answer"
+      :key="index" class="px-5 py-3">
+      <div>這裡要放檔案img圖示</div>
+      <div class="text-answer">{{ optionIn }}</div>
+    </div>
+  </div> -->
+  <!-- 檔案上傳 -->
+  <div class="text-area">
+    <div class="que-top">
+      <div class="title">問題文本</div>
+      <div class="subtitle">x則回應</div>
+    </div>
+    <div class="px-5 py-3">
+      <div>這裡要放檔案img圖示</div>
+      <div class="text-answer">這裡放檔名</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -106,6 +129,7 @@ export default {
       arrayB: this.chartdata?.results ?? [],
       arrayC: [],
       chartOptions: [],
+      arrayD: [],
     };
   },
   mounted() {
@@ -225,6 +249,8 @@ export default {
         return { type: 12 };
       } else if (item.type === 13) {
         return { type: 13 };
+      } else if (item.type === 6) {
+        return { type: 6 };
       }
       return {};
     });
@@ -507,6 +533,8 @@ export default {
           return { type: 12 };
         } else if (question.type === 13) {
           return { type: 13 };
+        } else if (question.type === 6) {
+          return { type: 6 };
         }
       });
     },
