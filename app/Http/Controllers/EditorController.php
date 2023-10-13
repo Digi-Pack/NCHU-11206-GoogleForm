@@ -250,13 +250,17 @@ class EditorController extends Controller
 
     public function coformid_index(Request $request)
     {
-
-        // 利用關聯user找到 user=>id
-        $ownerids = Question::with('user')->where('id', $request->coFormId)->first();
-        $ownerid = $ownerids->user;
-        // 利用關聯user找到 user=>id
-        $formIds = Coworker::with('user')->where('question_id', $request->coFormId)->get();
-        return back()->with(['message' => rtFormat([$formIds, $ownerid])]);
+        if ($request->coFormId) {
+            // 利用關聯user找到 user=>id
+            $ownerids = Question::with('user')->where('id', $request->coFormId)->first();
+            $ownerid = $ownerids->user;
+            // 利用關聯user找到 user=>id
+            $formIds = Coworker::with('user')->where('question_id', $request->coFormId)->get();
+            // dd($ownerid);
+            return back()->with(['message' => rtFormat([$formIds, $ownerid])]);
+        }
+        $formIds = $request->user();
+        return back()->with(['message' => rtFormat([$formIds])]);
     }
 
     public function coformid_store(Request $request)
