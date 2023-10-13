@@ -9,6 +9,7 @@ import linkoff from '/resources/images/link_off.png';
 import chevron_left from '/resources/images/chevron_left.svg';
 import chevron_right from '/resources/images/chevron_right.svg';
 import { router } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
 export default {
   props: {
@@ -32,7 +33,7 @@ export default {
       num: 1,
       coFormId: route()?.params?.id ?? '0',
       queform: {
-        que: this.response.rt_data.results,
+        que: this.response?.rt_data?.results ?? [],
       },
     };
   },
@@ -79,6 +80,34 @@ export default {
       }
       return loopResult;
     },
+    ansDelete() {
+      console.log(this.coFormId);
+      const { num, coFormId } = this;
+      Swal.fire({
+        title: '確定刪除嗎?',
+        text: '此筆刪除將會無法回復!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '刪除',
+        cancelButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('response.delete'), {
+            method: 'delete', data: { num, coFormId }, preserveState: true,
+            onSuccess: ({ props }) => {
+              if (props.flash.message.rt_code === 1) {
+                Swal.fire(
+                  '刪除成功',
+                  '此表單已被刪除',
+                );
+              }
+            },
+          });
+        }
+      });
+    },
   },
 };
 </script>
@@ -106,12 +135,13 @@ export default {
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
             <div>第
               <input type="number" :value="num"
-                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共 {{ response.rt_data.results.response_count }}
+                class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
+              {{ response.rt_data.results.response_count }}
               項
             </div>
             <button type="button" @click="plus()"><img :src="chevron_right" alt="" class="select-btn"></button>
           </div>
-          <button type="button">
+          <button type="button" @click="ansDelete()">
             <label>
               <img :src="del" alt="" class="select-btn">
             </label>
@@ -119,10 +149,14 @@ export default {
         </div>
       </div>
       <div class="response-body">
-        <div class="container">
+        <div v-if="response.rt_data.results.response_count === 0">
+          未回覆
+        </div>
+        <div v-else class="container">
           <div class="form-title">
             <!-- 表單名稱 -->
-            <input v-model="queform.que.qu_naires_title" type="text" class="form-input form-title-input truncate" disabled>
+            <input v-model="queform.que.qu_naires_title" type="text" class="form-input form-title-input truncate"
+              disabled>
             <!-- 表單說明 -->
             <input v-model="queform.que.qu_naires_desc" type="text" class="form-input form-explain-input-2 truncate"
               disabled>
@@ -147,7 +181,8 @@ export default {
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-3">
                 <div v-for="choose in item.options" :key="choose.id" class="option my-3">
-                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3 text-grey" :value="choose.id" disabled>
+                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3 text-grey"
+                    :value="choose.id" disabled>
                   <label for="choice-1 w-full truncate">{{ choose.value }}</label>
                 </div>
               </div>
@@ -157,8 +192,8 @@ export default {
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-4">
                 <div v-for="choose in item.options" :key="choose.id" class="option my-3">
-                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3 text-grey" :value="choose.id"
-                    disabled>
+                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3 text-grey"
+                    :value="choose.id" disabled>
                   <label for="focus w-full truncate">{{ choose.value }}</label>
                 </div>
               </div>
@@ -168,7 +203,8 @@ export default {
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-5 mt-5">
                 <label for="select"></label>
-                <select v-model="ansStringJson[key].answer" name="select" id="select" class="border-grey-dark rounded-md w-[200px] py-3">
+                <select v-model="ansStringJson[key].answer" name="select" id="select"
+                  class="border-grey-dark rounded-md w-[200px] py-3">
                   <option v-for="choose in item.options" :key="choose.id" :value="choose.value" disabled>{{ choose.value
                   }}
                   </option>
@@ -188,7 +224,8 @@ export default {
               <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
               <div class="questype-7 flex justify-center items-center gap-6 my-10">
                 <span class="w-[120px] flex justify-end pt-12 truncate">{{ item.linear.minText }}</span>
-                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index class="flex flex-col items-center gap-5">
+                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
+                  class="flex flex-col items-center gap-5">
                   <label> {{ i }}
                   </label>
                   <input v-model="ansStringJson[key].manyOptions" type="radio" class="text-grey p-3" :value="i" disabled>
@@ -210,7 +247,8 @@ export default {
                   <tbody>
                     <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
                       <th class="truncate">{{ choose.text }}</th>
-                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id" class="text-center py-4">
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id"
+                        class="text-center py-4">
                         <input v-model="ansStringJson[key].manyOptions[innerkey]" class="text-grey" type="radio"
                           :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
                           disabled>
@@ -234,7 +272,8 @@ export default {
                   <tbody>
                     <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
                       <th class="truncate">{{ choose.text }}</th>
-                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id" class="text-center py-4">
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id"
+                        class="text-center py-4">
                         <input v-model="ansStringJson[key].manyOptions" class="text-grey" type="checkbox"
                           :name="'many-' + innerkey + '-' + innerinnerkey"
                           :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" disabled>
@@ -257,9 +296,11 @@ export default {
             <div v-if="item.type === 11" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-11 flex justify-start items-center">
-                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2" v-model="ansStringJson[key].time.hour" disabled>
+                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2"
+                  v-model="ansStringJson[key].time.hour" disabled>
                 <span>:</span>
-                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2" v-model="ansStringJson[key].time.minute" disabled>
+                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2"
+                  v-model="ansStringJson[key].time.minute" disabled>
                 <select name="" id="" class="border-0" v-model="ansStringJson[key].time.section">
                   <option value="a.m." disabled>上午</option>
                   <option value="p.m." disabled>下午</option>
@@ -313,31 +354,35 @@ export default {
 
     .response-body {
       @apply flex min-h-[80px] justify-center items-center rounded-[10px];
+
       .form-title {
-            @apply max-w-[770px] rounded-[10px] border-t-[10px] border-t-purple pt-[22px] pb-[24px] bg-white;
+        @apply max-w-[770px] rounded-[10px] border-t-[10px] border-t-purple pt-[22px] pb-[24px] bg-white;
 
-            .form-input {
-                @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
-            }
-
-            .form-title-input {
-                @apply h-[45px] text-[32px];
-            }
-
-            .form-explain-input-2 {
-                @apply h-[21px] text-[18px] text-grey;
-            }
+        .form-input {
+          @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
         }
+
+        .form-title-input {
+          @apply h-[45px] text-[32px];
+        }
+
+        .form-explain-input-2 {
+          @apply h-[21px] text-[18px] text-grey;
+        }
+      }
+
       .question {
         @apply rounded-[10px] p-[24px] my-[12px] bg-white;
+
         .questype-7 {
           @media (max-width: 690px) {
             @apply flex-col items-start pl-5;
           }
+
           span {
             @media (max-width: 690px) {
-            @apply justify-start;
-          }
+              @apply justify-start;
+            }
           }
         }
       }

@@ -95,11 +95,6 @@ export default {
 </script>
 
 <template>
-  <!-- {{ response }} -->
-  <!-- {{ response.rt_data.responseForm[0] }} -->
-  <!-- {{ response.rt_data.questionNaires }} -->
-  <!-- {{ formData }} -->
-  <!-- {{ formData[3].answer }} -->
   <section id="question">
     <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] min-h-screen relative">
       <div class="container">
