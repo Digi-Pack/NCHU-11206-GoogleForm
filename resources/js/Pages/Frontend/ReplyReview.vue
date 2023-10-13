@@ -11,6 +11,7 @@ import radio_button from '/resources/images/radio_button_checked.png';
 import circle_down from '/resources/images/circle_down.png';
 import cloud_upload from '/resources/images/cloud_upload.png';
 import date from '/resources/images/date.png';
+import close from '/resources/images/close.svg';
 import time from '/resources/images/time.png';
 import dots from '/resources/images/dots.png';
 import check_box from '/resources/images/check_box.png';
@@ -40,6 +41,7 @@ export default {
       radio_button: radio_button,
       circle_down: circle_down,
       cloud_upload: cloud_upload,
+      close: close,
       date: date,
       time: time,
       dots: dots,
@@ -94,9 +96,13 @@ export default {
         },
       });
     },
+    // 檔案上傳
     handleFileUpload(e, key) {
       this.formData[key].file.name = e.target.files[0];
-      console.log(this.formData[key].file.name);
+    },
+    // 刪除上傳的檔案
+    handleFileDelete(e, key) {
+      this.formData[key].file.name = '';
     },
   },
 };
@@ -172,15 +178,26 @@ export default {
           <div v-if="item.type === 6" class="!block">
             <span class="text-[18px]">檔案上傳</span>
             <div class="questype-6">
-              <label
-                class="border border-[gray] w-[30px] aspect-[4/3] flex justify-center items-center text-[30px] cursor-pointer">
+              <label v-if="!formData[key].file.name"
+                class="border border-[gray] w-[50px] h-[50px] rounded-lg flex justify-center items-center text-[30px] cursor-pointer hover:border-grey-light hover:bg-grey-light">
                 +
                 <input type="file" class="hidden" accept=".csv,.xls,.docx,image/*"
                   @change="(e) => handleFileUpload(e, key)">
               </label>
-              <div>
-                <div v-if="typeof formData[key].file.name === 'string'">{{ formData[key].file.name }}</div>
-                <span v-else>{{ formData[key].file.name.name }}</span>
+              <div class="flex items-center">
+                <div v-if="formData[key].file.name" class="flex items-center">
+                  <div v-if="typeof formData[key].file.name === 'string'" class="border p-2 rounded-l w-auto border-grey flex items-center gap-2">
+                    <img :src="image" alt="">
+                    <span class="truncate">{{ formData[key].file.name }}</span>
+                  </div>
+                  <div v-else class="border p-2 rounded-l w-auto border-grey flex items-center gap-2">
+                    <img :src="image" alt="">
+                    <span class="truncate">{{ formData[key].file.name.name }}</span>
+                  </div>
+                  <button type="button" v-if="formData[key].file.name" class="w-[42px] h-[42px] rounded-r bg-white border-grey border-y border-r flex justify-center items-center" @click="(e) => handleFileDelete(e, key)">
+                    <img :src="close" alt="">
+                  </button>
+                </div>
               </div>
             </div>
           </div>

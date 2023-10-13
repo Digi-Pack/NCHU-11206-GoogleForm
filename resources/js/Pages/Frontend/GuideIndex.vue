@@ -387,7 +387,7 @@ export default {
         //     @apply block;
         //   }
           .card-option-menu {
-            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md;
+            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md z-50;
             button {
             @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
             }
