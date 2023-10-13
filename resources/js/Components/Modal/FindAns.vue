@@ -1,11 +1,14 @@
 <script>
+import image from '/resources/images/image.png';
 
 export default {
   props: {
     value: Object,
   },
   data() {
-    return {};
+    return {
+      image: image,
+    };
   },
   methods: {
     arrayData(min, max) {
@@ -21,7 +24,6 @@ export default {
 
 <template>
   <section id="findans">
-    {{ value }}
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1" class="responser">
       <div class="text">
@@ -71,11 +73,13 @@ export default {
     </div>
     <!-- 檔案上傳 -->
     <div v-if="value.qus.type === 6">
-      <div class="responser flex items-center">
-        {{ value.ans.file.name }}
-        <a :href="value.ans.file.path" :download="value.ans.file.name">下載</a>
+      <div class="responser flex flex-col justify-center">
+        <div class="p-3 m-3 border rounded-md w-[200px] truncate flex">
+          <img :src="image" alt="" class="mr-2">
+          <a :href="value.ans.file.path" :download="value.ans.file.name">{{ value.ans.file.name }}</a>
+        </div>
+        <div class="reply"><a href="#">1 則回應</a></div>
       </div>
-      <div class="reply"><a href="#">1 則回應</a></div>
     </div>
     <!-- 線性刻度 -->
     <div v-if="value.qus.type === 7" class="!block responser">
