@@ -25,7 +25,10 @@ export default {
       this.show = false;
     },
     messageUrl() {
-      return route('reply.index', { 'id': this.formUrl });
+      if (this.formUrl) {
+        return route('reply.index', { 'id': this.formUrl });
+      }
+      return '';
     },
     copy() {
       let copyText = document.getElementById('url');
@@ -83,7 +86,8 @@ export default {
             <button type="button" class="btn px-5 py-2 text-gray-700 hover:bg-grey-light rounded-[10px] mr-3"
               @click="closing()">取消</button>
             <button type="button"
-              class="btn px-5 py-2 border border-grey rounded-[10px] text-gray-700 hover:bg-grey-light" @click="copy()">複製</button>
+              class="btn px-5 py-2 border border-grey rounded-[10px] text-gray-700 hover:bg-grey-light"
+              @click="copy()">複製</button>
           </div>
         </div>
       </div>
