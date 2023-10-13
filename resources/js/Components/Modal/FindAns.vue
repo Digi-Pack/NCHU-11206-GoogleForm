@@ -21,6 +21,7 @@ export default {
 
 <template>
   <section id="findans">
+    {{ value }}
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1" class="responser">
       <div class="text">
@@ -42,7 +43,7 @@ export default {
           <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-if="choose.id === value.ans.answer ?? ''"
             checked>
           <input type="radio" id="choice-1" class="ml-5 text-grey" disabled v-else>
-          <label for="choice-1" class="text-[16px] px-5">{{ choose.value }}</label>
+          <label for="choice-1" class="text-[16px] px-5 text-grey">{{ choose.value }}</label>
         </div>
         <div class="reply"><a href="#">1 則回應</a></div>
       </div>
@@ -54,7 +55,7 @@ export default {
           <input type="checkbox" class="choice-2 ml-5 text-grey p-2" disabled
             v-if="value.ans.manyOptions.includes(choose.id)" checked>
           <input type="checkbox" class="choice-2 ml-5 text-grey" disabled v-else>
-          <label for="choice-2" class="text-[16px] px-5">{{ choose.value }}</label>
+          <label for="choice-2" class="text-[16px] px-5 text-grey">{{ choose.value }}</label>
         </div>
         <div class="reply"><a href="#">1 則回應</a></div>
       </div>

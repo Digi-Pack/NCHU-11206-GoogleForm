@@ -124,7 +124,48 @@ export default {
             <div v-if="que.id === titles" class="responser">
               {{ que.title }}
               <div v-for="option in que.options" :key="option.id">
-                <div><input type="radio" class="mr3" disabled>{{ option.value }}</div>
+                <div class="my-2">
+                  <input v-if="que.type === 3" type="radio" class="m-3" disabled>
+                  <input v-if="que.type === 4" type="checkbox" class="m-3" disabled>
+                  <span v-if="que.type === 5" class="m-3 text-base" disabled>{{ option.id }}。</span>
+                  <span v-if="option.value" class="text-[16px]">{{ option.value }}</span>
+                </div>
+              </div>
+              <div v-if="que.type === 8">
+                <table class="w-full table-fixed border-separate border-spacing-y-2">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th v-for="choose in que.square.column" :key="choose.id" class="truncate text-base">{{ choose.text }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="choose in que.square.row" :key="choose.id">
+                      <th class="truncate text-base">{{ choose.text }}</th>
+                      <td v-for="choosecol in que.square.column" :key="choosecol.id" class="text-center py-4">
+                        <input type="radio" class="text-grey p-2" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div v-if="que.type === 9">
+                <table class="w-full table-fixed border-separate border-spacing-y-2">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th v-for="choose in que.square.column" :key="choose.id" class="truncate text-base">{{ choose.text }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="choose in que.square.row" :key="choose.id">
+                      <th class="truncate text-base">{{ choose.text }}</th>
+                      <td v-for="choosecol in que.square.column" :key="choosecol.id" class="text-center py-4">
+                        <input type="checkbox" class="text-grey p-2" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -184,7 +225,7 @@ export default {
       }
 
       .responser {
-        @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white text-[20px] flex items-start gap-5 flex-col;
+        @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white text-[20px] flex items-start flex-col;
 
         .date {
           @apply text-grey flex flex-col gap-3 items-end;
