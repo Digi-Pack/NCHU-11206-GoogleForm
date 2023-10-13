@@ -3,6 +3,7 @@ import link from '/resources/images/link.png';
 import facebook from '/resources/images/facebook.svg';
 import twitter from '/resources/images/twitter.svg';
 import close from '/resources/images/close.svg';
+import Swal from 'sweetalert2';
 
 export default {
   props: {
@@ -38,7 +39,7 @@ export default {
       // Copy the text inside the text field
       navigator.clipboard.writeText(copyText.value);
       // Alert the copied text
-      alert('Copied the text: ' + copyText.value);
+      Swal.fire('已成功複製' + copyText.value);
     },
     // 發佈到fb
     shareOnFacebook() {
