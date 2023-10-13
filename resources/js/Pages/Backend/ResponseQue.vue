@@ -103,7 +103,7 @@ export default {
         </div>
         <div class="head-fotter">
           <select v-model="titles" name="" id="">
-            <option v-for="item in response.rt_data.responseForm" :key="item.id" :value="item.id">
+            <option v-for="item in response?.rt_data?.responseForm ?? []" :key="item.id" :value="item.id">
               {{ item.title }}
             </option>
           </select>
@@ -119,7 +119,7 @@ export default {
         </div>
       </div>
       <div class="response-body">
-        <div v-for="que in response.rt_data.responseForm" :key="que.id">
+        <div v-for="que in response?.rt_data?.responseForm ?? []" :key="que.id">
           <div>
             <div v-if="que.id === titles" class="responser">
               {{ que.title }}

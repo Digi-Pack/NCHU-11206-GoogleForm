@@ -61,7 +61,7 @@ class ResponseController extends Controller
     {
         $responseForm = Question::with('response')->find($id);
         if (!$responseForm) {
-            return Inertia::render('Backend/ResponseQue');
+            return Inertia::render('Backend/ResponseSum');
         }
         // 找種共有幾筆填答者
         $responseFormReply = Question::withCount('response')->find($id);
@@ -79,6 +79,9 @@ class ResponseController extends Controller
             'num' => 'numeric',
         ]);
         $responseForm = Question::withCount('response')->find($id);
+        if (!$responseForm) {
+            return Inertia::render('Backend/ResponseSum');
+        }
         // 判斷回答數跟傳入的數是否有大於回答數
         if ($request->filled('num') <= $responseForm->response_count) {
             $fillForm = Response::where('question_id', $id)->skip(intval($request->num) - 1)->take(1)->first();
