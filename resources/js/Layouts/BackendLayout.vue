@@ -98,7 +98,9 @@ export default {
       router.visit(route('edit.store'), {
         method: 'post', data: { formDataobj, formTextobj, preview: true, coFormId: coFormId }, preserveState: true,
       });
-
+    },
+    print() {
+      window.print();
     },
   },
 };
@@ -175,7 +177,7 @@ export default {
                   <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'CopyDocument'"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
                   <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'TrashCanModal'"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
                   <!-- <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button> -->
-                  <button v-if="coFormId !== '0'" type="button" class="option"><img :src="images.print" alt=""><span>列印</span></button>
+                  <button v-if="coFormId !== '0'" type="button" class="option" @click="print()"><img :src="images.print" alt=""><span>列印</span></button>
                   <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'AddCollaborator'"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
                 </div>
               </div>
