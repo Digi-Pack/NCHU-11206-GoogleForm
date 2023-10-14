@@ -156,6 +156,7 @@ export default {
 <template>
   <section id="guide">
     <section v-if="show" id="RenameModal">
+
       <div class="container">
         <div class="content">
           <div class="flex justify-between items-center">

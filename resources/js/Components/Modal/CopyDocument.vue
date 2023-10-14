@@ -5,6 +5,7 @@ import { router } from '@inertiajs/vue3';
 
 export default {
   props: {
+    errors: Object,
     formUrl: String,
     coFormId: String,
   },
@@ -27,11 +28,12 @@ export default {
     },
     addSameForm() {
     //   Swal.fire('hihi');
+      this.closing();
       const sameFormId = parseInt(this.coFormId, 10);
-      const newFormName = this.newFormName;
+      const { newFormName, sameCallaborator } = this;
 
       router.visit(route('edit.addSameForm'), {
-        method: 'post', data: { sameFormId, newFormName }, preserveState: true,
+        method: 'post', data: { sameFormId, newFormName, sameCallaborator }, preserveState: true,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
@@ -46,6 +48,9 @@ export default {
             });
           }
         },
+        // onError: errors => {
+        //   console.log(errors);
+        // },
       });
     },
   },
@@ -65,8 +70,8 @@ export default {
         <div class="pt-[15px]">
           <div>
             <div class="flex flex-col mb-5">
-              <label for="name">名稱</label>
-              <input v-model="newFormName" type="text" class="h-[30px] text-gray-400 text-lg" id="name">
+              <label for="name">名稱</label><span v-if="$page.props.errors.newFormName" class="text-red">{{ $page.props.errors.newFormName }}</span>
+              <input v-model="newFormName" type="text" class="h-[30px] text-gray-400 text-lg" id="name" :class="{ 'border-[red]': $page.props.errors.newFormName }">
             </div>
             <div class="flex items-center gap-2">
               <input v-model="sameCallaborator" type="checkbox" id="collaborator">
