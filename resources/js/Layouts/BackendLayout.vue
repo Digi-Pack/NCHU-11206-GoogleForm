@@ -240,7 +240,7 @@ export default {
 }
 
 #main {
-  @apply h-full w-full relative;
+  @apply h-full min-w-[910px] relative;
 }
 
 #header {
