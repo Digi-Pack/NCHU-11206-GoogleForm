@@ -1,8 +1,8 @@
 <template>
   <!-- {{ chartdata }}123 -->
-  <!-- {{ arrayA }}<hr>{{ arrayB }} -->
-  <!-- {{ chartOptions }}<br>
-  {{ arrayC }} -->
+  {{ arrayA }}<hr>{{ arrayB }}
+  {{ chartOptions }}<br>
+  {{ arrayC }}
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
