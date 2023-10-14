@@ -286,6 +286,10 @@ export default {
             </div>
           </div>
         </div>
+        <div class="card opacity-0 !h-0 overflow-hidden pointer-events-none"></div>
+        <div class="card opacity-0 !h-0 overflow-hidden pointer-events-none"></div>
+        <div class="card opacity-0 !h-0 overflow-hidden pointer-events-none"></div>
+        <div class="card opacity-0 !h-0 overflow-hidden pointer-events-none"></div>
       </div>
       <div v-if="blockShow" class="list-group">
         <div class="list" v-for="item in response.rt_data.guide " :key="item.id">
@@ -421,8 +425,7 @@ export default {
     @apply w-full px-[13%] relative top-[138px] pb-24;
 
     .card-group {
-      @apply flex flex-wrap gap-5;
-
+      @apply flex flex-wrap gap-5 justify-center;
       .card {
         @apply w-[208px] h-[244px] border border-grey-middle cursor-pointer hover:border-purple;
 
@@ -431,21 +434,21 @@ export default {
         }
 
         .card-bottom {
-          @apply h-[40%] w-full px-4 py-2 border-grey-middle border-t relative flex flex-col gap-5 justify-center;
+          @apply h-[40%] w-full px-3 py-2 border-grey-middle border-t relative flex flex-col gap-5 justify-center;
           .card-bottom-title {
             @apply text-[14px] w-[140px] truncate;
             &:hover .hiddenText {
               @apply block;
             }
             .hiddenText {
-              @apply w-auto bg-[#5b5b5bbb] text-white rounded-md absolute px-2 leading-6 top-[35px] left-[80px] z-10 hidden text-[12px];
+              @apply max-w-[250px] whitespace-normal break-words bg-[#5b5b5bbb] text-white rounded-md absolute px-2 leading-6 top-[35px] left-[80px] z-10 hidden text-[12px];
             }
           }
         //   #card-option:checked~#card-option-menu {
         //     @apply block;
         //   }
           .card-option-menu {
-            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md z-50;
+            @apply border bg-white border-green-light py-2 w-[210px] absolute top-[85px] -right-[80px] shadow-md drop-shadow-md z-50;
 
             button {
               @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
