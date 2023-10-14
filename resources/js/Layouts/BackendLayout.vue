@@ -203,7 +203,7 @@ export default {
                   <div class="hello"><span>{{ $page.props.auth.user.name }}</span>，你好!</div>
                   <div class="acc mb-3">
                     <Link class="manage" :href="route('profile.edit')">
-                      <div>管理你的帳戶{{ coFormId }}</div>
+                      <div>管理你的帳戶</div>
                     </Link>
                     <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
                       登出

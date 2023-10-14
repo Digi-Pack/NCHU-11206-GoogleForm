@@ -251,12 +251,11 @@ class EditorController extends Controller
     }
     public function edit_rename(Request $request)
     {
-        // 這段驗證不知道為甚麼沒效
-        // $request->validate([
-        //     'modalData.newName => required|string',
-        // ], [
-        //     'modalData.newName' => '表單標題必填',
-        // ]);
+        $request->validate([
+            'newFormName' => 'required|string',
+        ], [
+            'newFormName.required' => '請填入新表單名稱 ',
+        ]);
 
         $updateForm = Question::find($request->modalData['id']);
         // dd($updateForm);
@@ -268,6 +267,12 @@ class EditorController extends Controller
     }
     public function edit_addSameForm(Request $request)
     {
+        $request->validate([
+            'newFormName' => 'required|string',
+        ], [
+            'newFormName.required' => '請填入新表單名稱 ',
+        ]);
+        // dd($request->sameCallaborator);
         $motherForm = Question::find($request->sameFormId);
         // dd($motherForm);
         // dd($motherForm['qu_naires_title']);
@@ -276,7 +281,7 @@ class EditorController extends Controller
         $randomString = bin2hex(random_bytes(15));
         $combinedString = $data . $randomString;
         $user = $request->user();
-        
+
         $SameForm = Question::create([
             'qu_naires_title' => $request->newFormName,
             'qu_naires_desc' => $motherForm['qu_naires_desc'],
@@ -284,6 +289,29 @@ class EditorController extends Controller
             'lead_author_id' => $user->id,
             'random' => $combinedString,
         ]);
+
+        if($request->sameCallaborator){
+            // dd(123);
+            $allCoworker=Coworker::where('question_id',$request->sameFormId)->get();
+            // dd( $allCoworker);
+            $copyCoworker = [];
+            foreach ($allCoworker as $coworker) {
+                // dump($coworker);
+                $cowork = $coworker['coworker_id'];
+                $copyCoworker[] = $cowork;
+            }
+            // dd($copyCoworker);
+            foreach ($copyCoworker as $copy) {
+                // dump($copy);
+                $worker=Coworker::create([
+                    'question_id' => $SameForm['id'],
+                    'coworker_id' => $copy,
+                ]);
+                // dd($worker);
+            }
+
+
+        }
 
         return back()->with(['message' => rtFormat( $SameForm)]);
     }

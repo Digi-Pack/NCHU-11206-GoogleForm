@@ -43,7 +43,7 @@ export default {
     this.processArray();
   },
   methods: {
-    () {
+    fileUpload() {
       // 初始化一个空的arrayD
 
       // 遍历arrayA
@@ -71,7 +71,7 @@ export default {
         files: files,
       };
 
-    },fileUpload
+    },
 
     // 打印结果
 
