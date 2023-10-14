@@ -24,8 +24,8 @@ import account from '/images/account_circle.svg';
 import open_in_new from '/images/open_in_new.png';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
+
 export default {
-//   components: { RenameModal },
   props: {
     response: {
       type: Object,
@@ -34,7 +34,6 @@ export default {
         return {};
       },
     },
-    // modalData: Object,
   },
   data() {
     return {
@@ -81,6 +80,7 @@ export default {
   mounted() {
     sessionStorage.removeItem('formData');
     sessionStorage.removeItem('formText');
+    // this.getOpenTime();
   },
   methods: {
     toggleMenu(id) {
@@ -148,7 +148,14 @@ export default {
         method: 'get', data: selectShow, preserveState: true,
       });
     },
-
+    // 顯示開啟時間
+    opentimes(opendate) {
+      if (!opendate) { return ''; } // 或者返回您想要的預設值
+      const dateTime = new Date(`${opendate}`);
+      const hours = dateTime.getHours();
+      const minutes = dateTime.getMinutes();
+      return `${hours}:${minutes}`;
+    },
   },
 };
 </script>
@@ -160,7 +167,6 @@ export default {
         <div class="content">
           <div class="flex justify-between items-center">
             <h1 class="text-[24px] text-black">重新命名</h1>
-            <button type="button" class="text-[28px] font-bold text-black" @click="closing()"></button>
           </div>
           <div class="pt-[15px]">
             <div>
@@ -225,7 +231,6 @@ export default {
             <button type="button" v-if="blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
               <img :src="images.view_module" width="23" alt="">
             </button>
-            <!-- <input type="checkbox" class="hidden" id="sort"> -->
             <select name="sortType" v-model="selectShow.sort" @change="changeResponse()">
               <option value="1">我上次開啟的時間</option>
               <option value="2">我上次修改的時間</option>
@@ -240,9 +245,6 @@ export default {
       <div v-if="!blockShow" class="card-group">
         <!-- 表單方格 -->
         <div class="card" v-for="item in response.rt_data.guide " :key="item.id">
-          <!-- {{ item.created_at }} -->
-          <!-- {{ item.updated_at }} -->
-          <!-- {{ item.opened_date }} -->
           <Link :href="route('edit.old', { id: item.id })">
             <div class="card-top">
               <!-- 預覽頁面 -->
@@ -253,7 +255,7 @@ export default {
             <div class="text-[14px] w-[140px] truncate">{{ item.qu_naires_title }}</div>
             <div class="flex gap-3 items-center">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
-              <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
+              <span class="text-[12px] leading-1">開啟時間 {{ opentimes(item.opened_date) }}</span>
               <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
                 <img :src="images.dot" alt="">
               </button>
