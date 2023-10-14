@@ -251,12 +251,9 @@ class EditorController extends Controller
     }
     public function edit_rename(Request $request)
     {
-        // 這段驗證不知道為甚麼沒效
-        // $request->validate([
-        //     'modalData.newName => required|string',
-        // ], [
-        //     'modalData.newName' => '表單標題必填',
-        // ]);
+        $request->validate([
+            'modalData.newName' => 'required|max:255'
+        ]);
 
         $updateForm = Question::find($request->modalData['id']);
         $updateForm->update([
@@ -267,8 +264,6 @@ class EditorController extends Controller
     public function edit_addSameForm(Request $request)
     {
         $motherForm = Question::find($request->sameFormId);
-        // dd($motherForm);
-        // dd($motherForm['qu_naires_title']);
         $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
         // 產生再轉成16進位亂瑪(15字元)
         $randomString = bin2hex(random_bytes(15));

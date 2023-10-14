@@ -69,6 +69,7 @@ export default {
         };
       }) ?? [],
       fileSize: 0,
+      submitted: false,
     };
   },
   methods: {
@@ -80,6 +81,7 @@ export default {
       return loopResult;
     },
     submitData() {
+      this.submitted = true;
       const { formData, response } = this;
       const formId = response.rt_data.responseForm[0].id;
       if (this.fileSize > 3145728) return Swal.fire('圖片檔案過大');
@@ -102,14 +104,16 @@ export default {
 
 <template>
   <section id="question">
-    <form @submit.prevent="submitData()" class="flex justify-between items-center m-auto max-w-[920px] min-h-screen relative">
+    <form @submit.prevent="submitData()"
+      class="flex justify-between items-center m-auto max-w-[920px] min-h-screen relative">
       <div class="container">
         <!-- 表單命名處 -->
         <div class="form-title">
           <!-- 表單名稱 -->
           <div class="form-input form-title-input truncate">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
           <!-- 表單說明 -->
-          <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }} </div>
+          <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }}
+          </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
           <!-- {{ item }} -->
@@ -117,14 +121,14 @@ export default {
           <div v-if="item.type === 1" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-1">
-              <input v-model=" formData[key].answer " type="text" class="short" placeholder="簡答" :required="item.request">
+              <input v-model="formData[key].answer" type="text" class="short" placeholder="簡答" :required="item.request">
             </div>
           </div>
           <!-- 詳答 -->
           <div v-if="item.type === 2" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-2">
-              <input v-model=" formData[key].answer" type="text" class="long" placeholder="詳答" :required="item.request">
+              <input v-model="formData[key].answer" type="text" class="long" placeholder="詳答" :required="item.request">
             </div>
           </div>
           <!-- 選擇題 -->
@@ -132,7 +136,8 @@ export default {
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-3">
               <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-                <input v-model=" formData[key].answer" type="radio" :name="'choice-questions' + key" id="choice-1" :value="innerkey + 1" :required="item.request">
+                <input v-model="formData[key].answer" type="radio" :name="'choice-questions' + key" id="choice-1"
+                  :value="innerkey + 1" :required="item.request">
                 <label for="choice-1">{{ choose.value }}</label>
               </div>
             </div>
@@ -142,7 +147,9 @@ export default {
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-4">
               <div v-for="(choose, innerkey) in item.options" :key="choose.id" class="option">
-                <input v-model="formData[key].manyOptions" type="checkbox" class="focus:" :name="'checkbox-' + key" :id="'checkbox-' + choose.id" :value="innerkey + 1" :required="item.request && formData[key].manyOptions.length === 0">
+                <input v-model="formData[key].manyOptions" type="checkbox" class="focus:" :name="'checkbox-' + key"
+                  :id="'checkbox-' + choose.id" :value="innerkey + 1"
+                  :required="item.request && formData[key].manyOptions.length === 0">
                 <label :for="'checkbox-' + choose.id">{{ choose.value }}</label>
               </div>
             </div>
@@ -153,7 +160,8 @@ export default {
             <div class="questype-5">
               <label for="select"></label>
               <select v-model="formData[key].answer" name="select" id="select">
-                <option v-for="choose in item.options" :key="choose.id" :value="choose.value" :required="item.request">{{ choose.value }}
+                <option v-for="choose in item.options" :key="choose.id" :value="choose.value" :required="item.request">{{
+                  choose.value }}
                 </option>
               </select>
             </div>
@@ -170,7 +178,8 @@ export default {
               </label>
               <div class="flex items-center">
                 <div v-if="formData[key].file.name" class="flex items-center">
-                  <div v-if="typeof formData[key].file.name === 'string'" class="border p-2 rounded-l w-auto border-grey flex items-center gap-2">
+                  <div v-if="typeof formData[key].file.name === 'string'"
+                    class="border p-2 rounded-l w-auto border-grey flex items-center gap-2">
                     <img :src="image" alt="">
                     <span class="truncate">{{ formData[key].file.name }}</span>
                   </div>
@@ -178,7 +187,9 @@ export default {
                     <img :src="image" alt="">
                     <span class="truncate">{{ formData[key].file.name.name }}</span>
                   </div>
-                  <button type="button" v-if="formData[key].file.name" class="w-[42px] h-[42px] rounded-r bg-white border-grey border-y border-r flex justify-center items-center" @click="(e) => handleFileDelete(e, key)">
+                  <button type="button" v-if="formData[key].file.name"
+                    class="w-[42px] h-[42px] rounded-r bg-white border-grey border-y border-r flex justify-center items-center"
+                    @click="(e) => handleFileDelete(e, key)">
                     <img :src="close" alt="">
                   </button>
                 </div>
@@ -192,7 +203,8 @@ export default {
               <span>{{ item.linear.minText }}</span>
               <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
                 {{ i }}
-                <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i" :value="i" :required="item.request">
+                <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i"
+                  :value="i" :required="item.request">
               </div>
               <span class="w-[120px] truncate">{{ item.linear.maxText }}</span>
             </div>
@@ -212,7 +224,8 @@ export default {
                   <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
                     <th>{{ choose.text }}</th>
                     <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
-                      <input v-model="formData[key].manyOptions[innerkey]" type="radio" :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" :required="item.request">
+                      <input v-model="formData[key].manyOptions[innerkey]" type="radio" :name="'only-' + key + innerkey"
+                        :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" :required="item.request">
                     </td>
                   </tr>
                 </tbody>
@@ -234,7 +247,9 @@ export default {
                   <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id">
                     <th>{{ choose.text }}</th>
                     <td v-for="(choose, innerinnerkey) in item.square.column" :key="choose.id">
-                      <input v-model="formData[key].manyOptions" type="checkbox" :name="'many-' + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" :required="item.request && formData[key].manyOptions.length === 0">
+                      <input v-model="formData[key].manyOptions" type="checkbox" :name="'many-' + innerkey"
+                        :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
+                        :required="item.request && formData[key].manyOptions.length === 0">
                     </td>
                   </tr>
                 </tbody>
@@ -245,17 +260,17 @@ export default {
           <div v-if="item.type === 10" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-10">
-              <input v-model=" formData[key].answer" type="date" :required="item.request">
+              <input v-model="formData[key].answer" type="date" :required="item.request">
             </div>
           </div>
           <!-- 時間 -->
           <div v-if="item.type === 11" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-11">
-              <input type="text" v-model=" formData[key].time.hour" :required="item.request">
+              <input type="text" v-model="formData[key].time.hour" :required="item.request">
               <span>:</span>
-              <input type="text" v-model=" formData[key].time.minute" :required="item.request">
-              <select name="" id="" v-model=" formData[key].time.section">
+              <input type="text" v-model="formData[key].time.minute" :required="item.request">
+              <select name="" id="" v-model="formData[key].time.section">
                 <option value="a.m.">上午</option>
                 <option value="p.m.">下午</option>
               </select>
@@ -272,12 +287,14 @@ export default {
           <div v-if="item.type === 13" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="p-5 flex justify-center">
-              <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+              <iframe class="max-w-[600px] w-[90%] h-[400px]" :src="item.video" title="YouTube video player"
+                frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
         </div>
       </div>
-      <button type="submit" class="bg-purple text-white py-[10px] px-[10px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[90%] truncate">送出</button>
+      <button type="submit" :disabled="submitted"
+        class="bg-purple text-white py-[10px] px-[10px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[90%] truncate">送出</button>
     </form>
   </section>
 </template>
@@ -286,22 +303,29 @@ export default {
 #question {
   .container {
     @apply max-w-[770px] m-auto relative mt-[20px];
+
     .form-title {
       @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+
       .form-input {
         @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
       }
+
       .form-title-input {
         @apply h-[45px] text-[32px];
       }
+
       .form-explain-input-2 {
         @apply h-[34px] text-[18px] text-grey;
       }
     }
+
     .question {
       @apply rounded-[10px] drop-shadow-md border border-grey-light p-[24px] my-[12px] bg-white;
+
       .questype-1 {
         @apply pt-[20px] pb-[10px];
+
         .short {
           @apply w-[60%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
         }
@@ -309,21 +333,15 @@ export default {
 
       .questype-2 {
         @apply pt-[20px] pb-[10px];
+
         .long {
           @apply w-[85%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
         }
       }
+
       .questype-3 {
         @apply w-full pt-[20px] flex flex-col;
-        .option {
-          @apply flex items-center mb-3;
-          label {
-            @apply ml-[10px];
-          }
-        }
-      }
-      .questype-4 {
-        @apply w-full pt-[20px];
+
         .option {
           @apply flex items-center mb-3;
 
@@ -332,51 +350,79 @@ export default {
           }
         }
       }
+
+      .questype-4 {
+        @apply w-full pt-[20px];
+
+        .option {
+          @apply flex items-center mb-3;
+
+          label {
+            @apply ml-[10px];
+          }
+        }
+      }
+
       .questype-5 {
         @apply w-full py-[30px];
+
         #select {
           @apply w-[30%] h-[50px] border-green-middle rounded-md;
         }
       }
+
       .questype-6 {
         @apply w-full py-[10px];
+
         #file-upload-button {
           @apply bg-purple;
         }
       }
+
       .questype-7 {
         @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
+
         @media (max-width: 690px) {
           @apply flex-col items-start pl-5;
         }
       }
+
       .questype-8,
       .questype-9 {
         @apply w-full;
+
         table {
           @apply w-full;
+
           tbody {
             @apply py-10;
+
             td {
               @apply text-center;
             }
           }
         }
       }
+
       .questype-10 {
         @apply pt-[20px] pb-[20px];
+
         input {
           @apply border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
         }
       }
+
       .questype-11 {
         @apply pt-[20px] pb-[20px];
+
         input {
           @apply w-[60px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
         }
+
         span {
           @apply mx-2;
         }
+
         select {
           @apply border-0 focus:ring-0;
         }
