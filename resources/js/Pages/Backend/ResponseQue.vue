@@ -109,7 +109,7 @@ export default {
           </select>
           <div class="flex ml-3">
             <button type="button" @click="minus()"><img :src="chevron_left" alt="" class="select-btn"></button>
-            <div>
+            <div>第
               <input type="number" :value="num"
                 class="border-x-0 border-t-0 border-gray-200 border-[3px] w-[60px] focus:ring-0 focus:border-purple">項, 共
               {{ formStringJson?.length ?? '' }} 項
