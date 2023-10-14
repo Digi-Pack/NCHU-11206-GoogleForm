@@ -23,8 +23,6 @@ export default {
     submitData() {
       const { formData } = this;
       const getOldResponse = formData.rt_data;
-      // if (this.imageSize > 3145728) return Swal.fire('圖片檔案過大');
-      // 驗證
       router.visit(route('reply.review'), {
         method: 'get', data: { getOldResponse }, preserveState: true,
       });

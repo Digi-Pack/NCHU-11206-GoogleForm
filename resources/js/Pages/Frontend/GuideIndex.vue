@@ -128,16 +128,18 @@ export default {
     sendName() {
       this.show = !this.show;
       const { modalData } = this;
-      router.visit(route('edit.rename'), {
-        method: 'post', data: { modalData }, preserveState: true,
-        onSuccess: ({ props }) => {
-          if (props.flash.message.rt_code === 1) {
-            Swal.fire(
-              '已修改表單標題',
-            );
-          }
-        },
-      });
+      if (modalData.newName) {
+        router.visit(route('edit.rename'), {
+          method: 'post', data: { modalData }, preserveState: true,
+          onSuccess: ({ props }) => {
+            if (props.flash.message.rt_code === 1) {
+              Swal.fire(
+                '已修改表單標題',
+              );
+            }
+          },
+        });
+      }
       modalData.newName = '';
     },
     changeResponse() {

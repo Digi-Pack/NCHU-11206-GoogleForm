@@ -26,9 +26,6 @@ export default {
       <div class="content">
         <div class="flex justify-between items-center">
           <h1 class="text-[24px] text-black">重新命名</h1>
-          <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
-            <img :src="close" alt="">
-          </button>
         </div>
         <div class="pt-[15px]">
           <div>
