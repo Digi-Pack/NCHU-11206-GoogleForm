@@ -154,8 +154,8 @@ export default {
         </div>
       </div>
       <div class="response-body">
-        <div v-if="response.rt_data.results.response_count === 0">
-          未回覆
+        <div v-if="response.rt_data.results.response_count === 0" class="response">
+          待回應
         </div>
         <div v-else class="container">
           <div class="form-title">
@@ -360,8 +360,10 @@ export default {
     }
 
     .response-body {
-      @apply flex min-h-[80px] justify-center items-center rounded-[10px];
-
+      @apply flex min-h-[80px] justify-center items-center rounded-[10px] ;
+      .response {
+        @apply w-full rounded-[10px] border py-[22px] bg-white flex justify-center items-center text-[#686868] min-h-[80px];
+      }
       .form-title {
         @apply max-w-[770px] rounded-[10px] border-t-[10px] border-t-purple pt-[22px] pb-[24px] bg-white;
 

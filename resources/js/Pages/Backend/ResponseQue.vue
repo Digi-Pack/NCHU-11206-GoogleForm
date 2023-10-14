@@ -118,8 +118,8 @@ export default {
           </div>
         </div>
       </div>
-      <div class="response-body">
-        <div v-for="que in response?.rt_data?.responseForm ?? []" :key="que.id">
+      <div v-if="response?.rt_data?.responseFormReply?.response_count ?? false" class="response-body">
+        <div v-for="que in response.rt_data.responseForm" :key="que.id">
           <div>
             <div v-if="que.id === titles" class="responser">
               {{ que.title }}
@@ -174,6 +174,11 @@ export default {
           <FindAns :value="item" />
         </div>
       </div>
+      <div v-else class="response-body">
+        <div class="noreply">
+          <span>待回應</span>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -221,7 +226,7 @@ export default {
       @apply flex flex-col mt-[15px];
 
       .noreply {
-        @apply flex justify-start items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
+        @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
       }
 
       .responser {

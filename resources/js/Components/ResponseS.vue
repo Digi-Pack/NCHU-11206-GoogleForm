@@ -63,7 +63,7 @@
         <div class="title">{{ option.item.text }}</div>
         <div class="subtitle">{{ option.item.subtext }}則回應</div>
       </div>
-      <div v-for="(optionIn, index) in option.item.files " class="px-5 py-3"
+      <div v-for="(optionIn, index) in option.item.files " class="mx-5 py-3 rounded bg-gray-50 border mb-[15px]"
         :key="index">
         <a :href=" optionIn.path " :download=" optionIn.name " class="text-answer">{{ optionIn.name }}下載</a>
       </div>
