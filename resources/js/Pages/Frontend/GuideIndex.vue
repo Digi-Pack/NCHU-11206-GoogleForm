@@ -25,7 +25,7 @@ import open_in_new from '/images/open_in_new.png';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 export default {
-//   components: { RenameModal },
+  //   components: { RenameModal },
   props: {
     response: {
       type: Object,
@@ -165,13 +165,16 @@ export default {
           <div class="pt-[15px]">
             <div>
               <div class="text-gray-400 text-lg">請輸入新的項目名稱:</div>
-              <input v-model=" modalData.newName " type="text" placeholder="請輸入新的名稱" class="rounded-[5px] leading-5 mt-5 w-full">
+              <input v-model="modalData.newName" type="text" placeholder="請輸入新的名稱"
+                class="rounded-[5px] leading-5 mt-5 w-full">
             </div>
             <div class="flex justify-end mt-7">
-              <button type="button" class="btn px-5 py-2 border border-grey text-purple hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
+              <button type="button"
+                class="btn px-5 py-2 border border-grey text-purple hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
                 @click="closing()">取消</button>
               <button type="button"
-                class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400" @click="sendName()">確定</button>
+                class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400"
+                @click="sendName()">確定</button>
             </div>
           </div>
         </div>
@@ -187,7 +190,9 @@ export default {
           <!-- 搜尋欄 -->
           <div class="flex w-full justify-center">
             <input v-model="selectShow.keyword" type="text" class="search" placeholder="輸入表單名稱...">
-            <button type="button" class="bg-grey text-white py-[10px] px-[10px] duration-200 rounded-r-lg hover:bg-grey-dark hover:text-gray-700" @click="changeResponse()">搜尋</button>
+            <button type="button"
+              class="bg-grey text-white py-[10px] px-[10px] duration-200 rounded-r-lg hover:bg-grey-dark hover:text-gray-700"
+              @click="changeResponse()">搜尋</button>
           </div>
           <div class="topR">
             <!-- 帳戶 -->
@@ -219,10 +224,14 @@ export default {
             <option value="3">不歸我所有</option>
           </select>
           <div class="flex items-center gap-2 pr-6">
-            <button type="button" v-if="!blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
+            <button type="button" v-if="!blockShow"
+              class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light"
+              @click="listChange()">
               <img :src="images.view_list" width="23" alt="">
             </button>
-            <button type="button" v-if="blockShow" class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light" @click="listChange()">
+            <button type="button" v-if="blockShow"
+              class="w-[40px] h-[40px] flex justify-center items-center rounded-full hover:bg-grey-light"
+              @click="listChange()">
               <img :src="images.view_module" width="23" alt="">
             </button>
             <!-- <input type="checkbox" class="hidden" id="sort"> -->
@@ -254,12 +263,16 @@ export default {
             <div class="flex gap-3 items-center">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
               <span class="text-[12px] leading-1">開啟時間 上午11:43</span>
-              <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
+              <button type="button"
+                class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer"
+                @click="toggleMenu(item.id)" tabindex="0">
                 <img :src="images.dot" alt="">
               </button>
               <div class="card-option-menu" v-if="isMenuOpen[item.id]">
-                <button type="button" @click="open(item.id)"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
-                <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60" alt="">移除</button>
+                <button type="button" @click="open(item.id)"><img :src="images.text" class="opacity-60"
+                  alt="">重新命名</button>
+                <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60"
+                  alt="">移除</button>
               </div>
             </div>
           </div>
@@ -276,19 +289,23 @@ export default {
           <div class="flex items-center justify-between w-[35%]">
             <span>我</span>
             <span>2023年9月28日</span>
-            <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-purple-light cursor-pointer" @click="toggleMenu(item.id)">
+            <button type="button"
+              class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-purple-light cursor-pointer"
+              @click="toggleMenu(item.id)">
               <img :src="images.dot" alt="">
             </button>
             <div class="card-option-menu" v-if="isMenuOpen[item.id]" @blur="closeMenu(item.id)" tabindex="0">
               <button type="button" @click="open(item.id)"><img :src="images.text" class="opacity-60" alt="">重新命名</button>
-              <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60" alt="">移除</button>
+              <button type="button" @click="closeMenu(item.id)"><img :src="images.del" class="opacity-60"
+                alt="">移除</button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <Link :href="route('edit.index')">
-      <button type="button" class="newformbtn w-[60px] rounded-full drop-shadow-md border border-grey-light bg-white p-3 duration-500 fixed bottom-10 right-10 hover:scale-110 hover:drop-shadow-xl">
+      <button type="button"
+        class="newformbtn w-[60px] rounded-full drop-shadow-md border border-grey-light bg-white p-3 duration-500 fixed bottom-10 right-10 hover:scale-110 hover:drop-shadow-xl">
         <img :src="images.addnewform" class="addnewform" alt="">
       </button>
     </Link>
@@ -298,122 +315,159 @@ export default {
 <style lang="scss" scoped>
 #guide {
   @apply min-h-screen;
+
   nav {
     @apply fixed w-full z-50;
+
     .container {
       @apply flex h-[64px] flex-col justify-between bg-[#ededed] relative;
-        .top {
-          @apply h-full bg-white flex justify-between p-[10px];
-            .topL {
-              @apply flex justify-start items-center;
-                .logo {
-                    @apply mx-[10px] w-[30px];
-                }
-                .title {
-                  @apply text-[#202124] text-[18px] font-medium w-[50px];
-                }
-            }
-            .search {
-              @apply bg-grey-light flex justify-center items-center rounded-l-lg border-0 w-[45%] focus:ring-0 focus:bg-white focus:drop-shadow-md;
-            }
-            .topR {
-                @apply flex justify-between items-center;
-                button {
-                  @apply flex w-[45px] h-[45px] justify-center items-center mx-[5px];
-                }
-                #menu {
-                  @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
-                }
-                .option {
-                  @apply w-[230px] my-[12.5px] leading-[30px] text-[#505050] flex font-bold items-center justify-center;
-                    span {
-                        @apply ms-[10px];
-                    }
-                }
-                #ham-menu-switch:checked~#menu {
-                    @apply block;
-                }
-                .account {
-                  @apply w-[40px] h-[40px] rounded-[50%] mr-5 cursor-pointer opacity-70;
-                }
-                #account-menu {
-                  @apply w-[300px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
-                    .google {
-                      @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
-                        .photo {
-                          @apply w-[100px] h-[100px] rounded-[50%] opacity-70;
-                        }
-                        .hello {
-                          @apply w-[80%] h-[30px] text-xl flex justify-center items-center;
-                        }
-                        .acc {
-                          @apply w-[80%] h-[50px] flex justify-center;
-                            .log-out {
-                              @apply w-[39.5%] h-[50px] border border-grey-light duration-300 drop-shadow-sm cursor-pointer rounded-[30px] text-xl bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
-                            }
-                        }
-                    }
-                }
-                #ham-menu-switch-2:checked~#account-menu {
-                    @apply block;
-                }
-            }
+
+      .top {
+        @apply h-full bg-white flex justify-between p-[10px];
+
+        .topL {
+          @apply flex justify-start items-center;
+
+          .logo {
+            @apply mx-[10px] w-[30px];
+          }
+
+          .title {
+            @apply text-[#202124] text-[18px] font-medium w-[50px];
+          }
         }
+
+        .search {
+          @apply bg-grey-light flex justify-center items-center rounded-l-lg border-0 w-[45%] focus:ring-0 focus:bg-white focus:drop-shadow-md;
+        }
+
+        .topR {
+          @apply flex justify-between items-center;
+
+          button {
+            @apply flex w-[45px] h-[45px] justify-center items-center mx-[5px];
+          }
+
+          #menu {
+            @apply w-[256px] bg-white border border-[gainsboro] rounded-[2px] mt-[5px] hidden shadow-lg absolute top-[50px] right-[50px];
+          }
+
+          .option {
+            @apply w-[230px] my-[12.5px] leading-[30px] text-[#505050] flex font-bold items-center justify-center;
+
+            span {
+              @apply ms-[10px];
+            }
+          }
+
+          #ham-menu-switch:checked~#menu {
+            @apply block;
+          }
+
+          .account {
+            @apply w-[40px] h-[40px] rounded-[50%] mr-5 cursor-pointer opacity-70;
+          }
+
+          #account-menu {
+            @apply w-[300px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
+
+            .google {
+              @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
+
+              .photo {
+                @apply w-[100px] h-[100px] rounded-[50%] opacity-70;
+              }
+
+              .hello {
+                @apply w-[80%] h-[30px] text-xl flex justify-center items-center;
+              }
+
+              .acc {
+                @apply w-[80%] h-[50px] flex justify-center;
+
+                .log-out {
+                  @apply w-[39.5%] h-[50px] border border-grey-light duration-300 drop-shadow-sm cursor-pointer rounded-[30px] text-xl bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
+                }
+              }
+            }
+          }
+
+          #ham-menu-switch-2:checked~#account-menu {
+            @apply block;
+          }
+        }
+      }
     }
+
     .controlBar {
       @apply flex w-full bg-white h-[64px] px-[13%] text-[15px] justify-between items-center relative mb-5;
+
       select {
         @apply border-0 h-[45%] text-[14px] pr-7 py-1 rounded-md hover:bg-grey-light focus:ring-0;
       }
     }
   }
+
   .main {
     @apply w-full px-[13%] relative top-[138px] pb-24;
+
     .card-group {
       @apply flex flex-wrap gap-5;
+
       .card {
         @apply w-[208px] h-[244px] border border-grey-middle cursor-pointer hover:border-purple;
 
         .card-top {
           @apply h-[70%] bg-grey-light flex justify-center items-center;
         }
+
         .card-bottom {
           @apply h-[30%] w-full px-5 py-2 border-grey-middle border-t relative;
-        //   #card-option:checked~#card-option-menu {
-        //     @apply block;
-        //   }
+
+          //   #card-option:checked~#card-option-menu {
+          //     @apply block;
+          //   }
           .card-option-menu {
             @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md z-50;
+
             button {
-            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
+              @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
             }
           }
         }
       }
+
       .card:hover .card-top img {
         @apply scale-110 opacity-60 duration-200;
       }
     }
+
     .list-group {
       @apply pr-10;
+
       .list {
         @apply flex items-center justify-between rounded-[25px] relative hover:bg-purple-light py-2 px-4;
+
         span {
           @apply leading-[31px] text-[14px] text-gray-500;
         }
+
         .card-option-menu {
           @apply border bg-white border-green-light py-2 w-[210px] z-10 absolute top-[40px] -right-[80px] shadow-md drop-shadow-md;
+
           button {
-          @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
+            @apply w-full hover:bg-grey-light flex justify-start px-5 gap-5 py-2;
           }
         }
       }
     }
   }
+
   .newformbtn:hover .addnewform {
-      @apply rotate-[360deg] scale-125 duration-1000;
+    @apply rotate-[360deg] scale-125 duration-1000;
   }
 }
+
 #RenameModal {
   .container {
     @apply w-full h-screen fixed top-0 left-0 bg-[#0101015a] z-10;
@@ -422,5 +476,4 @@ export default {
       @apply w-[500px] h-[300px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8;
     }
   }
-}
-</style>
+}</style>
