@@ -32,9 +32,6 @@ class EditorController extends Controller
     }
     public function edit_store(Request $request)
     {
-        // dd($request->formDataobj);
-        // dd($request->formTextobj);
-
         // 新表單頁面，點預覽，的情況
         if ($request->preview) {
             // 先做資料驗證，確認表單標題、問題標題、問題類型正確
