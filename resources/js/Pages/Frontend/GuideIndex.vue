@@ -121,7 +121,6 @@ export default {
               }
             },
           });
-
         }
       });
       this.isMenuOpen[id] = false;
@@ -129,16 +128,18 @@ export default {
     sendName() {
       this.show = !this.show;
       const { modalData } = this;
-      router.visit(route('edit.rename'), {
-        method: 'post', data: { modalData }, preserveState: true,
-        onSuccess: ({ props }) => {
-          if (props.flash.message.rt_code === 1) {
-            Swal.fire(
-              '已修改表單標題',
-            );
-          }
-        },
-      });
+      if (modalData.newName) {
+        router.visit(route('edit.rename'), {
+          method: 'post', data: { modalData }, preserveState: true,
+          onSuccess: ({ props }) => {
+            if (props.flash.message.rt_code === 1) {
+              Swal.fire(
+                '已修改表單標題',
+              );
+            }
+          },
+        });
+      }
       modalData.newName = '';
     },
     changeResponse() {
@@ -179,7 +180,7 @@ export default {
     <nav>
       <div class="container">
         <div class="top">
-          <div class="topL flex justify-start items-center">
+          <div class="topL">
             <div class="square logo"><img :src="images.logo" width="25" height="25" alt=""></div>
             <span class="title">表單</span>
           </div>
@@ -200,9 +201,6 @@ export default {
                 <img class="photo" :src="images.user" alt="">
                 <div class="hello"><span>{{ response.rt_data.user.name }}</span>，你好!</div>
                 <div class="acc mb-3">
-                  <Link class="manage" :href="route('profile.edit')">
-                    <div>管理你的帳戶</div>
-                  </Link>
                   <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
                     登出
                   </DropdownLink>
@@ -307,6 +305,7 @@ export default {
         .top {
           @apply h-full bg-white flex justify-between p-[10px];
             .topL {
+              @apply flex justify-start items-center;
                 .logo {
                     @apply mx-[10px] w-[30px];
                 }
@@ -338,7 +337,7 @@ export default {
                   @apply w-[40px] h-[40px] rounded-[50%] mr-5 cursor-pointer opacity-70;
                 }
                 #account-menu {
-                  @apply w-[350px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
+                  @apply w-[300px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
                     .google {
                       @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
                         .photo {
@@ -348,12 +347,9 @@ export default {
                           @apply w-[80%] h-[30px] text-xl flex justify-center items-center;
                         }
                         .acc {
-                          @apply w-[80%] h-[50px] flex flex-row justify-between;
-                            .manage {
-                              @apply w-[59.5%] h-[50px] flex justify-center items-center bg-grey-gray drop-shadow-md border border-grey rounded-l-[30px] hover:bg-white hover:drop-shadow-lg hover:font-semibold;
-                            }
+                          @apply w-[80%] h-[50px] flex justify-center;
                             .log-out {
-                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md cursor-pointer rounded-r-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
+                              @apply w-[39.5%] h-[50px] border border-grey-light duration-300 drop-shadow-sm cursor-pointer rounded-[30px] text-xl bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                         }
                     }

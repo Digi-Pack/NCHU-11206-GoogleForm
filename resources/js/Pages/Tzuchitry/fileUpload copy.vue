@@ -45,9 +45,7 @@ export default {
   methods: {
     fileUpload() {
       // 初始化一个空的arrayD
-
       // 遍历arrayA
-
       let subtextCount = 0;
       let files = [];
 
@@ -70,11 +68,8 @@ export default {
         subtext: subtextCount,
         files: files,
       };
-
-    },
-
+    },fileUpload
     // 打印结果
-
   },
 
 };

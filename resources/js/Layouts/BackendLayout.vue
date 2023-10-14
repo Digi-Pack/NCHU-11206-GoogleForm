@@ -164,11 +164,6 @@ export default {
                   </div>
                 </div>
               </div>
-              <!-- <Link :href="route('reply.index', { id: coFormId })">
-                <button type="button" class="eye">
-                  <img :src="images.visibility" width="25" height="25" alt="">
-                </button>
-              </Link> -->
               <button type="button" class="eye" @click="submitData()">
                 <img :src="images.visibility" width="25" height="25" alt="">
               </button>
@@ -184,8 +179,7 @@ export default {
                 <AddCollaborator v-if="model === 'AddCollaborator'" :co-form-id="coFormId" @close-model="handleClose"></AddCollaborator>
                 <div v-if="coFormId !== '0'" class="">
                   <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'CopyDocument'"><img :src="images.content_copy" alt=""><span>建立副本</span></button>
-                  <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'TrashCanModal'"><img :src="images.del" alt=""><span>移至垃圾桶</span></button>
-                  <!-- <button type="button" class="option"><img :src="images.link" alt=""><span>取得預先填入的連結</span></button> -->
+                  <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'TrashCanModal'"><img :src="images.del" alt=""><span>刪除表單</span></button>
                   <button v-if="coFormId !== '0'" type="button" class="option" @click="print()"><img :src="images.print" alt=""><span>列印</span></button>
                   <button v-if="coFormId !== '0'" type="button" class="option" @click="model = 'AddCollaborator'"><img :src="images.group_add" alt=""><span>新增協作者</span></button>
                 </div>
@@ -240,7 +234,7 @@ export default {
 }
 
 #main {
-  @apply h-full w-full relative;
+  @apply h-full min-w-[910px] relative;
 }
 
 #header {
@@ -283,45 +277,15 @@ nav {
                     }
                     .close {
                       @apply
-
                        hover:rounded-full hover:bg-[#e5e5e5];
                     }
                   }
                   .topic-body {
                     @apply px-[20px] py-[10px];
-                    .select-region {
-                      @apply mb-[20px];
-                      .region-title {
-                        @apply text-[18px] font-semibold mb-[10px];
-                      }
-                      select {
-                        @apply h-[50px] rounded-[5px] bg-[#ffffff];
-                      }
-                      #font-family {
-                        @apply w-[200px] me-[8px];
-                      }
-                      #font-size {
-                        @apply w-[80px];
-                      }
-                    }
-                    .page-top {
-                      .choice-image {
-                        @apply w-[150px] flex justify-center border border-[#cbcbcb] rounded-[5px] py-[10px] cursor-pointer;
-                        img {
-                          @apply me-[10px];
-                        }
-                        span {
-                          @apply text-[20px] font-semibold text-[#4d92ed];
-                        }
-                      }
-                    }
                     .col {
                       @apply flex flex-wrap mb-[10px];
                       .colorbox {
                         @apply flex w-[30px] h-[30px] rounded-full ml-[10px] mb-[10px] justify-center items-center hover:drop-shadow-sm hover:scale-110 cursor-pointer;
-                        .add {
-                          @apply w-[24px];
-                        }
                       }
                     }
                   }

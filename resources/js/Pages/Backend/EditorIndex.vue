@@ -704,14 +704,11 @@ export default {
     @apply min-h-[100vh] pl-[70px];
     .container {
         @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
-
         .side {
             @apply w-[49px] h-[210px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
-
             img {
                 @apply w-[22px];
             }
-
             .side-func {
                 @apply flex justify-center items-center relative py-[10px] hover:bg-blue-light tablet:w-full tablet:h-full;
 
@@ -732,81 +729,47 @@ export default {
                 }
             }
         }
-
         .form-title {
             @apply max-w-[770px] rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
-
             .form-input {
                 @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
             }
-
             .form-title-input {
                 @apply h-[45px] text-[32px];
             }
-
             .form-explain-input-2 {
                 @apply h-[21px] text-[18px] text-grey;
             }
         }
-
         .question {
             @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white;
-
             .question-top {
                 @apply flex flex-wrap justify-between items-center;
-
-                // @media(max-width:435px){
-                //     justify-content:initial;
-                // }
                 .upload {
                     @apply w-[41.6px] h-[41.6px] p-[10px] mt-[8px] cursor-pointer hover:bg-gray-100 rounded-[50%];
                 }
-
                 .text-box {
                     @apply w-[447px] mt-[10px];
-
                     @media(max-width:770px) {
                         width: 90%;
                     }
-
                     @media(max-width:435px) {
                         width: 100%;
                     }
-
                     .form-title-input {
                         @apply border-x-0 border-t-0 border-b-gray-400 w-full h-[56px] text-base font-semibold focus:bg-gray-50 focus:border-b-[3px] focus:border-b-purple focus:ring-0 rounded-tl-[10px] rounded-tr-[10px];
                     }
                 }
-
                 .check {
                     @apply relative mt-[10px];
-
                     @media(max-width:435px) {
                         margin-left: 10px;
                     }
-
-                    .check-box {
-                        @apply flex justify-around items-center w-[209px] h-[49px] rounded-[10px] text-gray-500 font-semibold border border-grey;
-                    }
-
                     .answer-type {
                         @apply w-[209px] border border-grey rounded-[10px] overflow-y-scroll;
-
-                        ul {
-                            @apply w-full border-x-0 border-t-0 bg-white border border-b-gray-400 px-[3px] py-[8px] m-0;
-
-                            button {
-                                @apply w-full flex h-[48px] p-[8px] font-normal hover:bg-blue;
-
-                                img {
-                                    @apply mr-[26px] w-[22px] h-[22px] inline-block;
-                                }
-                            }
-                        }
                     }
                 }
             }
-
             .questype-1 {
                 @apply pt-[20px] pb-[35px] hidden border-b border-grey;
                 .short {
@@ -833,11 +796,6 @@ export default {
                     .choose_line {
                       @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-b-purple focus:ring-0;
                     }
-
-                    .choose_line2 {
-                      @apply w-[100px] text-grey;
-                    }
-
                     a {
                       @apply text-blue no-underline;
                     }
@@ -855,7 +813,6 @@ export default {
                     .choose_line {
                       @apply w-[80%] border-0 h-[30px] ml-2 text-[16px] font-medium hover:border-b hover:border-grey focus:border-b-[3px] focus:border-[#673ab7] focus:ring-0;
                     }
-
                     a {
                       @apply text-blue no-underline;
                     }
@@ -863,20 +820,13 @@ export default {
             }
             .questype-5 {
               @apply hidden w-full py-[30px] border-b border-grey;
-
                 .choose {
                   @apply w-full flex items-center mb-[10px];
-
                     span {
                       @apply pt-[12px];
                     }
-
                     .choose_line {
                       @apply w-[80%] border-0 h-[30px] text-[16px] font-medium hover:border-b hover:border-grey focus:ring-0 focus:border-b-[3px] focus:border-b-purple;
-                    }
-
-                    .choose_line2 {
-                      @apply w-[100px] text-grey;
                     }
                 }
             }
@@ -917,9 +867,6 @@ export default {
                             }
                             .choose_line {
                               @apply w-4/5 border-0 h-[40px] text-base font-medium hover:border-b hover:border-b-grey focus:border-x-0 focus:border-t-0 focus:border-b-[3px] focus:border-b-purple focus:ring-0;
-                            }
-                            .choose_line2 {
-                              @apply w-[70px] text-grey;
                             }
                         }
                     }
@@ -970,27 +917,21 @@ export default {
 
                 .switch {
                     @apply w-[130px] ml-[50px];
-
                     label {
                         @apply w-[85px] flex justify-between items-center;
                     }
-
                     .btn-box {
                         @apply inline-block align-middle w-[40px] h-[20px] rounded-[100px] bg-grey-middle shadow-inner;
                     }
-
                     .btn-box .btn {
                         @apply inline-block -translate-y-1 drop-shadow-lg w-[25px] h-[25px] rounded-[50%] bg-white ml-0 transition-[0.5s] shadow-sm;
                     }
-
                     .checkbox {
                         @apply absolute opacity-0;
                     }
-
                     .checkbox:checked+.btn-box {
                         @apply bg-blue;
                     }
-
                     .checkbox:checked+.btn-box .btn {
                         @apply ml-[20px];
                     }

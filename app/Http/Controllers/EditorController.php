@@ -252,17 +252,13 @@ class EditorController extends Controller
     public function edit_rename(Request $request)
     {
         $request->validate([
-            'newFormName' => 'required|string',
-        ], [
-            'newFormName.required' => '請填入新表單名稱 ',
+            'modalData.newName' => 'required|max:255'
         ]);
 
         $updateForm = Question::find($request->modalData['id']);
-        // dd($updateForm);
         $updateForm->update([
             'qu_naires_title' => $request->modalData['newName']
         ]);
-        // dd(132);
         return back()->with(['message' => rtFormat($updateForm)]);
     }
     public function edit_addSameForm(Request $request)
@@ -274,8 +270,6 @@ class EditorController extends Controller
         ]);
         // dd($request->sameCallaborator);
         $motherForm = Question::find($request->sameFormId);
-        // dd($motherForm);
-        // dd($motherForm['qu_naires_title']);
         $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
         // 產生再轉成16進位亂瑪(15字元)
         $randomString = bin2hex(random_bytes(15));
