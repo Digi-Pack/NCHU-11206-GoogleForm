@@ -118,7 +118,7 @@ export default {
             <div class="flex flex-col gap-4">
               <div class="px-8 flex flex-col gap-4">
                 <input v-model="co_email" type="email" class="w-full h-[45px] rounded-md text-[14px]"
-                  placeholder="新增使用者和群組">
+                  placeholder="新增使用者">
                 <p>具有存取權的使用者</p>
               </div>
               <div class="flex items-center gap-3 hover:bg-grey-light px-8 w-full">

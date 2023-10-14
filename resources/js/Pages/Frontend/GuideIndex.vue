@@ -80,7 +80,6 @@ export default {
   mounted() {
     sessionStorage.removeItem('formData');
     sessionStorage.removeItem('formText');
-    // this.getOpenTime();
   },
   methods: {
     toggleMenu(id) {
@@ -150,11 +149,14 @@ export default {
     },
     // 顯示開啟時間
     opentimes(opendate) {
-      if (!opendate) { return ''; } // 或者返回您想要的預設值
+      if (!opendate) { return ''; }
       const dateTime = new Date(`${opendate}`);
+      const year = dateTime.getFullYear();
+      const month = dateTime.getMonth();
+      const day = dateTime.getDate();
       const hours = dateTime.getHours();
       const minutes = dateTime.getMinutes();
-      return `${hours}:${minutes}`;
+      return `${year}年${month}月${day}日${hours}:${minutes}`;
     },
   },
 };
@@ -252,10 +254,12 @@ export default {
             </div>
           </Link>
           <div class="card-bottom">
-            <div class="text-[14px] w-[140px] truncate">{{ item.qu_naires_title }}</div>
-            <div class="flex gap-3 items-center">
+            <div class="card-bottom-title">{{ item.qu_naires_title }}
+              <div class="hiddenText">{{ item.qu_naires_title }}</div>
+            </div>
+            <div class="flex gap-2 items-center">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
-              <span class="text-[12px] leading-1">開啟時間 {{ opentimes(item.opened_date) }}</span>
+              <div class="text-[12px] leading-1"> <div>開啟時間</div> {{ opentimes(item.opened_date) }}</div>
               <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
                 <img :src="images.dot" alt="">
               </button>
@@ -377,10 +381,19 @@ export default {
         @apply w-[208px] h-[244px] border border-grey-middle cursor-pointer hover:border-purple;
 
         .card-top {
-          @apply h-[70%] bg-grey-light flex justify-center items-center;
+          @apply h-[60%] bg-grey-light flex justify-center items-center;
         }
         .card-bottom {
-          @apply h-[30%] w-full px-5 py-2 border-grey-middle border-t relative;
+          @apply h-[40%] w-full px-5 py-2 border-grey-middle border-t relative;
+          .card-bottom-title {
+            @apply text-[14px] w-[140px] truncate relative;
+            .card-bottom-title:hover .hiddenText {
+              @apply block;
+            }
+            .hiddenText {
+              @apply w-auto h-[10px] bg-[yellow] hidden absolute;
+            }
+          }
         //   #card-option:checked~#card-option-menu {
         //     @apply block;
         //   }
