@@ -119,10 +119,13 @@ export default {
         </div>
       </div>
       <div v-if="response?.rt_data?.responseFormReply?.response_count ?? false" class="response-body">
-        <div v-for="que in response.rt_data.responseForm" :key="que.id">
+        <div v-for="que in response?.rt_data?.responseForm ?? []" :key="que.id">
           <div>
             <div v-if="que.id === titles" class="responser">
               {{ que.title }}
+              <div>
+                <img v-if="que.image" :src="que.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
+              </div>
               <div v-for="option in que.options" :key="option.id">
                 <div class="my-2">
                   <input v-if="que.type === 3" type="radio" class="m-3" disabled>
@@ -136,7 +139,8 @@ export default {
                   <thead>
                     <tr>
                       <th></th>
-                      <th v-for="choose in que.square.column" :key="choose.id" class="truncate text-base">{{ choose.text }}</th>
+                      <th v-for="choose in que.square.column" :key="choose.id" class="truncate text-base">{{ choose.text
+                      }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -154,7 +158,8 @@ export default {
                   <thead>
                     <tr>
                       <th></th>
-                      <th v-for="choose in que.square.column" :key="choose.id" class="truncate text-base">{{ choose.text }}</th>
+                      <th v-for="choose in que.square.column" :key="choose.id" class="truncate text-base">{{ choose.text
+                      }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -204,29 +209,35 @@ export default {
           @apply p-[10px] text-[16px] focus:bg-purple-light;
         }
       }
+
       .head-fotter {
         @apply h-[150px] p-5 flex items-center;
+
         select {
           @apply rounded border-gray-200 w-[200px] h-[50px];
         }
+
         .select-btn {
           @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
         }
       }
+
       #dot-box-switch {
         @apply hidden;
       }
     }
+
     .response-body {
       @apply flex flex-col mt-[15px];
+
       .noreply {
         @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
       }
+
       .responser {
         @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white text-[20px] flex items-start flex-col;
       }
     }
   }
-}
-</style>
+}</style>
 

@@ -24,6 +24,8 @@ export default {
 
 <template>
   <section id="findans">
+    <!-- {{ value.qus.type }}
+    {{ value.ans }} -->
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1" class="responser">
       <div class="text">
@@ -52,7 +54,9 @@ export default {
     <div v-if="value.qus.type === 4">
       <div class="responser">
         <div v-for="(choose) in value.qus.options" :key="choose.id" class="option">
-          <input type="checkbox" class="choice-2 ml-5 text-grey" disabled :checked="parseInt(value.ans.manyOptions).includes(choose.id)">
+          <!-- {{ value.ans.manyOptions.includes(String(choose.id)) }} -->
+          <!-- {{ String(choose.id) }} -->
+          <input type="checkbox" class="choice-2 ml-5 text-grey" disabled :checked="value.ans.manyOptions.includes(String(choose.id))">
           <span class="text-[16px] px-5 text-grey">{{ choose.value }}</span>
         </div>
         <div class="reply"><a href="#">1 則回應</a></div>
@@ -84,7 +88,7 @@ export default {
         <div v-for="(i, index) in arrayData(parseInt(value.qus.linear.min), parseInt(value.qus.linear.max))" :key=index>
           <div class="flex flex-col justify-center items-center py-4">
             <div class="p-5"> {{ i }}</div>
-            <input type="radio" disabled v-if="index === value.ans.manyOptions" class="p-3 text-grey" checked>
+            <input type="radio" disabled v-if="index === parseInt(value.ans.manyOptions)" class="p-3 text-grey" checked>
             <input type="radio" disabled v-else class="p-3">
           </div>
         </div>
