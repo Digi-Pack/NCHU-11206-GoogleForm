@@ -130,7 +130,6 @@ export default {
           </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
-          <!-- {{ item }} -->
           <!-- 簡答 -->
           <div v-if="item.type === 1" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
