@@ -62,26 +62,26 @@ export default {
 
 <style lang="scss" scoped>
 #frontend-index {
-    @apply w-full h-screen overflow-y-auto flex flex-col items-center bg-purple-light;
-      .content {
-        @apply w-[60%] max-w-2xl h-auto bg-white flex flex-col rounded-lg mt-[10px] border;
-        .title {
-          @apply text-[40px];
-        }
-        .btn-base {
-          @apply p-1.5 border-2 rounded-md cursor-pointer text-sm shadow text-purple hover:bg-grey-light;
-        }
+  @apply w-full h-screen overflow-y-auto flex flex-col items-center bg-purple-light;
+  .content {
+  @apply w-[60%] max-w-2xl h-auto bg-white flex flex-col rounded-lg mt-[10px] border;
+  .title {
+    @apply text-[40px];
+  }
+  .btn-base {
+    @apply p-1.5 border-2 rounded-md cursor-pointer text-sm shadow text-purple hover:bg-grey-light;
+  }
+  }
+  .btn {
+    @apply w-[52px] h-[52px] p-3 bg-white rounded-[50%] fixed right-[3.125rem] bottom-[3.125rem] shadow hover:bg-grey-light;
+    &:hover {
+      span {
+        @apply block;
       }
-      .btn {
-        @apply w-[52px] h-[52px] p-3 bg-white rounded-[50%] fixed right-[3.125rem] bottom-[3.125rem] shadow hover:bg-grey-light;
-        &:hover {
-            span {
-                @apply block;
-            }
-        }
-        span {
-            @apply absolute w-[100px] -top-[30px] -left-[20px] bg-gray-500 text-white text-xs p-0.5 rounded hidden;
-        }
-      }
+    }
+    span {
+      @apply absolute w-[100px] -top-[30px] -left-[20px] bg-gray-500 text-white text-xs p-0.5 rounded hidden;
+    }
+  }
 }
 </style>

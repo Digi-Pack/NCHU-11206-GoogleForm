@@ -331,20 +331,15 @@ export default {
 <style lang="scss" scoped>
 #response {
   @apply min-h-[100vh] mt-[20px] pb-[20px];
-
   .all {
     @apply m-auto max-w-[770px] relative z-[2];
-
     .response-head {
       @apply my-[15px] rounded-[10px] border border-gray-200;
-
       .head-top {
         @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
       }
-
       .head-middle {
         @apply flex justify-around h-[50px] border-b;
-
         .btn {
           @apply p-[10px] text-[16px] focus:bg-purple-light;
         }
@@ -352,13 +347,11 @@ export default {
 
       .head-fotter {
         @apply h-[150px] p-5 flex items-center justify-between;
-
         .select-btn {
           @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
         }
       }
     }
-
     .response-body {
       @apply flex min-h-[80px] justify-center items-center rounded-[10px] ;
       .response {
@@ -370,24 +363,19 @@ export default {
         .form-input {
           @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
         }
-
         .form-title-input {
           @apply h-[45px] text-[32px];
         }
-
         .form-explain-input-2 {
           @apply h-[21px] text-[18px] text-grey;
         }
       }
-
       .question {
         @apply rounded-[10px] p-[24px] my-[12px] bg-white;
-
         .questype-7 {
           @media (max-width: 690px) {
             @apply flex-col items-start pl-5;
           }
-
           span {
             @media (max-width: 690px) {
               @apply justify-start;
@@ -395,7 +383,6 @@ export default {
           }
         }
       }
-
       span {
         @apply text-[#686868];
       }

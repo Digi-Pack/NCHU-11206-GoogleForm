@@ -121,7 +121,6 @@ export default {
               }
             },
           });
-
         }
       });
       this.isMenuOpen[id] = false;
@@ -179,7 +178,7 @@ export default {
     <nav>
       <div class="container">
         <div class="top">
-          <div class="topL flex justify-start items-center">
+          <div class="topL">
             <div class="square logo"><img :src="images.logo" width="25" height="25" alt=""></div>
             <span class="title">表單</span>
           </div>
@@ -307,6 +306,7 @@ export default {
         .top {
           @apply h-full bg-white flex justify-between p-[10px];
             .topL {
+              @apply flex justify-start items-center;
                 .logo {
                     @apply mx-[10px] w-[30px];
                 }

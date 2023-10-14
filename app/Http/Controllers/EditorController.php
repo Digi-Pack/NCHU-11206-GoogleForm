@@ -259,11 +259,9 @@ class EditorController extends Controller
         // ]);
 
         $updateForm = Question::find($request->modalData['id']);
-        // dd($updateForm);
         $updateForm->update([
             'qu_naires_title' => $request->modalData['newName']
         ]);
-        // dd(132);
         return back()->with(['message' => rtFormat($updateForm)]);
     }
 

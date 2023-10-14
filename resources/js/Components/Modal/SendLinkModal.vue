@@ -39,7 +39,13 @@ export default {
       // Copy the text inside the text field
       navigator.clipboard.writeText(copyText.value);
       // Alert the copied text
-      Swal.fire('已成功複製' + copyText.value);
+      Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: '已成功複製',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
     // 發佈到fb
     shareOnFacebook() {
@@ -100,7 +106,6 @@ export default {
 #sendLinkModal {
   .container {
     @apply w-full h-screen fixed top-0 left-0 bg-[#0101015a] z-10;
-
     .content {
       @apply w-[600px] h-[400px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5;
     }

@@ -179,22 +179,15 @@ export default {
   .text {
     @apply text-black text-[22px] px-5 pt-5;
   }
-
   .reply {
     @apply px-3 py-2 my-3 ml-3 text-blue hover:bg-blue-light w-[85px];
   }
 
-  .noreply {
-    @apply flex justify-start items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
-  }
-
   .responser {
     @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
-
     .option {
       @apply px-3 py-2 my-3;
     }
-
     .date {
       @apply text-grey flex flex-col items-end;
 

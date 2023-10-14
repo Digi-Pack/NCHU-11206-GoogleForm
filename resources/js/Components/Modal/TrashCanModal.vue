@@ -64,8 +64,6 @@ export default {
             <span>刪除後無法再復原。您確定刪除此份表單嗎?</span>
           </div>
           <div class="flex justify-start mt-7">
-            <!-- <button type="button" class="btn px-5 py-2 border border-grey-light bg-grey-middle hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
-              @click="closing()">移出垃圾桶</button> -->
             <button type="button"
               class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400" @click="submitDataId()">刪除</button>
           </div>
