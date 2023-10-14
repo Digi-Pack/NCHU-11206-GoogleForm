@@ -264,6 +264,27 @@ class EditorController extends Controller
         ]);
         return back()->with(['message' => rtFormat($updateForm)]);
     }
+    public function edit_addSameForm(Request $request)
+    {
+        $motherForm = Question::find($request->sameFormId);
+        // dd($motherForm);
+        // dd($motherForm['qu_naires_title']);
+        $data = Carbon::now()->locale('zh-tw')->format('YmdHms');
+        // 產生再轉成16進位亂瑪(15字元)
+        $randomString = bin2hex(random_bytes(15));
+        $combinedString = $data . $randomString;
+        $user = $request->user();
+        
+        $SameForm = Question::create([
+            'qu_naires_title' => $request->newFormName,
+            'qu_naires_desc' => $motherForm['qu_naires_desc'],
+            'questionnaires' => $motherForm['questionnaires'],
+            'lead_author_id' => $user->id,
+            'random' => $combinedString,
+        ]);
+
+        return back()->with(['message' => rtFormat( $SameForm)]);
+    }
 
     public function coformid_index(Request $request)
     {

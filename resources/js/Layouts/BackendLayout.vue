@@ -174,7 +174,7 @@ export default {
                 </button>
               </div>
               <div id="menu" v-if="menuShow" ref="menu">
-                <CopyDocument v-if="model === 'CopyDocument'" @close-model="handleClose"></CopyDocument>
+                <CopyDocument v-if="model === 'CopyDocument'" @close-model="handleClose" :co-form-id="coFormId"></CopyDocument>
                 <TrashCanModal v-if="model === 'TrashCanModal'" @close-model="handleClose" :co-form-id="coFormId" :form-title="formTitle"></TrashCanModal>
                 <AddCollaborator v-if="model === 'AddCollaborator'" :co-form-id="coFormId" @close-model="handleClose"></AddCollaborator>
                 <div v-if="coFormId !== '0'" class="">
