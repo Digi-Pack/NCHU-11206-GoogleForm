@@ -204,41 +204,26 @@ export default {
           @apply p-[10px] text-[16px] focus:bg-purple-light;
         }
       }
-
       .head-fotter {
         @apply h-[150px] p-5 flex items-center;
-
         select {
           @apply rounded border-gray-200 w-[200px] h-[50px];
         }
-
         .select-btn {
           @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
         }
       }
-
       #dot-box-switch {
         @apply hidden;
       }
     }
-
     .response-body {
       @apply flex flex-col mt-[15px];
-
       .noreply {
         @apply flex justify-center items-center text-[#686868] w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] bg-white;
       }
-
       .responser {
         @apply w-full min-h-[80px] border rounded-[10px] border-gray-200 mb-[15px] px-5 py-2 bg-white text-[20px] flex items-start flex-col;
-
-        .date {
-          @apply text-grey flex flex-col gap-3 items-end;
-
-          span {
-            @apply text-black border-b;
-          }
-        }
       }
     }
   }

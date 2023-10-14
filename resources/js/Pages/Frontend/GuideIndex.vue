@@ -121,7 +121,6 @@ export default {
               }
             },
           });
-
         }
       });
       this.isMenuOpen[id] = false;
@@ -129,16 +128,18 @@ export default {
     sendName() {
       this.show = !this.show;
       const { modalData } = this;
-      router.visit(route('edit.rename'), {
-        method: 'post', data: { modalData }, preserveState: true,
-        onSuccess: ({ props }) => {
-          if (props.flash.message.rt_code === 1) {
-            Swal.fire(
-              '已修改表單標題',
-            );
-          }
-        },
-      });
+      if (modalData.newName) {
+        router.visit(route('edit.rename'), {
+          method: 'post', data: { modalData }, preserveState: true,
+          onSuccess: ({ props }) => {
+            if (props.flash.message.rt_code === 1) {
+              Swal.fire(
+                '已修改表單標題',
+              );
+            }
+          },
+        });
+      }
       modalData.newName = '';
     },
     changeResponse() {
@@ -179,7 +180,7 @@ export default {
     <nav>
       <div class="container">
         <div class="top">
-          <div class="topL flex justify-start items-center">
+          <div class="topL">
             <div class="square logo"><img :src="images.logo" width="25" height="25" alt=""></div>
             <span class="title">表單</span>
           </div>
@@ -304,6 +305,7 @@ export default {
         .top {
           @apply h-full bg-white flex justify-between p-[10px];
             .topL {
+              @apply flex justify-start items-center;
                 .logo {
                     @apply mx-[10px] w-[30px];
                 }
