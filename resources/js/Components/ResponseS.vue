@@ -247,19 +247,21 @@ export default {
   },
   methods: {
     pieSum(question) {
+      let count = 0;
       return {
         type: question.type,
         text: question.title,
         data: question.options.map((option) => {
-          this.count = 0; // 在這裡定義並初始化 count
+          count = 0; // 在這裡定義並初始化 count
           this.arrayB.forEach((answerSet) => {
-            const answer = answerSet.find((answer) => answer.id === question.id);
-            if (answer && answer.answer === option.id) { // 比較 answer.answer 和 option.id
-              this.count++;
+            const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
+            console.log('trfr', answer.answer, option.id);
+            if (answer && parseInt(answer.answer) === option.id) { // 比較 answer.answer 和 option.id
+              count++;
             }
           });
           return {
-            value: this.count,
+            value: count,
             name: option.value,
           };
         }),
