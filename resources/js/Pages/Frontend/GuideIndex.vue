@@ -148,7 +148,19 @@ export default {
         method: 'get', data: selectShow, preserveState: true,
       });
     },
+<<<<<<< Updated upstream
 
+=======
+    // 顯示開啟時間
+    opentimes(opendate) {
+      if (!opendate) { return ''; }
+      const dateTime = new Date(`${opendate}`);
+      const year = dateTime.getFullYear();
+      const month = dateTime.getMonth();
+      const day = dateTime.getDate();
+      return `${year}年${month + 1}月${day}日`;
+    },
+>>>>>>> Stashed changes
   },
 };
 </script>
@@ -260,6 +272,7 @@ export default {
             </div>
           </Link>
           <div class="card-bottom">
+<<<<<<< Updated upstream
             <div class="text-[14px] w-[140px] truncate">{{ item.qu_naires_title }}</div>
             <div class="flex gap-3 items-center">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
@@ -267,6 +280,15 @@ export default {
               <button type="button"
                 class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer"
                 @click="toggleMenu(item.id)" tabindex="0">
+=======
+            <div class="card-bottom-title">{{ item.qu_naires_title }}
+              <span class="hiddenText">{{ item.qu_naires_title }}</span>
+            </div>
+            <div class="flex items-center justify-around">
+              <img :src="images.favicon_qp2" class="rounded-sm" alt="">
+              <div class="w-[128.03px] text-[11px] leading-1 ml-2"> <span>開啟時間</span> {{ opentimes(item.opened_date) }}</div>
+              <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
+>>>>>>> Stashed changes
                 <img :src="images.dot" alt="">
               </button>
               <div class="card-option-menu" v-if="isMenuOpen[item.id]">
@@ -423,11 +445,27 @@ export default {
         }
 
         .card-bottom {
+<<<<<<< Updated upstream
           @apply h-[30%] w-full px-5 py-2 border-grey-middle border-t relative;
 
           //   #card-option:checked~#card-option-menu {
           //     @apply block;
           //   }
+=======
+          @apply h-[40%] w-full px-4 py-2 border-grey-middle border-t relative flex flex-col gap-5 justify-center;
+          .card-bottom-title {
+            @apply text-[14px] w-[140px] truncate;
+            &:hover .hiddenText {
+              @apply block;
+            }
+            .hiddenText {
+              @apply w-auto bg-[#5b5b5bbb] text-white rounded-md absolute px-2 leading-6 top-[35px] left-[80px] z-10 hidden text-[12px];
+            }
+          }
+        //   #card-option:checked~#card-option-menu {
+        //     @apply block;
+        //   }
+>>>>>>> Stashed changes
           .card-option-menu {
             @apply border bg-white border-green-light py-2 w-[210px] absolute top-[60px] -right-[80px] shadow-md drop-shadow-md z-50;
 
