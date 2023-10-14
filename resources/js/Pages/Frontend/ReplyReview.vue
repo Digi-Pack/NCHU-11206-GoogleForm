@@ -104,6 +104,20 @@ export default {
     handleFileDelete(e, key) {
       this.formData[key].file.name = '';
     },
+    validateMinute(id) {
+      if (this.formData[id].time.minute < 0) {
+        this.formData[id].time.minute = 0;
+      } else if (this.formData[id].time.minute > 59) {
+        this.formData[id].time.minute = 59;
+      }
+    },
+    validateHour(id) {
+      if (this.formData[id].time.hour < 0) {
+        this.formData[id].time.hour = 0;
+      } else if (this.formData[id].time.hour > 12) {
+        this.formData[id].time.hour = 12;
+      }
+    },
   },
 };
 </script>
@@ -277,14 +291,13 @@ export default {
           <div v-if="item.type === 11" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-11">
-              <input type="text" v-model="formData[key].time.hour" :required="item.request">
+              <input type="number" v-model="formData[key].time.hour" :required="item.request" @input="validateHour(key)" min="0" max="12">
               <span>:</span>
-              <input type="text" v-model="formData[key].time.minute">
+              <input type="number" v-model="formData[key].time.minute" :required="item.request" @input="validateMinute(key)" min="0" max="59">
               <select name="" id="" v-model="formData[key].time.section">
                 <option value="a.m.">上午</option>
                 <option value="p.m.">下午</option>
               </select>
-
             </div>
           </div>
           <!-- 影片 -->

@@ -97,7 +97,6 @@ class ReplyController extends Controller
                 $formData[$key]['file'] = $file;
             }
         }
-
         $jsonText = json_encode($formData, JSON_UNESCAPED_UNICODE);
         Response::create([
             'user_id' => $user->id,
