@@ -218,17 +218,36 @@ class EditorController extends Controller
     }
     public function edit_delete(Request $request)
     {
-        $formDel = Question::find($request->id);
-        $ansdel = Response::where('question_id', $request->id)->get();
-        foreach ($ansdel as $key => $value) {
-            $answer = json_decode($value['answer'], true);
-            if ($answer[$key]['file']['name']) {
-                $this->fileService->deleteUpload($answer[$key]['file']['path']);
+
+        // 處理----從表單編輯頁面刪除表單----的情況
+        if($request->deleteFormId){
+            $formDel = Question::find($request->deleteFormId);
+            $ansdel = Response::where('question_id', $request->deleteFormId)->get();
+            foreach ($ansdel as $key => $value) {
+                $answer = json_decode($value['answer'], true);
+                if ($answer[$key]['file']['name']) {
+                    $this->fileService->deleteUpload($answer[$key]['file']['path']);
+                }
+                $value->delete();
             }
-            $value->delete();
-        }
-        $formDel->delete();
-        return back()->with(['message' => rtFormat($formDel)]);
+            $formDel->delete();
+            return redirect()->route('guide.index');
+        };
+         // 處理----從導覽頁面刪除表單----的情況
+         if($request->id){
+            $formDel = Question::find($request->id);
+            $ansdel = Response::where('question_id', $request->id)->get();
+            foreach ($ansdel as $key => $value) {
+                $answer = json_decode($value['answer'], true);
+                if ($answer[$key]['file']['name']) {
+                    $this->fileService->deleteUpload($answer[$key]['file']['path']);
+                }
+                $value->delete();
+            }
+            $formDel->delete();
+            return back()->with(['message' => rtFormat($formDel)]);
+         }
+
     }
     public function edit_rename(Request $request)
     {

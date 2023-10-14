@@ -1,9 +1,13 @@
 <script>
 import close from '/images/close.svg';
+import { router } from '@inertiajs/vue3';
 
 export default {
   props: {
     formUrl: String,
+    coFormId: String,
+    formTitle: String,
+
   },
   emits: [
     'closeModel',
@@ -20,6 +24,26 @@ export default {
     closing() {
       this.$emit('closeModel');
     },
+    submitDataId() {
+      const deleteFormId = parseInt(this.coFormId, 10);
+      router.visit(route('edit.delete'), {
+        method: 'delete', data: { deleteFormId }, preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '表單已刪除',
+              showDenyButton: false,
+              confirmButtonText: '確定，回列表',
+              denyButtonText: '',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('guide.index'));
+              }
+            });
+          }
+        },
+      });
+    },
   },
 };
 </script>
@@ -29,21 +53,21 @@ export default {
     <div class="container">
       <div class="content">
         <div class="flex justify-between items-center">
-          <h1 class="text-[24px] text-black">檔案已移至垃圾桶</h1>
+          <h1 class="text-[24px] text-black">刪除「{{ formTitle }}」表單</h1>
           <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
             <img :src="close" alt="">
           </button>
         </div>
         <div class="pt-[15px]">
           <div>
-            <span>「未命名表單」</span>
-            <span>將於30天後永刪除。如果這個檔案已與他人共用,協作者在檔案永久刪除前仍可另存副本。如要存取這個檔案,請將這個檔案移出垃圾桶。</span>
+            <span></span>
+            <span>刪除後無法再復原。您確定刪除此份表單嗎?</span>
           </div>
           <div class="flex justify-start mt-7">
-            <button type="button" class="btn px-5 py-2 border border-grey-light bg-grey-middle hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
-              @click="closing()">移出垃圾桶</button>
+            <!-- <button type="button" class="btn px-5 py-2 border border-grey-light bg-grey-middle hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
+              @click="closing()">移出垃圾桶</button> -->
             <button type="button"
-              class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400">前往表單主頁面</button>
+              class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400" @click="submitDataId()">刪除</button>
           </div>
         </div>
       </div>
