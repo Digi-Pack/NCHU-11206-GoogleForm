@@ -28,6 +28,7 @@ export default {
     },
     addSameForm() {
     //   Swal.fire('hihi');
+      this.closing();
       const sameFormId = parseInt(this.coFormId, 10);
       const { newFormName, sameCallaborator } = this;
 

@@ -68,7 +68,7 @@ export default {
         subtext: subtextCount,
         files: files,
       };
-    },fileUpload
+    },
     // 打印结果
   },
 
