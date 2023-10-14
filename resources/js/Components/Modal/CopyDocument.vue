@@ -1,9 +1,12 @@
 <script>
 import close from '/images/close.svg';
+import Swal from 'sweetalert2';
+import { router } from '@inertiajs/vue3';
 
 export default {
   props: {
     formUrl: String,
+    coFormId: String,
   },
   emits: [
     'closeModel',
@@ -11,14 +14,39 @@ export default {
   data() {
     return {
       close,
+      newFormName: '',
+      sameCallaborator: '',
     };
   },
   mounted() {
-    // console.log(this.formUrl);
+
   },
   methods: {
     closing() {
       this.$emit('closeModel');
+    },
+    addSameForm() {
+    //   Swal.fire('hihi');
+      const sameFormId = parseInt(this.coFormId, 10);
+      const newFormName = this.newFormName;
+
+      router.visit(route('edit.addSameForm'), {
+        method: 'post', data: { sameFormId, newFormName }, preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '已新增副本',
+              showDenyButton: false,
+              confirmButtonText: '確定',
+              denyButtonText: '',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                console.log(123);
+              }
+            });
+          }
+        },
+      });
     },
   },
 };
@@ -38,10 +66,10 @@ export default {
           <div>
             <div class="flex flex-col mb-5">
               <label for="name">名稱</label>
-              <input type="text" class="h-[30px] text-gray-400 text-lg" id="name">
+              <input v-model="newFormName" type="text" class="h-[30px] text-gray-400 text-lg" id="name">
             </div>
             <div class="flex items-center gap-2">
-              <input type="checkbox" id="collaborator">
+              <input v-model="sameCallaborator" type="checkbox" id="collaborator">
               <label for="collaborator" class="text-[14px]">與同樣的協作者共用</label>
             </div>
           </div>
@@ -49,7 +77,7 @@ export default {
             <button type="button" class="btn px-5 py-2 border border-grey-light bg-grey-middle hover:bg-blue-light hover:shadow rounded-[10px] mr-3"
               @click="closing()">取消</button>
             <button type="button"
-              class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400">建立副本</button>
+              class="btn px-5 py-2 rounded-[10px] bg-blue text-white hover:shadow hover:shadow-gray-400" @click="addSameForm()">建立副本</button>
           </div>
         </div>
       </div>
