@@ -130,6 +130,10 @@ export default {
           </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
+          <!-- 問題框內圖片 -->
+          <div class="p-5">
+            <img v-if="item.image" :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
+          </div>
           <!-- 簡答 -->
           <div v-if="item.type === 1" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
