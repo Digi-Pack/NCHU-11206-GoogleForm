@@ -209,7 +209,7 @@ export default {
                 <label for="select"></label>
                 <select v-model="ansStringJson[key].answer" name="select" id="select"
                   class="border-grey-dark rounded-md w-[200px] py-3">
-                  <option v-for="choose in item.options" :key="choose.id" :value="choose.value" disabled>{{ choose.value
+                  <option v-for="choose in item.options" :key="choose.id" :value="choose.id" disabled>{{ choose.value
                   }}
                   </option>
                 </select>
