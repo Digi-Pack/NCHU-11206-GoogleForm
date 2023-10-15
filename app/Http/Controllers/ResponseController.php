@@ -43,9 +43,13 @@ class ResponseController extends Controller
         $whoAll = [];
         foreach ($whoRespond as $item) {
             $whoIn = User::where('id', $item)->get();
-            $whoAll[] = $whoIn[0]['email'];
-        }
+            $email = $whoIn[0]['email'];
 
+            // 檢查 $email 是否已存在于 $whoAll 數組中
+            if (!in_array($email, $whoAll)) {
+                $whoAll[] = $email;
+            }
+        }
 
         // 回覆和題目內容一起打包給前台
         $response = [
