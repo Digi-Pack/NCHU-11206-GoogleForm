@@ -294,12 +294,12 @@ export default {
             </div>
           </div>
           <!-- 圖片 -->
-          <div v-if="item.type === 12" class="!block">
+          <!-- <div v-if="item.type === 12" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="p-5">
               <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
             </div>
-          </div>
+          </div> -->
           <!-- 影片 -->
           <div v-if="item.type === 13" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
