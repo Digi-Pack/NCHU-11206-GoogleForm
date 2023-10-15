@@ -182,7 +182,7 @@ export default {
             <div class="questype-5">
               <label for="select"></label>
               <select v-model="formData[key].answer" name="select" id="select">
-                <option v-for="choose in item.options" :key="choose.id" :value="choose.value" :required="item.request">{{
+                <option v-for="choose in item.options" :key="choose.id" :value="choose.id" :required="item.request" selected>{{
                   choose.value }}
                 </option>
               </select>
@@ -230,7 +230,6 @@ export default {
             </div>
           </div>
           <!-- 單選方格 -->
-
           <div v-if="item.type === 8" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-8">
