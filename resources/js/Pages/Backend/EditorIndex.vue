@@ -445,7 +445,6 @@ export default {
             </div>
             <!-- 側欄新增影片 -->
             <div v-else-if="item.type === 13">
-              {{ item }}
               <div class="question-bottom">
                 <div class="func !border-r-0">
                   <input :value="item.title" type="text" placeholder="影片標題" class="border-0 w-full h-[55px] duration-200 placeholder:text-black focus:ring-0 focus:bg-grey-light focus:border-b-[3px] focus:border-b-purple">

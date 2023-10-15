@@ -53,7 +53,6 @@ export default {
             </button>
           </div>
           <div class="w-full flex gap-8">
-            <!-- <button class="navbtn" type="button" @click="showSearch()">搜尋影片</button> -->
             <button class="navbtn" type="button" @click="showUrl()">網址</button>
           </div>
         </div>
