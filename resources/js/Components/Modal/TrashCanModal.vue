@@ -17,9 +17,6 @@ export default {
       close,
     };
   },
-  mounted() {
-    // console.log(this.formUrl);
-  },
   methods: {
     closing() {
       this.$emit('closeModel');

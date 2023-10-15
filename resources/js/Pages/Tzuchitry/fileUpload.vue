@@ -44,9 +44,6 @@ export default {
   },
   methods: {
     processArray() {
-      // 初始化一个空的arrayD
-      let arrayD = [];
-
       // 遍历arrayA
       this.arrayA.forEach((questionA, indexA) => {
         if (questionA.type === 6) {
@@ -77,9 +74,6 @@ export default {
           this.arrayD.push(objectX);
         }
       });
-
-      // 打印结果
-      console.log(arrayD);
     },
   },
 };

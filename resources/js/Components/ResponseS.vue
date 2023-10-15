@@ -1,8 +1,4 @@
 <template>
-  <!-- {{ chartdata }}123 -->
-  {{ arrayA }}<hr>{{ arrayB }}
-  {{ chartOptions }}<br>
-  {{ arrayC }}
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
@@ -39,7 +35,6 @@
     </div>
     <!-- 時間 -->
     <div v-if="option.type === 11" class="text-area">
-      <!-- { type: 11, text:'這是時間的題目', subtext: 3, zone: 10, time: '上午10點' } -->
       <div class="que-top">
         {{ option.item.text }}
         <div class="subtitle">{{ option.item.subtext }}則回應</div>

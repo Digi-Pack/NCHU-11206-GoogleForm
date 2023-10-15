@@ -49,9 +49,6 @@ export default {
       return JSON.parse(rt_data?.fillform?.answer ?? '[]');
     },
   },
-  mounted() {
-    console.log(this.ansStringJson);
-  },
   methods: {
     currentUrl(urlName = '') {
       if (urlName === '') return;
@@ -83,7 +80,6 @@ export default {
       return loopResult;
     },
     ansDelete() {
-      console.log(this.coFormId);
       const { num, coFormId } = this;
       Swal.fire({
         title: '確定刪除嗎?',

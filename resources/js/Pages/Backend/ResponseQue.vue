@@ -50,7 +50,6 @@ export default {
     },
     findAns() {
       const { ansStringJson, formStringJson, titles } = this;
-      console.log(titles);
       return ansStringJson.map((item, index) => {
         return {
           id: index + 1,

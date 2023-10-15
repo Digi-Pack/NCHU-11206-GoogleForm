@@ -243,7 +243,6 @@ export default {
               @click="listChange()">
               <img :src="images.view_module" width="23" alt="">
             </button>
-            <!-- <input type="checkbox" class="hidden" id="sort"> -->
             <select name="sortType" v-model="selectShow.sort" @change="changeResponse()">
               <option value="1">我上次開啟的時間</option>
               <option value="2">我上次修改的時間</option>
@@ -258,9 +257,6 @@ export default {
       <div v-if="!blockShow" class="card-group">
         <!-- 表單方格 -->
         <div class="card" v-for="item in response.rt_data.guide " :key="item.id">
-          <!-- {{ item.created_at }} -->
-          <!-- {{ item.updated_at }} -->
-          <!-- {{ item.opened_date }} -->
           <Link :href="route('edit.old', { id: item.id })">
             <div class="card-top">
               <!-- 預覽頁面 -->
@@ -273,7 +269,7 @@ export default {
             </div>
             <div class="flex items-center justify-around">
               <img :src="images.favicon_qp2" class="rounded-sm" alt="">
-              <div class="w-[128.03px] text-[11px] leading-1 ml-2"> <span>開啟時間</span> {{ opentimes(item.opened_date) }}</div>
+              <div class="w-auto whitespace-nowrap text-[11px] leading-1 ml-2"> <span>開啟時間</span> {{ opentimes(item.opened_date) }}</div>
               <button type="button" class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-grey-light cursor-pointer" @click="toggleMenu(item.id)" tabindex="0">
                 <img :src="images.dot" alt="">
               </button>
@@ -300,8 +296,7 @@ export default {
             </div>
           </Link>
           <div class="flex items-center justify-between w-[35%]">
-            <span>我</span>
-            <span>2023年9月28日</span>
+            <span>{{ opentimes(item.opened_date) }}</span>
             <button type="button"
               class="w-[20px] h-[20px] flex justify-center items-center rounded-full hover:bg-purple-light cursor-pointer"
               @click="toggleMenu(item.id)">
