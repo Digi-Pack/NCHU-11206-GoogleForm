@@ -286,7 +286,12 @@ export default {
       let count = 0;
       this.arrayB.forEach((answerSet) => {
         answerSet.forEach((answer) => {
-          if (answer.id === questionId && answer.manyOptions.includes(optionId)) {
+        //   console.log(answer, 11);
+        //   console.log(answer.manyOptions, 132);
+        //   console.log(toString(optionId), 132);
+        //   console.log(optionId);
+          if (parseInt(answer.id) === questionId && answer.manyOptions.includes(optionId.toString())) {
+            console.log(13);
             count++;
           }
         });
