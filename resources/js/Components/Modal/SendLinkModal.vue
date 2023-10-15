@@ -18,9 +18,6 @@ export default {
       show: true,
     };
   },
-  mounted() {
-    // console.log(this.formUrl);
-  },
   methods: {
     closing() {
       this.show = false;

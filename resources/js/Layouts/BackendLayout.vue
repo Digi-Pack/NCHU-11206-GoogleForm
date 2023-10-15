@@ -54,13 +54,11 @@ export default {
       menuShow: false,
     };
   },
-
   watch: {
     '$page.url': function () {
       this.coFormId = route()?.params?.id ?? '0';
     },
   },
-
   methods: {
     /**
      * 判斷現在是否在urlName的路由
@@ -88,9 +86,6 @@ export default {
     // 這樣就可以接收到來自子組件的值
     },
     submitData() {
-      console.log(123);
-      console.log(sessionStorage.getItem('formText'));
-
       //   将字符串轉换为對象;
       const { coFormId } = this;
       const formDataobj = JSON.parse(sessionStorage.getItem('formData'));

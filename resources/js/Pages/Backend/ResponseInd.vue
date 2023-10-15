@@ -49,9 +49,6 @@ export default {
       return JSON.parse(rt_data?.fillform?.answer ?? '[]');
     },
   },
-  mounted() {
-    console.log(this.ansStringJson);
-  },
   methods: {
     currentUrl(urlName = '') {
       if (urlName === '') return;
@@ -83,7 +80,6 @@ export default {
       return loopResult;
     },
     ansDelete() {
-      console.log(this.coFormId);
       const { num, coFormId } = this;
       Swal.fire({
         title: '確定刪除嗎?',
@@ -168,6 +164,9 @@ export default {
           </div>
           <div v-for="(item, key) in formStringJson" :key="item.id" class="question">
             <!-- 簡答 -->
+            <div>
+              <img v-if="item.image" :src="item.image" class="w-[200px] aspect-[4/3] object-cover" alt="">
+            </div>
             <div v-if="item.type === 1" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-1 w-1/2 border-b-black border-b border-dotted">
@@ -219,8 +218,10 @@ export default {
             <!-- 檔案上傳 -->
             <div v-if="item.type === 6" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-6 border-[2px] mt-2 border-grey rounded-md w-1/2 hover:border-gray-600 active:hover:border-white active:bg-grey-dark">
-                <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name" class="flex items-center gap-2 px-2 py-1">
+              <div
+                class="questype-6 border-[2px] mt-2 border-grey rounded-md w-1/2 hover:border-gray-600 active:hover:border-white active:bg-grey-dark">
+                <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name"
+                  class="flex items-center gap-2 px-2 py-1">
                   <img :src="image" alt="">
                   <span class="truncate !text-gray-800">{{ ansStringJson[key].file.name }}</span>
                 </a>
@@ -331,15 +332,20 @@ export default {
 <style lang="scss" scoped>
 #response {
   @apply min-h-[100vh] mt-[20px] pb-[20px];
+
   .all {
     @apply m-auto max-w-[770px] relative z-[2];
+
     .response-head {
       @apply my-[15px] rounded-[10px] border border-gray-200;
+
       .head-top {
         @apply pt-[16px] pr-[8px] ps-[24px] flex justify-between items-center;
       }
+
       .head-middle {
         @apply flex justify-around h-[50px] border-b;
+
         .btn {
           @apply p-[10px] text-[16px] focus:bg-purple-light;
         }
@@ -347,35 +353,44 @@ export default {
 
       .head-fotter {
         @apply h-[150px] p-5 flex items-center justify-between;
+
         .select-btn {
           @apply w-[50px] h-[50px] p-3 hover:bg-grey-light rounded-[50%];
         }
       }
     }
+
     .response-body {
-      @apply flex min-h-[80px] justify-center items-center rounded-[10px] ;
+      @apply flex min-h-[80px] justify-center items-center rounded-[10px];
+
       .response {
         @apply w-full rounded-[10px] border py-[22px] bg-white flex justify-center items-center text-[#686868] min-h-[80px];
       }
+
       .form-title {
         @apply max-w-[770px] rounded-[10px] border-t-[10px] border-t-purple pt-[22px] pb-[24px] bg-white;
 
         .form-input {
           @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
         }
+
         .form-title-input {
           @apply h-[45px] text-[32px];
         }
+
         .form-explain-input-2 {
           @apply h-[21px] text-[18px] text-grey;
         }
       }
+
       .question {
         @apply rounded-[10px] p-[24px] my-[12px] bg-white;
+
         .questype-7 {
           @media (max-width: 690px) {
             @apply flex-col items-start pl-5;
           }
+
           span {
             @media (max-width: 690px) {
               @apply justify-start;
@@ -383,11 +398,11 @@ export default {
           }
         }
       }
+
       span {
         @apply text-[#686868];
       }
     }
   }
-}
-</style>
+}</style>
 

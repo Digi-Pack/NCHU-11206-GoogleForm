@@ -41,16 +41,9 @@ export default {
               showDenyButton: false,
               confirmButtonText: '確定',
               denyButtonText: '',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                console.log(123);
-              }
             });
           }
         },
-        // onError: errors => {
-        //   console.log(errors);
-        // },
       });
     },
   },
