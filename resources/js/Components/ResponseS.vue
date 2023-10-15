@@ -281,10 +281,6 @@ export default {
       let count = 0;
       this.arrayB.forEach((answerSet) => {
         answerSet.forEach((answer) => {
-        //   console.log(answer, 11);
-        //   console.log(answer.manyOptions, 132);
-        //   console.log(toString(optionId), 132);
-        //   console.log(optionId);
           if (parseInt(answer.id) === questionId && answer.manyOptions.includes(optionId.toString())) {
             console.log(13);
             count++;
@@ -339,7 +335,9 @@ export default {
       // 遍历数组B，统计各个row-col组合的出现次数
       for (const answers of arrayB) {
         for (const answer of answers) {
-          if (answer.id === question.id) {
+
+          console.log(parseInt(answer.id), question.id, 444);
+          if (parseInt(answer.id) === question.id) {
             for (const option of answer.manyOptions) {
               const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
               if (!timeCounts[row]) {
