@@ -335,8 +335,6 @@ export default {
       // 遍历数组B，统计各个row-col组合的出现次数
       for (const answers of arrayB) {
         for (const answer of answers) {
-
-          console.log(parseInt(answer.id), question.id, 444);
           if (parseInt(answer.id) === question.id) {
             for (const option of answer.manyOptions) {
               const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
@@ -388,7 +386,8 @@ export default {
     dateSubtext(questionId) {
       let subtextCount = 0;
       for (const answerSet of this.arrayB) {
-        const answer = answerSet.find((answer) => answer.id === questionId);
+        const answer = answerSet.find((answer) => parseInt(answer.id) === questionId);
+        // console.log(parseInt(answer.id), questionId);
         if (answer && answer.answer !== null && answer.answer !== '') {
           subtextCount++;
         }
@@ -398,7 +397,7 @@ export default {
     dateCalculate(questionId) {
       const dateData = [];
       for (const answerSet of this.arrayB) {
-        const answer = answerSet.find((answer) => answer.id === questionId);
+        const answer = answerSet.find((answer) => parseInt(answer.id) === questionId);
         if (answer && answer.answer !== null && answer.answer !== '') {
           const [year, month, day] = answer.answer.split('-').map(Number);
           const existingDate = dateData.find((dateItem) => dateItem.year === year && dateItem.month === month);
@@ -452,7 +451,7 @@ export default {
     //   const timeAll = [];
       const zoneMap = new Map();
       for (const answerSet of this.arrayB) {
-        const answer = answerSet.find((answer) => answer.id === questionId);
+        const answer = answerSet.find((answer) => parseInt(answer.id) === questionId);
         if (answer && answer.time && (answer.time.hour !== null || answer.time.minute !== null)) {
           const zone = answer.time.hour || answer.time.minute;
           if (!zoneMap.has(zone)) {
