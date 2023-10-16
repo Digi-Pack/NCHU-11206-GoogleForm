@@ -530,14 +530,11 @@ export default {
 
       this.arrayB.forEach((answerSet) => {
         const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
-        if (answer) {
-          if (answer && answer.answer !== 'null') {
+        if (answer && answer.answer !== 'null') {
           // 比較 answer.answer 和 option.id
-            answerArray.push(answer.answer);
-            subtext++;
-          }
+          answerArray.push(answer.answer);
+          subtext++;
         }
-
       });
 
       return {
@@ -551,17 +548,14 @@ export default {
       let subtextCount = 0;
       let files = [];
 
-      // 遍历arrayB的各个数组
-      for (let j = 0; j < this.arrayB.length; j++) {
-        let answerSet = this.arrayB[j];
-        let answer = answerSet[question.id - 1]; // 获取对应问题的答案
-
-        // 检查答案是否不为 null 或空字符串
+      this.arrayB.forEach((answerSet) => {
+        const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
         if (answer && answer.file && answer.file.path && answer.file.path.trim() !== '') {
           subtextCount++;
           files.push({ name: answer.file.name, path: answer.file.path });
         }
-      }
+
+      });
 
       // 返回生成的对象
       return {
