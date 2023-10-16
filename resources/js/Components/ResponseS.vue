@@ -457,7 +457,7 @@ export default {
     timeSubtext(questionId) {
       let subtextCount = 0;
       for (const answerSet of this.arrayB) {
-        const answer = answerSet.find((answer) => answer.id === questionId);
+        const answer = answerSet.find((answer) => parseInt(answer.id) === questionId);
         if (answer && answer.time && (answer.time.hour !== null || answer.time.minute !== null)) {
           subtextCount++;
         }
