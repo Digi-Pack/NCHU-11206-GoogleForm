@@ -1,4 +1,4 @@
-<template>
+<template>{{ chartOptions }}
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
@@ -126,6 +126,7 @@ export default {
           type: item.type,
           title: {
             text: item.text,
+            subtext: `${item.subtext}則回覆`,
             left: 'center',
           },
           tooltip: {
@@ -243,6 +244,7 @@ export default {
   methods: {
     pieSum(question) {
       let count = 0;
+      let subtextCount = 0;
       return {
         type: question.type,
         text: question.title,
@@ -250,9 +252,11 @@ export default {
           count = 0; // 在這裡定義並初始化 count
           this.arrayB.forEach((answerSet) => {
             const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
-            if (answer) {
-              if (answer && parseInt(answer.answer) === option.id) { // 比較 answer.answer 和 option.id
+            if (answer && answer.answer !== 'null') {
+              // 比較 answer.answer 和 option.id
+              if (answer && parseInt(answer.answer) === option.id) {
                 count++;
+                subtextCount++;
               }
             }
 
@@ -262,6 +266,7 @@ export default {
             name: option.value,
           };
         }),
+        subtext: subtextCount,
       };
     },
     checkboxSum(question) {
