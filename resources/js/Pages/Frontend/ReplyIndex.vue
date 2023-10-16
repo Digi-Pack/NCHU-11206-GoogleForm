@@ -118,8 +118,7 @@ export default {
 
 <template>
   <section id="question">
-    <form @submit.prevent="submitData()"
-      class="flex justify-between items-center m-auto max-w-[920px] min-h-screen relative">
+    <form @submit.prevent="submitData()">
       <div class="container">
         <!-- 表單命名處 -->
         <div class="form-title">
@@ -219,7 +218,7 @@ export default {
             <div class="questype-7">
               <span>{{ item.linear.minText }}</span>
               <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
-                {{ i }}
+                <span>{{ i }}</span>
                 <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i"
                   :value="i" :required="item.request">
               </div>
@@ -311,13 +310,16 @@ export default {
         </div>
       </div>
       <button type="submit" :disabled="submitted"
-        class="bg-purple text-white py-[10px] px-[10px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[90%] truncate">送出</button>
+        class="submit-btn">送出</button>
     </form>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #question {
+  form {
+    @apply flex justify-between items-center m-auto max-w-[920px] min-h-screen relative;
+  }
   .container {
     @apply max-w-[770px] m-auto relative mt-[20px];
 
@@ -398,10 +400,14 @@ export default {
 
       .questype-7 {
         @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
-
         @media (max-width: 690px) {
           @apply flex-col items-start pl-5;
         }
+        div input {
+            @media (max-width: 690px) {
+              @apply ml-[5px];
+            }
+          }
       }
 
       .questype-8,
@@ -446,5 +452,12 @@ export default {
       }
     }
   }
-}</style>
+  .submit-btn {
+    @apply bg-purple text-white py-[10px] px-[10px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[90%] truncate;
+    @media(max-width:840px) {
+      @apply fixed right-[5px];
+    }
+  }
+}
+</style>
 

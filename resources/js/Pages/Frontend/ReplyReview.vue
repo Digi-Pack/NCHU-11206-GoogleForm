@@ -221,8 +221,7 @@ export default {
             <div class="questype-7">
               <span>{{ item.linear.minText }}</span>
               <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index>
-                <label> {{ i }}
-                </label>
+                <span>{{ i }}</span>
                 <input v-model="formData[key].manyOptions" type="radio" :name="'linear-' + item.id" :id="'linear-' + i"
                   :value="i" :required="item.request">
               </div>
@@ -309,7 +308,7 @@ export default {
         </div>
       </div>
       <button type="submit"
-        class="bg-purple text-white flex self-start py-[10px] px-[15px] sticky top-[92%] rounded-lg drop-shadow-md hover:scale-105 truncate">完成修改</button>
+        class="submit-btn">完成修改</button>
     </form>
   </section>
 </template>
@@ -317,108 +316,121 @@ export default {
 <style lang="scss" scoped>
 #question {
   @apply pl-[150px];
-  .container {
-    @apply max-w-[770px] m-auto relative mt-[20px];
-    .form-title {
-      @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
-      .form-input {
-        @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
-      }
-      .form-title-input {
-        @apply h-[45px] text-[32px];
-      }
-      .form-explain-input-2 {
-        @apply h-[34px] text-[18px] text-grey;
-      }
-    }
-    .question {
-      @apply rounded-[10px] drop-shadow-md border border-grey-light p-[24px] my-[12px] bg-white;
-      .questype-1 {
-        @apply pt-[20px] pb-[10px];
-        .short {
-          @apply w-[60%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
+  form {
+    .container {
+      @apply max-w-[770px] m-auto relative mt-[20px];
+      .form-title {
+        @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+        .form-input {
+          @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
+        }
+        .form-title-input {
+          @apply h-[45px] text-[32px];
+        }
+        .form-explain-input-2 {
+          @apply h-[34px] text-[18px] text-grey;
         }
       }
-      .questype-2 {
-        @apply pt-[20px] pb-[10px];
-        .long {
-          @apply w-[85%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
-        }
-      }
-      .questype-3 {
-        @apply w-full pt-[20px] flex flex-col;
-        .option {
-          @apply flex items-center mb-3;
-          label {
-            @apply ml-[10px];
+      .question {
+        @apply rounded-[10px] drop-shadow-md border border-grey-light p-[24px] my-[12px] bg-white;
+        .questype-1 {
+          @apply pt-[20px] pb-[10px];
+          .short {
+            @apply w-[60%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
           }
         }
-      }
-      .questype-4 {
-        @apply w-full pt-[20px];
-        .option {
-          @apply flex items-center mb-3;
-          label {
-            @apply ml-[10px];
+        .questype-2 {
+          @apply pt-[20px] pb-[10px];
+          .long {
+            @apply w-[85%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
           }
         }
-      }
-      .questype-5 {
-        @apply w-full py-[30px];
-        #select {
-          @apply w-[30%] h-[50px] border-green-middle rounded-md;
-        }
-      }
-      .questype-6 {
-        @apply w-full py-[10px];
-        #file-upload-button {
-          @apply bg-purple;
-        }
-      }
-      .questype-7 {
-        @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
-        @media (max-width: 690px) {
-          @apply flex-col items-start pl-5;
-        }
-      }
-      .questype-8, .questype-9 {
-        @apply w-full;
-        table {
-          @apply w-full table-fixed border-separate border-spacing-y-2;
-          th {
-            @apply truncate;
+        .questype-3 {
+          @apply w-full pt-[20px] flex flex-col;
+          .option {
+            @apply flex items-center mb-3;
+            label {
+              @apply ml-[10px];
+            }
           }
-          tbody {
-            @apply py-10;
-            tr {
-              @apply bg-grey-light;
-              th {
-                @apply truncate;
-              }
-              td {
-                @apply text-center py-4;
+        }
+        .questype-4 {
+          @apply w-full pt-[20px];
+          .option {
+            @apply flex items-center mb-3;
+            label {
+              @apply ml-[10px];
+            }
+          }
+        }
+        .questype-5 {
+          @apply w-full py-[30px];
+          #select {
+            @apply w-[30%] h-[50px] border-green-middle rounded-md;
+          }
+        }
+        .questype-6 {
+          @apply w-full py-[10px];
+          #file-upload-button {
+            @apply bg-purple;
+          }
+        }
+        .questype-7 {
+          @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
+          @media (max-width: 690px) {
+            @apply flex-col items-start pl-5;
+          }
+          div input {
+            @media (max-width: 690px) {
+              @apply ml-[5px];
+            }
+          }
+        }
+        .questype-8, .questype-9 {
+          @apply w-full;
+          table {
+            @apply w-full table-fixed border-separate border-spacing-y-2;
+            th {
+              @apply truncate;
+            }
+            tbody {
+              @apply py-10;
+              tr {
+                @apply bg-grey-light;
+                th {
+                  @apply truncate;
+                }
+                td {
+                  @apply text-center py-4;
+                }
               }
             }
           }
         }
-      }
-      .questype-10 {
-        @apply pt-[20px] pb-[20px];
-        input {
-          @apply border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
+        .questype-10 {
+          @apply pt-[20px] pb-[20px];
+          input {
+            @apply border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
+          }
+        }
+        .questype-11 {
+          @apply pt-[20px] pb-[20px];
+          input {
+            @apply w-[60px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
+          }
+          span {
+            @apply mx-2;
+          }
+          select {
+            @apply border-0 focus:ring-0;
+          }
         }
       }
-      .questype-11 {
-        @apply pt-[20px] pb-[20px];
-        input {
-          @apply w-[60px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
-        }
-        span {
-          @apply mx-2;
-        }
-        select {
-          @apply border-0 focus:ring-0;
-        }
+    }
+    .submit-btn {
+      @apply bg-purple text-white py-[10px] px-[15px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[92%] truncate;
+      @media(max-width:1050px) {
+        @apply fixed right-[5px];
       }
     }
   }

@@ -717,6 +717,9 @@ export default {
             @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white tablet:w-full;
             .question-top {
                 @apply flex flex-wrap justify-between items-center;
+                @media (max-width:435px) {
+                  @apply flex-col items-start;
+                }
                 .upload {
                     @apply w-[41.6px] h-[41.6px] p-[10px] mt-[8px] cursor-pointer hover:bg-gray-100 rounded-[50%];
                 }
@@ -877,9 +880,6 @@ export default {
                     @apply w-full h-[52px] pr-5 flex items-center justify-end border-r border-r-gray-400;
                     img {
                         @apply w-[52px] h-[52px] p-[15px] mr-2.5 cursor-pointer hover:bg-gray-100 rounded-[50%];
-                    }
-                    @media(max-width:480px) {
-                        display: none;
                     }
                 }
 
