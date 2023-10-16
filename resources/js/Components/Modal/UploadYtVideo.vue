@@ -58,7 +58,7 @@ export default {
         </div>
         <div class="pt-[15px] h-[270px] border-b">
           <div class="px-8">
-            <div class="flex gap-5 mt-2 mb-5">
+            <div class="yt-add">
               <span class="text-normal font-bold">在這裡貼上Youtube網址:</span>
               <input type="url" class="w-2/3 h-[25px] border-gray-300 text-md" v-model="url">
             </div>
@@ -71,7 +71,7 @@ export default {
             </div>
           </div>
         </div>
-        <div class="flex py-4 px-7">
+        <div class="btn-all ">
           <button type="button"
             class="btn bg-blue text-white hover:shadow-gray-400 mr-5" @click="addvideo()">選取</button>
           <button type="button" class="btn border-grey-light bg-grey-middle hover:bg-blue-light mr-3"
@@ -88,15 +88,33 @@ export default {
     @apply w-full h-screen fixed top-0 left-0 bg-[#e6e6e65a] z-20;
     .content {
       @apply w-[800px] h-[460px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 py-8;
+      @media(max-width:850px) {
+        @apply w-[90%];
+      }
       .top {
         @apply w-full border-b pb-3 px-8 shadow-md;
+      }
+      .yt-add {
+        @apply flex gap-5 mt-2 mb-5;
+        @media(max-width:850px) {
+          @apply flex-col;
+          input {
+            @apply w-full;
+          }
+        }
       }
     }
     .navbtn {
         @apply hover:border-b hover:border-purple;
     }
-    .btn {
-      @apply px-6 py-2 rounded-[3px] hover:shadow border border-gray-300 text-xs font-semibold;
+    .btn-all {
+      @apply flex py-4 px-7;
+      @media(max-width:450px) {
+          @apply justify-between;
+        }
+      .btn {
+        @apply px-6 py-2 rounded-[3px] hover:shadow border border-gray-300 text-xs font-semibold;
+      }
     }
   }
 }

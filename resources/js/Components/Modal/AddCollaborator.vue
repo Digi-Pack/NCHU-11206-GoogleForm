@@ -162,7 +162,7 @@ export default {
     .content {
       @apply w-[500px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 py-8;
       @media (max-width: 550px) {
-        @apply w-[300px] ;
+        @apply w-[90%];
       }
     }
   }
