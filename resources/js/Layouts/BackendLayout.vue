@@ -229,7 +229,7 @@ export default {
 }
 
 #main {
-  @apply h-full min-w-[910px] relative;
+  @apply min-h-full min-w-full relative;
 }
 
 #header {
@@ -239,17 +239,32 @@ export default {
 nav {
     .container {
       @apply flex h-[107px] flex-col justify-between bg-[#ededed] relative;
+      @media (max-width: 560px) {
+        @apply h-[147px];
+      }
         .top {
+          @media (max-width: 560px) {
+            @apply h-[70%];
+          }
             .topL {
+              @media (max-width: 560px) {
+                @apply flex-col items-start justify-between pl-3;
+              }
                 .logo {
                     @apply mx-[10px];
                 }
                 .title {
                   @apply text-[#202124] text-[18px] w-[300px] font-medium;
+                  @media (max-width: 560px) {
+                    @apply w-[150px];
+                  }
                 }
             }
             .topR {
                 @apply flex justify-between items-center;
+                @media (max-width: 560px) {
+                  @apply self-start;
+                }
                 button {
                   @apply flex w-[45px] h-[45px] justify-center items-center mx-[5px];
                 }
@@ -331,6 +346,9 @@ nav {
         }
         .down {
           @apply h-[40%] bg-white flex justify-center items-end border-b-2;
+          @media (max-width: 560px) {
+            @apply justify-start pl-3 h-[30%];
+          }
             .btn {
               @apply p-[10px] text-[16px] rounded-none;
             }
