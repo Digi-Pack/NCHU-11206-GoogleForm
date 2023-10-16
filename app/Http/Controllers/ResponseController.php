@@ -18,16 +18,18 @@ class ResponseController extends Controller
     {
         // 找到對應的問券
         $responseForm = Question::find($request->id);
+        if (!$responseForm) {
+                    return Inertia::render('Backend/ResponseSum');
+                }
         // 找幾筆填答者
         $responseFormReply = Question::withCount('response')->find($request->id);
+
         // $questionNaires是問卷的題目內容
-        if (!$responseForm) {
-            return Inertia::render('Backend/ResponseSum');
-        }
         $questionNaires = json_decode($responseForm['questionnaires'], true);
+
         // 找到對應該份問卷的所有回覆
-        //$results會裝取出來的回覆資料
         $datas = Response::where('question_id', $request->id)->get();
+        //$results會裝取出來的回覆資料
         $results = [];
         foreach ($datas as $data) {
             $answer = json_decode($data['answer'], true);

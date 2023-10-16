@@ -454,10 +454,23 @@ export default {
       for (const answerSet of this.arrayB) {
         const answer = answerSet.find((answer) => parseInt(answer.id) === questionId);
         if (answer && answer.time && (answer.time.hour !== null || answer.time.minute !== null)) {
-          const zone = answer.time.hour || answer.time.minute;
+          let zone;
+          if (answer.time.section === 'p.m.') {
+            if (answer.time.hour === 12) {
+              zone = 0;
+            } else if (answer.time.hour === 0) {
+              zone = 12;
+            } else {
+              zone = 12 + answer.time.hour;
+            }
+          } else {
+            zone = answer.time.hour || answer.time.minute;
+          }
+
           if (!zoneMap.has(zone)) {
             zoneMap.set(zone, { zone: zone, time: [] });
           }
+
           const existingZone = zoneMap.get(zone);
           const formattedTime = this.formatTime(answer.time);
           const existingTime = existingZone.time.find((item) => item.time === formattedTime);
