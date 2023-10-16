@@ -333,6 +333,7 @@ export default {
       // 初始化行和列名
       const rowNames = question.square.row.map(row => row.text);
       const columnNames = question.square.column.map(col => col.text);
+      let subtextCount = 0;
 
       // 初始化数据数组
       const data = [['欄', ...columnNames]];
@@ -342,11 +343,12 @@ export default {
 
       // 遍历数组B，统计各个row-col组合的出现次数
       for (const answers of arrayB) {
+
         for (const answer of answers) {
-        //   console.log(answer.id, '我是answer1');
-        //   console.log(question.id, '我是question.id');
           if (parseInt(answer.id) === question.id) {
-            // console.log(answer, '我是answer');
+            if (answer.manyOptions.length > 0) {
+              subtextCount++;
+            }
             for (const option of answer.manyOptions) {
               const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
               if (!timeCounts[row]) {
@@ -378,12 +380,8 @@ export default {
       return {
         type: question.type,
         text: question.title,
-        subtext: arrayB.filter(answers => {
-          if (answers[question.id - 1]) {
-            return answers[question.id - 1].manyOptions.length > 0;
-          }
-          return false;
-        }).length,
+        // 這裡要改
+        subtext: subtextCount,
         data: data,
         series: series,
       };
