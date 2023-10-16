@@ -176,7 +176,6 @@ class EditorController extends Controller
     }
     public function edit_update(Request $request)
     {
-        // dd(132456798);
         $request->validate([
             'formData.*.title' => 'required|string',
             'formData.*.type' => 'required|numeric',
@@ -185,13 +184,10 @@ class EditorController extends Controller
             'formData.*.title.required' => '問題:position必填 ',
             'formText.qu_naires_title.required' => '表單標題必填',
         ]);
-        // dd(json_encode($request->formData, JSON_UNESCAPED_UNICODE));
 
         $jsonText = json_encode($request->formData, JSON_UNESCAPED_UNICODE);
 
         // 找到表單id
-        // $updateForm = Question::where('lead_author_id', $request->user()->id)->find($request->formText['id']);
-
         $updateForm = Question::where(function ($query) use ($request) {
             return $query->where('lead_author_id', $request->user()->id)
                 ->orWhereHas('coworker', function ($coQuery) use ($request) {
@@ -199,11 +195,11 @@ class EditorController extends Controller
                 });
         })->find($request->formText['id']);
 
+
         // 處理圖片
         foreach ($request->formData as $item) {
             $item['image'] = $this->fileService->base64Upload($request->image, 'editor');
         }
-        // dd($updateForm);
         $updateForm->update([
             'qu_naires_title' => $request->formText['qu_naires_title'],
             'qu_naires_desc' => $request->formText['qu_naires_desc'],
