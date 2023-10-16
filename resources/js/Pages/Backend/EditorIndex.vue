@@ -415,9 +415,9 @@ export default {
   <input hidden type="text" v-model="userInformation">
   <section id="question" class="pt-[10px] z-2" ref="main">
     <div class="container">
-      <form class="min-w-[840px] flex justify-between" @submit.prevent="submitData()">
+      <form class="w-[840px] tablet:w-full flex justify-between tablet:justify-center" @submit.prevent="submitData()">
         <!-- 表單命名處 -->
-        <div class="max-w-[770px]">
+        <div class="w-[770px] tablet:w-full">
           <div class="form-title">
             <!-- 表單名稱 -->
             <input v-model="formText.qu_naires_title" type="text" placeholder="未命名的表單" class="form-input form-title-input truncate" required @input="updateFormTitle">
@@ -699,9 +699,9 @@ export default {
 
 <style lang="scss" scoped>
 #question {
-    @apply min-h-[100vh] pl-[70px];
+    @apply min-h-[100vh] pl-[70px] tablet:pl-0;
     .container {
-        @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px];
+        @apply max-w-[840px] min-h-full m-auto relative flex justify-between mt-[30px] pb-[20px] tablet:mt-0 tablet:max-w-full tablet:items-center;
         .side {
             @apply w-[49px] h-[210px] flex flex-col bg-white rounded-[10px] shadow tablet:fixed tablet:flex-row tablet:justify-around tablet:h-[60px] tablet:w-[98%] tablet:top-[calc(100%-60px)] tablet:left-2 tablet:items-center;
             img {
@@ -728,7 +728,7 @@ export default {
             }
         }
         .form-title {
-            @apply max-w-[770px] rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+            @apply w-[770px] tablet:w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
             .form-input {
                 @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:ring-0;
             }
@@ -740,9 +740,13 @@ export default {
             }
         }
         .question {
-            @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white;
+            @apply rounded-[10px] border-l-[10px] border-l-purple p-[24px] my-[12px] bg-white tablet:w-full;
             .question-top {
                 @apply flex flex-wrap justify-between items-center;
+                @media (max-width:435px) {
+                    flex-direction: column;
+                    align-items: start;
+                }
                 .upload {
                     @apply w-[41.6px] h-[41.6px] p-[10px] mt-[8px] cursor-pointer hover:bg-gray-100 rounded-[50%];
                 }
@@ -906,10 +910,6 @@ export default {
 
                     img {
                         @apply w-[52px] h-[52px] p-[15px] mr-2.5 cursor-pointer hover:bg-gray-100 rounded-[50%];
-                    }
-
-                    @media(max-width:480px) {
-                        display: none;
                     }
                 }
 
