@@ -252,13 +252,11 @@ export default {
           count = 0; // 在這裡定義並初始化 count
           this.arrayB.forEach((answerSet) => {
             const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
-            if (answer) {
-              if (answer && answer.answer !== 'null') {
+            if (answer && answer.answer !== 'null') {
               // 比較 answer.answer 和 option.id
-                if (answer && parseInt(answer.answer) === option.id) {
-                  count++;
-                  subtextCount++;
-                }
+              if (answer && parseInt(answer.answer) === option.id) {
+                count++;
+                subtextCount++;
               }
             }
 
