@@ -528,20 +528,17 @@ export default {
       let subtext = 0;
       let answerArray = [];
 
-      // 遍历数组B中的子数组
-      for (let j = 0; j < this.arrayB.length; j++) {
-        let answerSet = this.arrayB[j];
-        if (answerSet[question.id - 1]) {
-          let answer = answerSet[question.id - 1].answer; // 获取对应问题的答案
-          if (answer !== null && answer.trim() !== '') {
+      this.arrayB.forEach((answerSet) => {
+        const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
+        if (answer) {
+          if (answer && answer.answer !== 'null') {
+          // 比較 answer.answer 和 option.id
+            answerArray.push(answer.answer);
             subtext++;
-            answerArray.push(answer);
           }
         }
 
-        // 检查答案是否不为 null 或空字符串
-
-      }
+      });
 
       return {
         type: question.type,
