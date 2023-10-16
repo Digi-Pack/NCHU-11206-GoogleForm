@@ -50,7 +50,7 @@ export default {
     <div class="container">
       <div class="content">
         <div class="flex justify-between items-center">
-          <h1 class="text-[24px] text-black">刪除「{{ formTitle }}」表單</h1>
+          <h1 class="content-title text-[24px] text-black">刪除「{{ formTitle }}」表單</h1>
           <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
             <img :src="close" alt="">
           </button>
@@ -76,7 +76,15 @@ export default {
     @apply w-full h-screen fixed top-0 left-0 bg-[#e6e6e65a] z-20;
 
     .content {
-      @apply w-[500px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8;
+      @apply w-[500px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6;
+      @media (max-width: 550px) {
+        @apply w-[300px];
+      }
+      .content-title {
+        @media (max-width: 550px) {
+          @apply text-[17px] font-semibold;
+        }
+      }
     }
   }
 }

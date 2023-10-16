@@ -191,9 +191,6 @@ export default {
                   <img class="photo" :src="images.user" alt="">
                   <div class="hello"><span>{{ $page.props.auth.user.name }}</span>，你好!</div>
                   <div class="acc mb-3">
-                    <Link class="manage" :href="route('profile.edit')">
-                      <div>管理你的帳戶</div>
-                    </Link>
                     <DropdownLink :href="route('logout')" method="post" as="button" class="log-out">
                       登出
                     </DropdownLink>
@@ -226,10 +223,13 @@ export default {
 <style lang="scss" scoped>
 #frontend-layout {
   @apply w-full mt-[107px];
+  @media (max-width: 560px) {
+    @apply overflow-y-hidden;
+  }
 }
 
 #main {
-  @apply min-h-full min-w-full relative;
+  @apply min-h-full w-full relative;
 }
 
 #header {
@@ -248,7 +248,7 @@ nav {
           }
             .topL {
               @media (max-width: 560px) {
-                @apply flex-col items-start justify-between pl-3;
+                @apply flex-col items-start justify-between;
               }
                 .logo {
                     @apply mx-[10px];
@@ -274,6 +274,9 @@ nav {
 
                 .topic {
                   @apply shadow-lg w-[350px] absolute right-0 top-[107px] bg-white;
+                  @media (max-width: 560px) {
+                    @apply top-[147px];
+                  }
                   .topic-head {
                   @apply px-[20px] w-full flex justify-between items-center drop-shadow-sm;
                     .top-text {
@@ -320,6 +323,9 @@ nav {
                 }
                 #account-menu {
                   @apply w-[350px] h-[300px] bg-purple-dark border border-[gainsboro] px-[10px] py-[15px] rounded-[30px] hidden shadow-lg absolute top-[80px] right-[30px] z-[1];
+                  @media (max-width: 550px) {
+                    @apply w-[300px] right-[20px];
+                  }
                     .google {
                       @apply w-[100%] h-[100%] flex-col flex justify-between items-center;
                         .photo {
@@ -329,12 +335,12 @@ nav {
                           @apply w-[80%] h-[30px] text-xl flex justify-center items-center;
                         }
                         .acc {
-                          @apply w-[80%] h-[50px] flex flex-row justify-between;
+                          @apply w-[80%] h-[50px] flex flex-row justify-center;
                             .manage {
                               @apply w-[59.5%] h-[50px] flex justify-center items-center bg-grey-gray drop-shadow-md border border-grey rounded-l-[30px] hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                             .log-out {
-                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md rounded-r-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
+                              @apply w-[39.5%] h-[50px] border border-grey drop-shadow-md rounded-[30px] flex justify-center items-center bg-grey-gray hover:bg-white hover:drop-shadow-lg hover:font-semibold;
                             }
                         }
                     }
@@ -347,7 +353,7 @@ nav {
         .down {
           @apply h-[40%] bg-white flex justify-center items-end border-b-2;
           @media (max-width: 560px) {
-            @apply justify-start pl-3 h-[30%];
+            @apply justify-start h-[30%];
           }
             .btn {
               @apply p-[10px] text-[16px] rounded-none;

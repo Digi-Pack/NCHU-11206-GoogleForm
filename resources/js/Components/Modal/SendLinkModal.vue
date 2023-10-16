@@ -105,6 +105,9 @@ export default {
     @apply w-full h-screen fixed top-0 left-0 bg-[#0101015a] z-10;
     .content {
       @apply w-[600px] h-[400px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5;
+      @media (max-width: 650px) {
+        @apply w-[300px];
+      }
     }
   }
 }

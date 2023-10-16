@@ -108,21 +108,21 @@ export default {
     <div class="container">
       <form @submit.prevent="submitDataId()">
         <div class="content">
-          <div class="flex justify-between items-center px-8">
-            <h1 class="text-[18px] text-black">將編輯者新增至<span>「未命名表單」</span></h1>
+          <div class="flex justify-between items-center px-6">
+            <h1 class="content-title text-[18px] text-black">將編輯者新增至表單</h1>
             <button type="button" class="text-[28px] font-bold text-black" @click="closing()">
               <img :src="images.close" alt="">
             </button>
           </div>
           <div class="pt-[15px]">
             <div class="flex flex-col gap-4">
-              <div class="px-8 flex flex-col gap-4">
+              <div class="px-6 flex flex-col gap-4">
                 <input v-model="co_email" type="email" class="w-full h-[45px] rounded-md text-[14px]"
                   placeholder="新增使用者">
                 <p>具有存取權的使用者</p>
               </div>
-              <div class="flex items-center gap-3 hover:bg-grey-light px-8 w-full">
-                <div class="rounded-full bg-purple w-[22px] h-[22px]"></div>
+              <div class="flex items-center gap-3 hover:bg-grey-light px-6 w-full">
+                <div class="rounded-full bg-purple min-w-[22px] h-[22px]"></div>
                 <div class="flex flex-col">
                   <span class="text-[12px]">{{ formOwner.name }}</span>
                   <span class="text-[12px] text-[#6e6e6e]">{{ formOwner.email }}</span>
@@ -161,6 +161,9 @@ export default {
     @apply w-full h-screen fixed top-0 left-0 bg-[#e6e6e65a] z-20;
     .content {
       @apply w-[500px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 py-8;
+      @media (max-width: 550px) {
+        @apply w-[300px] ;
+      }
     }
   }
 }
