@@ -306,8 +306,9 @@ export default {
       }
       let subtextCount = 0; // 初始化 subtext 计数
       for (const answerSet of this.arrayB) {
-        if (answerSet[this.arrayA.indexOf(question)]) {
-          const manyOptionsValue = answerSet[this.arrayA.indexOf(question)].manyOptions; // 使用问题的索引获取manyOptions值
+        const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
+        if (answer) {
+          const manyOptionsValue = answer.manyOptions;
           if (manyOptionsValue >= min && manyOptionsValue <= max) {
           // 计算数据数组的索引
             const dataIndex = manyOptionsValue - min;
@@ -317,7 +318,6 @@ export default {
             subtextCount++;
           }
         }
-
       }
 
       return {
@@ -380,7 +380,6 @@ export default {
       return {
         type: question.type,
         text: question.title,
-        // 這裡要改
         subtext: subtextCount,
         data: data,
         series: series,
