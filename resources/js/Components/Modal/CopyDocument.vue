@@ -88,7 +88,10 @@ export default {
   .container {
     @apply w-full h-screen fixed top-0 left-0 bg-[#e6e6e65a] z-20;
     .content {
-      @apply w-[500px] h-[300px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8;
+      @apply w-[500px] h-[300px] bg-white rounded-xl border shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6;
+      @media (max-width: 550px) {
+        @apply w-[300px] ;
+      }
     }
   }
 }

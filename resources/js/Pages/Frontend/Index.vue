@@ -49,10 +49,13 @@ export default {
 
 <style lang="scss" scoped>
 #frontend-index {
-  @apply w-full min-h-screen overflow-y-auto bg-gradient-to-tr p-5 from-black to-gray-600 bg-cover;
+  @apply w-full min-h-screen overflow-y-auto bg-gradient-to-tr p-5 from-black to-gray-600 bg-cover bg-center;
   background-image: url('../../../images/mountain.jpg');
   .title {
-    @apply text-[6.25rem] text-center text-grey-light justify-self-center items-center;
+    @apply text-[6.25rem] text-center text-grey-light justify-self-center items-center pb-32;
+    @media(max-width:508px) {
+      @apply text-[64px];
+    }
     .wave {
       @apply inline-block;
       animation: wave 5s infinite; /* 應用波浪動畫，交替反向播放 */
