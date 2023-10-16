@@ -422,11 +422,12 @@ export default {
     timeTotal(question) {
       const subtext = this.timeSubtext(question.id);
       const timeAll = this.timeAll(question.id);
-
+      //   console.log(timeAll);
       // 在每个timeAll对象内对time进行排序
       timeAll.sort((a, b) => {
         // 比较ZONE值，愈小的排后面
-        return a.zone.localeCompare(b.zone);
+        // console.log(a, b);
+        return a.zone.toString().localeCompare(b.zone.toString());
       });
 
       return {
