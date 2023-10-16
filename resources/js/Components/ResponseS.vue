@@ -1,4 +1,4 @@
-<template>{{ chartOptions }}
+<template>
   <div v-for="(option, index) in chartOptions"
     :key="index">
     <!-- Echart -->
@@ -277,6 +277,7 @@ export default {
 
       return {
         type: question.type,
+        // subtext:
         text: question.title,
         yAxis: question.options.map((option) => option.value),
         data: data,
@@ -287,7 +288,6 @@ export default {
       this.arrayB.forEach((answerSet) => {
         answerSet.forEach((answer) => {
           if (parseInt(answer.id) === questionId && answer.manyOptions.includes(optionId.toString())) {
-            console.log(13);
             count++;
           }
         });
