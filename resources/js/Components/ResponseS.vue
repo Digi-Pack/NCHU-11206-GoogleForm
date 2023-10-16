@@ -471,16 +471,29 @@ export default {
       return Array.from(zoneMap.values());
     },
     formatTime(time) {
+      console.log(time.section);
+      const section = time.section || '';
       const hour = time.hour || '00';
       const minute = time.minute || '00';
-      if (time.hour !== null && time.minute !== null) {
-        return `凌晨${hour}:${minute}`;
-      } else if (time.hour !== null) {
-        return `上午${hour}:${minute}`;
-      } else if (time.minute !== null) {
-        return `凌晨${minute}`;
+      if (section === 'a.m.') {
+        if (hour >= 0 && hour <= 5) {
+          return `凌晨${hour}:${minute}`;
+        } else if (hour >= 6 && hour <= 11) {
+          return `早上${hour}:${minute}`;
+        }
+        return `中午${hour}:${minute}`;
+
+      } else if (section === 'p.m.') {
+        if (hour === 0) {
+          return `中午12:${minute}`;
+        } else if (hour >= 1 && hour <= 5) {
+          return `下午${hour}:${minute}`;
+        } else if (hour >= 6 && hour <= 11) {
+          return `晚上${hour}:${minute}`;
+        }
+        return `凌晨00:${minute}`;
+
       }
-      return '';
     },
     shortLongAnswer(question) {
       let subtext = 0;
