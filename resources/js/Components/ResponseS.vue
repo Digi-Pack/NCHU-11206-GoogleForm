@@ -301,15 +301,18 @@ export default {
       }
       let subtextCount = 0; // 初始化 subtext 计数
       for (const answerSet of this.arrayB) {
-        const manyOptionsValue = answerSet[this.arrayA.indexOf(question)].manyOptions; // 使用问题的索引获取manyOptions值
-        if (manyOptionsValue >= min && manyOptionsValue <= max) {
+        if (answerSet[this.arrayA.indexOf(question)]) {
+          const manyOptionsValue = answerSet[this.arrayA.indexOf(question)].manyOptions; // 使用问题的索引获取manyOptions值
+          if (manyOptionsValue >= min && manyOptionsValue <= max) {
           // 计算数据数组的索引
-          const dataIndex = manyOptionsValue - min;
-          data[dataIndex]++;
+            const dataIndex = manyOptionsValue - min;
+            data[dataIndex]++;
+          }
+          if (manyOptionsValue >= 0) {
+            subtextCount++;
+          }
         }
-        if (manyOptionsValue >= 0) {
-          subtextCount++;
-        }
+
       }
 
       return {
@@ -335,7 +338,10 @@ export default {
       // 遍历数组B，统计各个row-col组合的出现次数
       for (const answers of arrayB) {
         for (const answer of answers) {
+        //   console.log(answer.id, '我是answer1');
+        //   console.log(question.id, '我是question.id');
           if (parseInt(answer.id) === question.id) {
+            // console.log(answer, '我是answer');
             for (const option of answer.manyOptions) {
               const [row, col] = option.match(/row(\d+)col(\d+)/).slice(1); // 解析row和col
               if (!timeCounts[row]) {
@@ -367,7 +373,12 @@ export default {
       return {
         type: question.type,
         text: question.title,
-        subtext: arrayB.filter(answers => answers[question.id - 1].manyOptions.length > 0).length,
+        subtext: arrayB.filter(answers => {
+          if (answers[question.id - 1]) {
+            return answers[question.id - 1].manyOptions.length > 0;
+          }
+          return false;
+        }).length,
         data: data,
         series: series,
       };
@@ -515,13 +526,16 @@ export default {
       // 遍历数组B中的子数组
       for (let j = 0; j < this.arrayB.length; j++) {
         let answerSet = this.arrayB[j];
-        let answer = answerSet[question.id - 1].answer; // 获取对应问题的答案
+        if (answerSet[question.id - 1]) {
+          let answer = answerSet[question.id - 1].answer; // 获取对应问题的答案
+          if (answer !== null && answer.trim() !== '') {
+            subtext++;
+            answerArray.push(answer);
+          }
+        }
 
         // 检查答案是否不为 null 或空字符串
-        if (answer !== null && answer.trim() !== '') {
-          subtext++;
-          answerArray.push(answer);
-        }
+
       }
 
       return {
