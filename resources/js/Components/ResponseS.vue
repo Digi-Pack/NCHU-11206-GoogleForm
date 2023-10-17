@@ -497,7 +497,6 @@ export default {
       return Array.from(zoneMap.values());
     },
     formatTime(time) {
-      console.log(time.section);
       const section = time.section || '';
       const hour = time.hour || '00';
       const minute = time.minute || '00';
