@@ -28,7 +28,7 @@ export default {
     {{ value.ans }} -->
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1 && !value.ans" class="responser">
-      <div class="text">
+      <div class="text pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
       </div>
       <div class="reply"><a href="#">0 則回應</a></div>
@@ -41,7 +41,7 @@ export default {
     </div>
     <!-- 詳答 -->
     <div v-if="value.qus.type === 2 && !value.ans" class="responser">
-      <div class="text">
+      <div class="text pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
       </div>
       <div class="reply"><a href="#">0 則回應</a></div>
@@ -54,7 +54,7 @@ export default {
     </div>
     <!-- 選擇題 -->
     <div v-if="value.qus.type === 3 && !value.ans">
-      <div class="responser">
+      <div class="responser pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
@@ -71,7 +71,7 @@ export default {
     </div>
     <!-- 核取方塊 -->
     <div v-if="value.qus.type === 4 && !value.ans">
-      <div class="responser">
+      <div class="responser pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
@@ -106,7 +106,7 @@ export default {
     </div>
     <!-- 檔案上傳 -->
     <div v-if="value.qus.type === 6 && !value.ans">
-      <div class="responser flex flex-col justify-center">
+      <div class="responser flex flex-col justify-center pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
@@ -121,7 +121,7 @@ export default {
       </div>
     </div>
     <!-- 線性刻度 -->
-    <div v-if="value.qus.type === 7 && !value.ans" class="!block responser">
+    <div v-if="value.qus.type === 7 && !value.ans" class="!block responser pt-5 ps-5">
       (使用者填寫表單時，未建立此問題)
       <div class="reply"><a href="#">0 則回應</a></div>
     </div>
@@ -141,7 +141,7 @@ export default {
     </div>
     <!-- 單選方格 -->
     <div v-if="value.qus.type === 8 && !value.ans">
-      <div class="responser px-5">
+      <div class="responser pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
@@ -171,7 +171,7 @@ export default {
     </div>
     <!-- 核取方塊格 -->
     <div v-if="value.qus.type === 9 && !value.ans">
-      <div class="responser px-5">
+      <div class="responser pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
@@ -201,7 +201,7 @@ export default {
     </div>
     <!-- 日期 -->
     <div v-if="value.qus.type === 10 && !value.ans">
-      <div class="responser">
+      <div class="responser pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
@@ -219,7 +219,7 @@ export default {
     </div>
     <!-- 時間 -->
     <div v-if="value.qus.type === 11 && !value.ans">
-      <div class="responser">
+      <div class="responser pt-5 ps-5">
         (使用者填寫表單時，未建立此問題)
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
