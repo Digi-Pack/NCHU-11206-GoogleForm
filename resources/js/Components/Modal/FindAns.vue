@@ -89,7 +89,7 @@ export default {
         <div v-for="(choose) in value.qus.options" :key="choose.id" class="option">
           <!-- {{ value.ans.manyOptions.includes(String(choose.id)) }} -->
           <!-- {{ String(choose.id) }} -->
-          <input type="checkbox" class="choice-2 ml-5 text-grey" disabled :checked="value.ans.manyOptions.includes(String(choose.id))">
+          <input type="checkbox" class="choice-2 ml-5 text-grey" disabled :checked="value.ans?.manyOptions?.includes(String(choose.id))">
           <span class="text-[16px] px-5 text-grey">{{ choose.value }}</span>
         </div>
         <div class="reply"><a href="#">1 則回應</a></div>
@@ -173,7 +173,6 @@ export default {
               <th class="truncate">{{ choose.text }}</th>
               <td v-for="choosecol in value.qus.square.column" :key="choosecol.id" class="text-center py-4">
                 <input type="radio" class="text-grey p-2" disabled>
-                <input type="radio" class="text-grey p-2" disabled>
               </td>
             </tr>
           </tbody>
@@ -194,7 +193,7 @@ export default {
             <tr v-for="choose in value.qus.square.row" :key="choose.id" class="bg-grey-light">
               <th class="truncate">{{ choose.text }}</th>
               <td v-for="choosecol in value.qus.square.column" :key="choosecol.id" class="text-center py-4">
-                <input v-if="value.ans.manyOptions.includes(`row${choose.id}col${choosecol.id}`)" type="radio"
+                <input v-if="value.ans?.manyOptions?.includes(`row${choose.id}col${choosecol.id}`)" type="radio"
                   class="text-grey p-2" disabled checked>
                 <input type="radio" class="text-grey p-2" disabled v-else>
               </td>
@@ -240,7 +239,7 @@ export default {
             <tr v-for="choose in value.qus.square.row" :key="choose.id" class="bg-grey-light">
               <th class="truncate">{{ choose.text }}</th>
               <td v-for="choosecol in value.qus.square.column" :key="choosecol.id" class="text-center py-4">
-                <input v-if="value.ans.manyOptions.includes(`row${choose.id}col${choosecol.id}`)" type="checkbox"
+                <input v-if="value.ans?.manyOptions?.includes(`row${choose.id}col${choosecol.id}`)" type="checkbox"
                   class="text-grey p-2" disabled checked>
                 <input type="checkbox" class="text-grey p-2" disabled v-else>
               </td>

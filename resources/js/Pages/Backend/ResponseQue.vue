@@ -174,6 +174,7 @@ export default {
             </div>
           </div>
         </div>
+        <!-- {{ findAns }} -->
         <div v-for="item in findAns" :key="item.id">
           <FindAns :value="item" />
         </div>
