@@ -287,7 +287,7 @@ export default {
       let count = 0;
       this.arrayB.forEach((answerSet) => {
         answerSet.forEach((answer) => {
-          if (parseInt(answer.id) === questionId && answer.manyOptions.includes(optionId.toString())) {
+          if (parseInt(answer.id) === questionId && answer.manyOptions && answer.manyOptions.includes(optionId.toString())) {
             count++;
           }
         });
@@ -346,7 +346,7 @@ export default {
 
         for (const answer of answers) {
           if (parseInt(answer.id) === question.id) {
-            if (answer.manyOptions.length > 0) {
+            if (answer.manyOptions && answer.manyOptions.length > 0) {
               subtextCount++;
             }
             for (const option of answer.manyOptions) {
