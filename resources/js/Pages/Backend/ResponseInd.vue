@@ -169,14 +169,14 @@ export default {
             </div>
             <div v-if="item.type === 1" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-1 w-1/2 border-b-black border-b border-dotted">
+              <div v-if="ansStringJson[key]" class="questype-1 w-1/2 border-b-black border-b border-dotted">
                 {{ ansStringJson[key].answer }}
               </div>
             </div>
             <!-- 詳答 -->
             <div v-if="item.type === 2" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-2 border-b-black border-b border-dotted">
+              <div v-if="ansStringJson[key]" class="questype-2 border-b-black border-b border-dotted">
                 {{ ansStringJson[key].answer }}
               </div>
             </div>
@@ -184,47 +184,91 @@ export default {
             <div v-if="item.type === 3">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-3">
-                <div v-for="choose in item.options" :key="choose.id" class="option my-3">
-                  <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3 text-grey"
-                    :value="choose.id" disabled>
-                  <label for="choice-1 w-full truncate">{{ choose.value }}</label>
+                <div v-if="!ansStringJson[key]">
+                  <div v-for="choose in item.options" :key="choose.id" class="option my-3">
+                    <input type="radio" class="choice-1 mr-3 text-grey"
+                      :value="choose.id" disabled>
+                    <label for="choice-1 w-full truncate">{{ choose.value }}</label>
+                  </div>
+                </div>
+                <div v-if="ansStringJson[key]">
+                  <div v-for="choose in item.options" :key="choose.id" class="option my-3">
+                    <input v-model="ansStringJson[key].answer" type="radio" class="choice-1 mr-3 text-grey"
+                      :value="choose.id" disabled>
+                    <label for="choice-1 w-full truncate">{{ choose.value }}</label>
+                  </div>
                 </div>
               </div>
             </div>
             <!-- 核取方塊 -->
             <div v-if="item.type === 4" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-4">
-                <div v-for="choose in item.options" :key="choose.id" class="option my-3">
-                  <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3 text-grey"
-                    :value="choose.id" disabled>
-                  <label for="focus w-full truncate">{{ choose.value }}</label>
+              <div v-if="!ansStringJson[key]">
+                <div class="questype-4">
+                  <div v-for="choose in item.options" :key="choose.id" class="option my-3">
+                    <input type="checkbox" class="focus mr-3 text-grey"
+                      :value="choose.id" disabled>
+                    <label for="focus w-full truncate">{{ choose.value }}</label>
+                  </div>
+                </div>
+              </div>
+              <div v-if="ansStringJson[key]">
+                <div class="questype-4">
+                  <div v-for="choose in item.options" :key="choose.id" class="option my-3">
+                    <input v-model="ansStringJson[key].manyOptions" type="checkbox" class="focus mr-3 text-grey"
+                      :value="choose.id" disabled>
+                    <label for="focus w-full truncate">{{ choose.value }}</label>
+                  </div>
                 </div>
               </div>
             </div>
             <!-- 下拉式選單 -->
             <div v-if="item.type === 5" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-5 mt-5">
-                <label for="select"></label>
-                <select v-model="ansStringJson[key].answer" name="select" id="select"
-                  class="border-grey-dark rounded-md w-[200px] py-3">
-                  <option v-for="choose in item.options" :key="choose.id" :value="choose.id" disabled>{{ choose.value
-                  }}
-                  </option>
-                </select>
+              <div v-if="!ansStringJson[key]">
+                <div class="questype-5 mt-5">
+                  <label for="select"></label>
+                  <select name="select" id="select"
+                    class="border-grey-dark rounded-md w-[200px] py-3">
+                    <option v-for="choose in item.options" :key="choose.id" :value="choose.id" disabled>{{ choose.value
+                    }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div v-if="ansStringJson[key]">
+                <div class="questype-5 mt-5">
+                  <label for="select"></label>
+                  <select v-model="ansStringJson[key].answer" name="select" id="select"
+                    class="border-grey-dark rounded-md w-[200px] py-3">
+                    <option v-for="choose in item.options" :key="choose.id" :value="choose.id" disabled>{{ choose.value
+                    }}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
             <!-- 檔案上傳 -->
             <div v-if="item.type === 6" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div
-                class="questype-6 border-[2px] mt-2 border-grey rounded-md w-1/2 hover:border-gray-600 active:hover:border-white active:bg-grey-dark">
-                <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name"
-                  class="flex items-center gap-2 px-2 py-1">
-                  <img :src="image" alt="">
-                  <span class="truncate !text-gray-800">{{ ansStringJson[key].file.name }}</span>
-                </a>
+              <div v-if="!ansStringJson[key]">
+                <div
+                  class="questype-6 border-[2px] mt-2 border-grey rounded-md w-1/2 hover:border-gray-600 active:hover:border-white active:bg-grey-dark">
+                  <div class="flex items-center gap-2 px-2 py-1">
+                    <img :src="image" alt="">
+                    <span class="truncate !text-gray-800"></span>
+                  </div>
+                </div>
+              </div>
+              <div v-if="ansStringJson[key]">
+                <div
+                  class="questype-6 border-[2px] mt-2 border-grey rounded-md w-1/2 hover:border-gray-600 active:hover:border-white active:bg-grey-dark">
+                  <a :href="ansStringJson[key].file.path" :download="ansStringJson[key].file.name"
+                    class="flex items-center gap-2 px-2 py-1">
+                    <img :src="image" alt="">
+                    <span class="truncate !text-gray-800">{{ ansStringJson[key].file.name }}</span>
+                  </a>
+                </div>
               </div>
             </div>
             <!-- 線性刻度 -->
@@ -232,11 +276,21 @@ export default {
               <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
               <div class="questype-7 flex justify-center items-center gap-6 my-10">
                 <span class="w-[120px] flex justify-end pt-12 truncate">{{ item.linear.minText }}</span>
-                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
-                  class="flex flex-col items-center gap-5">
-                  <label> {{ i }}
-                  </label>
-                  <input v-model="ansStringJson[key].manyOptions" type="radio" class="text-grey p-3" :value="i" disabled>
+                <div v-if="!ansStringJson[key]">
+                  <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
+                    class="flex flex-col items-center gap-5">
+                    <label> {{ i }}
+                    </label>
+                    <input type="radio" class="text-grey p-3" :value="i" disabled>
+                  </div>
+                </div>
+                <div v-if="ansStringJson[key]">
+                  <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
+                    class="flex flex-col items-center gap-5">
+                    <label> {{ i }}
+                    </label>
+                    <input v-model="ansStringJson[key].manyOptions" type="radio" class="text-grey p-3" :value="i" disabled>
+                  </div>
                 </div>
                 <span class="w-[120px] truncate pt-12">{{ item.linear.maxText }}</span>
               </div>
@@ -245,6 +299,54 @@ export default {
             <div v-if="item.type === 8" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
               <div class="questype-8">
+                <table v-if="!ansStringJson[key]" class="w-full table-fixed border-separate border-spacing-y-2">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th v-for="choose in item.square.column" :key="choose.id" class="truncate">{{ choose.text }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
+                      <th class="truncate">{{ choose.text }}</th>
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id"
+                        class="text-center py-4">
+                        <input class="text-grey" type="radio"
+                          :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
+                          disabled>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <table v-if="ansStringJson[key]" class="w-full table-fixed border-separate border-spacing-y-2">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th v-for="choose in item.square.column" :key="choose.id" class="truncate">{{ choose.text }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr v-for="(choose, innerkey) in item.square.row" :key="choose.id" class="bg-purple-light">
+                      <th class="truncate">{{ choose.text }}</th>
+                      <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id"
+                        class="text-center py-4">
+                        <input v-model="ansStringJson[key].manyOptions[innerkey]" class="text-grey" type="radio"
+                          :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
+                          disabled>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- 核取方塊格 -->
+            <div v-if="item.type === 9" class="!block">
+              <span class="text-[18px]">{{ item.title }}</span>
+              <div v-if="!ansStringJson[key]" class="questype-9 w-full">
                 <table class="w-full table-fixed border-separate border-spacing-y-2">
                   <thead>
                     <tr>
@@ -257,19 +359,15 @@ export default {
                       <th class="truncate">{{ choose.text }}</th>
                       <td v-for="(choosecol, innerinnerkey) in item.square.column" :key="choosecol.id"
                         class="text-center py-4">
-                        <input v-model="ansStringJson[key].manyOptions[innerkey]" class="text-grey" type="radio"
-                          :name="'only-' + key + innerkey" :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)"
-                          disabled>
+                        <input class="text-grey" type="checkbox"
+                          :name="'many-' + innerkey + '-' + innerinnerkey"
+                          :value="'row' + (innerkey + 1) + 'col' + (innerinnerkey + 1)" disabled>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </div>
-            <!-- 核取方塊格 -->
-            <div v-if="item.type === 9" class="!block">
-              <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-9 w-full">
+              <div v-if="ansStringJson[key]" class="questype-9 w-full">
                 <table class="w-full table-fixed border-separate border-spacing-y-2">
                   <thead>
                     <tr>
@@ -294,7 +392,11 @@ export default {
             <!-- 日期 -->
             <div v-if="item.type === 10" class="!block">
               <!-- <span class="text-[18px]">{{ item.title }}</span> -->
-              <div class="questype-10 flex flex-col">
+              <div v-if="!ansStringJson[key]" class="questype-10 flex flex-col">
+                <div class="text-grey text-sm tracking-widest">YYYY MM DD</div>
+                <input type="date" class="border-0 pl-0 tracking-wider" disabled>
+              </div>
+              <div v-if="ansStringJson[key]" class="questype-10 flex flex-col">
                 <div class="text-grey text-sm tracking-widest">YYYY MM DD</div>
                 <input v-model="ansStringJson[key].answer" type="date" class="border-0 pl-0 tracking-wider" disabled>
               </div>
@@ -303,7 +405,18 @@ export default {
             <!-- 時間 -->
             <div v-if="item.type === 11" class="!block">
               <span class="text-[18px]">{{ item.title }}</span>
-              <div class="questype-11 flex justify-start items-center">
+              <div v-if="!ansStringJson[key]" class="questype-11 flex justify-start items-center">
+                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2"
+                  disabled>
+                <span>:</span>
+                <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2"
+                  disabled>
+                <select name="" id="" class="border-0">
+                  <option value="a.m." disabled>上午</option>
+                  <option value="p.m." disabled>下午</option>
+                </select>
+              </div>
+              <div v-if="ansStringJson[key]" class="questype-11 flex justify-start items-center">
                 <input type="text" class="border-0 border-b border-dotted w-[17px] p-0 mx-2"
                   v-model="ansStringJson[key].time.hour" disabled>
                 <span>:</span>
