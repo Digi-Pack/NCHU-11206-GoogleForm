@@ -124,15 +124,14 @@ export default {
 
 <template>
   <section id="question">
-    <form @submit.prevent="submitData()"
-      class="flex justify-between items-center m-auto max-w-[920px] relative min-h-screen">
+    <form @submit.prevent="submitData()">
       <div class="container">
         <!-- 表單命名處 -->
         <div class="form-title">
           <!-- 表單名稱 -->
-          <div class="form-input form-title-input truncate">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
+          <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
           <!-- 表單說明 -->
-          <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }}
+          <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }}
           </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
@@ -278,12 +277,10 @@ export default {
           </div>
           <!-- 日期 -->
           <div v-if="item.type === 10" class="!block">
-
             <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-10">
               <input v-model="formData[key].answer" type="date" :required="item.request">
             </div>
-
           </div>
           <!-- 時間 -->
           <div v-if="item.type === 11" class="!block">
@@ -316,7 +313,11 @@ export default {
 <style lang="scss" scoped>
 #question {
   @apply pl-[150px];
+  @media(max-width:1050px) {
+    @apply pl-0;
+  }
   form {
+    @apply flex justify-between items-center m-auto max-w-[920px] relative min-h-screen;
     .container {
       @apply max-w-[770px] m-auto relative mt-[20px];
       .form-title {
@@ -325,10 +326,10 @@ export default {
           @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
         }
         .form-title-input {
-          @apply h-[45px] text-[32px];
+          @apply h-auto text-[32px] leading-9;
         }
         .form-explain-input-2 {
-          @apply h-[34px] text-[18px] text-grey;
+          @apply h-auto text-[18px] text-grey;
         }
       }
       .question {

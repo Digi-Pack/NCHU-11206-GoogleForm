@@ -123,9 +123,9 @@ export default {
         <!-- 表單命名處 -->
         <div class="form-title">
           <!-- 表單名稱 -->
-          <div class="form-input form-title-input truncate">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
+          <div class="form-input form-title-input">{{ response.rt_data.responseForm[0].qu_naires_title }} </div>
           <!-- 表單說明 -->
-          <div class="form-input form-explain-input-2 truncate">{{ response.rt_data.responseForm[0].qu_naires_desc }}
+          <div class="form-input form-explain-input-2">{{ response.rt_data.responseForm[0].qu_naires_desc }}
           </div>
         </div>
         <div v-for="(item, key) in response.rt_data.questionNaires" :key="item.id" class="question">
@@ -292,13 +292,6 @@ export default {
               </select>
             </div>
           </div>
-          <!-- 圖片 -->
-          <!-- <div v-if="item.type === 12" class="!block">
-            <span class="text-[18px]">{{ item.title }}</span>
-            <div class="p-5">
-              <img :src="item.image" class="w-full aspect-[5/3] object-cover" alt="">
-            </div>
-          </div> -->
           <!-- 影片 -->
           <div v-if="item.type === 13" class="!block">
             <span class="text-[18px]">{{ item.title }}</span>
@@ -318,144 +311,143 @@ export default {
 <style lang="scss" scoped>
 #question {
   form {
-    @apply flex justify-between items-center m-auto max-w-[920px] min-h-screen relative;
-  }
-  .container {
+    @apply flex justify-center items-center m-auto max-w-[920px] min-h-screen relative;
+    .container {
     @apply max-w-[770px] m-auto relative mt-[20px];
-
     .form-title {
-      @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
+        @apply w-full rounded-[10px] border-t-[10px] border-l-[10px] border-l-purple border-t-purple pt-[22px] pb-[24px] bg-white;
 
-      .form-input {
+        .form-input {
         @apply border-x-0 border-t-0 border-b-gray-400 w-[91%] font-semibold my-2 mx-[25px] focus:border-b-[3px] focus:border-b-purple focus:outline-none;
-      }
+        }
 
-      .form-title-input {
-        @apply h-[45px] text-[32px];
-      }
+        .form-title-input {
+        @apply h-auto text-[32px] leading-9;
+        }
 
-      .form-explain-input-2 {
-        @apply h-[34px] text-[18px] text-grey;
-      }
+        .form-explain-input-2 {
+        @apply h-auto text-[18px] text-grey;
+        }
     }
 
     .question {
-      @apply rounded-[10px] drop-shadow-md border border-grey-light p-[24px] my-[12px] bg-white;
+        @apply rounded-[10px] drop-shadow-md border border-grey-light p-[24px] my-[12px] bg-white;
 
-      .questype-1 {
+        .questype-1 {
         @apply pt-[20px] pb-[10px];
 
         .short {
-          @apply w-[60%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
+            @apply w-[60%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
         }
-      }
+        }
 
-      .questype-2 {
+        .questype-2 {
         @apply pt-[20px] pb-[10px];
 
         .long {
-          @apply w-[85%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
+            @apply w-[85%] text-[16px] font-semibold border-b-[2px] border-grey-middle border-0 focus:ring-0 focus:border-b-purple focus:border-b-[3px];
         }
-      }
+        }
 
-      .questype-3 {
+        .questype-3 {
         @apply w-full pt-[20px] flex flex-col;
 
         .option {
-          @apply flex items-center mb-3;
+            @apply flex items-center mb-3;
 
-          label {
+            label {
             @apply ml-[10px];
-          }
+            }
         }
-      }
+        }
 
-      .questype-4 {
+        .questype-4 {
         @apply w-full pt-[20px];
 
         .option {
-          @apply flex items-center mb-3;
+            @apply flex items-center mb-3;
 
-          label {
+            label {
             @apply ml-[10px];
-          }
+            }
         }
-      }
+        }
 
-      .questype-5 {
+        .questype-5 {
         @apply w-full py-[30px];
 
         #select {
-          @apply w-[30%] h-[50px] border-green-middle rounded-md;
+            @apply w-[30%] h-[50px] border-green-middle rounded-md;
         }
-      }
+        }
 
-      .questype-6 {
+        .questype-6 {
         @apply w-full py-[10px];
 
         #file-upload-button {
-          @apply bg-purple;
+            @apply bg-purple;
         }
-      }
+        }
 
-      .questype-7 {
+        .questype-7 {
         @apply w-full border-x-0 border-t-0 py-[30px] flex items-end justify-center gap-10;
         @media (max-width: 690px) {
-          @apply flex-col items-start pl-5;
+            @apply flex-col items-start pl-5;
         }
         div input {
             @media (max-width: 690px) {
-              @apply ml-[5px];
+                @apply ml-[5px];
             }
-          }
-      }
+            }
+        }
 
-      .questype-8,
-      .questype-9 {
+        .questype-8,
+        .questype-9 {
         @apply w-full;
 
         table {
-          @apply w-full;
+            @apply w-full;
 
-          tbody {
+            tbody {
             @apply py-10;
 
             td {
-              @apply text-center;
+                @apply text-center;
             }
-          }
+            }
         }
-      }
+        }
 
-      .questype-10 {
+        .questype-10 {
         @apply pt-[20px] pb-[20px];
 
         input {
-          @apply border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
+            @apply border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
         }
-      }
+        }
 
-      .questype-11 {
+        .questype-11 {
         @apply pt-[20px] pb-[20px];
 
         input {
-          @apply w-[60px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
+            @apply w-[60px] h-[30px] border-0 border-b-[2px] border-grey-middle focus:ring-0 focus:border-b-purple focus:border-b-[3px] focus:transition-all;
         }
 
         span {
-          @apply mx-2;
+            @apply mx-2;
         }
 
         select {
-          @apply border-0 focus:ring-0;
+            @apply border-0 focus:ring-0;
         }
-      }
+        }
     }
-  }
-  .submit-btn {
+    }
+    .submit-btn {
     @apply bg-purple text-white py-[10px] px-[10px] rounded-lg drop-shadow-md hover:scale-105 sticky top-[90%] truncate;
     @media(max-width:840px) {
-      @apply fixed right-[5px];
+        @apply fixed right-[5px];
+    }
     }
   }
 }
