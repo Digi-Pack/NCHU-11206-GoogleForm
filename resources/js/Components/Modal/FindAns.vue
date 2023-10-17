@@ -88,7 +88,7 @@ export default {
         <div v-for="(i, index) in arrayData(parseInt(value.qus.linear.min), parseInt(value.qus.linear.max))" :key=index>
           <div class="flex flex-col justify-center items-center py-4">
             <div class="p-5"> {{ i }}</div>
-            <input type="radio" disabled v-if="index === parseInt(value.ans.manyOptions)" class="p-3 text-grey" checked>
+            <input type="radio" disabled v-if="index === parseInt(value.ans.manyOptions) - 1" class="p-3 text-grey" checked>
             <input type="radio" disabled v-else class="p-3">
           </div>
         </div>
