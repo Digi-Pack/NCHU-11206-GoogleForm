@@ -190,7 +190,7 @@ export default {
           </div>
           <!-- 檔案上傳 -->
           <div v-if="item.type === 6" class="!block">
-            <span class="text-[18px]">檔案上傳</span>
+            <span class="text-[18px]">{{ item.title }}</span>
             <div class="questype-6">
               <label v-if="!formData[key].file.name"
                 class="border border-[gray] w-[50px] h-[50px] rounded-lg flex justify-center items-center text-[30px] cursor-pointer hover:border-grey-light hover:bg-grey-light">
