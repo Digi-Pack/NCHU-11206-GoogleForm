@@ -29,7 +29,7 @@ export default {
     <!-- 簡答 -->
     <div v-if="value.qus.type === 1 && !value.ans" class="responser">
       <div class="text">
-        (使用者無回應)
+        (使用者填寫表單時，未建立此問題)
       </div>
       <div class="reply"><a href="#">0 則回應</a></div>
     </div>
@@ -42,7 +42,7 @@ export default {
     <!-- 詳答 -->
     <div v-if="value.qus.type === 2 && !value.ans" class="responser">
       <div class="text">
-        (使用者無回應)
+        (使用者填寫表單時，未建立此問題)
       </div>
       <div class="reply"><a href="#">0 則回應</a></div>
     </div>
@@ -99,7 +99,7 @@ export default {
     <div v-if="value.qus.type === 5 && !value.ans">
       <div class="responser">
         <div class=" text-black text-[16px] px-5 py-2 my-3">
-          (使用者無回應)
+          (使用者填寫表單時，未建立此問題)
         </div>
         <div class="reply"><a href="#">0 則回應</a></div>
       </div>
