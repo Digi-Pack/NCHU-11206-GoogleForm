@@ -314,7 +314,7 @@ export default {
             const dataIndex = manyOptionsValue - min;
             data[dataIndex]++;
           }
-          if (manyOptionsValue >= 0) {
+          if (manyOptionsValue.length > 0) {
             subtextCount++;
           }
         }
@@ -526,7 +526,7 @@ export default {
 
       this.arrayB.forEach((answerSet) => {
         const answer = answerSet.find((answer) => parseInt(answer.id) === question.id);
-        if (answer && answer.answer !== 'null') {
+        if (answer && answer.answer !== null) {
           // 比較 answer.answer 和 option.id
           answerArray.push(answer.answer);
           subtext++;
