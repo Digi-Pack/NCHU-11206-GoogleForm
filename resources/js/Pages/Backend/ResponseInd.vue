@@ -392,7 +392,7 @@ export default {
             </div>
             <!-- 日期 -->
             <div v-if="item.type === 10" class="!block">
-              <!-- <span class="text-[18px]">{{ item.title }}</span> -->
+              <span class="text-[18px]">{{ item.title }}</span>
               <div v-if="!ansStringJson[key]" class="questype-10 flex flex-col">
                 <div class="text-grey text-sm tracking-widest">YYYY MM DD</div>
                 <input type="date" class="border-0 pl-0 tracking-wider" disabled>
