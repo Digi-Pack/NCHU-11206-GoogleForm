@@ -274,23 +274,24 @@ export default {
             <!-- 線性刻度 -->
             <div v-if="item.type === 7" class="!block">
               <span class="text-[18px] w-[120px] truncate">{{ item.title }}</span>
-              <div class="questype-7 flex justify-center items-center gap-6 my-10">
+              <div v-if="!ansStringJson[key]" class="questype-7 flex justify-center items-center gap-6 my-10">
                 <span class="w-[120px] flex justify-end pt-12 truncate">{{ item.linear.minText }}</span>
-                <div v-if="!ansStringJson[key]">
-                  <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
-                    class="flex flex-col items-center gap-5">
-                    <label> {{ i }}
-                    </label>
-                    <input type="radio" class="text-grey p-3" :value="i" disabled>
-                  </div>
+                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
+                  class="flex flex-col items-center gap-5">
+                  <label> {{ i }}
+                  </label>
+                  <input type="radio" class="text-grey p-3" :value="i" disabled>
                 </div>
-                <div v-if="ansStringJson[key]">
-                  <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
-                    class="flex flex-col items-center gap-5">
-                    <label> {{ i }}
-                    </label>
-                    <input v-model="ansStringJson[key].manyOptions" type="radio" class="text-grey p-3" :value="i" disabled>
-                  </div>
+
+                <span class="w-[120px] truncate pt-12">{{ item.linear.maxText }}</span>
+              </div>
+              <div v-if="ansStringJson[key]" class="questype-7 flex justify-center items-center gap-6 my-10">
+                <span class="w-[120px] flex justify-end pt-12 truncate">{{ item.linear.minText }}</span>
+                <div v-for="(i, index) in arrayData(parseInt(item.linear.min), parseInt(item.linear.max))" :key=index
+                  class="flex flex-col items-center gap-5">
+                  <label> {{ i }}
+                  </label>
+                  <input v-model="ansStringJson[key].manyOptions" type="radio" class="text-grey p-3" :value="i" disabled>
                 </div>
                 <span class="w-[120px] truncate pt-12">{{ item.linear.maxText }}</span>
               </div>
