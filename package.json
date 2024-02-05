@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build && vite build --ssr",
+        "build": "vite build",
         "lint": "eslint --fix --ext .vue,.js,.ts --ignore-path .gitignore ."
     },
     "devDependencies": {

@@ -26,7 +26,7 @@ export default {
   <section id="frontend-index">
     <div class="flex flex-col h-full">
       <div class="flex justify-between items-center gap-5 mb-5">
-        <span class="text-[24px] text-white">Google 表單</span>
+        <span class="text-[24px] text-white">問卷表單系統</span>
         <div class="flex justify-between items-center gap-5">
           <Link :href="route('register')" class="btn-base">註冊</Link>
           <Link :href="route('login')" class="btn-base">登入</Link>
