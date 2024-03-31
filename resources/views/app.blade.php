@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        @if (env('GOOGLE_REBOT_BAN', false))
+          <meta name="robots" content="noindex, nofollow">
+          <meta name="googlebot" content="noindex">
+        @endif
         <title>問卷表單系統</title>
 
         <link rel="icon" type="image/x-icon" href="./logo.png" rel="external nofollow" >
