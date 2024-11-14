@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->string('random')->nullable('')->comment('表單獨一網址');
+            $table->string('random')->nullable()->comment('表單獨一網址');
         });
     }
 

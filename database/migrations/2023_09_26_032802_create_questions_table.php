@@ -20,9 +20,9 @@ return new class extends Migration
             $table->date('other_modified')->nullable()->comment('協作者的表單修改日期');
             $table->date('opened_date')->nullable()->comment('表單上次開啟日期');
             $table->bigInteger('lead_author_id')->comment('主編者ID');
-            $table->string('qu_naires_title')->nullable()->default('')->comment('表單標題');
-            $table->string('qu_naires_desc')->nullable()->default('')->comment('表單說明');
-            $table->longText('questionnaires')->nullable()->default('')->comment('問題');
+            $table->string('qu_naires_title')->nullable()->comment('表單標題');
+            $table->string('qu_naires_desc')->nullable()->comment('表單說明');
+            $table->longText('questionnaires')->nullable()->comment('問題');
         });
     }
 
